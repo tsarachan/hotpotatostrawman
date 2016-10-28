@@ -24,7 +24,7 @@ GameObject:
   - 23: {fileID: 23000013472935466}
   - 114: {fileID: 114000012826773482}
   - 54: {fileID: 54000011739773052}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: HomingEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000013543070894}
   - 108: {fileID: 108000012525816498}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Point light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -189,3 +189,21 @@ MonoBehaviour:
   - 2
   - 5
   - 7
+  enterDistance: 35
+  enterTime: 2
+  enterCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+    - time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
