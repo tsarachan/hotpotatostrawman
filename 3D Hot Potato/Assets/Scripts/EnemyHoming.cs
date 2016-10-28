@@ -85,7 +85,11 @@ public class EnemyHoming : EnemyBase {
 	}
 
 	private Vector3 GetDirection(){
-		return (target.position - transform.position).normalized;
+		if (target != null){
+			return (target.position - transform.position).normalized;
+		} else {
+			return transform.position; //stop in place if the player this enemy is searching for has been destroyed
+		}
 	}
 
 	public override void GetDestroyed(){
