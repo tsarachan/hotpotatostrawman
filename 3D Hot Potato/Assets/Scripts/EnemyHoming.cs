@@ -21,6 +21,16 @@ public class EnemyHoming : EnemyBase {
 
 	private const string ENEMY_ORGANIZER = "Enemies";
 
+
+	//these variables are used to bring homing enemies onto the screen, allowing players to see them before they start attacking
+	private bool enteringScreen = true;
+	public float enterDistance = 5.0f; //how far the homing enemy will move before it starts attacking
+	public float enterTime = 2.0f;
+	private float timer = 0.0f;
+	public AnimationCurve enterCurve;
+	private Vector3 start;
+	private Vector3 end;
+
 	private void Start(){
 		transform.parent = GameObject.Find(ENEMY_ORGANIZER).transform;
 		playerOrganizer = GameObject.Find(PLAYER_ORGANIZER).transform;
@@ -28,7 +38,13 @@ public class EnemyHoming : EnemyBase {
 		rb = GetComponent<Rigidbody>();
 		//destroyParticle = Resources.Load("DestroyParticle") as GameObject;
 		myMaxSpeed = maxSpeeds[Random.Range(0, maxSpeeds.Length)];
+		start = transform.position;
+		end = new Vector3(transform.position.x,
+						  transform.position.y,
+						  transform.position.z - enterDistance);
 	}
+
+
 
 
 	/// <summary>
@@ -47,7 +63,25 @@ public class EnemyHoming : EnemyBase {
 	}
 
 	private void FixedUpdate(){
-		rb.AddForce(Vector3.ClampMagnitude(GetDirection() * speed, myMaxSpeed), ForceMode.Force);
+		if (enteringScreen){
+			rb.MovePosition(MoveOntoScreen());
+		} else {
+			rb.AddForce(GetDirection() * Speed, ForceMode.Force);
+
+			//This is a bodge to limit maximum speed. The better way would be to impose a countervailing force.
+			//Directly manipulating rigidbody velocity could lead to physics problems.
+			if (rb.velocity.magnitude > myMaxSpeed) { rb.velocity = rb.velocity.normalized * myMaxSpeed; }
+		}
+	}
+
+	private Vector3 MoveOntoScreen(){
+		timer += Time.deltaTime;
+
+		Vector3 pos = Vector3.LerpUnclamped(start, end, enterCurve.Evaluate(timer/enterTime));
+
+		if (Vector3.Distance(pos, end) <= Mathf.Epsilon) { enteringScreen = false; }
+
+		return pos;
 	}
 
 	private Vector3 GetDirection(){
