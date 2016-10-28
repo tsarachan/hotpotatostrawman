@@ -87,4 +87,9 @@ public class EnemyHoming : EnemyBase {
 	private Vector3 GetDirection(){
 		return (target.position - transform.position).normalized;
 	}
+
+	public override void GetDestroyed(){
+		GetComponent<ParticleBurst>().MakeBurst();
+		Destroy(gameObject);
+	}
 }
