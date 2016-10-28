@@ -40,7 +40,7 @@ public class EnemyGiant : EnemyBase {
 		if (enteringScreen){
 			rb.MovePosition(MoveOntoScreen());
 		} else {
-			rb.AddForce(new Vector3(0.0f, -speed, 0.0f), ForceMode.Impulse); //move straight down
+			rb.AddForce(new Vector3(0.0f, 0.0f, -speed), ForceMode.Impulse); //move straight down
 
 			//This is a bodge to limit maximum speed. The better way would be to impose a countervailing force.
 			//Directly manipulating rigidbody velocity could lead to physics problems.

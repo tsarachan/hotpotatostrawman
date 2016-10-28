@@ -14,14 +14,33 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 			if (!GetComponent<PlayerBallInteraction>().BallCarrier){  //try to destroy enemies when not the ball carrier
 				collision.gameObject.GetComponent<EnemyBase>().GetDestroyed();
 			} else { //this player is the ball carrier; the game is over
-				GetComponent<ParticleBurst>().MakeBurst();
+				GetComponent<ParticleBurst>().MakeBurst(); //throw up some particles
 
 				//de-parent the ball to avoid null reference exceptions
 				if (transform.Find(BALL_OBJ) != null){
 					transform.Find(BALL_OBJ).parent = transform.root;
 				}
 
-				Destroy(gameObject);
+				GetComponent<Renderer>().enabled = false; //make the player disappear
+
+				StartCoroutine(ResetGame());
+			}
+		}
+	}
+
+	private void OnTriggerEnter(Collider other){
+		if (other.gameObject.name.Contains(ENEMY_OBJ)){
+			if (!GetComponent<PlayerBallInteraction>().BallCarrier){  //try to destroy enemies when not the ball carrier
+				other.gameObject.GetComponent<EnemyBase>().GetDestroyed();
+			} else { //this player is the ball carrier; the game is over
+				GetComponent<ParticleBurst>().MakeBurst(); //throw up some particles
+
+				//de-parent the ball to avoid null reference exceptions
+				if (transform.Find(BALL_OBJ) != null){
+					transform.Find(BALL_OBJ).parent = transform.root;
+				}
+
+				GetComponent<Renderer>().enabled = false; //make the player disappear
 
 				StartCoroutine(ResetGame());
 			}
@@ -30,14 +49,9 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 
 	private IEnumerator ResetGame(){
 		Debug.Log("Resetting game");
-		float timer = 0.0f;
+		yield return new WaitForSeconds(timeToResetGame);
 
-		while (timer < timeToResetGame){
-			timer += Time.deltaTime;
-			Debug.Log(timer);
-
-			yield return null;
-		}
+		Debug.Log("Done waiting");
 
 		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
