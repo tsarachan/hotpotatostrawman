@@ -14,16 +14,7 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 			if (!GetComponent<PlayerBallInteraction>().BallCarrier){  //try to destroy enemies when not the ball carrier
 				collision.gameObject.GetComponent<EnemyBase>().GetDestroyed();
 			} else { //this player is the ball carrier; the game is over
-				GetComponent<ParticleBurst>().MakeBurst(); //throw up some particles
-
-				//de-parent the ball to avoid null reference exceptions
-				if (transform.Find(BALL_OBJ) != null){
-					transform.Find(BALL_OBJ).parent = transform.root;
-				}
-
-				GetComponent<Renderer>().enabled = false; //make the player disappear
-
-				StartCoroutine(ResetGame());
+				LoseTheGame();
 			}
 		}
 	}
@@ -33,18 +24,23 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 			if (!GetComponent<PlayerBallInteraction>().BallCarrier){  //try to destroy enemies when not the ball carrier
 				other.gameObject.GetComponent<EnemyBase>().GetDestroyed();
 			} else { //this player is the ball carrier; the game is over
-				GetComponent<ParticleBurst>().MakeBurst(); //throw up some particles
-
-				//de-parent the ball to avoid null reference exceptions
-				if (transform.Find(BALL_OBJ) != null){
-					transform.Find(BALL_OBJ).parent = transform.root;
-				}
-
-				GetComponent<Renderer>().enabled = false; //make the player disappear
-
-				StartCoroutine(ResetGame());
+				LoseTheGame();
 			}
 		}
+	}
+
+	private void LoseTheGame(){
+		GetComponent<ParticleBurst>().MakeBurst(); //throw up some particles
+
+		//de-parent the ball to avoid null reference exceptions
+		if (transform.Find(BALL_OBJ) != null){
+			transform.Find(BALL_OBJ).parent = transform.root;
+		}
+
+		GetComponent<Renderer>().enabled = false; //make the player disappear
+		transform.GetChild(0).gameObject.SetActive(false); //shut off the point light
+
+		StartCoroutine(ResetGame());
 	}
 
 	private IEnumerator ResetGame(){

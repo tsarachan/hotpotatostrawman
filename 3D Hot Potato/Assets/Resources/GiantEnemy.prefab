@@ -196,8 +196,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88787fdcaa962438db819f8d01a45c03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 20
-  enterDistance: 15
+  speed: 10
+  enterDistance: 20
   enterTime: 2
   enterCurve:
     serializedVersion: 2
