@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour {
 	private Rigidbody rb;
 
 	public float maxSpeed = 1.0f; //player maximum speed
-	public float acceleration = 0.3f; //amount player accelerates each frame of input
+	public float speed = 0.3f; //amount player accelerates each frame of input
 
 	private void Start(){
 		playerNum = transform.name[7]; //assumes players are named using the convention "Player #"
@@ -23,10 +23,14 @@ public class PlayerMovement : MonoBehaviour {
 	}
 
 	private void FixedUpdate(){
-		rb.AddForce(Vector3.ClampMagnitude(Move() * acceleration, maxSpeed), ForceMode.Impulse);
+		rb.AddForce(GetDirection() * speed, ForceMode.Force);
+
+		//This is a bodge to limit maximum speed. The better way would be to impose a countervailing force.
+		//Directly manipulating rigidbody velocity could lead to physics problems.
+		if (rb.velocity.magnitude > maxSpeed) { rb.velocity = rb.velocity.normalized * maxSpeed; }
 	}
 
-	private Vector3 Move(){
+	private Vector3 GetDirection(){
 		Vector3 direction = new Vector3(0.0f, 0.0f, 0.0f);
 
 		if (Input.GetAxis(myHorizAxis) < -0.3f){

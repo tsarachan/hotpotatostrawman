@@ -37,8 +37,9 @@ public class SpawnEnemies : MonoBehaviour {
 
 		if (index <= spawnTimes.Length - 1 && index <= enemyToSpawn.Length - 1 && index <= whichSpawner.Length - 1){
 			if (timer >= spawnTimes[index]){
-				GameObject newEnemy = Instantiate(enemyToSpawn[index], spawners[whichSpawner[index] - 1].position, Quaternion.identity) 
-					as GameObject;
+				GameObject newEnemy = Instantiate(enemyToSpawn[index],
+												  spawners[whichSpawner[index] - 1].position, 
+												  enemyToSpawn[index].transform.rotation) as GameObject;
 				index++;
 			}
 		}

@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class PlayerEnemyInteraction : MonoBehaviour {
+
+	public float timeToResetGame = 1.0f;
 
 	private const string ENEMY_OBJ = "Enemy";
 	private const string BALL_OBJ = "Ball";
@@ -19,7 +22,25 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 				}
 
 				Destroy(gameObject);
+
+				StartCoroutine(ResetGame());
 			}
 		}
+	}
+
+	private IEnumerator ResetGame(){
+		Debug.Log("Resetting game");
+		float timer = 0.0f;
+
+		while (timer < timeToResetGame){
+			timer += Time.deltaTime;
+			Debug.Log(timer);
+
+			yield return null;
+		}
+
+		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
+		yield break;
 	}
 }

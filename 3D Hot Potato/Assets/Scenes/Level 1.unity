@@ -250,7 +250,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.2
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &260184037
 MeshFilter:
@@ -286,7 +286,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  flightTimePerUnitDistance: 7
+  flightTimePerUnitDistance: 40
 --- !u!54 &260184039
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -324,7 +324,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 267393481}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 10, y: 0, z: 70}
+  m_LocalPosition: {x: 16, y: 0, z: 70}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
@@ -344,6 +344,8 @@ GameObject:
   - 54: {fileID: 290731063}
   - 114: {fileID: 290731068}
   - 114: {fileID: 290731067}
+  - 114: {fileID: 290731069}
+  - 114: {fileID: 290731070}
   m_Layer: 0
   m_Name: Player 2
   m_TagString: Untagged
@@ -373,7 +375,7 @@ Rigidbody:
   m_GameObject: {fileID: 290731061}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 5
+  m_Drag: 7
   m_AngularDrag: 0
   m_UseGravity: 0
   m_IsKinematic: 0
@@ -450,8 +452,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b520623cc3ab4009ad4b6041b948335, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 2
-  acceleration: 0.3
+  maxSpeed: 100
+  speed: 100
+--- !u!114 &290731069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 290731061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34cbc151d86584c009d725dc81399a00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeToResetGame: 1
+--- !u!114 &290731070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 290731061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f9ed74837a3e42f39fe239a0bcaa86a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  numCubes: 4
+  forceMax: 10
 --- !u!1 &350929074
 GameObject:
   m_ObjectHideFlags: 0
@@ -790,7 +817,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 834214257}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5, y: 0, z: 70}
+  m_LocalPosition: {x: 8, y: 0, z: 70}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
@@ -818,7 +845,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 938853229}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5, y: 0, z: 70}
+  m_LocalPosition: {x: -8, y: 0, z: 70}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
@@ -846,7 +873,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 952416779}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10, y: 0, z: 70}
+  m_LocalPosition: {x: -16, y: 0, z: 70}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
@@ -906,7 +933,7 @@ Light:
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -996,13 +1023,15 @@ MonoBehaviour:
   - 0
   - 0
   - 0
+  - 2
   enemyToSpawn:
   - {fileID: 1000010609928504, guid: 6f5721defacc24ec682361f4f4a17fe5, type: 2}
   - {fileID: 1000010609928504, guid: 6f5721defacc24ec682361f4f4a17fe5, type: 2}
   - {fileID: 1000010609928504, guid: 6f5721defacc24ec682361f4f4a17fe5, type: 2}
   - {fileID: 1000010609928504, guid: 6f5721defacc24ec682361f4f4a17fe5, type: 2}
   - {fileID: 1000010609928504, guid: 6f5721defacc24ec682361f4f4a17fe5, type: 2}
-  whichSpawner: 0100000002000000030000000400000005000000
+  - {fileID: 1000013416586560, guid: 4b860832ba3534efa818b60359629e10, type: 2}
+  whichSpawner: 010000000200000003000000040000000500000001000000
 --- !u!1 &1153795567
 GameObject:
   m_ObjectHideFlags: 0
@@ -1057,7 +1086,7 @@ Light:
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -1121,6 +1150,8 @@ GameObject:
   - 54: {fileID: 2058022945}
   - 114: {fileID: 2058022949}
   - 114: {fileID: 2058022950}
+  - 114: {fileID: 2058022951}
+  - 114: {fileID: 2058022952}
   m_Layer: 0
   m_Name: Player 1
   m_TagString: Untagged
@@ -1150,7 +1181,7 @@ Rigidbody:
   m_GameObject: {fileID: 2058022943}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 5
+  m_Drag: 7
   m_AngularDrag: 0
   m_UseGravity: 0
   m_IsKinematic: 0
@@ -1216,8 +1247,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b520623cc3ab4009ad4b6041b948335, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 2
-  acceleration: 0.3
+  maxSpeed: 100
+  speed: 100
 --- !u!114 &2058022950
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1229,6 +1260,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc088436ff43f4e54b566649a0353128, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2058022951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2058022943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34cbc151d86584c009d725dc81399a00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeToResetGame: 1
+--- !u!114 &2058022952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2058022943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f9ed74837a3e42f39fe239a0bcaa86a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  numCubes: 4
+  forceMax: 10
 --- !u!1 &2125330018
 GameObject:
   m_ObjectHideFlags: 0
@@ -1283,7 +1339,7 @@ Light:
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295

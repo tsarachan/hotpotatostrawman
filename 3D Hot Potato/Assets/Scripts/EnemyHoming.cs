@@ -22,7 +22,7 @@ public class EnemyHoming : EnemyBase {
 	private const string ENEMY_ORGANIZER = "Enemies";
 
 
-	//these variables are used to bring homing enemies onto the screen, allowing players to see them before they start attacking
+	//these variables are used to bring enemies onto the screen, allowing players to see them before they start attacking
 	private bool enteringScreen = true;
 	public float enterDistance = 5.0f; //how far the homing enemy will move before it starts attacking
 	public float enterTime = 2.0f;
