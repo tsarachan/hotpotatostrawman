@@ -54,7 +54,9 @@ public class EnemyBoss : EnemyBase {
 
 
 	public override void GetDestroyed(){
-		GetComponent<ParticleBurst>().MakeBurst(); //make more particles, just for good measure
-		Destroy(transform.parent.gameObject); //get rid of all the parts of the boss fight
+		if (health <= 0){ //the boss can't be destroyed just by running into it
+			GetComponent<ParticleBurst>().MakeBurst(); //make more particles, just for good measure
+			transform.parent.gameObject.GetComponent<EnemyBossBattle>().GetDestroyed(); //get rid of all the parts of the boss fight
+		}
 	}
 }

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EnemyBossBattle : MonoBehaviour {
+public class EnemyBossBattle : EnemyBase {
 
 	private const string ENEMY_ORGANIZER = "Enemies";
 

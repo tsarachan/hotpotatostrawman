@@ -1050,9 +1050,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnTimes:
   - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 20
+  - 21
   enemyToSpawn:
+  - {fileID: 1000010609928504, guid: 6f5721defacc24ec682361f4f4a17fe5, type: 2}
+  - {fileID: 1000010609928504, guid: 6f5721defacc24ec682361f4f4a17fe5, type: 2}
+  - {fileID: 1000010609928504, guid: 6f5721defacc24ec682361f4f4a17fe5, type: 2}
+  - {fileID: 1000010609928504, guid: 6f5721defacc24ec682361f4f4a17fe5, type: 2}
+  - {fileID: 1000010609928504, guid: 6f5721defacc24ec682361f4f4a17fe5, type: 2}
+  - {fileID: 1000010756031986, guid: 1047538a394a8476eb45b9efd25ad005, type: 2}
   - {fileID: 1000012254824446, guid: 00a691f05977544a4b3fb001eafc3030, type: 2}
-  whichSpawner: 04000000
+  whichSpawner: 02000000030000000400000005000000060000000100000004000000
 --- !u!1 &1153795567
 GameObject:
   m_ObjectHideFlags: 0
