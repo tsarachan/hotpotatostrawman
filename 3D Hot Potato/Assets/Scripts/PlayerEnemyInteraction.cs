@@ -13,6 +13,7 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 		if (collision.gameObject.name.Contains(ENEMY_OBJ)){
 			if (!GetComponent<PlayerBallInteraction>().BallCarrier){  //try to destroy enemies when not the ball carrier
 				collision.gameObject.GetComponent<EnemyBase>().GetDestroyed();
+				GetComponent<PlayerMovement>().Stopped = true;
 			} else { //this player is the ball carrier; the game is over
 				LoseTheGame();
 			}
@@ -23,6 +24,7 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 		if (other.gameObject.name.Contains(ENEMY_OBJ)){
 			if (!GetComponent<PlayerBallInteraction>().BallCarrier){  //try to destroy enemies when not the ball carrier
 				other.gameObject.GetComponent<EnemyBase>().GetDestroyed();
+				GetComponent<PlayerMovement>().Stopped = true;
 			} else { //this player is the ball carrier; the game is over
 				LoseTheGame();
 			}

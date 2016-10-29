@@ -15,6 +15,14 @@ public class PlayerMovement : MonoBehaviour {
 	public float maxSpeed = 1.0f; //player maximum speed
 	public float speed = 0.3f; //amount player accelerates each frame of input
 
+	private bool stopped = false; //players are stopped, for example, when they destroy an enemy
+	public bool Stopped{
+		get { return stopped; }
+		set { stopped = value; }
+	}
+	public float stopDuration = 0.25f;
+	private float stopTimer = 0.0f;
+
 	private void Start(){
 		playerNum = transform.name[7]; //assumes players are named using the convention "Player #"
 		myHorizAxis = LSTICK_HORIZ + playerNum;
@@ -23,11 +31,16 @@ public class PlayerMovement : MonoBehaviour {
 	}
 
 	private void FixedUpdate(){
-		rb.AddForce(GetDirection() * speed, ForceMode.Force);
+		if (!Stopped){
+			rb.AddForce(GetDirection() * speed, ForceMode.Force);
 
-		//This is a bodge to limit maximum speed. The better way would be to impose a countervailing force.
-		//Directly manipulating rigidbody velocity could lead to physics problems.
-		if (rb.velocity.magnitude > maxSpeed) { rb.velocity = rb.velocity.normalized * maxSpeed; }
+			//This is a bodge to limit maximum speed. The better way would be to impose a countervailing force.
+			//Directly manipulating rigidbody velocity could lead to physics problems.
+			if (rb.velocity.magnitude > maxSpeed) { rb.velocity = rb.velocity.normalized * maxSpeed; }
+		} else if (Stopped) {
+			rb.velocity = Vector3.zero;
+			Stopped = RunStopTimer();
+		}
 	}
 
 	private Vector3 GetDirection(){
@@ -46,5 +59,15 @@ public class PlayerMovement : MonoBehaviour {
 		}
 
 		return direction.normalized;
+	}
+
+	private bool RunStopTimer(){
+		stopTimer += Time.deltaTime;
+
+		if (stopTimer >= stopDuration){
+			return false;
+		} else {
+			return true;
+		}
 	}
 }
