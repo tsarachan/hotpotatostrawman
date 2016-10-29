@@ -9,6 +9,7 @@ public class PlayerBallInteraction : MonoBehaviour {
 	private const string O_BUTTON = "PS4_O_";
 	private char playerNum = '0';
 	private string myOButton = "";
+	public KeyCode pass; //debug control
 
 	private const string PLAYER_ORGANIZER = "Players";
 	private Transform otherPlayer;
@@ -45,7 +46,7 @@ public class PlayerBallInteraction : MonoBehaviour {
 	}
 
 	private void Update(){
-		if (Input.GetButtonDown(myOButton) && BallCarrier){
+		if (Input.GetButtonDown(myOButton) && BallCarrier || Input.GetKeyDown(pass) && BallCarrier){
 			BallCarrier = ThrowBall();
 		}
 	}

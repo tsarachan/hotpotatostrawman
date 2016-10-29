@@ -10,6 +10,12 @@ public class PlayerMovement : MonoBehaviour {
 	private string myHorizAxis = ""; //this player's horizontal left thumbstick axis
 	private string myVertAxis = ""; //this player's vertical left thumbstick axis
 
+	//debug controls
+	public KeyCode up;
+	public KeyCode down;
+	public KeyCode left;
+	public KeyCode right;
+
 	private Rigidbody rb;
 
 	public float maxSpeed = 1.0f; //player maximum speed
@@ -46,15 +52,15 @@ public class PlayerMovement : MonoBehaviour {
 	private Vector3 GetDirection(){
 		Vector3 direction = new Vector3(0.0f, 0.0f, 0.0f);
 
-		if (Input.GetAxis(myHorizAxis) < -0.3f){
+		if (Input.GetAxis(myHorizAxis) < -0.3f || Input.GetKey(left)){
 			direction.x = -1.0f;
-		} else if (Input.GetAxis(myHorizAxis) > 0.3f){
+		} else if (Input.GetAxis(myHorizAxis) > 0.3f || Input.GetKey(right)){
 			direction.x = 1.0f;
 		}
 
-		if (Input.GetAxis(myVertAxis) > 0.3f){
+		if (Input.GetAxis(myVertAxis) > 0.3f || Input.GetKey(down)){
 			direction.z = -1.0f;
-		} else if (Input.GetAxis(myVertAxis) < -0.3f){
+		} else if (Input.GetAxis(myVertAxis) < -0.3f || Input.GetKey(up)){
 			direction.z = 1.0f;
 		}
 
