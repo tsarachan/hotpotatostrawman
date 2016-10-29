@@ -32,7 +32,7 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 	}
 
 	private void LoseTheGame(){
-		GetComponent<ParticleBurst>().MakeBurst(); //throw up some particles
+		GetComponent<ParticleBurst>().MakeBurst(); //throw some particles
 
 		//de-parent the ball to avoid null reference exceptions
 		if (transform.Find(BALL_OBJ) != null){
