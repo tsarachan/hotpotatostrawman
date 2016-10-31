@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -43,5 +44,14 @@ public class SpawnEnemies : MonoBehaviour {
 				index++;
 			}
 		}
+	}
+
+	/// <summary>
+	/// Stop enemies from spawning by setting the index beyond the length of the arrays used to decide what to spawn.
+	/// 
+	/// This avoids clearing the arrays, which could be a source of errors.
+	/// </summary>
+	public void StopSpawning(){
+		index = spawnTimes.Length + 1; //this assumes all three arrays are the same length, which should be true anyway!
 	}
 }
