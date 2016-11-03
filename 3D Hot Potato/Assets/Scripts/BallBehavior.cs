@@ -7,6 +7,8 @@ public class BallBehavior : MonoBehaviour {
 
 	public AnimationCurve normalTossCurve; //can be used to make the ball move faster at start then lose speed over time, etc.
 	public float flightTimePerUnitDistance = 0.1f; //effectively speed
+	public AnimationCurve verticalCurve; //used to give the ball a "lob" effect
+	public float verticalHeight = 2.0f; //height the ball reaches at the apex of the lob
 
 	private const string PLAYER_OBJ = "Player";
 
@@ -45,9 +47,13 @@ public class BallBehavior : MonoBehaviour {
 		while (timer <= totalFlightTime){
 			timer += Time.deltaTime;
 
-			rb.MovePosition(Vector3.Lerp(start,
-										 destination.position,
-										 normalTossCurve.Evaluate(timer/totalFlightTime)));
+			Vector3 nextPoint = Vector3.Lerp(start,
+											 destination.position,
+											 normalTossCurve.Evaluate(timer/totalFlightTime));
+
+			nextPoint.y = Mathf.Lerp(0.0f, verticalHeight, verticalCurve.Evaluate(timer/totalFlightTime));
+
+			rb.MovePosition(nextPoint);
 
 			yield return null;
 		}

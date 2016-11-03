@@ -88,7 +88,6 @@ public class EnemyHoming : EnemyBase {
 			//This is a bodge to limit maximum speed. The better way would be to impose a countervailing force.
 			//Directly manipulating rigidbody velocity could lead to physics problems.
 			if (rb.velocity.magnitude > myMaxSpeed) { rb.velocity = rb.velocity.normalized * myMaxSpeed; }
-			Debug.Log("enemy velocity == " + rb.velocity.magnitude);
 		}
 	}
 

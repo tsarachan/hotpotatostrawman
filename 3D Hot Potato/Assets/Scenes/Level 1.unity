@@ -315,6 +315,23 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 0
   flightTimePerUnitDistance: 40
+  verticalCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 4.561616
+      outSlope: 4.561616
+      tangentMode: 0
+    - time: 0.50044286
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 0
+    m_RotationOrder: 0
+  verticalHeight: 2
 --- !u!54 &260184039
 Rigidbody:
   m_ObjectHideFlags: 0
