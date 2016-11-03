@@ -1,4 +1,10 @@
-﻿using UnityEngine;
+﻿/*
+ * 
+ * This script handles the ball's movement betwen players
+ * 
+ */
+
+using UnityEngine;
 using System.Collections;
 
 public class BallBehavior : MonoBehaviour {
@@ -15,6 +21,7 @@ public class BallBehavior : MonoBehaviour {
 	private const string SCENE_ORGANIZER = "Scene";
 	private Transform scene;
 
+	//this is used to stop the coroutine that moves the ball between players when a player "catches" a pass
 	private Coroutine co;
 	public Coroutine Co{
 		get { return co; }
@@ -25,6 +32,7 @@ public class BallBehavior : MonoBehaviour {
 		scene = GameObject.Find(SCENE_ORGANIZER).transform;
 	}
 
+
 	/// <summary>
 	/// Players should call this function to pass between players.
 	/// </summary>
@@ -34,6 +42,7 @@ public class BallBehavior : MonoBehaviour {
 		transform.parent = scene; //stop being a child of the ball carrier, so that the ball can move between players
 		co = StartCoroutine(PassBetweenPlayers(start.position, destination));
 	}
+
 
 	/// <summary>
 	/// This coroutine moves the ball between the players.
