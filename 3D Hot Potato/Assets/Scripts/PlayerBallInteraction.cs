@@ -3,17 +3,15 @@ using System.Collections;
 
 public class PlayerBallInteraction : MonoBehaviour {
 
+	//these enable the player to find the ball
 	private const string BALL_OBJ = "Ball";
 	private BallBehavior ballBehavior;
 
-	private const string O_BUTTON = "PS4_O_";
-	private char playerNum = '0';
-	private string myOButton = "";
-	public KeyCode pass; //debug control
-
+	//the player this player will throw to
 	private const string PLAYER_ORGANIZER = "Players";
 	private Transform otherPlayer;
 
+	//is this player currently in possession of the ball?
 	private bool ballCarrier = false;
 	public bool BallCarrier{
 		get { return ballCarrier; }
@@ -22,8 +20,6 @@ public class PlayerBallInteraction : MonoBehaviour {
 
 	private void Start(){
 		ballBehavior = GameObject.Find(BALL_OBJ).GetComponent<BallBehavior>();
-		playerNum = transform.name[7]; //assumes players are named using the convention "Player #"
-		myOButton = O_BUTTON + playerNum;
 		otherPlayer = GetOtherPlayer();
 	}
 
@@ -34,7 +30,7 @@ public class PlayerBallInteraction : MonoBehaviour {
 	private Transform GetOtherPlayer(){
 		Transform temp = transform;
 
-		foreach (Transform player in transform.root.Find(PLAYER_ORGANIZER)){
+		foreach (Transform player in GameObject.Find(PLAYER_ORGANIZER).transform){
 			if (player.name != transform.name){
 				temp = player;
 			}
@@ -44,12 +40,7 @@ public class PlayerBallInteraction : MonoBehaviour {
 
 		return temp;
 	}
-
-	private void Update(){
-		if (Input.GetButtonDown(myOButton) && BallCarrier || Input.GetKeyDown(pass) && BallCarrier){
-			BallCarrier = ThrowBall();
-		}
-	}
+		
 
 	/// <summary>
 	/// Picks up the ball when the player encounters it.
@@ -65,10 +56,10 @@ public class PlayerBallInteraction : MonoBehaviour {
 	}
 
 	/// <summary>
-	/// Call this to start the process of throwing the ball
+	/// InputManager calls this to start the process of throwing the ball.
 	/// </summary>
 	/// <returns><c>false</c> so that this player is no longer the ball carrier.</returns>
-	private bool ThrowBall(){
+	public bool ThrowBall(){
 		ballBehavior.Pass(transform, otherPlayer);
 
 		return false;
