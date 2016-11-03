@@ -46,10 +46,8 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 	}
 
 	private IEnumerator ResetGame(){
-		Debug.Log("Resetting game");
 		yield return new WaitForSeconds(timeToResetGame);
 
-		Debug.Log("Done waiting");
 
 		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 

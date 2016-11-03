@@ -45,6 +45,9 @@ public class BallBehavior : MonoBehaviour {
 		float timer = 0.0f;
 
 		while (timer <= totalFlightTime){
+			//update totalFlightTime every frame, so that the ball moves faster or slower depending on the distance
+			//this should also avoid a bug wherein the ball gets stuck at a high elevation
+			totalFlightTime = Vector3.Distance(start, destination.position)/flightTimePerUnitDistance;
 			timer += Time.deltaTime;
 
 			Vector3 nextPoint = Vector3.Lerp(start,
@@ -58,6 +61,13 @@ public class BallBehavior : MonoBehaviour {
 			yield return null;
 		}
 
+		Debug.Log("Coroutine stopped: y == " + transform.position.y);
 		yield break;
+	}
+
+
+	public void BallCaught(Transform catchingPlayer){
+		StopCoroutine(Co);
+
 	}
 }

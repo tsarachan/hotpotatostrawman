@@ -61,6 +61,7 @@ public class PlayerBallInteraction : MonoBehaviour {
 			other.transform.position = transform.position;
 			if (other.transform.GetComponent<BallBehavior>().Co != null) { StopCoroutine(other.transform.GetComponent<BallBehavior>().Co); }
 			BallCarrier = true;
+			Debug.Log("Coroutine stopped by player catch; y == " + transform.position.y);
 		}
 	}
 
