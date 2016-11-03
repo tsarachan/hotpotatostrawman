@@ -21,6 +21,13 @@ public class EnemyHoming : EnemyBase {
 
 	private const string ENEMY_ORGANIZER = "Enemies";
 
+	public float onScreenTime = 10.0f;
+	private float stayTimer = 0.0f;
+
+	private Vector3 direction;
+	private Light myPointLight;
+	public Color leavingScreenColor;
+
 
 	//these variables are used to bring enemies onto the screen, allowing players to see them before they start attacking
 	private bool enteringScreen = true;
@@ -42,6 +49,7 @@ public class EnemyHoming : EnemyBase {
 		end = new Vector3(transform.position.x,
 						  transform.position.y,
 						  transform.position.z - enterDistance);
+		myPointLight = transform.GetChild(0).GetComponent<Light>();
 	}
 
 
@@ -66,11 +74,21 @@ public class EnemyHoming : EnemyBase {
 		if (enteringScreen){
 			rb.MovePosition(MoveOntoScreen());
 		} else {
-			rb.AddForce(GetDirection() * Speed, ForceMode.Force);
+			if (stayTimer <= onScreenTime){
+				direction = GetDirection();
+				stayTimer += Time.deltaTime;
+				rb.AddForce(direction * Speed, ForceMode.Force);
+			} else {
+				//stop changing direction; the enemy goes off-screen
+				rb.AddForce(direction * Speed * 2, ForceMode.Force);
+				myPointLight.color = leavingScreenColor;
+				myPointLight.intensity = 8.0f; //set the light to maximum intensity to signify danger
+			}
 
 			//This is a bodge to limit maximum speed. The better way would be to impose a countervailing force.
 			//Directly manipulating rigidbody velocity could lead to physics problems.
 			if (rb.velocity.magnitude > myMaxSpeed) { rb.velocity = rb.velocity.normalized * myMaxSpeed; }
+			Debug.Log("enemy velocity == " + rb.velocity.magnitude);
 		}
 	}
 

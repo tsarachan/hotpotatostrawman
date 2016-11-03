@@ -43,6 +43,7 @@ public class PlayerMovement : MonoBehaviour {
 			//This is a bodge to limit maximum speed. The better way would be to impose a countervailing force.
 			//Directly manipulating rigidbody velocity could lead to physics problems.
 			if (rb.velocity.magnitude > maxSpeed) { rb.velocity = rb.velocity.normalized * maxSpeed; }
+			Debug.Log("player velocity == " + rb.velocity.magnitude);
 		} else if (Stopped) {
 			rb.velocity = Vector3.zero;
 			Stopped = RunStopTimer();

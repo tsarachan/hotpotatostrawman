@@ -402,8 +402,8 @@ Rigidbody:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 290731061}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 7
+  m_Mass: 0.08
+  m_Drag: 0
   m_AngularDrag: 0
   m_UseGravity: 0
   m_IsKinematic: 0
@@ -485,8 +485,8 @@ MonoBehaviour:
   down: 0
   left: 0
   right: 0
-  maxSpeed: 100
-  speed: 100
+  maxSpeed: 7
+  speed: 7
   stopDuration: 0.25
 --- !u!114 &290731069
 MonoBehaviour:
@@ -599,7 +599,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 448365701}
   - 33: {fileID: 448365704}
-  - 65: {fileID: 448365703}
   - 23: {fileID: 448365702}
   m_Layer: 0
   m_Name: Ground
@@ -634,7 +633,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 2d807f86f53dc4af388a6abcacf6bb86, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
@@ -650,18 +649,6 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
---- !u!65 &448365703
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 448365700}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &448365704
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1097,6 +1084,24 @@ MonoBehaviour:
   - 39
   - 42
   - 43
+  - 43
+  - 43
+  - 43
+  - 43
+  - 43
+  - 43
+  - 45
+  - 45
+  - 45
+  - 45
+  - 45
+  - 45
+  - 47
+  - 47
+  - 47
+  - 47
+  - 47
+  - 47
   enemyToSpawn:
   - {fileID: 1000010609928504, guid: 6f5721defacc24ec682361f4f4a17fe5, type: 2}
   - {fileID: 1000010609928504, guid: 6f5721defacc24ec682361f4f4a17fe5, type: 2}
@@ -1141,7 +1146,25 @@ MonoBehaviour:
   - {fileID: 1000013416586560, guid: 4b860832ba3534efa818b60359629e10, type: 2}
   - {fileID: 1000010756031986, guid: 1047538a394a8476eb45b9efd25ad005, type: 2}
   - {fileID: 1000012254824446, guid: 00a691f05977544a4b3fb001eafc3030, type: 2}
-  whichSpawner: 02000000030000000400000005000000060000000200000003000000040000000500000006000000020000000300000004000000050000000600000002000000030000000400000005000000060000000200000003000000040000000500000006000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000004000000
+  - {fileID: 1000013146955538, guid: ec2bb65c3ecb04f5bb41e4f6dbac6630, type: 2}
+  - {fileID: 1000013146955538, guid: ec2bb65c3ecb04f5bb41e4f6dbac6630, type: 2}
+  - {fileID: 1000013146955538, guid: ec2bb65c3ecb04f5bb41e4f6dbac6630, type: 2}
+  - {fileID: 1000013146955538, guid: ec2bb65c3ecb04f5bb41e4f6dbac6630, type: 2}
+  - {fileID: 1000013146955538, guid: ec2bb65c3ecb04f5bb41e4f6dbac6630, type: 2}
+  - {fileID: 1000013146955538, guid: ec2bb65c3ecb04f5bb41e4f6dbac6630, type: 2}
+  - {fileID: 1000013146955538, guid: ec2bb65c3ecb04f5bb41e4f6dbac6630, type: 2}
+  - {fileID: 1000013146955538, guid: ec2bb65c3ecb04f5bb41e4f6dbac6630, type: 2}
+  - {fileID: 1000013146955538, guid: ec2bb65c3ecb04f5bb41e4f6dbac6630, type: 2}
+  - {fileID: 1000013146955538, guid: ec2bb65c3ecb04f5bb41e4f6dbac6630, type: 2}
+  - {fileID: 1000013146955538, guid: ec2bb65c3ecb04f5bb41e4f6dbac6630, type: 2}
+  - {fileID: 1000013146955538, guid: ec2bb65c3ecb04f5bb41e4f6dbac6630, type: 2}
+  - {fileID: 1000013146955538, guid: ec2bb65c3ecb04f5bb41e4f6dbac6630, type: 2}
+  - {fileID: 1000013146955538, guid: ec2bb65c3ecb04f5bb41e4f6dbac6630, type: 2}
+  - {fileID: 1000013146955538, guid: ec2bb65c3ecb04f5bb41e4f6dbac6630, type: 2}
+  - {fileID: 1000013146955538, guid: ec2bb65c3ecb04f5bb41e4f6dbac6630, type: 2}
+  - {fileID: 1000013146955538, guid: ec2bb65c3ecb04f5bb41e4f6dbac6630, type: 2}
+  - {fileID: 1000013146955538, guid: ec2bb65c3ecb04f5bb41e4f6dbac6630, type: 2}
+  whichSpawner: 02000000030000000400000005000000060000000200000003000000040000000500000006000000020000000300000004000000050000000600000002000000030000000400000005000000060000000200000003000000040000000500000006000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000004000000010000000200000003000000050000000600000007000000010000000200000003000000050000000600000007000000010000000200000003000000050000000600000007000000
 --- !u!1 &1153795567
 GameObject:
   m_ObjectHideFlags: 0
@@ -1290,8 +1313,8 @@ Rigidbody:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2058022943}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 7
+  m_Mass: 0.08
+  m_Drag: 0
   m_AngularDrag: 0
   m_UseGravity: 0
   m_IsKinematic: 0
@@ -1361,8 +1384,8 @@ MonoBehaviour:
   down: 0
   left: 0
   right: 0
-  maxSpeed: 100
-  speed: 100
+  maxSpeed: 7
+  speed: 7
   stopDuration: 0.25
 --- !u!114 &2058022950
 MonoBehaviour:

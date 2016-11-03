@@ -56,7 +56,7 @@ Transform:
   m_GameObject: {fileID: 1000013416586560}
   m_LocalRotation: {x: 0.35355338, y: 0.35355338, z: -0.1464466, w: 0.8535535}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 6, y: 6, z: 6}
+  m_LocalScale: {x: 10, y: 10, z: 10}
   m_LocalEulerAnglesHint: {x: 45, y: 45, z: 0}
   m_Children:
   - {fileID: 4000011752162376}
@@ -196,9 +196,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88787fdcaa962438db819f8d01a45c03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 20
   enterDistance: 20
-  enterTime: 2
+  enterTime: 1
   enterCurve:
     serializedVersion: 2
     m_Curve:
