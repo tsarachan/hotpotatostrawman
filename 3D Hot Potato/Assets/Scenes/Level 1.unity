@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.19995156, g: 0.22199026, b: 0.25681725, a: 1}
+  m_IndirectSpecularColor: {r: 0.19995117, g: 0.22198918, b: 0.25681606, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -403,7 +403,7 @@ Rigidbody:
   m_GameObject: {fileID: 290731061}
   serializedVersion: 2
   m_Mass: 0.08
-  m_Drag: 0
+  m_Drag: 0.3
   m_AngularDrag: 0
   m_UseGravity: 0
   m_IsKinematic: 0
@@ -485,8 +485,8 @@ MonoBehaviour:
   down: 0
   left: 0
   right: 0
-  maxSpeed: 7
-  speed: 7
+  maxSpeed: 8
+  speed: 8
   stopDuration: 0.25
 --- !u!114 &290731069
 MonoBehaviour:
@@ -751,7 +751,7 @@ Light:
   serializedVersion: 7
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0.95
+  m_Intensity: 0.3
   m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10
@@ -814,7 +814,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 42.95, y: 1, z: 1}
+  m_Size: {x: 97.6, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &834214257
 GameObject:
@@ -1251,7 +1251,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1966004042}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 16.45, y: 0, z: 14.9}
+  m_LocalPosition: {x: 31.38, y: 0, z: 14.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
@@ -1314,7 +1314,7 @@ Rigidbody:
   m_GameObject: {fileID: 2058022943}
   serializedVersion: 2
   m_Mass: 0.08
-  m_Drag: 0
+  m_Drag: 0.3
   m_AngularDrag: 0
   m_UseGravity: 0
   m_IsKinematic: 0
@@ -1384,8 +1384,8 @@ MonoBehaviour:
   down: 0
   left: 0
   right: 0
-  maxSpeed: 7
-  speed: 7
+  maxSpeed: 8
+  speed: 8
   stopDuration: 0.25
 --- !u!114 &2058022950
 MonoBehaviour:
@@ -1538,7 +1538,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2125741932}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -16.45, y: 0, z: 14.9}
+  m_LocalPosition: {x: -31.33, y: 0, z: 14.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
