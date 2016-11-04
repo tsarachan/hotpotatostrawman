@@ -332,7 +332,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 0
     m_RotationOrder: 0
-  verticalHeight: 4
+  verticalHeight: 0
 --- !u!54 &260184039
 Rigidbody:
   m_ObjectHideFlags: 0
