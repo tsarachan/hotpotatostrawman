@@ -9,25 +9,25 @@ using System.Collections;
 
 public class BallBehavior : MonoBehaviour {
 
-	private Rigidbody rb;
+	protected Rigidbody rb;
 
 	public AnimationCurve normalTossCurve; //can be used to make the ball move faster at start then lose speed over time, etc.
 	public float flightTimePerUnitDistance = 0.1f; //effectively speed
 	public AnimationCurve verticalCurve; //used to give the ball a "lob" effect
 	public float verticalHeight = 2.0f; //height the ball reaches at the apex of the lob
 
-	private const string PLAYER_OBJ = "Player";
+	protected const string PLAYER_OBJ = "Player";
 
-	private const string SCENE_ORGANIZER = "Scene";
-	private Transform scene;
+	protected const string SCENE_ORGANIZER = "Scene";
+	protected Transform scene;
 
 	//this is used to stop the coroutine that moves the ball between players when a player "catches" a pass
-	private Coroutine co;
+	protected Coroutine co;
 	public Coroutine Co{
 		get { return co; }
 	}
 
-	private void Start(){
+	protected virtual void Start(){
 		rb = GetComponent<Rigidbody>();
 		scene = GameObject.Find(SCENE_ORGANIZER).transform;
 	}
@@ -49,7 +49,7 @@ public class BallBehavior : MonoBehaviour {
 	/// </summary>
 	/// <param name="start">The throwing player's location.</param>
 	/// <param name="destination">The catching player.</param>
-	public IEnumerator PassBetweenPlayers(Vector3 start, Transform destination){
+	public virtual IEnumerator PassBetweenPlayers(Vector3 start, Transform destination){
 		float totalFlightTime = Vector3.Distance(start, destination.position)/flightTimePerUnitDistance;
 		float timer = 0.0f;
 
