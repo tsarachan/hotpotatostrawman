@@ -17,7 +17,9 @@ namespace ObjectPooling
 
 	public class ObjectPool {
 
-		public static Dictionary<string, Queue<GameObject>> enemyPool = new Dictionary<string, Queue<GameObject>>();
+		private const string CLONE = "(Clone)";
+
+		public static Dictionary<string, Queue<GameObject>> objectPool = new Dictionary<string, Queue<GameObject>>();
 
 
 		/// <summary>
@@ -28,41 +30,42 @@ namespace ObjectPooling
 		/// </summary>
 		/// <returns>The chosen enemy.</returns>
 		/// <param name="enemyType">The name of the enemy prefab.</param>
-		public static GameObject GetObj(string enemyType){
+		public static GameObject GetObj(string objectType){
 			GameObject obj = null; //default initialization for error-checking
+			Debug.Log("trying to get " + objectType);
 
-			//if an enemy of the chosen type is in the pool, get one of them
-			if (enemyPool.ContainsKey(enemyType)){
-				if (enemyPool[enemyType].Count > 0){
-					obj = enemyPool[enemyType].Dequeue();
+			//if an object of the chosen type is in the pool, get one of them
+			if (objectPool.ContainsKey(objectType + CLONE)){
+				if (objectPool[objectType + CLONE].Count > 0){
+					obj = objectPool[objectType + CLONE].Dequeue();
 					obj.GetComponent<Poolable>().Reset();
+					Debug.Log("Found one in the pool");
 				}
 			}
 
-			//if no enemy of a given type is in the pool, make one
+			//if no object of a given type is in the pool, make one
 			else {
-				obj = MonoBehaviour.Instantiate(Resources.Load(enemyType)) as GameObject;
+				obj = MonoBehaviour.Instantiate(Resources.Load(objectType)) as GameObject;
+				Debug.Log("Made something because it wasn't in the pool");
 			}
 
-			if (obj == null) { Debug.Log("Unable to find enemy named " + enemyType); }
+			if (obj == null) { Debug.Log("Unable to find enemy named " + objectType); }
 
 			return obj;
 		}
 
 
 		/// <summary>
-		/// Call this to add an enemy to the pool of enemies.
+		/// Call this to add an object to the pool of objects.
 		/// </summary>
-		/// <param name="enemyType">The name of the enemy prefab.</param>
-		public static void AddObj(string enemyType){
-			GameObject obj = MonoBehaviour.Instantiate(Resources.Load(enemyType)) as GameObject;
-
-			if (!enemyPool.ContainsKey(enemyType)){
-				enemyPool.Add(enemyType, new Queue<GameObject>());
+		/// <param name="enemyType">The name of the object prefab.</param>
+		public static void AddObj(GameObject obj){
+			if (!objectPool.ContainsKey(obj.name)){
+				objectPool.Add(obj.name, new Queue<GameObject>());
 			}
 
-			enemyPool[enemyType].Enqueue(obj);
+			objectPool[obj.name].Enqueue(obj);
 			obj.GetComponent<Poolable>().ShutOff();
-		}
+ 		}
 	}
 }

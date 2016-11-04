@@ -32,11 +32,11 @@ namespace ObjectPooling
 		/// Call this function when an enemy is going back to the pool.
 		/// </summary>
 		public virtual void ShutOff(){
-			gameObject.SetActive(false); //shut the enemy off so that it doesn't move, etc.
-
 			//stop the enemy in preparation for it to move normally again
 			//this avoids having to deal with the existing velocity case-by-case; it's always going to start at zero
 			GetComponent<Rigidbody>().velocity = startVelocity;
+
+			gameObject.SetActive(false); //shut the enemy off so that it doesn't move, etc.
 		}
 	}
 }

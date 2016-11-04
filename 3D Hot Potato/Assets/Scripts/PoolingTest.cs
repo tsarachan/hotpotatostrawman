@@ -7,14 +7,14 @@
 
 		private void Start(){
 			for (int i = 0; i < 100; i++){
-				ObjectPool.AddObj("HomingEnemy");
-				Debug.Log("Added an enemy");
+				GameObject newObj = Instantiate(Resources.Load("Tiny cube"), Vector3.zero, Quaternion.identity) as GameObject;
+				ObjectPool.AddObj(newObj);
 			}
 		}
 
 		private void Update(){
 			if (Input.GetKeyDown(KeyCode.Space)){
-				ObjectPool.GetObj("HomingEnemy");
+				ObjectPool.GetObj("Tiny cube");
 			}
 		}
 	}

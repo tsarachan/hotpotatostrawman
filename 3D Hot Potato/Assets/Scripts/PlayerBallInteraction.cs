@@ -1,4 +1,11 @@
-﻿using UnityEngine;
+﻿/*
+ * 
+ * All interactions between the player and the ball begin here, including catching and throwing.
+ * BallBehavior knows how to throw and how to be caught; this just tells BallBehavior that it's time to do those things.
+ * 
+ */
+
+using UnityEngine;
 using System.Collections;
 
 public class PlayerBallInteraction : MonoBehaviour {
