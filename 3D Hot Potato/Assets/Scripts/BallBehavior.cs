@@ -38,7 +38,7 @@ public class BallBehavior : MonoBehaviour {
 	/// </summary>
 	/// <param name="start">The throwing player.</param>
 	/// <param name="destination">The catching player.</param>
-	public void Pass(Transform start, Transform destination){
+	public virtual void GetThrown(Transform start, Transform destination){
 		transform.parent = scene; //stop being a child of the ball carrier, so that the ball can move between players
 		co = StartCoroutine(PassBetweenPlayers(start.position, destination));
 	}
@@ -67,6 +67,21 @@ public class BallBehavior : MonoBehaviour {
 			yield return null;
 		}
 
+		GetCaught(destination); //if the ball somehow doesn't reach its destination, force it to go there
+
 		yield break;
+	}
+
+
+	/// <summary>
+	/// Whenever a pass is done, call this. If a player catches the ball, the player should call this;
+	/// if the ball reaches the end of a pass without being caught, call this with the intended recipient
+	/// to ensure a valid game state.
+	/// </summary>
+	/// <param name="catchingPlayer">Catching player.</param>
+	public void GetCaught(Transform catchingPlayer){
+		StopCoroutine(Co);
+		transform.parent = catchingPlayer;
+		transform.position = catchingPlayer.position;
 	}
 }

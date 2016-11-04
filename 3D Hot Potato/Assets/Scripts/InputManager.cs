@@ -56,7 +56,7 @@ public class InputManager : MonoBehaviour {
 	private void Update(){
 		foreach (char player in playerBallInteractionScripts.Keys){
 			if (Input.GetButtonDown(O_BUTTON + player)){
-				playerBallInteractionScripts[player].ThrowBall();
+				playerBallInteractionScripts[player].Throw();
 			}
 		}
 	}

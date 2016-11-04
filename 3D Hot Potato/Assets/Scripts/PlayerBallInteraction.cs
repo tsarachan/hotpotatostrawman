@@ -48,9 +48,7 @@ public class PlayerBallInteraction : MonoBehaviour {
 	/// <param name="other">The collider the player has encountered.</param>
 	private void OnTriggerEnter(Collider other){
 		if (other.transform.name.Contains(BALL_OBJ)){
-			other.transform.parent = transform;
-			other.transform.position = transform.position;
-			if (other.transform.GetComponent<BallBehavior>().Co != null) { StopCoroutine(other.transform.GetComponent<BallBehavior>().Co); }
+			other.transform.GetComponent<BallBehavior>().GetCaught(transform);
 			BallCarrier = true;
 		}
 	}
@@ -59,8 +57,8 @@ public class PlayerBallInteraction : MonoBehaviour {
 	/// InputManager calls this to start the process of throwing the ball.
 	/// </summary>
 	/// <returns><c>false</c> so that this player is no longer the ball carrier.</returns>
-	public bool ThrowBall(){
-		ballBehavior.Pass(transform, otherPlayer);
+	public bool Throw(){
+		ballBehavior.GetThrown(transform, otherPlayer);
 
 		return false;
 	}

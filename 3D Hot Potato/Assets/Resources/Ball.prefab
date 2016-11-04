@@ -203,7 +203,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 0
     m_RotationOrder: 0
-  verticalHeight: 3
+  verticalHeight: 4
 --- !u!135 &135000010488664286
 SphereCollider:
   m_ObjectHideFlags: 1
