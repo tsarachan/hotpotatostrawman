@@ -1,8 +1,10 @@
 ﻿/*
  * 
- * This script works in concert with "Poolable" to put enemies into, and bring them out of, the object pool.
+ * This script works in concert with "Poolable" to put things (e.g., enemies) into, and bring them out of, the object pool.
  * 
- * All enemies must inherit from Poolable for this script to work correctly.
+ * To work correctly, all objects to be in a pool must:
+ * 1. inherit from Poolable, and
+ * 2. be instantiated from a prefab.
  * 
  * Note that this doesn't do anything to the enemy other than put it in the hierarchy. The enemy's own script is responsible for
  * its own parenting, movement after appearing in the scene, etc.

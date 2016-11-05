@@ -1,4 +1,10 @@
-﻿namespace ObjectPooling
+﻿/*
+ * 
+ * Test script for object pooling. This shouldn't be in the actual game.
+ * 
+ */
+
+namespace ObjectPooling
 {
 	using UnityEngine;
 	using System.Collections;
