@@ -88,7 +88,7 @@ public class PlayerBallThrowDelay : MonoBehaviour {
 			if (other.transform.GetComponent<BallBehavior>().Co != null) { StopCoroutine(other.transform.GetComponent<BallBehavior>().Co); }
 			BallCarrier = true;
 			myPointLight.intensity = 0.0f;
-			Debug.Log("Coroutine stopped by player catch; y == " + transform.position.y);
+			//Debug.Log("Coroutine stopped by player catch; y == " + transform.position.y);
 		}
 	}
 
@@ -99,7 +99,7 @@ public class PlayerBallThrowDelay : MonoBehaviour {
 	/// <returns><c>false</c> so that this player is no longer the ball carrier.</returns>
 	private bool ThrowBall(){
 		ballBehavior.Pass(transform, otherPlayer);
-
+		currentCharge = 0.0f;
 		return false;
 	}
 
