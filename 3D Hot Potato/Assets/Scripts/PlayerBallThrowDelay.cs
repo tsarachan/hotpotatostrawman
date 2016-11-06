@@ -83,13 +83,17 @@ public class PlayerBallThrowDelay : MonoBehaviour {
 	/// <param name="other">The collider the player has encountered.</param>
 	private void OnTriggerEnter(Collider other){
 		if (other.transform.name.Contains(BALL_OBJ)){
-			other.transform.parent = transform;
-			other.transform.position = transform.position;
 			if (other.transform.GetComponent<BallBehavior>().Co != null) { StopCoroutine(other.transform.GetComponent<BallBehavior>().Co); }
-			BallCarrier = true;
-			myPointLight.intensity = 0.0f;
+			CatchBall(other.transform);
 			//Debug.Log("Coroutine stopped by player catch; y == " + transform.position.y);
 		}
+	}
+
+	public void CatchBall(Transform ball){
+		ball.parent = transform;
+		ball.position = transform.position;
+		BallCarrier = true;
+		myPointLight.intensity = 0.0f;
 	}
 
 

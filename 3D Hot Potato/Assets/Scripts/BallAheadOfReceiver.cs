@@ -41,7 +41,7 @@ public class BallAheadOfReceiver : BallBehavior {
 	/// <param name="destination">The catching player.</param>
 	public override void Pass(Transform start, Transform destination){
 		transform.parent = scene; //stop being a child of the ball carrier, so that the ball can move between players
-		co = StartCoroutine(PassToPoint(start.position, FindPointAhead(destination)));
+		co = StartCoroutine(PassToPoint(start.position, FindPointAhead(destination), destination));
 	}
 
 	/// <summary>
@@ -49,7 +49,8 @@ public class BallAheadOfReceiver : BallBehavior {
 	/// </summary>
 	/// <param name="start">The throwing player's location.</param>
 	/// <param name="destination">The catching player's location at the moment of the throw.</param>
-	public IEnumerator PassToPoint(Vector3 start, Vector3 end){
+	/// <param name="intendedReceiver">The catching player.</param>
+	public IEnumerator PassToPoint(Vector3 start, Vector3 end, Transform intendedReceiver){
 		//float totalFlightTime = Vector3.Distance(start, end)/flightTimePerUnitDistance;
 		float timer = 0.0f;
 
@@ -68,6 +69,7 @@ public class BallAheadOfReceiver : BallBehavior {
 		}
 
 		FallToGround(end);
+		TryToGetPickedUp(intendedReceiver);
 
 		//Debug.Log("Coroutine stopped: y == " + transform.position.y);
 		yield break;
@@ -122,5 +124,16 @@ public class BallAheadOfReceiver : BallBehavior {
 		}
 
 		return estimatedPoint;
+	}
+
+	/// <summary>
+	/// If the player who was supposed to get the ball is close by, snap it to them as though they'd caught it.
+	/// This is a brute-force fix to help players deal with the somewhat inaccurate predictive math.
+	/// </summary>
+	/// <param name="player">The player who's supposed to get the ball.</param>
+	private void TryToGetPickedUp(Transform player){
+		if (Vector3.Distance(transform.position, player.position) <= snapToPlayerDist){
+			player.GetComponent<PlayerBallThrowDelay>().CatchBall(transform);
+		}
 	}
 }

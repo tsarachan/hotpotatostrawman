@@ -389,9 +389,9 @@ GameObject:
   - 23: {fileID: 290731064}
   - 54: {fileID: 290731063}
   - 114: {fileID: 290731068}
-  - 114: {fileID: 290731067}
   - 114: {fileID: 290731069}
   - 114: {fileID: 290731070}
+  - 114: {fileID: 290731067}
   m_Layer: 0
   m_Name: Player 2
   m_TagString: Untagged
@@ -484,10 +484,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 290731061}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc088436ff43f4e54b566649a0353128, type: 3}
+  m_Script: {fileID: 11500000, guid: 80859c54393a34144a2b4aea49aad190, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pass: 0
+  chargeTime: 1
+  maxIntensity: 8
+  normalIntensity: 1
 --- !u!114 &290731068
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3127,9 +3130,9 @@ GameObject:
   - 23: {fileID: 2058022946}
   - 54: {fileID: 2058022945}
   - 114: {fileID: 2058022949}
-  - 114: {fileID: 2058022950}
   - 114: {fileID: 2058022951}
   - 114: {fileID: 2058022952}
+  - 114: {fileID: 2058022950}
   m_Layer: 0
   m_Name: Player 1
   m_TagString: Untagged
@@ -3240,10 +3243,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2058022943}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc088436ff43f4e54b566649a0353128, type: 3}
+  m_Script: {fileID: 11500000, guid: 80859c54393a34144a2b4aea49aad190, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pass: 0
+  chargeTime: 1
+  maxIntensity: 8
+  normalIntensity: 1
 --- !u!114 &2058022951
 MonoBehaviour:
   m_ObjectHideFlags: 0
