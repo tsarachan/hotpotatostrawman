@@ -20,7 +20,7 @@ public class BallBehavior : MonoBehaviour {
 		get { return co; }
 	}
 
-	protected void Start(){
+	protected virtual void Start(){
 		rb = GetComponent<Rigidbody>();
 		scene = GameObject.Find(SCENE_ORGANIZER).transform;
 	}
