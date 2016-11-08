@@ -488,7 +488,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pass: 0
-  chargeTime: 1
+  chargeTime: 0.7
   maxIntensity: 8
   normalIntensity: 1
 --- !u!114 &290731068
@@ -3247,7 +3247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pass: 0
-  chargeTime: 1
+  chargeTime: 0.7
   maxIntensity: 8
   normalIntensity: 1
 --- !u!114 &2058022951

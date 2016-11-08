@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class EnemyHoming : EnemyBase {
 
@@ -60,14 +61,49 @@ public class EnemyHoming : EnemyBase {
 	/// </summary>
 	/// <returns>The target.</returns>
 	private Transform ChooseTarget(){
-		float randomValue = Random.Range(0.0f, 1.0f); //if this is <= chanceOfGoForBall, the enemy will want to chase the ball
+		float randomValue = Random.Range(0.0f, 1.0f); //if this is <= chanceOfGoForBall, the enemy will want to chase the player with the ball
+		Transform target = transform; //default initialization for error-checking
 
 
 		if (randomValue <= chanceOfGoForBall){ //enemy wants to go for the ball
-			return GameObject.Find(BALL_OBJ).transform;
-		} else { //didn't want to go for the ball; chase a random player
-			return playerOrganizer.GetChild(Random.Range(0, playerOrganizer.childCount));
+			foreach(Transform player in playerOrganizer){
+				if (player.GetComponent<PlayerBallInteraction>().BallCarrier){
+					target = player;
+					break;
+				}
+			}
+		} else { //didn't want to go for the ball; go for the other player, if possible
+
+			//this section is a little more complicated so that the enemies don't swarm player 1 when there's not a ball carrier
+			//(e.g., because it's the start of the game, or the ball is being passed)
+
+			//get a list of all players
+			List<Transform> players = new List<Transform>();
+			foreach(Transform player in playerOrganizer){
+				players.Add(player);
+			}
+
+			//take the ball carrier out of the list, if there is one
+			foreach (Transform player in players){
+				if (player.GetComponent<PlayerBallInteraction>().BallCarrier){
+					players.Remove(player);
+				}
+			}
+
+			//choose a random player to get the target among those who are left
+			target = players[Random.Range(0, players.Count)];
 		}
+
+		//Was the target set to a player? If not (e.g., wanted to chase the ball carrier but there wasn't one), choose a random player to chase
+		if (target == transform){
+			target = playerOrganizer.GetChild(Random.Range(0, playerOrganizer.childCount));
+		}
+
+		//error check: send a message if the target wasn't set
+		if (target == transform) { Debug.Log("Couldn't find a target!"); }
+
+		Debug.Log(target);
+		return target;
 	}
 
 	private void FixedUpdate(){
