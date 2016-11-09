@@ -183,7 +183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24fcbc765222542f0bb8cc30e9275443, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chanceOfGoForBall: 0.8
+  chanceOfGoForBall: 0.2
   target: {fileID: 0}
   speed: 35
   maxSpeeds:

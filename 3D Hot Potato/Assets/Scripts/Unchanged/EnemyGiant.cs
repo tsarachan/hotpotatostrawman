@@ -49,7 +49,7 @@ public class EnemyGiant : EnemyBase {
 		}
 
 		//take the ball carrier out of the list, if there is one
-		foreach (Transform player in players){
+		foreach (Transform player in playerOrganizer){
 			if (player.GetComponent<PlayerBallInteraction>().BallCarrier){
 				players.Remove(player);
 			}
