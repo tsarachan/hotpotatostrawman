@@ -14,7 +14,7 @@ public class BuildingMove : MonoBehaviour {
 	void Update(){
 		transform.localPosition -= transform.forward * 50 * Time.deltaTime;
 
-		if (transform.localPosition.z == -25) {
+		if (transform.localPosition.z <= -25.0f) {
 		
 			transform.localPosition = new Vector3 (-34.9f, 9.04f, 74.8f);
 		}

@@ -15,26 +15,22 @@ public class PowerUp : MonoBehaviour {
 
 	/*
 	 * 
-	 * Power-ups are spawned using two dictionaries: one of the powerups, and one of the types of throws players make
-	 * (horizontal, vertical, etc.). The powerup dictionary has all the powerups, indexed by ints. The throw type
-	 * tracks the number of throws of each type the players make, indexed by the type of throw.
+	 * Power-ups are spawned using two dictionaries: one of the powerups, and one of the relative positions players were in for the throw.
 	 * 
-	 * The throw types are mapped to ints using an enum. This makes the code shorter, and hopefully more readable.
+	 * Each time the players throw, the super meter increases and the appropriate entry in the relative positions dictionary increases.
 	 * 
-	 * Each time the players throw, the super meter increases and an entry is made in the throw type dictionary under the appropriate type.
-	 * 
-	 * When the super meter is full, the system checks which throw type has the most entries. It spawns a powerup from the dictionary
+	 * When the super meter is full, the system checks which relative position has the highest total. It spawns a powerup from the dictionary
 	 * of powerups accordingly, and then resets the process.
 	 * 
 	 */
 
-	private Dictionary<int, GameObject> powerUps = new Dictionary<int, GameObject>();
+	private Dictionary<ThrowTypes, GameObject> powerUps = new Dictionary<ThrowTypes, GameObject>();
 	enum ThrowTypes { horizontal, vertical }; //horizontal == 0, vertical == 1
 
 	private GameObject clearEnemies;
 	private const string CLEAR_ENEMIES_POWERUP = "ClearEnemies";
 
-	private Dictionary<int, int> relativePositions = new Dictionary<int, int>(); //keeps track of where the players have been when they power up
+	private Dictionary<ThrowTypes, int> relativePositions = new Dictionary<ThrowTypes, int>(); //keeps track of where the players have been when they power up
 
 	private void Start(){
 		superMeter = GetComponent<Image>();
@@ -48,13 +44,13 @@ public class PowerUp : MonoBehaviour {
 	/// Create a dictionary with all the different ways to power up, and the powerups players get as a result
 	/// </summary>
 	/// <returns>The dictionary.</returns>
-	private Dictionary<int, GameObject> SetUpPowerUps(){
-		Dictionary<int, GameObject> temp = new Dictionary<int, GameObject>();
+	private Dictionary<ThrowTypes, GameObject> SetUpPowerUps(){
+		Dictionary<ThrowTypes, GameObject> temp = new Dictionary<ThrowTypes, GameObject>();
 
 		clearEnemies = Resources.Load(CLEAR_ENEMIES_POWERUP) as GameObject;
 
-		temp.Add((int)ThrowTypes.vertical, clearEnemies);
-		temp.Add((int)ThrowTypes.horizontal, clearEnemies);
+		temp.Add(ThrowTypes.vertical, clearEnemies);
+		temp.Add(ThrowTypes.horizontal, clearEnemies);
 
 		return temp;
 	}
@@ -64,11 +60,11 @@ public class PowerUp : MonoBehaviour {
 	/// Create a dictionary to keep track of what kinds of throws players make--primarily horizontal ones, primarily vertical ones, etc.
 	/// </summary>
 	/// <returns>The dictionary.</returns>
-	private Dictionary<int, int> SetUpPositionPossibilities(){
-		Dictionary<int, int> temp = new Dictionary<int, int>();
+	private Dictionary<ThrowTypes, int> SetUpPositionPossibilities(){
+		Dictionary<ThrowTypes, int> temp = new Dictionary<ThrowTypes, int>();
 
-		temp.Add((int)ThrowTypes.vertical, 0);
-		temp.Add((int)ThrowTypes.horizontal, 0);
+		temp.Add(ThrowTypes.vertical, 0);
+		temp.Add(ThrowTypes.horizontal, 0);
 
 		return temp;
 	}
@@ -88,11 +84,11 @@ public class PowerUp : MonoBehaviour {
 		float zDist = Mathf.Abs(difference.z);
 
 		if (xDist > zDist){
-			relativePositions[(int)ThrowTypes.horizontal]++;
+			relativePositions[ThrowTypes.horizontal]++;
 		} else if (zDist > xDist){
-			relativePositions[(int)ThrowTypes.vertical]++;
+			relativePositions[ThrowTypes.vertical]++;
 		} else { //tiebreaker
-			relativePositions[(int)ThrowTypes.horizontal]++;
+			relativePositions[ThrowTypes.horizontal]++;
 		}
 
 		//if the players have filled the meter, trigger a powerup
@@ -110,17 +106,17 @@ public class PowerUp : MonoBehaviour {
 	private void GetPowerUp(){
 
 		//chose the power-up to spawn
-		if (relativePositions[(int)ThrowTypes.vertical] > relativePositions[(int)ThrowTypes.horizontal]){
-			Instantiate(powerUps[(int)ThrowTypes.vertical]);
-		} else if (relativePositions[(int)ThrowTypes.horizontal] > relativePositions[(int)ThrowTypes.vertical]){
-			Instantiate(powerUps[(int)ThrowTypes.horizontal]);
+		if (relativePositions[ThrowTypes.vertical] > relativePositions[ThrowTypes.horizontal]){
+			Instantiate(powerUps[ThrowTypes.vertical]);
+		} else if (relativePositions[ThrowTypes.horizontal] > relativePositions[ThrowTypes.vertical]){
+			Instantiate(powerUps[ThrowTypes.horizontal]);
 		} else { //tiebreaker
-			Instantiate(powerUps[(int)ThrowTypes.horizontal]);
+			Instantiate(powerUps[ThrowTypes.horizontal]);
 		}
 
 		//reset the super meter
-		relativePositions[(int)ThrowTypes.vertical] = 0;
-		relativePositions[(int)ThrowTypes.horizontal] = 0;
+		relativePositions[ThrowTypes.vertical] = 0;
+		relativePositions[ThrowTypes.horizontal] = 0;
 		superMeter.fillAmount = 0.0f;
 	}
 }

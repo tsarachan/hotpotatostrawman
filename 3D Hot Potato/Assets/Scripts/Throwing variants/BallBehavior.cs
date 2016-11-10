@@ -20,9 +20,13 @@ public class BallBehavior : MonoBehaviour {
 		get { return co; }
 	}
 
+	protected const string SUPER_METER = "Super meter";
+	protected PowerUp powerUpScript;
+
 	protected virtual void Start(){
 		rb = GetComponent<Rigidbody>();
 		scene = GameObject.Find(SCENE_ORGANIZER).transform;
+		powerUpScript = GameObject.Find(SUPER_METER).GetComponent<PowerUp>();
 	}
 
 	/// <summary>
@@ -32,6 +36,7 @@ public class BallBehavior : MonoBehaviour {
 	/// <param name="destination">The catching player.</param>
 	public virtual void Pass(Transform start, Transform destination){
 		transform.parent = scene; //stop being a child of the ball carrier, so that the ball can move between players
+		powerUpScript.IncreaseSuperMeter(start, destination);
 		co = StartCoroutine(PassBetweenPlayers(start.position, destination));
 	}
 

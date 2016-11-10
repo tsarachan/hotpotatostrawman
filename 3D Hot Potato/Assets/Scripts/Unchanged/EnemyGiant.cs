@@ -10,8 +10,8 @@ public class EnemyGiant : EnemyBase {
 	private const string PLAYER_ORGANIZER = "Players";
 	private const string ENEMY_ORGANIZER = "Enemies";
 
-	private const string BALL_OBJ = "Ball";
-	private Transform ball;
+//	private const string BALL_OBJ = "Ball";
+//	private Transform ball;
 
 	public float speed = 1000.0f;
 
@@ -27,7 +27,7 @@ public class EnemyGiant : EnemyBase {
 	private void Start(){
 		transform.parent = GameObject.Find(ENEMY_ORGANIZER).transform;
 		playerOrganizer = GameObject.Find(PLAYER_ORGANIZER).transform;
-		ball = GameObject.Find(BALL_OBJ).transform;
+//		ball = GameObject.Find(BALL_OBJ).transform;
 
 		//line this enemy up with a player who doesn't have the ball
 		transform.position = ChooseTarget().position;
