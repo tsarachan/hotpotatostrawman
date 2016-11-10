@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerMovement : MonoBehaviour {
+public class PlayerMotorcycleMovement : MonoBehaviour {
 
 	//all of these are used to get the thumbstick axes
 	private const string LSTICK_HORIZ = "PS4_LStick_Horiz_";
@@ -76,11 +76,9 @@ public class PlayerMovement : MonoBehaviour {
 			zMultiplier += accelDecel;
 		}
 
-		zMultiplier = Mathf.Clamp(zMultiplier, 1.0f, 5.0f);
+		return zMultiplier;
 
 		Debug.Log(zMultiplier);
-
-		return Mathf.Abs(zMultiplier);
 	}
 
 	private bool RunStopTimer(){

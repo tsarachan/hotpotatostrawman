@@ -527,7 +527,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 290731062}
-  - 33: {fileID: 290731066}
   - 23: {fileID: 290731064}
   - 54: {fileID: 290731063}
   - 114: {fileID: 290731068}
@@ -536,6 +535,7 @@ GameObject:
   - 114: {fileID: 290731070}
   - 65: {fileID: 290731065}
   - 96: {fileID: 290731071}
+  - 33: {fileID: 290731066}
   m_Layer: 0
   m_Name: Player 2
   m_TagString: Untagged
@@ -585,7 +585,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 385908a7d7251456a90b8ce2101ac473, type: 2}
+  - {fileID: 2100000, guid: 6fd099d339b4ae34692c8258e4f87531, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
@@ -649,6 +649,7 @@ MonoBehaviour:
   right: 0
   maxSpeed: 8
   speed: 8
+  accelDecel: 0.7
   stopDuration: 0.25
 --- !u!114 &290731069
 MonoBehaviour:
@@ -1477,7 +1478,7 @@ Light:
     m_Bits: 4294967295
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 0.35
+  m_BounceIntensity: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
 --- !u!1 &1094098399
@@ -3874,6 +3875,7 @@ MonoBehaviour:
   right: 0
   maxSpeed: 8
   speed: 8
+  accelDecel: 0.7
   stopDuration: 0.25
 --- !u!114 &2058022950
 MonoBehaviour:
