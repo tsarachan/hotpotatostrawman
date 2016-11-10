@@ -15,6 +15,7 @@ public class EnemyHoming : EnemyBase {
 	public float[] maxSpeeds = { 2.0f, 5.0f, 7.0f };
 	private float myMaxSpeed = 0.0f;
 	private GameObject destroyParticle;
+	public float speedBoost = 2f; //speed multiplier for when the enemy stops homing
 
 	private const string PLAYER_ORGANIZER = "Players";
 	private Transform playerOrganizer;
@@ -80,7 +81,7 @@ public class EnemyHoming : EnemyBase {
 				rb.AddForce(direction * Speed, ForceMode.Force);
 			} else {
 				//stop changing direction; the enemy goes off-screen
-				rb.AddForce(direction * Speed * 2, ForceMode.Force);
+				rb.AddForce(direction * Speed * speedBoost, ForceMode.Force);
 				myPointLight.color = leavingScreenColor;
 				myPointLight.intensity = 8.0f; //set the light to maximum intensity to signify danger
 			}
