@@ -24,7 +24,7 @@ Material:
     - first:
         name: _DetailAlbedoMap
       second:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: a2ecc01f36474eb4c8b62e7b47f155c2, type: 3}
         m_Scale: {x: 13, y: 13}
         m_Offset: {x: 0, y: 0}
     - first:
@@ -48,7 +48,7 @@ Material:
     - first:
         name: _MainTex
       second:
-        m_Texture: {fileID: 2800000, guid: afbb081427661c642b6f6750cc8e2feb, type: 3}
+        m_Texture: {fileID: 2800000, guid: 8caa437b19957a045866b84c6218a0db, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - first:
@@ -87,13 +87,13 @@ Material:
       second: 1
     - first:
         name: _Glossiness
-      second: 1
+      second: 0
     - first:
         name: _GlossyReflections
       second: 1
     - first:
         name: _Metallic
-      second: 1
+      second: 0
     - first:
         name: _Mode
       second: 0

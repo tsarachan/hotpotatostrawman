@@ -1,17 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 
 public class EnemyGiant : EnemyBase {
 
 	private Rigidbody rb;
 
-	private Transform playerOrganizer;
-	private const string PLAYER_ORGANIZER = "Players";
 	private const string ENEMY_ORGANIZER = "Enemies";
 
-//	private const string BALL_OBJ = "Ball";
-//	private Transform ball;
+	private const string BALL_OBJ = "Ball";
+	private Transform ball;
 
 	public float speed = 1000.0f;
 
@@ -26,42 +23,17 @@ public class EnemyGiant : EnemyBase {
 
 	private void Start(){
 		transform.parent = GameObject.Find(ENEMY_ORGANIZER).transform;
-		playerOrganizer = GameObject.Find(PLAYER_ORGANIZER).transform;
-//		ball = GameObject.Find(BALL_OBJ).transform;
+		ball = GameObject.Find(BALL_OBJ).transform;
 
-		//line this enemy up with a player who doesn't have the ball
-		transform.position = ChooseTarget().position;
-
+		//line this enemy up with the ball
+		transform.position = new Vector3(ball.position.x,
+			0.0f,
+			transform.position.z);
 		rb = GetComponent<Rigidbody>();
 		start = transform.position;
 		end = new Vector3(transform.position.x,
-						  transform.position.y,
-						  transform.position.z - enterDistance);
-	}
-
-	private Transform ChooseTarget(){
-		Transform target = transform; //default initialization for error-checking
-
-		//get a list of all players
-		List<Transform> players = new List<Transform>();
-		foreach(Transform player in playerOrganizer){
-			players.Add(player);
-		}
-
-		//take the ball carrier out of the list, if there is one
-		foreach (Transform player in playerOrganizer){
-			if (player.GetComponent<PlayerBallInteraction>().BallCarrier){
-				players.Remove(player);
-			}
-		}
-
-		//choose a random player to get the target among those who are left
-		target = players[Random.Range(0, players.Count)];
-
-		//error check: send a message if the target wasn't set
-		if (target == transform) { Debug.Log("Couldn't find target!"); }
-
-		return target;
+			transform.position.y,
+			transform.position.z - enterDistance);
 	}
 
 	private void FixedUpdate(){

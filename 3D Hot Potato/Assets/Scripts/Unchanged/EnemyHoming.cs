@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 
 public class EnemyHoming : EnemyBase {
 
@@ -16,6 +15,7 @@ public class EnemyHoming : EnemyBase {
 	public float[] maxSpeeds = { 2.0f, 5.0f, 7.0f };
 	private float myMaxSpeed = 0.0f;
 	private GameObject destroyParticle;
+	public float speedBoost = 2f; //speed multiplier for when the enemy stops homing
 
 	private const string PLAYER_ORGANIZER = "Players";
 	private Transform playerOrganizer;
@@ -28,6 +28,7 @@ public class EnemyHoming : EnemyBase {
 	private Vector3 direction;
 	private Light myPointLight;
 	public Color leavingScreenColor;
+	public Color preparingToChargeColor; //Zach added this. Feel free to remove it.
 
 
 	//these variables are used to bring enemies onto the screen, allowing players to see them before they start attacking
@@ -48,8 +49,8 @@ public class EnemyHoming : EnemyBase {
 		myMaxSpeed = maxSpeeds[Random.Range(0, maxSpeeds.Length)];
 		start = transform.position;
 		end = new Vector3(transform.position.x,
-						  transform.position.y,
-						  transform.position.z - enterDistance);
+			transform.position.y,
+			transform.position.z - enterDistance);
 		myPointLight = transform.GetChild(0).GetComponent<Light>();
 	}
 
@@ -61,49 +62,14 @@ public class EnemyHoming : EnemyBase {
 	/// </summary>
 	/// <returns>The target.</returns>
 	private Transform ChooseTarget(){
-		float randomValue = Random.Range(0.0f, 1.0f); //if this is <= chanceOfGoForBall, the enemy will want to chase the player with the ball
-		Transform target = transform; //default initialization for error-checking
+		float randomValue = Random.Range(0.0f, 1.0f); //if this is <= chanceOfGoForBall, the enemy will want to chase the ball
 
 
 		if (randomValue <= chanceOfGoForBall){ //enemy wants to go for the ball
-			foreach(Transform player in playerOrganizer){
-				if (player.GetComponent<PlayerBallInteraction>().BallCarrier){
-					target = player;
-					break;
-				}
-			}
-		} else { //didn't want to go for the ball; go for the other player, if possible
-
-			//this section is a little more complicated so that the enemies don't swarm player 1 when there's not a ball carrier
-			//(e.g., because it's the start of the game, or the ball is being passed)
-
-			//get a list of all players
-			List<Transform> players = new List<Transform>();
-			foreach(Transform player in playerOrganizer){
-				players.Add(player);
-			}
-
-			//take the ball carrier out of the list, if there is one
-			foreach (Transform player in playerOrganizer){
-				if (player.GetComponent<PlayerBallInteraction>().BallCarrier){
-					players.Remove(player);
-				}
-			}
-
-			//choose a random player to get the target among those who are left
-			target = players[Random.Range(0, players.Count)];
+			return GameObject.Find(BALL_OBJ).transform;
+		} else { //didn't want to go for the ball; chase a random player
+			return playerOrganizer.GetChild(Random.Range(0, playerOrganizer.childCount));
 		}
-
-		//Was the target set to a player? If not (e.g., wanted to chase the ball carrier but there wasn't one), choose a random player to chase
-		if (target == transform){
-			target = playerOrganizer.GetChild(Random.Range(0, playerOrganizer.childCount));
-		}
-
-		//error check: send a message if the target wasn't set
-		if (target == transform) { Debug.Log("Couldn't find a target!"); }
-
-		Debug.Log(target);
-		return target;
 	}
 
 	private void FixedUpdate(){
@@ -114,9 +80,13 @@ public class EnemyHoming : EnemyBase {
 				direction = GetDirection();
 				stayTimer += Time.deltaTime;
 				rb.AddForce(direction * Speed, ForceMode.Force);
+				if(stayTimer >= onScreenTime - 0.5f){
+					myPointLight.color = preparingToChargeColor;
+					myPointLight.intensity = 8.0f; //set the light to maximum intensity to signify danger
+				}
 			} else {
 				//stop changing direction; the enemy goes off-screen
-				rb.AddForce(direction * Speed * 2, ForceMode.Force);
+				rb.AddForce(direction * Speed * speedBoost, ForceMode.Force);
 				myPointLight.color = leavingScreenColor;
 				myPointLight.intensity = 8.0f; //set the light to maximum intensity to signify danger
 			}
