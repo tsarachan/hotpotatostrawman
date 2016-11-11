@@ -1,9 +1,9 @@
 {"levels":
 	{"level1":
 		{"enemiesToMake":[
-			{"spawn":6, "whichEnemy":"HomingEnemy", "waves":1, "whichSpawners":[1, 2, 3], "timeBetweenWaves":0, "timeVariance":0 },
-			{"wait":5},
-			{"spawn":1, "whichEnemy":"GiantEnemy", "waves":1, "whichSpawners":[1, 2, 3], "timeBetweenWaves":0, "timeVariance":0 }
+			{"action":0, "whichEnemy":"HomingEnemy", "waves":1, "whichSpawners":[1, 2, 3], "timeBetweenWaves":0, "timeVariance":0 },
+			{"action":"wait5"},
+			{"action":1, "whichEnemy":"GiantEnemy", "waves":1, "whichSpawners":[1, 2, 3], "timeBetweenWaves":0, "timeVariance":0 }
 		]}
 	}
 }
