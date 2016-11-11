@@ -77,8 +77,6 @@ public class PlayerMotorcycleMovement : MonoBehaviour {
 		}
 
 		return zMultiplier;
-
-		Debug.Log(zMultiplier);
 	}
 
 	private bool RunStopTimer(){

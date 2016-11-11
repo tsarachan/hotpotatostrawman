@@ -80,7 +80,7 @@ public class EnemyHoming : EnemyBase {
 				direction = GetDirection();
 				stayTimer += Time.deltaTime;
 				rb.AddForce(direction * Speed, ForceMode.Force);
-				if(stayTimer >= onScreenTime - 0.5f){
+				if(stayTimer >= onScreenTime - 1.5f){
 					myPointLight.color = preparingToChargeColor;
 					myPointLight.intensity = 8.0f; //set the light to maximum intensity to signify danger
 				}

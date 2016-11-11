@@ -31,6 +31,7 @@ public class PlayerMovement : MonoBehaviour {
 	public float stopDuration = 0.25f;
 	private float stopTimer = 0.0f;
 
+
 	private void Start(){
 		playerNum = transform.name[7]; //assumes players are named using the convention "Player #"
 		myHorizAxis = LSTICK_HORIZ + playerNum;
@@ -77,8 +78,6 @@ public class PlayerMovement : MonoBehaviour {
 		}
 
 		zMultiplier = Mathf.Clamp(zMultiplier, 1.0f, 5.0f);
-
-		Debug.Log(zMultiplier);
 
 		return Mathf.Abs(zMultiplier);
 	}
