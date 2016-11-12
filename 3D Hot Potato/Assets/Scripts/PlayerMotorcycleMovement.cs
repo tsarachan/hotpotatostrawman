@@ -16,12 +16,18 @@ public class PlayerMotorcycleMovement : MonoBehaviour {
 	public KeyCode left;
 	public KeyCode right;
 
+	//dash controls
+	public KeyCode dash; //debug control; set to the same as the pass debug in PlayerBallInteraction
+	private const string O_BUTTON = "PS4_O_";
+
+
 	private Rigidbody rb;
 
 	public float maxSpeed = 1.0f; //player maximum speed
 	public float speed = 0.3f; //amount player accelerates each frame of input
 	private float zMultiplier = 1.0f;
 	public float accelDecel = 0.1f;
+	private Vector3 direction = new Vector3(0.0f, 0.0f, 0.0f); //the direction in which the player is moving
 
 	private bool stopped = false; //players are stopped, for example, when they destroy an enemy
 	public bool Stopped{
@@ -31,23 +37,50 @@ public class PlayerMotorcycleMovement : MonoBehaviour {
 	public float stopDuration = 0.25f;
 	private float stopTimer = 0.0f;
 
+	//these variables relate to dashing
+	private bool dashing = false; //is the player dashing? IF so, the player will move differently
+	private float dashSpeed = 10.0f; //the acceleration applied when the player starts dashing
+	private float dashMaxSpeed = 10.0f; //the speed the player moves at when dashing
+	public float dashDuration = 0.5f; //how long the dash lasts
+	private float dashTimer = 0.0f;
+	private PlayerBallInteraction playerBallInteraction; //used to determine whether the player is the ball carrier; can't dash if so
+
 	private void Start(){
 		playerNum = transform.name[7]; //assumes players are named using the convention "Player #"
 		myHorizAxis = LSTICK_HORIZ + playerNum;
 		myVertAxis = LSTICK_VERT + playerNum;
 		rb = GetComponent<Rigidbody>();
+		playerBallInteraction = GetComponent<PlayerBallInteraction>();
 	}
 
+
+	/// <summary>
+	/// All movement is handled in FixedUpdate.
+	/// </summary>
 	private void FixedUpdate(){
-		if (!Stopped){
-			rb.AddForce(GetDirection() * GetAcceleration() * speed, ForceMode.Force);
+
+		//normal movement
+		if (!Stopped && !dashing){
+			direction = GetDirection(); //when not dashing, the player can turn
+
+			rb.AddForce(direction * GetAcceleration() * speed, ForceMode.Force);
 
 			//This is a bodge to limit maximum speed. The better way would be to impose a countervailing force.
 			//Directly manipulating rigidbody velocity could lead to physics problems.
 			if (rb.velocity.magnitude > maxSpeed) { rb.velocity = rb.velocity.normalized * maxSpeed; }
-		} else if (Stopped) {
+
+		//not moving because movement paused while fighting an enemy
+		} else if (Stopped && !dashing) {
 			rb.velocity = Vector3.zero;
 			Stopped = RunStopTimer();
+
+		//dashing
+		} else if (dashing){
+			//no call to GetDirection() when dashing--the player is committed to a single direction
+			rb.AddForce(direction * dashSpeed, ForceMode.Force);
+			if (rb.velocity.magnitude > dashMaxSpeed) { rb.velocity = rb.velocity.normalized * dashMaxSpeed; }
+
+			dashing = RunDashTimer();
 		}
 	}
 
@@ -83,6 +116,17 @@ public class PlayerMotorcycleMovement : MonoBehaviour {
 		stopTimer += Time.deltaTime;
 
 		if (stopTimer >= stopDuration){
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	private bool RunDashTimer(){
+		dashTimer += Time.deltaTime;
+
+		if (dashTimer >= dashDuration){
+			dashTimer = 0.0f;
 			return false;
 		} else {
 			return true;
