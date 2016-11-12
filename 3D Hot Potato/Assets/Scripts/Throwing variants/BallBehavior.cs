@@ -59,12 +59,9 @@ public class BallBehavior : MonoBehaviour {
 											 destination.position,
 											 normalTossCurve.Evaluate(timer/totalFlightTime));
 
-			//make the ball arc from the elevated point above the player where the player holds the ball to the other player on the ground
-			if (timer <= totalFlightTime/2){
-				nextPoint.y = Mathf.Lerp(start.y, start.y + verticalHeight, verticalCurve.Evaluate(timer/totalFlightTime));
-			} else {
-				nextPoint.y = Mathf.Lerp(start.y, start.y + verticalHeight, verticalCurve.Evaluate(timer/totalFlightTime));
-			}
+			//make the ball arc between the elevated points where the players hold the ball
+			//note that the players' colliders have to be tall enough to "catch" the ball up high
+			nextPoint.y = Mathf.Lerp(start.y, start.y + verticalHeight, verticalCurve.Evaluate(timer/totalFlightTime));
 
 			rb.MovePosition(nextPoint);
 

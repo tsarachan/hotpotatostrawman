@@ -28,7 +28,7 @@ public class PowerUp : MonoBehaviour {
 	enum ThrowTypes { horizontal, vertical }; //horizontal == 0, vertical == 1
 
 	private GameObject clearEnemies;
-	private const string CLEAR_ENEMIES_POWERUP = "ClearEnemies";
+	private const string CLEAR_ENEMIES_POWERUP = "ClearEnemiesNotBoss";
 
 	private Dictionary<ThrowTypes, int> relativePositions = new Dictionary<ThrowTypes, int>(); //keeps track of where the players have been when they power up
 
