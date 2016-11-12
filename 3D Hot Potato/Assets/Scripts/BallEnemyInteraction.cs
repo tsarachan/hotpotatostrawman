@@ -8,7 +8,6 @@ public class BallEnemyInteraction : MonoBehaviour {
 	private void OnTriggerEnter(Collider other){
 		Debug.Log("hit a thing: " + other.gameObject.name);
 		if (other.gameObject.name.Contains(ENEMY_OBJ)){
-			Debug.Log("hit an enemy");
 			other.gameObject.GetComponent<EnemyBase>().GetDestroyed();
 		}
 	}

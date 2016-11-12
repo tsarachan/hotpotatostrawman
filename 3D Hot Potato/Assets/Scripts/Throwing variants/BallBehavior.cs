@@ -32,18 +32,18 @@ public class BallBehavior : MonoBehaviour {
 	/// <summary>
 	/// Players should call this function to pass between players.
 	/// </summary>
-	/// <param name="start">The throwing player.</param>
+	/// <param name="start">The ball's current position.</param>
 	/// <param name="destination">The catching player.</param>
-	public virtual void Pass(Transform start, Transform destination){
+	public virtual void Pass(Vector3 start, Transform destination){
 		transform.parent = scene; //stop being a child of the ball carrier, so that the ball can move between players
 		powerUpScript.IncreaseSuperMeter(start, destination);
-		co = StartCoroutine(PassBetweenPlayers(start.position, destination));
+		co = StartCoroutine(PassBetweenPlayers(start, destination));
 	}
 
 	/// <summary>
 	/// This coroutine moves the ball between the players.
 	/// </summary>
-	/// <param name="start">The throwing player's location.</param>
+	/// <param name="start">The ball's location as the throw begins.</param>
 	/// <param name="destination">The catching player.</param>
 	public virtual IEnumerator PassBetweenPlayers(Vector3 start, Transform destination){
 		float totalFlightTime = Vector3.Distance(start, destination.position)/flightTimePerUnitDistance;
@@ -59,7 +59,12 @@ public class BallBehavior : MonoBehaviour {
 											 destination.position,
 											 normalTossCurve.Evaluate(timer/totalFlightTime));
 
-			nextPoint.y = Mathf.Lerp(0.0f, verticalHeight, verticalCurve.Evaluate(timer/totalFlightTime));
+			//make the ball arc from the elevated point above the player where the player holds the ball to the other player on the ground
+			if (timer <= totalFlightTime/2){
+				nextPoint.y = Mathf.Lerp(start.y, start.y + verticalHeight, verticalCurve.Evaluate(timer/totalFlightTime));
+			} else {
+				nextPoint.y = Mathf.Lerp(start.y, start.y + verticalHeight, verticalCurve.Evaluate(timer/totalFlightTime));
+			}
 
 			rb.MovePosition(nextPoint);
 

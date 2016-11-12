@@ -102,7 +102,7 @@ public class PlayerBallThrowDelay : MonoBehaviour {
 	/// </summary>
 	/// <returns><c>false</c> so that this player is no longer the ball carrier.</returns>
 	private bool ThrowBall(){
-		ballBehavior.Pass(transform, otherPlayer);
+		ballBehavior.Pass(transform.position, otherPlayer);
 		currentCharge = 0.0f;
 		return false;
 	}

@@ -39,7 +39,7 @@ public class BallAheadOfReceiver : BallBehavior {
 	/// </summary>
 	/// <param name="start">The throwing player.</param>
 	/// <param name="destination">The catching player.</param>
-	public override void Pass(Transform start, Transform destination){
+	public void Pass(Transform start, Transform destination){
 		transform.parent = scene; //stop being a child of the ball carrier, so that the ball can move between players
 		co = StartCoroutine(PassToPoint(start.position, FindPointAhead(destination), destination));
 	}

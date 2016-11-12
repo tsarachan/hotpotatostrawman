@@ -20,6 +20,8 @@ public class PlayerBallInteraction : MonoBehaviour {
 		set { ballCarrier = value; }
 	}
 
+	public float verticalOffset = 2.0f;
+
 	private void Start(){
 		ballBehavior = GameObject.Find(BALL_OBJ).GetComponent<BallBehavior>();
 		playerNum = transform.name[7]; //assumes players are named using the convention "Player #"
@@ -58,7 +60,7 @@ public class PlayerBallInteraction : MonoBehaviour {
 	private void OnTriggerEnter(Collider other){
 		if (other.transform.name.Contains(BALL_OBJ)){
 			other.transform.parent = transform;
-			other.transform.position = transform.position;
+			other.transform.localPosition = new Vector3(0.0f, 0.0f, verticalOffset); //the player models are turned, so z is the vertical axis
 			if (other.transform.GetComponent<BallBehavior>().Co != null) { StopCoroutine(other.transform.GetComponent<BallBehavior>().Co); }
 			BallCarrier = true;
 		}
@@ -69,7 +71,7 @@ public class PlayerBallInteraction : MonoBehaviour {
 	/// </summary>
 	/// <returns><c>false</c> so that this player is no longer the ball carrier.</returns>
 	private bool ThrowBall(){
-		ballBehavior.Pass(transform, otherPlayer);
+		ballBehavior.Pass(transform.Find(BALL_OBJ).position, otherPlayer);
 
 		return false;
 	}

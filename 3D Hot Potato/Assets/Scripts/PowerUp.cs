@@ -73,13 +73,13 @@ public class PowerUp : MonoBehaviour {
 	/// <summary>
 	/// Call this script to increase the super meter.
 	/// </summary>
-	/// <param name="player1">Player 1.</param>
-	/// <param name="player2">Player 2.</param>
-	public void IncreaseSuperMeter(Transform player1, Transform player2){
+	/// <param name="player1">Where the throw began.</param>
+	/// <param name="player2">The location of the intended receiver.</param>
+	public void IncreaseSuperMeter(Vector3 start, Transform end){
 		superMeter.fillAmount += superGainIncrement;
 
 		//track what type of throw the player made--horizontal, vertical, etc.
-		Vector3 difference = player1.position - player2.position;
+		Vector3 difference = start - end.position;
 		float xDist = Mathf.Abs(difference.x);
 		float zDist = Mathf.Abs(difference.z);
 
