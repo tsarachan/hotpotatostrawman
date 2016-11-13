@@ -60,6 +60,15 @@ public class EnemyPlayerTracker : EnemyBase {
 	}
 
 	private void FixedUpdate(){
+		//if frozen, this enemy is immobilized. It retains its old force. 
+		if (frozen){
+			frozen = RunFreezeTimer();
+			rb.isKinematic = true;
+			return; //don't gain force, change direction, or build toward charging forward while frozen
+		} else if (!frozen){
+			rb.isKinematic = false; //when not frozen, the enemy can move
+		}
+
 		if (enteringScreen){
 			rb.MovePosition(MoveOntoScreen());
 		} else {

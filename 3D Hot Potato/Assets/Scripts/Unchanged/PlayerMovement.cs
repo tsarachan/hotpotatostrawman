@@ -43,6 +43,15 @@ public class PlayerMovement : MonoBehaviour {
 	public float dashDuration = 0.5f; //how long the dash lasts
 	private float dashTimer = 0.0f;
 	private PlayerBallInteraction playerBallInteraction; //used to determine whether the player is the ball carrier; can't dash if so
+	public float freezeTime = 0.2f; //how long enemies will stay in place when the player dashes through a bunch of enemies;
+	public int enemiesToFreeze = 3; //how many enemies does the player have to dash through to freeze the screen?
+	private int enemyLayer = 9; //enemies are on layer 9; this enables the dash spherecast to see them
+	private int enemyMask; //layermasks work in bits, rather than ints; we'll need this below
+	public float freezeCheckRadius = 1.0f; //radius of the sphere that will be cast
+	private Transform enemyOrganizer;
+	private const string ENEMY_ORGANIZER = "Enemies";
+	private Transform buildingOrganizer;
+	private const string BUILDING_ORGANIZER = "Buildings";
 
 
 	private void Start(){
@@ -51,12 +60,15 @@ public class PlayerMovement : MonoBehaviour {
 		myVertAxis = LSTICK_VERT + playerNum;
 		rb = GetComponent<Rigidbody>();
 		playerBallInteraction = GetComponent<PlayerBallInteraction>();
+		enemyMask = 1 << enemyLayer;
+		enemyOrganizer = GameObject.Find(ENEMY_ORGANIZER).transform;
+		buildingOrganizer = GameObject.Find(BUILDING_ORGANIZER).transform;
 	}
 
 	private void Update(){
 		if (Input.GetButtonDown(O_BUTTON + playerNum) && !playerBallInteraction.BallCarrier ||
 			Input.GetKeyDown(dash) && !playerBallInteraction.BallCarrier){
-			dashing = true;
+			dashing = CheckForTimeFreeze(); ;
 		}
 	}
 
@@ -136,5 +148,28 @@ public class PlayerMovement : MonoBehaviour {
 		} else {
 			return true;
 		}
+	}
+
+	private bool CheckForTimeFreeze(){
+		Vector3 direction = GetDirection();
+
+		//if the player isn't inputting a direction, don't freeze time and don't dash
+		if (direction == Vector3.zero) { return false; }
+
+		//if the player is inputting a direction, do a spherecast to see if the player will destroy enough enemies to freeze time
+		RaycastHit[] hits;
+		hits = Physics.SphereCastAll(transform.position, freezeCheckRadius, direction, dashMaxSpeed * dashDuration, enemyMask);
+
+		if (hits.Length >= enemiesToFreeze){
+			foreach (Transform enemy in enemyOrganizer){
+				enemy.GetComponent<EnemyBase>().Freeze(freezeTime);
+			}
+
+			foreach (Transform building in buildingOrganizer){
+				building.GetComponent<BuildingMove>().Freeze(freezeTime);
+			}
+		}
+
+		return true;
 	}
 }
