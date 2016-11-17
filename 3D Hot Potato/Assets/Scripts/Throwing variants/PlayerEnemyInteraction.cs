@@ -8,10 +8,19 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 
 	private const string ENEMY_OBJ = "Enemy";
 	private const string BALL_OBJ = "Ball";
+	private const string HUNT = "Hunt"; //if this is in the name, it's vulnerable to the ball and destroys non-ball carriers
 
 	private void OnCollisionEnter(Collision collision){
 		if (collision.gameObject.name.Contains(ENEMY_OBJ)){
-			if (!GetComponent<PlayerBallInteraction>().BallCarrier){  //try to destroy enemies when not the ball carrier
+			if (collision.gameObject.name.Contains(HUNT)){
+				if (!GetComponent<PlayerBallInteraction>().BallCarrier){  //lose when you get caught by a hunt enemy
+					LoseTheGame();
+				} else { //destroy hunt enemies when the ballcarrier
+					collision.gameObject.GetComponent<EnemyBase>().GetDestroyed();
+					GetComponent<PlayerMovement>().Stopped = true;
+				}
+			}
+			else if (!GetComponent<PlayerBallInteraction>().BallCarrier){  //try to destroy enemies when not the ball carrier
 				collision.gameObject.GetComponent<EnemyBase>().GetDestroyed();
 				GetComponent<PlayerMovement>().Stopped = true;
 			} else { //this player is the ball carrier; the game is over

@@ -777,8 +777,8 @@ MonoBehaviour:
   dashSpeed: 75
   dashMaxSpeed: 75
   dashDuration: 0
-  freezeTime: 0.2
-  enemiesToFreeze: 3
+  freezeTime: 0
+  enemiesToFreeze: 100
   freezeCheckRadius: 1
 --- !u!114 &290731069
 MonoBehaviour:
@@ -1268,7 +1268,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 662451203}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
@@ -1794,6 +1794,7 @@ MonoBehaviour:
   - {fileID: 1000010609928504, guid: 6f5721defacc24ec682361f4f4a17fe5, type: 2}
   - {fileID: 1000010609928504, guid: 6f5721defacc24ec682361f4f4a17fe5, type: 2}
   - {fileID: 1000010609928504, guid: 6f5721defacc24ec682361f4f4a17fe5, type: 2}
+  - {fileID: 1000011197139770, guid: c9cdf443605064127aa313e47422e5bb, type: 2}
   - {fileID: 1000010609928504, guid: 6f5721defacc24ec682361f4f4a17fe5, type: 2}
   - {fileID: 1000010609928504, guid: 6f5721defacc24ec682361f4f4a17fe5, type: 2}
   - {fileID: 1000010609928504, guid: 6f5721defacc24ec682361f4f4a17fe5, type: 2}
@@ -1807,11 +1808,10 @@ MonoBehaviour:
   - {fileID: 1000010609928504, guid: 6f5721defacc24ec682361f4f4a17fe5, type: 2}
   - {fileID: 1000010609928504, guid: 6f5721defacc24ec682361f4f4a17fe5, type: 2}
   - {fileID: 1000010609928504, guid: 6f5721defacc24ec682361f4f4a17fe5, type: 2}
+  - {fileID: 1000011197139770, guid: c9cdf443605064127aa313e47422e5bb, type: 2}
+  - {fileID: 1000011197139770, guid: c9cdf443605064127aa313e47422e5bb, type: 2}
   - {fileID: 1000010609928504, guid: 6f5721defacc24ec682361f4f4a17fe5, type: 2}
-  - {fileID: 1000010609928504, guid: 6f5721defacc24ec682361f4f4a17fe5, type: 2}
-  - {fileID: 1000010609928504, guid: 6f5721defacc24ec682361f4f4a17fe5, type: 2}
-  - {fileID: 1000010609928504, guid: 6f5721defacc24ec682361f4f4a17fe5, type: 2}
-  - {fileID: 1000010609928504, guid: 6f5721defacc24ec682361f4f4a17fe5, type: 2}
+  - {fileID: 1000011197139770, guid: c9cdf443605064127aa313e47422e5bb, type: 2}
   - {fileID: 1000010756031986, guid: 1047538a394a8476eb45b9efd25ad005, type: 2}
   - {fileID: 1000013416586560, guid: 4b860832ba3534efa818b60359629e10, type: 2}
   - {fileID: 1000013416586560, guid: 4b860832ba3534efa818b60359629e10, type: 2}
@@ -1848,7 +1848,7 @@ MonoBehaviour:
   - {fileID: 1000013146955538, guid: ec2bb65c3ecb04f5bb41e4f6dbac6630, type: 2}
   - {fileID: 1000013146955538, guid: ec2bb65c3ecb04f5bb41e4f6dbac6630, type: 2}
   - {fileID: 1000013146955538, guid: ec2bb65c3ecb04f5bb41e4f6dbac6630, type: 2}
-  whichSpawner: 02000000030000000400000005000000060000000200000003000000040000000500000006000000020000000300000004000000050000000600000002000000030000000400000005000000060000000200000003000000040000000500000006000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000004000000010000000200000003000000050000000600000007000000010000000200000003000000050000000600000007000000010000000200000003000000050000000600000007000000
+  whichSpawner: 02000000030000000400000005000000060000000200000003000000040000000500000006000000090000000a000000040000000c0000000d0000000200000003000000040000000500000006000000090000000a000000040000000c0000000d000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000004000000010000000200000003000000050000000600000007000000010000000200000003000000050000000600000007000000010000000200000003000000050000000600000007000000
 --- !u!114 &1095716598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2125,7 +2125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ea623645851a4d5b89be4e00b842f56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  superGainIncrement: 0.1
+  superGainIncrement: 0
 --- !u!1 &1650394734
 GameObject:
   m_ObjectHideFlags: 0
@@ -2262,7 +2262,7 @@ ParticleSystem:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1790311872}
-  serializedVersion: 4
+  serializedVersion: 2
   lengthInSec: 5
   startDelay:
     scalar: 0
@@ -2300,13 +2300,12 @@ ParticleSystem:
       m_RotationOrder: 4
     minMaxState: 0
   speed: 1
+  randomSeed: 63433504
   looping: 1
   prewarm: 0
   playOnAwake: 1
   moveWithTransform: 1
-  autoRandomSeed: 0
   scalingMode: 1
-  randomSeed: 63433504
   InitialModule:
     serializedVersion: 2
     enabled: 1
@@ -4175,8 +4174,8 @@ MonoBehaviour:
   dashSpeed: 20
   dashMaxSpeed: 20
   dashDuration: 0
-  freezeTime: 10
-  enemiesToFreeze: 0
+  freezeTime: 0
+  enemiesToFreeze: 100
   freezeCheckRadius: 1
 --- !u!114 &2058022950
 MonoBehaviour:
