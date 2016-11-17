@@ -11,7 +11,7 @@ public class SpawnEnemies : MonoBehaviour {
 	public float[] spawnTimes;
 	[Header("Which enemy prefab to spawn")]
 	public GameObject[] enemyToSpawn;
-	[Header("Which spawner--1-7, left to right")]
+	[Header("Which spawner--1-7, left to right--8-10, top to bottom on left--11-13, top to bottom on right")]
 	public int[] whichSpawner;
 	private int index = 0;
 	private float timer = 0.0f;
