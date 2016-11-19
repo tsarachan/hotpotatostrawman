@@ -20,10 +20,10 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 					GetComponent<PlayerMovement>().Stopped = true;
 				}
 			}
-			else if (!GetComponent<PlayerBallInteraction>().BallCarrier){  //try to destroy enemies when not the ball carrier
+			else if (!GetComponent<PlayerBallInteraction>().BallCarrier){  //try to destroy other enemies when not the ball carrier
 				collision.gameObject.GetComponent<EnemyBase>().GetDestroyed();
 				GetComponent<PlayerMovement>().Stopped = true;
-			} else { //this player is the ball carrier; the game is over
+			} else { //this player is the ball carrier, and got caught by a non-hunt enemy; the game is over
 				LoseTheGame();
 			}
 		}
@@ -31,10 +31,10 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 
 	private void OnTriggerEnter(Collider other){
 		if (other.gameObject.name.Contains(ENEMY_OBJ)){
-			if (!GetComponent<PlayerBallInteraction>().BallCarrier){  //try to destroy enemies when not the ball carrier
+			if (!GetComponent<PlayerBallInteraction>().BallCarrier){  //try to destroy non-hunt enemies when not the ball carrier
 				other.gameObject.GetComponent<EnemyBase>().GetDestroyed();
 				GetComponent<PlayerMovement>().Stopped = true;
-			} else { //this player is the ball carrier; the game is over
+			} else { //this player is the ball carrier and got caught by a non-hunt enemy; the game is over
 				LoseTheGame();
 			}
 		}
