@@ -6,7 +6,7 @@
  * 1. inherit from Poolable, and
  * 2. be instantiated from a prefab.
  * 
- * Note that this doesn't do anything to the enemy other than put it in the hierarchy. The enemy's own script is responsible for
+ * Note that this doesn't do anything to the object other than put it in the hierarchy. The object's own script is responsible for
  * its own parenting, movement after appearing in the scene, etc.
  * 
  */
@@ -34,21 +34,21 @@ namespace ObjectPooling
 		/// <param name="enemyType">The name of the enemy prefab.</param>
 		public static GameObject GetObj(string objectType){
 			GameObject obj = null; //default initialization for error-checking
-			Debug.Log("trying to get " + objectType);
+//			Debug.Log("trying to get " + objectType);
 
 			//if an object of the chosen type is in the pool, get one of them
 			if (objectPool.ContainsKey(objectType + CLONE)){
 				if (objectPool[objectType + CLONE].Count > 0){
 					obj = objectPool[objectType + CLONE].Dequeue();
 					obj.GetComponent<Poolable>().Reset();
-					Debug.Log("Found one in the pool");
+//					Debug.Log("Found one in the pool");
 				}
 			}
 
 			//if no object of a given type is in the pool, make one
 			else {
 				obj = MonoBehaviour.Instantiate(Resources.Load(objectType)) as GameObject;
-				Debug.Log("Made something because it wasn't in the pool");
+//				Debug.Log("Made something because it wasn't in the pool");
 			}
 
 			if (obj == null) { Debug.Log("Unable to find enemy named " + objectType); }
