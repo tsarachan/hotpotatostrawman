@@ -8,9 +8,6 @@ public class PlayerMovement : MonoBehaviour {
 
 	public float maxSpeed = 1.0f; //player maximum speed
 	public float speed = 0.3f; //amount player accelerates each frame of input
-	private float zMultiplier = 1.0f;
-	public float accelDecel = 0.1f;
-	private Vector3 direction = new Vector3(0.0f, 0.0f, 0.0f); //the direction in which the player is moving
 
 	private bool stopped = false; //players are stopped, for example, when they destroy an enemy
 	public bool Stopped{

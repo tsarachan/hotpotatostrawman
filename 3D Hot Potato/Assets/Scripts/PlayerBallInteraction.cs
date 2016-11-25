@@ -13,10 +13,6 @@ public class PlayerBallInteraction : MonoBehaviour {
 	private const string BALL_OBJ = "Ball";
 	private BallBehavior ballBehavior;
 
-	private const string O_BUTTON = "PS4_O_";
-	private char playerNum = '0';
-	private string myOButton = "";
-	public KeyCode pass; //debug control
 
 	private const string PLAYER_ORGANIZER = "Players";
 	private Transform otherPlayer;
@@ -31,8 +27,6 @@ public class PlayerBallInteraction : MonoBehaviour {
 
 	private void Start(){
 		ballBehavior = GameObject.Find(BALL_OBJ).GetComponent<BallBehavior>();
-		playerNum = transform.name[7]; //assumes players are named using the convention "Player #"
-		myOButton = O_BUTTON + playerNum;
 		otherPlayer = GetOtherPlayer();
 	}
 

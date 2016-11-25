@@ -1,4 +1,10 @@
-﻿using UnityEngine;
+﻿/*
+ * 
+ * This script handles the ball's movement betwen players
+ * 
+ */
+
+using UnityEngine;
 using System.Collections;
 
 public class BallBehavior : MonoBehaviour {
@@ -89,7 +95,10 @@ public class BallBehavior : MonoBehaviour {
 		rb.MovePosition(destination);
 	}
 
-
+	/// <summary>
+	/// Players call this when they catch or pick up the ball.
+	/// </summary>
+	/// <param name="catchingPlayer">The player interacting with the ball.</param>
 	public void GetCaught(Transform catchingPlayer){
 		if (Co != null){
 			StopCoroutine(Co);

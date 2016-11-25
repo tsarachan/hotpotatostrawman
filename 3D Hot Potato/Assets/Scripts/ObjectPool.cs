@@ -34,24 +34,29 @@ namespace ObjectPooling
 		/// <param name="enemyType">The name of the object prefab.</param>
 		public static GameObject GetObj(string objectType){
 			GameObject obj = null; //default initialization for error-checking
-//			Debug.Log("trying to get " + objectType);
+			Debug.Log("trying to get " + objectType);
 
 			//if an object of the chosen type is in the pool, get one of them
 			if (objectPool.ContainsKey(objectType + CLONE)){
 				if (objectPool[objectType + CLONE].Count > 0){
+					Debug.Log("Pool for " + objectType + CLONE + " now contains " + objectPool[objectType + CLONE].Count + " in GetObj()");
 					obj = objectPool[objectType + CLONE].Dequeue();
 					obj.GetComponent<Poolable>().Reset();
-//					Debug.Log("Found one in the pool");
+					Debug.Log("Found one in the pool");
+					Debug.Log("Pool for " + objectType + CLONE + " now contains " + objectPool[objectType + CLONE].Count + " after taking from the pool");
+				} else {
+					obj = MonoBehaviour.Instantiate(Resources.Load(objectType)) as GameObject;
+					Debug.Log("Pool exists, but empty; made one");
 				}
 			}
 
 			//if no object of a given type is in the pool, make one
 			else {
 				obj = MonoBehaviour.Instantiate(Resources.Load(objectType)) as GameObject;
-//				Debug.Log("Made something because it wasn't in the pool");
+				Debug.Log("Made something because it wasn't in the pool");
 			}
 
-			if (obj == null) { Debug.Log("Unable to find enemy named " + objectType); }
+			if (obj == null) { Debug.Log("Unable to find object named " + objectType); }
 
 			return obj;
 		}
@@ -67,6 +72,8 @@ namespace ObjectPooling
 			}
 
 			objectPool[obj.name].Enqueue(obj);
+
+			Debug.Log("Pool for " + obj.name + " now contains " + objectPool[obj.name].Count + " in AddObj()");
 			obj.GetComponent<Poolable>().ShutOff();
  		}
 	}

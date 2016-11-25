@@ -1,7 +1,13 @@
-﻿using UnityEngine;
+﻿/*
+ * 
+ * Attach this script to anything that stays in play for a limited amount of time to return it to the object pool when time runs out.
+ * 
+ */
+
+using UnityEngine;
 using System.Collections;
 
-public class TimeLimit : MonoBehaviour {
+public class TimeLimit : ObjectPooling.Poolable {
 
 	public float lifetime = 1.0f;
 	private float timer = 0.0f;
@@ -10,7 +16,8 @@ public class TimeLimit : MonoBehaviour {
 		timer += Time.deltaTime;
 
 		if (timer >= lifetime){
-			Destroy(gameObject);
+			Debug.Log("Time up! Adding " + gameObject.name + " to the pool");
+			ObjectPooling.ObjectPool.AddObj(gameObject);
 		}
 	}
 }

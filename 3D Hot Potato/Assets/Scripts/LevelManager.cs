@@ -147,7 +147,7 @@ public class LevelManager : MonoBehaviour {
 	 */
 	public int ReadInItem(){
 		JSONNode node = JSON.Parse(FileIOUtil.ReadStringFromFile(Application.dataPath + LEVEL_PATH + FILE_NAME));
-		Debug.Log("ReadInItem() called; action == " + node[WORLDS][WORLD + worldNumber.ToString()][ACT + actNumber.ToString()][readIndex][ACTION]);
+//		Debug.Log("ReadInItem() called; action == " + node[WORLDS][WORLD + worldNumber.ToString()][ACT + actNumber.ToString()][readIndex][ACTION]);
 
 		//Debug.Log("current action:" + node[WORLDS][WORLD + worldNumber.ToString()][ACT + actNumber.ToString()][readIndex][ACTION]);
 
@@ -224,14 +224,14 @@ public class LevelManager : MonoBehaviour {
 			return 0;
 		} else { //if not, this world is over
 			worldOver = true;
-			Debug.Log("world over");
+//			Debug.Log("world over");
 			return 0;
 		}
 	}
 
 	//set up the system to make the next wave(s) of enemies
 	private void PrepareFutureWaves(string enemyName, int numWaves, int numPerWave, List<int> spawnLocs, float timeBetweenWaves, float timeVariance){
-		Debug.Log("PrepareFutureWaves() called; enemyName == " + enemyName);
+//		Debug.Log("PrepareFutureWaves() called; enemyName == " + enemyName);
 		spawnTimer = 0.0f; //reset the clock that determines when enemies should spawn
 		nextSpawnTimes.Clear(); //reset the list of when enemies will spawn
 		spawnIndex = 0; //reset the index variable used to go through the list of spawn times
@@ -247,8 +247,8 @@ public class LevelManager : MonoBehaviour {
 		enemyToMake = enemyName;
 		enemiesPerWave = numPerWave;
 		possibleSpawnersThisWave = spawnLocs;
-		Debug.Log("nextSpawnTimes.Count == " + nextSpawnTimes.Count);
-		Debug.Log("nextSpawnTimes[0] == " + nextSpawnTimes[0]);
+//		Debug.Log("nextSpawnTimes.Count == " + nextSpawnTimes.Count);
+//		Debug.Log("nextSpawnTimes[0] == " + nextSpawnTimes[0]);
 	}
 
 
@@ -264,7 +264,7 @@ public class LevelManager : MonoBehaviour {
 	/// </summary>
 	/// <returns>spawnIndex's new value.</returns>
 	private int SpawnAWave(){
-		Debug.Log("SpawnAWave() called; enemyToMake == " + enemyToMake);
+//		Debug.Log("SpawnAWave() called; enemyToMake == " + enemyToMake);
 		possibleSpawnersThisWave = ShuffleList(possibleSpawnersThisWave);
 
 		for (int i = 0; i < enemiesPerWave; i++){
