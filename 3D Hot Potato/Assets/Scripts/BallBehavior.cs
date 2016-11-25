@@ -10,6 +10,8 @@ public class BallBehavior : MonoBehaviour {
 	public AnimationCurve verticalCurve; //used to give the ball a "lob" effect
 	public float verticalHeight = 2.0f; //height the ball reaches at the apex of the lob
 
+	public float verticalOffset = 2.0f; //how high above a player the ball is held
+
 	protected const string PLAYER_OBJ = "Player";
 
 	protected const string SCENE_ORGANIZER = "Scene";
@@ -85,5 +87,17 @@ public class BallBehavior : MonoBehaviour {
 		}
 
 		rb.MovePosition(destination);
+	}
+
+
+	public void GetCaught(Transform catchingPlayer){
+		if (Co != null){
+			StopCoroutine(Co);
+		}
+
+		transform.parent = catchingPlayer;
+		//the player models are turned, so z is the vertical axis for local position
+		//changes to the player model may require changing the offset axis here
+		transform.localPosition = new Vector3(0.0f, 0.0f, verticalOffset);
 	}
 }

@@ -61,9 +61,7 @@ public class PlayerBallInteraction : MonoBehaviour {
 	/// <param name="other">The collider the player has encountered.</param>
 	private void OnTriggerEnter(Collider other){
 		if (other.transform.name.Contains(BALL_OBJ)){
-			other.transform.parent = transform;
-			other.transform.localPosition = new Vector3(0.0f, 0.0f, verticalOffset); //the player models are turned, so z is the vertical axis
-			if (other.transform.GetComponent<BallBehavior>().Co != null) { StopCoroutine(other.transform.GetComponent<BallBehavior>().Co); }
+			other.transform.GetComponent<BallBehavior>().GetCaught(transform);
 			BallCarrier = true;
 		}
 	}
