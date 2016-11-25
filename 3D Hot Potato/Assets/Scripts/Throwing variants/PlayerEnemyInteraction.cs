@@ -51,6 +51,8 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 		GetComponent<Renderer>().enabled = false; //make the player disappear
 		transform.GetChild(0).gameObject.SetActive(false); //shut off the point light
 
+		ObjectPooling.ObjectPool.ClearPools();
+
 		StartCoroutine(ResetGame());
 	}
 

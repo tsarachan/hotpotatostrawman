@@ -98,6 +98,7 @@ public class LevelManager : MonoBehaviour {
 
 	private void Start(){
 		spawners = FindSpawners();
+		ObjectPooling.ObjectPool.GameOver = false; //start the game
 	}
 
 	private List<Transform> FindSpawners(){
@@ -147,7 +148,7 @@ public class LevelManager : MonoBehaviour {
 	 */
 	public int ReadInItem(){
 		JSONNode node = JSON.Parse(FileIOUtil.ReadStringFromFile(Application.dataPath + LEVEL_PATH + FILE_NAME));
-//		Debug.Log("ReadInItem() called; action == " + node[WORLDS][WORLD + worldNumber.ToString()][ACT + actNumber.ToString()][readIndex][ACTION]);
+		Debug.Log("ReadInItem() called; action == " + node[WORLDS][WORLD + worldNumber.ToString()][ACT + actNumber.ToString()][readIndex][ACTION]);
 
 		//Debug.Log("current action:" + node[WORLDS][WORLD + worldNumber.ToString()][ACT + actNumber.ToString()][readIndex][ACTION]);
 

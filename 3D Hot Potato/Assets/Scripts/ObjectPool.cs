@@ -21,6 +21,15 @@ namespace ObjectPooling
 
 		private const string CLONE = "(Clone)";
 
+		//these variables prevent objects from being added to pools when it's time to clear the pools and get ready for a new game
+		//LevelManager sets this to false in its Start()
+		//the ClearPools() method, below, sets it to true when the game is ending
+		private static bool gameOver = false;
+		public static bool GameOver{
+			get { return gameOver; }
+			set { gameOver = value; }
+		}
+
 		public static Dictionary<string, Queue<GameObject>> objectPool = new Dictionary<string, Queue<GameObject>>();
 
 
@@ -44,16 +53,19 @@ namespace ObjectPooling
 					obj.GetComponent<Poolable>().Reset();
 					Debug.Log("Found one in the pool");
 					Debug.Log("Pool for " + objectType + CLONE + " now contains " + objectPool[objectType + CLONE].Count + " after taking from the pool");
+					Debug.Log("objectPool.Count == " + objectPool.Count);
 				} else {
 					obj = MonoBehaviour.Instantiate(Resources.Load(objectType)) as GameObject;
 					Debug.Log("Pool exists, but empty; made one");
+					Debug.Log("objectPool.Count == " + objectPool.Count);
 				}
 			}
 
-			//if no object of a given type is in the pool, make one
+			//if no pool exists for an object, make the object
 			else {
 				obj = MonoBehaviour.Instantiate(Resources.Load(objectType)) as GameObject;
-				Debug.Log("Made something because it wasn't in the pool");
+				Debug.Log("Made something because there was no pool");
+				Debug.Log("objectPool.Count == " + objectPool.Count);
 			}
 
 			if (obj == null) { Debug.Log("Unable to find object named " + objectType); }
@@ -67,14 +79,32 @@ namespace ObjectPooling
 		/// </summary>
 		/// <param name="enemyType">The name of the object prefab.</param>
 		public static void AddObj(GameObject obj){
-			if (!objectPool.ContainsKey(obj.name)){
-				objectPool.Add(obj.name, new Queue<GameObject>());
+			if (!GameOver){ //don't put things back in the pool when the game is over; it leads to carryover pools that produce errors
+				if (!objectPool.ContainsKey(obj.name)){
+					objectPool.Add(obj.name, new Queue<GameObject>());
+				}
+
+				objectPool[obj.name].Enqueue(obj);
+
+				Debug.Log("Pool for " + obj.name + " now contains " + objectPool[obj.name].Count + " in AddObj()");
+				Debug.Log("objectPool.Count == " + objectPool.Count);
+				obj.GetComponent<Poolable>().ShutOff();
+			}
+ 		}
+
+		public static void ClearPools(){
+			GameOver = true;
+
+			Debug.Log("ClearPools() called");
+			Debug.Log("objectPool.Keys.Count == " + objectPool.Keys.Count);
+			foreach (string key in objectPool.Keys){
+				objectPool[key].Clear();
+				Debug.Log("objectPool[" + key + "].Count == " + objectPool[key].Count);
 			}
 
-			objectPool[obj.name].Enqueue(obj);
+			objectPool.Clear();
 
-			Debug.Log("Pool for " + obj.name + " now contains " + objectPool[obj.name].Count + " in AddObj()");
-			obj.GetComponent<Poolable>().ShutOff();
- 		}
+			Debug.Log("objectPool.Keys.Count == " + objectPool.Keys.Count);
+		}
 	}
 }
