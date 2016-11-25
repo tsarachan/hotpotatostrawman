@@ -151,13 +151,14 @@ public class LevelManager : MonoBehaviour {
 //		Debug.Log("ReadInItem() called; action == " + node[WORLDS][WORLD + worldNumber.ToString()][ACT + actNumber.ToString()][readIndex][ACTION]);
 
 		//Debug.Log("current action:" + node[WORLDS][WORLD + worldNumber.ToString()][ACT + actNumber.ToString()][readIndex][ACTION]);
+		Debug.Log(node["world1"]);
 
 		//decide what to do based on the current action
-		switch (node[WORLDS][WORLD + worldNumber.ToString()][ACT + actNumber.ToString()][readIndex][ACTION]) {
+		switch (node[WORLD + worldNumber.ToString()][ACT + actNumber.ToString()][readIndex][ACTION]) {
 
 			//if the action is "wait," read the next line after the indicated number of seconds.
 			case WAIT:
-				nextReadTime += node[WORLDS][WORLD + worldNumber.ToString()][ACT + actNumber.ToString()][readIndex][TIME].AsFloat;
+				nextReadTime += node[WORLD + worldNumber.ToString()][ACT + actNumber.ToString()][readIndex][TIME].AsFloat;
 				break;
 
 			//if the action is "spawn", make enemies
@@ -165,29 +166,29 @@ public class LevelManager : MonoBehaviour {
 				//get the values needed to make enemies
 				
 				//which enemy prefab to spawn
-				string enemyName = node[WORLDS][WORLD + worldNumber.ToString()][ACT + actNumber.ToString()][readIndex][WHICH_ENEMY];
+				string enemyName = node[WORLD + worldNumber.ToString()][ACT + actNumber.ToString()][readIndex][WHICH_ENEMY];
 				//Debug.Log("enemyName == " + enemyName);
 
 				//how many waves
-				int waves = node[WORLDS][WORLD + worldNumber.ToString()][ACT + actNumber.ToString()][readIndex][WAVES].AsInt;
+				int waves = node[WORLD + worldNumber.ToString()][ACT + actNumber.ToString()][readIndex][WAVES].AsInt;
 
 				//how many enemies in each wave
-				int numPerWave = node[WORLDS][WORLD + worldNumber.ToString()][ACT + actNumber.ToString()][readIndex][NUM_PER_WAVE].AsInt;
+				int numPerWave = node[WORLD + worldNumber.ToString()][ACT + actNumber.ToString()][readIndex][NUM_PER_WAVE].AsInt;
 
 				//time between waves
 				float timeBetweenWaves = 
-					node[WORLDS][WORLD + worldNumber.ToString()][ACT + actNumber.ToString()][readIndex][TIME_BETWEEN_WAVES].AsFloat;
+					node[WORLD + worldNumber.ToString()][ACT + actNumber.ToString()][readIndex][TIME_BETWEEN_WAVES].AsFloat;
 
 				//variance in the time between waves
-				float timeVariance = node[WORLDS][WORLD + worldNumber.ToString()][ACT + actNumber.ToString()][readIndex][TIME_VARIANCE].AsFloat;
+				float timeVariance = node[WORLD + worldNumber.ToString()][ACT + actNumber.ToString()][readIndex][TIME_VARIANCE].AsFloat;
 
 				//a list of all the spawners where this wave might appear
 				List<int> spawnLocs = new List<int>();
 
 				for (int i = 0;
-					 i < node[WORLDS][WORLD + worldNumber.ToString()][ACT + actNumber.ToString()][readIndex][WHICH_SPAWNERS].Count;
+					 i < node[WORLD + worldNumber.ToString()][ACT + actNumber.ToString()][readIndex][WHICH_SPAWNERS].Count;
 					 i++){
-					spawnLocs.Add(node[WORLDS][WORLD + worldNumber.ToString()][ACT + actNumber.ToString()][readIndex][WHICH_SPAWNERS][i].AsInt);
+					spawnLocs.Add(node[WORLD + worldNumber.ToString()][ACT + actNumber.ToString()][readIndex][WHICH_SPAWNERS][i].AsInt);
 				}
 				
 				PrepareFutureWaves(
@@ -213,7 +214,7 @@ public class LevelManager : MonoBehaviour {
 	//determine what the readIndex should be, based on how far through the Act the game is
 	private int GetNewReadIndex(JSONNode node){
 		//are is there still more to do in this act?
-		if (readIndex < node[WORLDS][WORLD + worldNumber.ToString()][ACT + actNumber.ToString()].Count - 1){
+		if (readIndex < node[WORLD + worldNumber.ToString()][ACT + actNumber.ToString()].Count - 1){
 			readIndex++;
 			return readIndex;
 		} else { //if you get here, there's no more to do in this Act; go to the next
@@ -221,11 +222,11 @@ public class LevelManager : MonoBehaviour {
 		}
 
 		//is there an act with this actNumber? If so, restart the readIndex
-		if (node[WORLDS][WORLD + worldNumber.ToString()][ACT + actNumber.ToString()] != null){
+		if (node[WORLD + worldNumber.ToString()][ACT + actNumber.ToString()] != null){
 			return 0;
 		} else { //if not, this world is over
 			worldOver = true;
-//			Debug.Log("world over");
+			Debug.Log("world over");
 			return 0;
 		}
 	}
