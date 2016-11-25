@@ -1,4 +1,11 @@
-﻿using UnityEngine;
+﻿/*
+ * 
+ * All interactions between the player and the ball begin here, including catching and throwing.
+ * BallBehavior knows how to throw and how to be caught; this just tells BallBehavior that it's time to do those things.
+ * 
+ */
+
+using UnityEngine;
 using System.Collections;
 
 public class PlayerBallInteraction : MonoBehaviour {
@@ -47,11 +54,6 @@ public class PlayerBallInteraction : MonoBehaviour {
 		return temp;
 	}
 
-	private void Update(){
-		if (Input.GetButtonDown(myOButton) && BallCarrier || Input.GetKeyDown(pass) && BallCarrier){
-			BallCarrier = ThrowBall();
-		}
-	}
 
 	/// <summary>
 	/// Picks up the ball when the player encounters it.
@@ -67,12 +69,10 @@ public class PlayerBallInteraction : MonoBehaviour {
 	}
 
 	/// <summary>
-	/// Call this to start the process of throwing the ball
+	/// InputManager calls this to start the process of throwing the ball.
 	/// </summary>
-	/// <returns><c>false</c> so that this player is no longer the ball carrier.</returns>
-	private bool ThrowBall(){
+	public void Throw(){
 		ballBehavior.Pass(transform.Find(BALL_OBJ).position, otherPlayer);
-
-		return false;
+		BallCarrier = false;
 	}
 }
