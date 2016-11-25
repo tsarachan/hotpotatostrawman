@@ -21,6 +21,10 @@ public class EnemyGiant : EnemyBase {
 	private Vector3 start;
 	private Vector3 end;
 
+	//time before the giant enemy is removed from the scene
+	public float existDuration = 2.5f;
+	private float existTimer = 0.0f;
+
 	private void Start(){
 		transform.parent = GameObject.Find(ENEMY_ORGANIZER).transform;
 		ball = GameObject.Find(BALL_OBJ).transform;
@@ -36,6 +40,16 @@ public class EnemyGiant : EnemyBase {
 			transform.position.z - enterDistance);
 	}
 
+	//track how long the enemy should exist
+	private void Update(){
+		existTimer += Time.deltaTime;
+
+		if (existTimer >= existDuration){
+			GetDestroyed();
+		}
+	}
+
+	//handle movement
 	private void FixedUpdate(){
 		if (enteringScreen){
 			rb.MovePosition(MoveOntoScreen());
@@ -59,8 +73,23 @@ public class EnemyGiant : EnemyBase {
 	}
 
 
-	//this is intentionally blank; giant enemies can't be destroyed by blocking them
+	//this is intentionally weird; giant enemies can't be destroyed by blocking them
 	public override void GetDestroyed(){
+		ObjectPooling.ObjectPool.AddObj(gameObject);
+	}
 
+	/// <summary>
+	/// Call this function to restore default values when an enemy comes out of the pool and into play.
+	/// 
+	/// Call this *before* the enemy is moved into position, so that everything is in a predictable state when the enemy's own script takes over.
+	/// </summary>
+	public override void Reset(){
+		gameObject.SetActive(true);
+
+		//reset timers so that this enemy behaves correctly when taken out of the pool
+		timer = 0.0f;
+		existTimer = 0.0f;
+
+		GetComponent<Rigidbody>().velocity = startVelocity; //sanity check: make absolutely sure the velocity is zero
 	}
 }

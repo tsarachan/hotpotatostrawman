@@ -148,7 +148,7 @@ public class LevelManager : MonoBehaviour {
 	 */
 	public int ReadInItem(){
 		JSONNode node = JSON.Parse(FileIOUtil.ReadStringFromFile(Application.dataPath + LEVEL_PATH + FILE_NAME));
-		Debug.Log("ReadInItem() called; action == " + node[WORLDS][WORLD + worldNumber.ToString()][ACT + actNumber.ToString()][readIndex][ACTION]);
+//		Debug.Log("ReadInItem() called; action == " + node[WORLDS][WORLD + worldNumber.ToString()][ACT + actNumber.ToString()][readIndex][ACTION]);
 
 		//Debug.Log("current action:" + node[WORLDS][WORLD + worldNumber.ToString()][ACT + actNumber.ToString()][readIndex][ACTION]);
 
@@ -157,7 +157,7 @@ public class LevelManager : MonoBehaviour {
 
 			//if the action is "wait," read the next line after the indicated number of seconds.
 			case WAIT:
-				nextReadTime = node[WORLDS][WORLD + worldNumber.ToString()][ACT + actNumber.ToString()][readIndex][TIME].AsFloat;
+				nextReadTime += node[WORLDS][WORLD + worldNumber.ToString()][ACT + actNumber.ToString()][readIndex][TIME].AsFloat;
 				break;
 
 			//if the action is "spawn", make enemies
@@ -256,7 +256,7 @@ public class LevelManager : MonoBehaviour {
 	/// <summary>
 	/// Creates a wave of enemies.
 	/// 
-	/// First, this function shuffles the list of spawner numbers entered for this wave. Then it creates enemies at the locations of, 
+	/// First, this function shuffles the list of spawner numbers entered for this wave. Then it creates enemies at the locations of 
 	/// the spawners with those numbers, starting with the first number in the shuffled list. Finally, it updates spawnIndex to control
 	/// whether spawning continues.
 	/// 
@@ -274,6 +274,8 @@ public class LevelManager : MonoBehaviour {
 			if (i < possibleSpawnersThisWave.Count){ //backstop check to make sure the condition in the comments above is met
 				obj.transform.position = FindSpawnerLoc(possibleSpawnersThisWave[i]);
 			}
+
+			obj.GetComponent<ObjectPooling.Poolable>().Reset();
 		}
 
 		spawnIndex++;

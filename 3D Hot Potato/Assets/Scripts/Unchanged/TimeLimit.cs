@@ -16,7 +16,6 @@ public class TimeLimit : ObjectPooling.Poolable {
 		timer += Time.deltaTime;
 
 		if (timer >= lifetime){
-			Debug.Log("Time up! Adding " + gameObject.name + " to the pool");
 			ObjectPooling.ObjectPool.AddObj(gameObject);
 		}
 	}

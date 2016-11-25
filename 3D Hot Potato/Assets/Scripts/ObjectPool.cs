@@ -43,29 +43,29 @@ namespace ObjectPooling
 		/// <param name="enemyType">The name of the object prefab.</param>
 		public static GameObject GetObj(string objectType){
 			GameObject obj = null; //default initialization for error-checking
-			Debug.Log("trying to get " + objectType);
+//			Debug.Log("trying to get " + objectType);
 
 			//if an object of the chosen type is in the pool, get one of them
 			if (objectPool.ContainsKey(objectType + CLONE)){
 				if (objectPool[objectType + CLONE].Count > 0){
-					Debug.Log("Pool for " + objectType + CLONE + " now contains " + objectPool[objectType + CLONE].Count + " in GetObj()");
+//					Debug.Log("Pool for " + objectType + CLONE + " now contains " + objectPool[objectType + CLONE].Count + " in GetObj()");
 					obj = objectPool[objectType + CLONE].Dequeue();
 					obj.GetComponent<Poolable>().Reset();
-					Debug.Log("Found one in the pool");
-					Debug.Log("Pool for " + objectType + CLONE + " now contains " + objectPool[objectType + CLONE].Count + " after taking from the pool");
-					Debug.Log("objectPool.Count == " + objectPool.Count);
+//					Debug.Log("Found one in the pool");
+//					Debug.Log("Pool for " + objectType + CLONE + " now contains " + objectPool[objectType + CLONE].Count + " after taking from the pool");
+//					Debug.Log("objectPool.Count == " + objectPool.Count);
 				} else {
 					obj = MonoBehaviour.Instantiate(Resources.Load(objectType)) as GameObject;
-					Debug.Log("Pool exists, but empty; made one");
-					Debug.Log("objectPool.Count == " + objectPool.Count);
+//					Debug.Log("Pool exists, but empty; made one");
+//					Debug.Log("objectPool.Count == " + objectPool.Count);
 				}
 			}
 
 			//if no pool exists for an object, make the object
 			else {
 				obj = MonoBehaviour.Instantiate(Resources.Load(objectType)) as GameObject;
-				Debug.Log("Made something because there was no pool");
-				Debug.Log("objectPool.Count == " + objectPool.Count);
+//				Debug.Log("Made something because there was no pool");
+//				Debug.Log("objectPool.Count == " + objectPool.Count);
 			}
 
 			if (obj == null) { Debug.Log("Unable to find object named " + objectType); }
@@ -86,8 +86,8 @@ namespace ObjectPooling
 
 				objectPool[obj.name].Enqueue(obj);
 
-				Debug.Log("Pool for " + obj.name + " now contains " + objectPool[obj.name].Count + " in AddObj()");
-				Debug.Log("objectPool.Count == " + objectPool.Count);
+//				Debug.Log("Pool for " + obj.name + " now contains " + objectPool[obj.name].Count + " in AddObj()");
+//				Debug.Log("objectPool.Count == " + objectPool.Count);
 				obj.GetComponent<Poolable>().ShutOff();
 			}
  		}
@@ -95,16 +95,16 @@ namespace ObjectPooling
 		public static void ClearPools(){
 			GameOver = true;
 
-			Debug.Log("ClearPools() called");
-			Debug.Log("objectPool.Keys.Count == " + objectPool.Keys.Count);
+//			Debug.Log("ClearPools() called");
+//			Debug.Log("objectPool.Keys.Count == " + objectPool.Keys.Count);
 			foreach (string key in objectPool.Keys){
 				objectPool[key].Clear();
-				Debug.Log("objectPool[" + key + "].Count == " + objectPool[key].Count);
+//				Debug.Log("objectPool[" + key + "].Count == " + objectPool[key].Count);
 			}
 
 			objectPool.Clear();
 
-			Debug.Log("objectPool.Keys.Count == " + objectPool.Keys.Count);
+//			Debug.Log("objectPool.Keys.Count == " + objectPool.Keys.Count);
 		}
 	}
 }

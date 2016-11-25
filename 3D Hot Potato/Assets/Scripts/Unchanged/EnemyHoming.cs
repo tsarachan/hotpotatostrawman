@@ -29,6 +29,8 @@ public class EnemyHoming : EnemyBase {
 	private Light myPointLight;
 	public Color leavingScreenColor;
 	public Color preparingToChargeColor; //Zach added this. Feel free to remove it.
+	private Color startColor;
+	private float startIntensity;
 
 
 	//these variables are used to bring enemies onto the screen, allowing players to see them before they start attacking
@@ -52,6 +54,8 @@ public class EnemyHoming : EnemyBase {
 			transform.position.y,
 			transform.position.z - enterDistance);
 		myPointLight = transform.GetChild(0).GetComponent<Light>();
+		startColor = myPointLight.color;
+		startIntensity = myPointLight.intensity;
 	}
 
 
@@ -74,13 +78,13 @@ public class EnemyHoming : EnemyBase {
 
 	private void FixedUpdate(){
 		//if frozen, this enemy is immobilized. It retains its old force. 
-		if (frozen){
-			frozen = RunFreezeTimer();
-			rb.isKinematic = true;
-			return; //don't gain force, change direction, or build toward charging forward while frozen
-		} else if (!frozen){
-			rb.isKinematic = false; //when not frozen, the enemy can move
-		}
+//		if (frozen){
+//			frozen = RunFreezeTimer();
+//			rb.isKinematic = true;
+//			return; //don't gain force, change direction, or build toward charging forward while frozen
+//		} else if (!frozen){
+//			rb.isKinematic = false; //when not frozen, the enemy can move
+//		}
 
 		if (enteringScreen){
 			rb.MovePosition(MoveOntoScreen());
@@ -126,6 +130,31 @@ public class EnemyHoming : EnemyBase {
 
 	public override void GetDestroyed(){
 		GetComponent<ParticleBurst>().MakeBurst();
-		Destroy(gameObject);
+		ObjectPooling.ObjectPool.AddObj(gameObject); //shut this off and return it to the pool
+	}
+
+	/// <summary>
+	/// Call this function to restore default values when an enemy comes out of the pool and into play.
+	/// 
+	/// Call this *before* the enemy is moved into position, so that everything is in a predictable state when the enemy's own script takes over.
+	/// </summary>
+	public override void Reset(){
+		gameObject.SetActive(true);
+
+		//reset timers so that the enemy behaves correctly when coming out of the pool.
+		timer = 0.0f;
+		stayTimer = 0.0f;
+		enteringScreen = true;
+
+
+		//reset the enemy's light
+		//the if-statement prevents this from running the first time this enters the scene,
+		//when myPointLight has yet to be initialized. It's unnecessary at that point.
+		if (myPointLight != null){
+			myPointLight.color = startColor;
+			myPointLight.intensity = startIntensity;
+		}
+
+		GetComponent<Rigidbody>().velocity = startVelocity; //sanity check: make absolutely sure the velocity is zero
 	}
 }
