@@ -18,6 +18,8 @@ public class ParticleBurst : MonoBehaviour {
 		for (int i = 0; i < numCubes; i++){
 			GameObject newCube = ObjectPooling.ObjectPool.GetObj(TINY_CUBE);
 
+			newCube.transform.position = gameObject.transform.position;
+
 			newCube.GetComponent<Rigidbody>().AddForce(Random.Range(-forceMax, forceMax),
 				Random.Range(-forceMax, forceMax),
 				forceMax,
