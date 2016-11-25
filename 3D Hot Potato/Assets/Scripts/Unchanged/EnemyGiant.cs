@@ -27,9 +27,12 @@ public class EnemyGiant : EnemyBase {
 
 	private void Start(){
 		transform.parent = GameObject.Find(ENEMY_ORGANIZER).transform;
-		ball = GameObject.Find(BALL_OBJ).transform;
+		LineUpWithBall();
+	}
 
-		//line this enemy up with the ball
+	//line this enemy up with the ball
+	private void LineUpWithBall(){
+		ball = GameObject.Find(BALL_OBJ).transform;
 		transform.position = new Vector3(ball.position.x,
 			0.0f,
 			transform.position.z);
@@ -86,10 +89,14 @@ public class EnemyGiant : EnemyBase {
 	public override void Reset(){
 		gameObject.SetActive(true);
 
+
 		//reset timers so that this enemy behaves correctly when taken out of the pool
 		timer = 0.0f;
 		existTimer = 0.0f;
+		enteringScreen = true;
 
 		GetComponent<Rigidbody>().velocity = startVelocity; //sanity check: make absolutely sure the velocity is zero
+
+		LineUpWithBall();
 	}
 }
