@@ -145,13 +145,85 @@ public class LevelManager : MonoBehaviour {
 	 * 
 	 * No matter which action is chosen, readIndex is handled the same way.
 	 * 
+	 * 
+	 * HOW TO READ THE JSON FILE
+	 * 
+	 * Here's an example of how the JSON file might look:
+	 *
+	 * 
+	 * ------
+	 * "world1":{
+			"act1":[
+				{"action":"spawn", "whichEnemy":"HomingEnemy", "waves":1, "numPerWave":3, "whichSpawners":[1, 2, 3], "timeBetweenWaves":1, "timeVariance":0},
+				{"action":"wait", "time":5},
+			],
+			"act2":[
+				{"action":"spawn", "whichEnemy":"PlayerHuntEnemy", "waves":1, "numPerWave":1, "whichSpawners":[1, 2, 3], "timeBetweenWaves":1, "timeVariance":0}
+				{"action":"wait", "time":5},
+			],
+			"act3":[
+				{"action":"spawn", "whichEnemy":"PlayerHuntEnemy", "waves":1, "numPerWave":1, "whichSpawners":[1, 2, 3], "timeBetweenWaves":1, "timeVariance":0}
+			]},
+		"world2":{
+				"act1":[
+					{"action":"spawn", "whichEnemy":"HomingEnemy", "waves":1, "numPerWave":3, "whichSpawners":[1, 2, 3], "timeBetweenWaves":1, "timeVariance":0},
+					{"action":"wait", "time":5},
+				],
+				"act2":[
+					{"action":"spawn", "whichEnemy":"PlayerHuntEnemy", "waves":1, "numPerWave":1, "whichSpawners":[1, 2, 3], "timeBetweenWaves":1, "timeVariance":0}
+				]}
+		}
+		------
+
+		The JSON file is divided into worlds, acts, and waves.
+
+		Each world can have as many acts as you like. Add new acts by copying the formatting of existing ones.
+		Note that all acts but the very last one in the very last world need to have a comma after the ] or } that closes them.
+
+		Within an act, each line denotes something this script should do.
+
+		Every line starts with an action. The two possible actions are spawn and wait.
+
+		Wait tells the script not to read the next line for the amount of time in the "time" entry. Time is read in as a float,
+		so you can enter decimal values.
+
+		Spawn creates something. That can include anything that can appear at a spawner: enemies, terrain features, etc.
+		The remaining entries determine what is spawned, where, and when.
+
+		whichEnemy: the exact name of the prefab to the spawned. Again, this says "enemy" because that's the normal use, but it could be other things.
+		waves: how many waves of that prefab should be spawned. The example always has 1 wave per line, but it can be more. Must be an int.
+		numPerWave: how many of the prefab to spawn in each wave. Must be an int.
+		whichSpawners: the spawners were the spawned prefabs will appear. Must be ints.
+		timeBetweenWaves: the number of seconds between spawning waves. Can be a float.
+		timeVariance: this will be randomly added or subtracted to the time between each wave. Can be a float.
+
+		-- Spawning in random locations --
+
+		Provide more spawners in whichSpawners than the number in numPerWave. This script will randomly choose from the listed spawners 
+		for each new wave.
+		
+		NEVER have numPerWave greater than the number of spawners in whichSpawners! At best the enemy will spawn at (0, 0, 0); at worst
+		the game will crash.
+
+		-- How timeVariance works, in detail --
+		The number in timeVariance is either added to or subtracted from timeBetweenWaves (50/50 chance of each) to get the actual time
+		between each wave.
+
+		The entire timeVariance is added or subtracted each time, not a number between -timeVariance and timeVariance. Otherwise
+		it's easy to get near-zero values that eliminate timeVariance's effect.
+
+		-- Total amount of time for a spawn --
+		In order to ensure that the entire line is completed before the next line is read, the total amount of time for one spawn line is
+		(waves * timeBetweenWaves) + (timeVariance * waves).
+
+		This means that to interleave different types of spawns, it's necessary to have separate lines for each, with 1 wave and
+		short (or even zero) timeBetweenWaves and a timeVariance of zero.
 	 */
 	public int ReadInItem(){
 		JSONNode node = JSON.Parse(FileIOUtil.ReadStringFromFile(Application.dataPath + LEVEL_PATH + FILE_NAME));
 //		Debug.Log("ReadInItem() called; action == " + node[WORLDS][WORLD + worldNumber.ToString()][ACT + actNumber.ToString()][readIndex][ACTION]);
 
 		//Debug.Log("current action:" + node[WORLDS][WORLD + worldNumber.ToString()][ACT + actNumber.ToString()][readIndex][ACTION]);
-		Debug.Log(node["world1"]);
 
 		//decide what to do based on the current action
 		switch (node[WORLD + worldNumber.ToString()][ACT + actNumber.ToString()][readIndex][ACTION]) {

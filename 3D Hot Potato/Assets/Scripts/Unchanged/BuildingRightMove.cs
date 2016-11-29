@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BuildingRightMove : BuildingMove {
+public class BuildingRightMove : EnvironmentMove {
 
 	public float speed;
 	bool gameStart;
