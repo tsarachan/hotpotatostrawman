@@ -64,7 +64,9 @@ public class PlayerBallInteraction : MonoBehaviour {
 	/// InputManager calls this to start the process of throwing the ball.
 	/// </summary>
 	public void Throw(){
-		ballBehavior.Pass(transform.Find(BALL_OBJ).position, otherPlayer);
-		BallCarrier = false;
+		if (transform.Find(BALL_OBJ)){ //sanity check to make sure this player has the ball; avoids null references after losing
+			ballBehavior.Pass(transform.Find(BALL_OBJ).position, otherPlayer);
+			BallCarrier = false;
+		}
 	}
 }
