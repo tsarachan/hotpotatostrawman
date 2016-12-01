@@ -82,7 +82,7 @@ public class LevelManager : MonoBehaviour {
 
 	//these are used to find the JSon file in the file directory
 	private const string LEVEL_PATH = "/Levels/";
-	private const string FILE_NAME = "Levels.json";
+	public string filename = "Levels.json";
 
 	//these are used to spawn enemies
 	private List<Transform> spawners = new List<Transform>();
@@ -220,7 +220,7 @@ public class LevelManager : MonoBehaviour {
 		short (or even zero) timeBetweenWaves and a timeVariance of zero.
 	 */
 	public int ReadInItem(){
-		JSONNode node = JSON.Parse(FileIOUtil.ReadStringFromFile(Application.dataPath + LEVEL_PATH + FILE_NAME));
+		JSONNode node = JSON.Parse(FileIOUtil.ReadStringFromFile(Application.dataPath + LEVEL_PATH + filename));
 //		Debug.Log("ReadInItem() called; action == " + node[WORLDS][WORLD + worldNumber.ToString()][ACT + actNumber.ToString()][readIndex][ACTION]);
 
 		//Debug.Log("current action:" + node[WORLDS][WORLD + worldNumber.ToString()][ACT + actNumber.ToString()][readIndex][ACTION]);

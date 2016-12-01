@@ -58,4 +58,12 @@ public class EnemyBossBattle : EnemyBase {
 		Destroy(gameObject); //get rid of the boss battle setpiece--the boss and the cannon
 
 	}
+
+
+	/// <summary>
+	/// Special Reset function that doesn't reference a rigidbody, since this is the setpiece rather than the enemies themselves
+	/// </summary>
+	public override void Reset(){
+		gameObject.SetActive(true);
+	}
 }

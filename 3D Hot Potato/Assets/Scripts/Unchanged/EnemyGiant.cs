@@ -48,7 +48,7 @@ public class EnemyGiant : EnemyBase {
 		existTimer += Time.deltaTime;
 
 		if (existTimer >= existDuration){
-			GetDestroyed();
+			ObjectPooling.ObjectPool.AddObj(gameObject);
 		}
 	}
 
@@ -76,10 +76,11 @@ public class EnemyGiant : EnemyBase {
 	}
 
 
-	//this is intentionally weird; giant enemies can't be destroyed by blocking them
+	//this is intentionally empty; giant enemies can't be destroyed by blocking them
 	public override void GetDestroyed(){
-		ObjectPooling.ObjectPool.AddObj(gameObject);
+		
 	}
+
 
 	/// <summary>
 	/// Call this function to restore default values when an enemy comes out of the pool and into play.
