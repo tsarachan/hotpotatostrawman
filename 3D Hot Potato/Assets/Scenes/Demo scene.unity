@@ -143,13 +143,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 125557042}
-  m_LocalRotation: {x: 0.35510695, y: 0, z: 0, w: 0.9348257}
+  m_LocalRotation: {x: 0.35510695, y: -0, z: -0, w: 0.9348257}
   m_LocalPosition: {x: 0, y: 22.7, z: -13}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 41.6, y: 0, z: 0}
   m_Children: []
-  m_Father: {fileID: 393844137}
-  m_RootOrder: 2
+  m_Father: {fileID: 1933372382}
+  m_RootOrder: 0
 --- !u!81 &125557044
 AudioListener:
   m_ObjectHideFlags: 0
@@ -688,7 +688,7 @@ Rigidbody:
   m_GameObject: {fileID: 290731061}
   serializedVersion: 2
   m_Mass: 0.08
-  m_Drag: 4
+  m_Drag: 3
   m_AngularDrag: 0
   m_UseGravity: 0
   m_IsKinematic: 0
@@ -766,8 +766,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b520623cc3ab4009ad4b6041b948335, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 20
-  accel: 12
+  maxSpeed: 8
+  speed: 8
   stopDuration: 0.25
 --- !u!114 &290731069
 MonoBehaviour:
@@ -1084,9 +1084,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
+  - {fileID: 1933372382}
   - {fileID: 786970158}
   - {fileID: 891422876}
-  - {fileID: 125557043}
   - {fileID: 721223291}
   - {fileID: 2145918037}
   - {fileID: 1094098400}
@@ -1406,7 +1406,7 @@ Transform:
   - {fileID: 2004831378}
   - {fileID: 871473179}
   m_Father: {fileID: 393844137}
-  m_RootOrder: 0
+  m_RootOrder: 1
 --- !u!1 &832521678
 GameObject:
   m_ObjectHideFlags: 0
@@ -1510,7 +1510,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 393844137}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!114 &891422877
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4061,15 +4061,39 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114000013751932324, guid: 49022445d95ae4379a19baa564fa5ccb,
-        type: 2}
-      propertyPath: resetZ
-      value: -56
-      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
   m_ParentPrefab: {fileID: 100100000, guid: 49022445d95ae4379a19baa564fa5ccb, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1933372381
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1933372382}
+  m_Layer: 0
+  m_Name: Camera boom
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1933372382
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1933372381}
+  m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
+  m_LocalPosition: {x: 0, y: 0, z: 10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
+  m_Children:
+  - {fileID: 125557043}
+  m_Father: {fileID: 393844137}
+  m_RootOrder: 0
 --- !u!1 &1966004042
 GameObject:
   m_ObjectHideFlags: 0
@@ -4191,7 +4215,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 50
   startPos: {x: 0, y: -1, z: 143.25}
-  resetZ: -56
+  resetZ: -55
 --- !u!1 &2058022943
 GameObject:
   m_ObjectHideFlags: 0
@@ -4238,7 +4262,7 @@ Rigidbody:
   m_GameObject: {fileID: 2058022943}
   serializedVersion: 2
   m_Mass: 0.08
-  m_Drag: 4
+  m_Drag: 1.5
   m_AngularDrag: 0
   m_UseGravity: 0
   m_IsKinematic: 0
@@ -4304,8 +4328,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b520623cc3ab4009ad4b6041b948335, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 20
-  accel: 12
+  maxSpeed: 8
+  speed: 8
   stopDuration: 0.25
 --- !u!114 &2058022950
 MonoBehaviour:

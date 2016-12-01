@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour {
 	private Rigidbody rb;
 
 	public float maxSpeed = 1.0f; //player maximum speed
-	public float speed = 0.3f; //amount player accelerates each frame of input
+	public float accel = 0.3f; //amount player accelerates each frame of input
 
 	private bool stopped = false; //players are stopped, for example, when they destroy an enemy
 	public bool Stopped{
@@ -65,7 +65,7 @@ public class PlayerMovement : MonoBehaviour {
 				temp.x = 1.0f;
 			}
 
-			rb.AddForce(temp.normalized * speed, ForceMode.Force);
+			rb.AddForce(temp.normalized * accel, ForceMode.Force);
 		}
 	}
 
