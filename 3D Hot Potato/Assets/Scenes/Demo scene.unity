@@ -143,7 +143,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1000010609928504, guid: 6f5721defacc24ec682361f4f4a17fe5, type: 2}
       propertyPath: m_Name
-      value: CutsceneEnemy
+      value: CutsceneEnemy 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114000012826773482, guid: 6f5721defacc24ec682361f4f4a17fe5, type: 2}
@@ -752,7 +752,7 @@ Rigidbody:
   m_GameObject: {fileID: 290731061}
   serializedVersion: 2
   m_Mass: 0.08
-  m_Drag: 3
+  m_Drag: 4
   m_AngularDrag: 0
   m_UseGravity: 0
   m_IsKinematic: 0
@@ -830,8 +830,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b520623cc3ab4009ad4b6041b948335, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 8
-  accel: 0.3
+  maxSpeed: 20
+  accel: 12
   stopDuration: 0.25
 --- !u!114 &290731069
 MonoBehaviour:
@@ -1442,6 +1442,23 @@ Light:
   m_BounceIntensity: 1.13
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1 &743889679 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1000010609928504, guid: 6f5721defacc24ec682361f4f4a17fe5,
+    type: 2}
+  m_PrefabInternal: {fileID: 18438750}
+--- !u!114 &743889685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 743889679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68c51dfea55cd4285bb93b9e16619cd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startVelocity: {x: 0, y: 0, z: 0}
 --- !u!1 &786970157
 GameObject:
   m_ObjectHideFlags: 0
@@ -1606,6 +1623,27 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+  enemyMoveStartTime: 7
+  enemyMoveDuration: 2
+  enemyMoveToPos: {x: 0, y: 0, z: 35.62}
+  enemyMoveCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 10
+    - time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 10
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  p2MoveStartTime: 7
+  p2MoveDuration: 0.5
 --- !u!114 &891422878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4358,7 +4396,7 @@ Rigidbody:
   m_GameObject: {fileID: 2058022943}
   serializedVersion: 2
   m_Mass: 0.08
-  m_Drag: 1.5
+  m_Drag: 4
   m_AngularDrag: 0
   m_UseGravity: 0
   m_IsKinematic: 0
@@ -4424,8 +4462,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b520623cc3ab4009ad4b6041b948335, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 8
-  accel: 0.3
+  maxSpeed: 20
+  accel: 12
   stopDuration: 0.25
 --- !u!114 &2058022950
 MonoBehaviour:
