@@ -19,6 +19,8 @@ namespace Cutscene
 		private const string CAMERA_BOOM = "Camera boom";
 		private EnemyDirected enemyDirected1;
 		private const string ENEMY_1 = "CutsceneEnemy 1";
+		private PlayerMovement p1MovementScript;
+		private const string P1 = "Player 1";
 		private PlayerMovement p2MovementScript;
 		private const string P2 = "Player 2";
 
@@ -49,14 +51,23 @@ namespace Cutscene
 		public AnimationCurve enemyMoveCurve;
 
 		[Header("P2 dodges")]
-		public float p2MoveStartTime = 0.0f;
-		public float p2MoveDuration = 1.0f;
+		public float p2DodgeStartTime = 0.0f;
+		public float p2DodgeDuration = 1.0f;
+
+		[Header("P1 moves off-screen")]
+		public float p1LeaveStartTime = 0.0f;
+		public float p1LeaveDuration = 1.0f;
+
+		[Header("P2 moves off-screen")]
+		public float p2LeaveStartTime = 0.0f;
+		public float p2LeaveDuration = 1.0f;
 
 
 
 		private void Start(){
 			cameraMoveScript = GameObject.Find(CAMERA_BOOM).GetComponent<CameraMove>();
 			enemyDirected1 = GameObject.Find(ENEMY_1).GetComponent<EnemyDirected>();
+			p1MovementScript = GameObject.Find(P1).GetComponent<PlayerMovement>();
 			p2MovementScript = GameObject.Find(P2).GetComponent<PlayerMovement>();
 			eventTimes = GetEventTimes();
 		}
@@ -66,7 +77,9 @@ namespace Cutscene
 
 			temp.Add(moveBackStartTime);
 			temp.Add(enemyMoveStartTime);
-			temp.Add(p2MoveStartTime);
+			temp.Add(p2DodgeStartTime);
+			temp.Add(p1LeaveStartTime);
+			temp.Add(p2LeaveStartTime);
 
 			return temp;
 		}
@@ -92,7 +105,16 @@ namespace Cutscene
 					enemyDirected1.MoveEnemy(enemyMoveToPos, enemyMoveDuration, enemyMoveCurve);
 					break;
 				case 2:
-					StartCoroutine(MovePlayer(p2MovementScript, p2MoveDuration));
+					StartCoroutine(MovePlayer(p2MovementScript, p2DodgeDuration, new List<string> { DOWN, RIGHT }));
+					break;
+				case 3:
+					StartCoroutine(MovePlayer(p1MovementScript, p1LeaveDuration, new List<string> {DOWN}));
+					break;
+				case 4:
+					StartCoroutine(MovePlayer(p2MovementScript, p2LeaveDuration, new List<string> {DOWN}));
+					break;
+				default:
+					Debug.Log("Illegal index: " + index);
 					break;
 			}
 
@@ -102,11 +124,12 @@ namespace Cutscene
 			return index;
 		}
 
-		private IEnumerator MovePlayer(PlayerMovement moveScript, float duration){
+		private IEnumerator MovePlayer(PlayerMovement moveScript, float duration, List<string> directions){
 			float moveTimer = 0.0f;
 			while(moveTimer <= duration){
-				moveScript.Move(DOWN);
-				moveScript.Move(RIGHT);
+				foreach (string direction in directions){
+					moveScript.Move(direction);
+				}
 
 				moveTimer += Time.deltaTime;
 

@@ -1642,8 +1642,12 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  p2MoveStartTime: 7
-  p2MoveDuration: 0.5
+  p2DodgeStartTime: 7
+  p2DodgeDuration: 0.25
+  p1LeaveStartTime: 8
+  p1LeaveDuration: 1
+  p2LeaveStartTime: 8
+  p2LeaveDuration: 1
 --- !u!114 &891422878
 MonoBehaviour:
   m_ObjectHideFlags: 0
