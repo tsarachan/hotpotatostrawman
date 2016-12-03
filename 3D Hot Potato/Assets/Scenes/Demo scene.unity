@@ -767,7 +767,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxSpeed: 8
-  speed: 8
+  accel: 0.3
   stopDuration: 0.25
 --- !u!114 &290731069
 MonoBehaviour:
@@ -1084,9 +1084,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
+  - {fileID: 891422876}
   - {fileID: 1933372382}
   - {fileID: 786970158}
-  - {fileID: 891422876}
   - {fileID: 721223291}
   - {fileID: 2145918037}
   - {fileID: 1094098400}
@@ -1406,7 +1406,7 @@ Transform:
   - {fileID: 2004831378}
   - {fileID: 871473179}
   m_Father: {fileID: 393844137}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!1 &832521678
 GameObject:
   m_ObjectHideFlags: 0
@@ -1489,7 +1489,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 891422876}
-  - 114: {fileID: 891422877}
   - 114: {fileID: 891422878}
   m_Layer: 0
   m_Name: Managers
@@ -1510,19 +1509,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 393844137}
-  m_RootOrder: 2
---- !u!114 &891422877
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 891422875}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 390f4b5e52b0f44c698b4bb3d16c7da6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  deadZone: 0.3
+  m_RootOrder: 0
 --- !u!114 &891422878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1534,6 +1521,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: beca32a3c8df64f9fa0fd2df0091573c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  filename: Levels.json
 --- !u!1 &938853229
 GameObject:
   m_ObjectHideFlags: 0
@@ -4093,7 +4081,7 @@ Transform:
   m_Children:
   - {fileID: 125557043}
   m_Father: {fileID: 393844137}
-  m_RootOrder: 0
+  m_RootOrder: 1
 --- !u!1 &1966004042
 GameObject:
   m_ObjectHideFlags: 0
@@ -4329,7 +4317,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxSpeed: 8
-  speed: 8
+  accel: 0.3
   stopDuration: 0.25
 --- !u!114 &2058022950
 MonoBehaviour:
