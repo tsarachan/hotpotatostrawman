@@ -21,13 +21,17 @@ namespace Cutscene
 		private const string ENEMY_1 = "CutsceneEnemy 1";
 		private PlayerMovement p1MovementScript;
 		private const string P1 = "Player 1";
+		private PlayerSkid p1SkidScript;
+		private const string P1_AXIS = "P1 axis";
 		private PlayerMovement p2MovementScript;
 		private const string P2 = "Player 2";
+		private PlayerSkid p2SkidScript;
+		private const string P2_AXIS = "P2 axis";
 
 		//these variables are used to manage when each event occurs
 		private float timer = 0.0f; //how long the cutscene has run; this is the master timer that controls when things happen
 		private List<float> eventTimes = new List<float>(); //all the times when this script will send an instruction to another script
-		private int index = 0; //which event are we on? Zero-indexed to work with eventTimes.
+		public int index = 0; //which event are we on? Zero-indexed to work with eventTimes. Start the first cutscene at 0, the second at 5.
 
 		//these match the directions in InputManager; they're used to move the players during the cutscene
 		private const string UP = "up";
@@ -62,6 +66,27 @@ namespace Cutscene
 		public float p2LeaveStartTime = 0.0f;
 		public float p2LeaveDuration = 1.0f;
 
+		[Header("P1 skids to a stop")]
+		public float p1YSkidStartTime = 0.0f;
+		public float p1YSkidDuration = 1.5f;
+		public float p1YSkidAngle = 90.0f;
+		public AnimationCurve p1YSkidCurve;
+
+		public float p1ZSkidSartTime = 0.0f;
+		public float p1ZSkidDuration = 1.5f;
+		public float p1ZSkidAngle = -45.0f;
+		public AnimationCurve p1ZSkidCurve;
+
+		[Header("P2 skids to a stop")]
+		public float p2YSkidStartTime = 0.0f;
+		public float p2YSkidDuration = 1.5f;
+		public float p2YSkidAngle = -90.0f;
+		public AnimationCurve p2YSkidCurve;
+
+		public float p2ZSkidSartTime = 0.0f;
+		public float p2ZSkidDuration = 1.5f;
+		public float p2ZSkidAngle = 45.0f;
+		public AnimationCurve p2ZSkidCurve;
 
 
 		private void Start(){
@@ -69,9 +94,17 @@ namespace Cutscene
 			enemyDirected1 = GameObject.Find(ENEMY_1).GetComponent<EnemyDirected>();
 			p1MovementScript = GameObject.Find(P1).GetComponent<PlayerMovement>();
 			p2MovementScript = GameObject.Find(P2).GetComponent<PlayerMovement>();
+			p1SkidScript = GameObject.Find(P1_AXIS).GetComponent<PlayerSkid>();
+			p2SkidScript = GameObject.Find(P2_AXIS).GetComponent<PlayerSkid>();
 			eventTimes = GetEventTimes();
 		}
 
+		/// <summary>
+		/// Create a list of all the times when this script will give an instruction.
+		/// 
+		/// This list is completely manual--to add or subtract something, do it here.
+		/// </summary>
+		/// <returns>A list of times, in seconds, when this script will tell another script to do something.</returns>
 		private List<float> GetEventTimes(){
 			List<float> temp = new List<float>();
 
@@ -80,13 +113,15 @@ namespace Cutscene
 			temp.Add(p2DodgeStartTime);
 			temp.Add(p1LeaveStartTime);
 			temp.Add(p2LeaveStartTime);
+			temp.Add(p1YSkidStartTime);
+			temp.Add(p1ZSkidSartTime);
+			temp.Add(p2YSkidStartTime);
+			temp.Add(p2ZSkidSartTime);
 
 			return temp;
 		}
 
 		private void Update(){
-			Debug.DrawLine(enemyDirected1.transform.position, enemyMoveToPos, Color.red, 2.0f);
-
 			if (index < eventTimes.Count){ //stop trying to do things once the cutscene is complete
 				timer += Time.deltaTime;
 
@@ -113,6 +148,18 @@ namespace Cutscene
 				case 4:
 					StartCoroutine(MovePlayer(p2MovementScript, p2LeaveDuration, new List<string> {DOWN}));
 					break;
+				case 5:
+					p1SkidScript.RotateAlongY(p1YSkidAngle, p1YSkidDuration, p1YSkidCurve);
+					break;
+				case 6:
+					p1SkidScript.RotateAlongZ(p1ZSkidAngle, p1ZSkidDuration, p1ZSkidCurve);
+					break;
+				case 7:
+					p2SkidScript.RotateAlongY(p2YSkidAngle, p2YSkidDuration, p2YSkidCurve);
+					break;
+				case 8:
+					p2SkidScript.RotateAlongZ(p2ZSkidAngle, p2ZSkidDuration, p2ZSkidCurve);
+					break;
 				default:
 					Debug.Log("Illegal index: " + index);
 					break;
@@ -124,6 +171,13 @@ namespace Cutscene
 			return index;
 		}
 
+
+		/// <summary>
+		/// Make a player move by imitating inputs.
+		/// </summary>
+		/// <param name="moveScript">The player's PlayerMovement script.</param>
+		/// <param name="duration">How long the input should be given.</param>
+		/// <param name="directions">A list of the directions to be sent as inputs.</param>
 		private IEnumerator MovePlayer(PlayerMovement moveScript, float duration, List<string> directions){
 			float moveTimer = 0.0f;
 			while(moveTimer <= duration){
