@@ -570,7 +570,7 @@ TrailRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 260184033}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_MotionVectors: 1
@@ -657,8 +657,8 @@ GameObject:
   - 114: {fileID: 290731069}
   - 114: {fileID: 290731070}
   - 65: {fileID: 290731065}
-  - 96: {fileID: 290731071}
   - 33: {fileID: 290731066}
+  - 96: {fileID: 290731071}
   m_Layer: 0
   m_Name: Player 2
   m_TagString: Untagged
@@ -672,10 +672,10 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 290731061}
-  m_LocalRotation: {x: -0.5, y: 0.5, z: 0.5, w: 0.5}
+  m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
   m_LocalPosition: {x: 2, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: -90, y: 90, z: 0}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
+  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
   m_Children:
   - {fileID: 1030614327}
   m_Father: {fileID: 1094098400}
@@ -742,7 +742,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 290731061}
-  m_Mesh: {fileID: 4300000, guid: 2c4a2175fa1f4431da4aede0af9e7009, type: 3}
+  m_Mesh: {fileID: 4300000, guid: a6abdc4df46264abb99be2434df3477f, type: 3}
 --- !u!114 &290731067
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -807,7 +807,7 @@ TrailRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 4aca3ac8b178b3a4f94561dcda59d2f2, type: 2}
+  - {fileID: 2100000, guid: 533ad9b87c1084630bff3e7292209c12, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
@@ -823,22 +823,22 @@ TrailRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Time: 0.5
-  m_StartWidth: 1
-  m_EndWidth: 1
+  m_Time: 0.3
+  m_StartWidth: 2
+  m_EndWidth: 0
   m_Colors:
     m_Color[0]:
       serializedVersion: 2
-      rgba: 4294967295
+      rgba: 16777215
     m_Color[1]:
       serializedVersion: 2
-      rgba: 4294967295
+      rgba: 16777215
     m_Color[2]:
       serializedVersion: 2
-      rgba: 4294967295
+      rgba: 16777215
     m_Color[3]:
       serializedVersion: 2
-      rgba: 4294967295
+      rgba: 16777215
     m_Color[4]:
       serializedVersion: 2
       rgba: 16777215
@@ -4202,7 +4202,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 2058022944}
   - 33: {fileID: 2058022948}
-  - 65: {fileID: 2058022947}
   - 23: {fileID: 2058022946}
   - 54: {fileID: 2058022945}
   - 114: {fileID: 2058022949}
@@ -4210,6 +4209,7 @@ GameObject:
   - 114: {fileID: 2058022951}
   - 114: {fileID: 2058022952}
   - 96: {fileID: 2058022953}
+  - 65: {fileID: 2058022947}
   m_Layer: 0
   m_Name: Player 1
   m_TagString: Untagged
@@ -4223,10 +4223,10 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2058022943}
-  m_LocalRotation: {x: -0.5, y: 0.5, z: 0.5, w: 0.5}
+  m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
   m_LocalPosition: {x: -2, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: -90, y: 90, z: 0}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
+  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
   m_Children:
   - {fileID: 2125330019}
   m_Father: {fileID: 1094098400}
@@ -4285,15 +4285,15 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3.0346851, y: 1.3256683, z: 3.72}
-  m_Center: {x: 0.17028785, y: 0.16283417, z: 1.68}
+  m_Size: {x: 1.91, y: 6.41, z: 6.38}
+  m_Center: {x: 0, y: 2.47, z: 0}
 --- !u!33 &2058022948
 MeshFilter:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2058022943}
-  m_Mesh: {fileID: 4300000, guid: 2c4a2175fa1f4431da4aede0af9e7009, type: 3}
+  m_Mesh: {fileID: 4300000, guid: a6abdc4df46264abb99be2434df3477f, type: 3}
 --- !u!114 &2058022949
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4358,7 +4358,7 @@ TrailRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 4aca3ac8b178b3a4f94561dcda59d2f2, type: 2}
+  - {fileID: 2100000, guid: 533ad9b87c1084630bff3e7292209c12, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
@@ -4374,22 +4374,22 @@ TrailRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Time: 0.5
-  m_StartWidth: 1
-  m_EndWidth: 1
+  m_Time: 0.3
+  m_StartWidth: 2
+  m_EndWidth: 0
   m_Colors:
     m_Color[0]:
       serializedVersion: 2
-      rgba: 4294967295
+      rgba: 16777215
     m_Color[1]:
       serializedVersion: 2
-      rgba: 4294967295
+      rgba: 16777215
     m_Color[2]:
       serializedVersion: 2
-      rgba: 4294967295
+      rgba: 16777215
     m_Color[3]:
       serializedVersion: 2
-      rgba: 4294967295
+      rgba: 16777215
     m_Color[4]:
       serializedVersion: 2
       rgba: 16777215

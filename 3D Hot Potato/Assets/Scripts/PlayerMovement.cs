@@ -42,6 +42,7 @@ public class PlayerMovement : MonoBehaviour {
 			rb.velocity = Vector3.zero;
 			Stopped = RunStopTimer();
 		}
+			
 	}
 
 
@@ -55,14 +56,18 @@ public class PlayerMovement : MonoBehaviour {
 
 			if (direction == UP){
 				temp.z = -1.0f;
+
 			} else if (direction == DOWN){
 				temp.z = 1.0f;
+
 			}
 
 			if (direction == LEFT){
 				temp.x = -1.0f;
+
 			} else if (direction == RIGHT){
 				temp.x = 1.0f;
+
 			}
 
 			rb.AddForce(temp.normalized * accel, ForceMode.Force);
