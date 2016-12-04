@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EnemyDestroyWave : MonoBehaviour {
+public class EnemyDestroyWave : ObjectPooling.Poolable {
 
 	private const string ENEMY_ORGANIZER = "Enemies";
 
 	private void Start(){
 		ClearEnemies();
-		Destroy(gameObject);
+		ObjectPooling.ObjectPool.AddObj(gameObject); //shut this off and return it to the pool
 	}
 
 	private void ClearEnemies(){

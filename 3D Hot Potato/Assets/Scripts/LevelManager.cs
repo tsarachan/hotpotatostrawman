@@ -338,7 +338,7 @@ public class LevelManager : MonoBehaviour {
 	/// </summary>
 	/// <returns>spawnIndex's new value.</returns>
 	private int SpawnAWave(){
-//		Debug.Log("SpawnAWave() called; enemyToMake == " + enemyToMake);
+		Debug.Log("SpawnAWave() called; enemyToMake == " + enemyToMake);
 		possibleSpawnersThisWave = ShuffleList(possibleSpawnersThisWave);
 
 		for (int i = 0; i < enemiesPerWave; i++){

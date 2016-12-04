@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EnemyDestroyWaveNotBoss : MonoBehaviour {
+public class EnemyDestroyWaveNotBoss : ObjectPooling.Poolable {
 
 	private const string ENEMY_ORGANIZER = "Enemies";
 	private const string BOSS_OBJ = "Boss";
 
 	private void Start(){
 		ClearNonBossEnemies();
-		Destroy(gameObject);
+		ObjectPooling.ObjectPool.AddObj(gameObject); //shut this off and return it to the pool
 	}
 
 	private void ClearNonBossEnemies(){
