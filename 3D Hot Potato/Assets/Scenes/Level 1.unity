@@ -143,10 +143,10 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 125557042}
-  m_LocalRotation: {x: 0.35510695, y: 0, z: 0, w: 0.9348257}
+  m_LocalRotation: {x: 0.34865385, y: 0, z: 0, w: 0.93725157}
   m_LocalPosition: {x: 0, y: 22.7, z: -13}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 41.6, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 40.81, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 393844137}
   m_RootOrder: 2
@@ -1096,6 +1096,34 @@ Transform:
   - {fileID: 1144013404}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!1 &428965603
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 428965604}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &428965604
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 428965603}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 2058022944}
+  m_RootOrder: 1
 --- !u!1 &544330738
 GameObject:
   m_ObjectHideFlags: 0
@@ -4223,12 +4251,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2058022943}
-  m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2, y: 0, z: 0}
-  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
-  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 2125330019}
+  - {fileID: 428965604}
   m_Father: {fileID: 1094098400}
   m_RootOrder: 0
 --- !u!54 &2058022945
@@ -4285,8 +4314,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.91, y: 6.41, z: 6.38}
-  m_Center: {x: 0, y: 2.47, z: 0}
+  m_Size: {x: 1.325668, y: 3.72, z: 3.034685}
+  m_Center: {x: 0.1702878, y: 0.1628342, z: 1.68}
 --- !u!33 &2058022948
 MeshFilter:
   m_ObjectHideFlags: 0

@@ -43,7 +43,6 @@ public class BallBehavior : MonoBehaviour {
 	/// <param name="destination">The catching player.</param>
 	public virtual void Pass(Vector3 start, Transform destination){
 		transform.parent = scene; //stop being a child of the ball carrier, so that the ball can move between players
-		powerUpScript.IncreaseSuperMeter(start, destination);
 		co = StartCoroutine(PassBetweenPlayers(start, destination));
 	}
 
