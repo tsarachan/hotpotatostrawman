@@ -1680,12 +1680,27 @@ MonoBehaviour:
     serializedVersion: 2
     m_Curve:
     - time: 0
-      value: 0
+      value: -0.012499999
       inSlope: 2
       outSlope: 2
       tangentMode: 0
+    - time: 0.34676576
+      value: 0.3272627
+      inSlope: 0.6081164
+      outSlope: 0.6081164
+      tangentMode: 0
+    - time: 0.6821939
+      value: 0.68050885
+      inSlope: 1.1834502
+      outSlope: 1.1834502
+      tangentMode: 0
+    - time: 0.88272405
+      value: 1.1686155
+      inSlope: 0.34302473
+      outSlope: 0.34302473
+      tangentMode: 0
     - time: 1
-      value: 1
+      value: 0.9875
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -1699,12 +1714,22 @@ MonoBehaviour:
     serializedVersion: 2
     m_Curve:
     - time: 0
-      value: 0
+      value: -0.012499999
       inSlope: 2
       outSlope: 2
       tangentMode: 0
-    - time: 1
-      value: 1
+    - time: 0.6818907
+      value: 0.79215175
+      inSlope: 0.34302473
+      outSlope: 0.34302473
+      tangentMode: 0
+    - time: 0.79457223
+      value: 1.239275
+      inSlope: 1.1834502
+      outSlope: 1.1834502
+      tangentMode: 0
+    - time: 0.99583334
+      value: 0.63485146
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -2879,7 +2904,7 @@ ParticleSystem:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1790311872}
-  serializedVersion: 2
+  serializedVersion: 4
   lengthInSec: 5
   startDelay:
     scalar: 0
@@ -2917,12 +2942,13 @@ ParticleSystem:
       m_RotationOrder: 4
     minMaxState: 0
   speed: 1
-  randomSeed: 63433504
   looping: 1
   prewarm: 0
   playOnAwake: 1
   moveWithTransform: 1
+  autoRandomSeed: 0
   scalingMode: 1
+  randomSeed: 63433504
   InitialModule:
     serializedVersion: 2
     enabled: 1

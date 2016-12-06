@@ -49,7 +49,7 @@ namespace Cutscene
 		/// </summary>
 		/// <returns>The new Y rotation.</returns>
 		private float GetYRotation(){
-			return Mathf.Lerp(startYRotation,
+			return Mathf.LerpUnclamped(startYRotation,
 							  finalYRotation,
 							  yRotationCurve.Evaluate((timer - yRotationStartTime)/(yRotationEndTime - yRotationStartTime)));
 		}
@@ -75,7 +75,7 @@ namespace Cutscene
 		/// </summary>
 		/// <returns>The new Z rotation.</returns>
 		private float GetZRotation(){
-			return Mathf.Lerp(startZRotation,
+			return Mathf.LerpUnclamped(startZRotation,
 							  finalZRotation,
 							  zRotationCurve.Evaluate((timer - zRotationStartTime)/(zRotationEndTime - zRotationStartTime)));
 		}
