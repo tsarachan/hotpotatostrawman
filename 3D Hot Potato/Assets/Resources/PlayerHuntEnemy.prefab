@@ -196,7 +196,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24fcbc765222542f0bb8cc30e9275443, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chanceOfGoForBall: 0.85
+  startVelocity: {x: 0, y: 0, z: 0}
+  chanceOfGoForBall: 0.1
   target: {fileID: 0}
   speed: 35
   maxSpeeds:
