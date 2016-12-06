@@ -38,6 +38,12 @@ namespace Cutscene
 		private Vector3 endCameraRotation = Vector3.zero;
 		private AnimationCurve cameraRotateCurve;
 
+		private float startCameraSlerpTime = 0.0f;
+		private float endCameraSlerpTime = 0.0f;
+		private Quaternion startCameraSlerp = Quaternion.Euler(Vector3.zero);
+		private Quaternion cameraSlerpChange = Quaternion.Euler(Vector3.zero); //this is the amount the angle changes, not the final angle
+		private AnimationCurve cameraSlerpCurve;
+
 
 
 		private void Start(){
@@ -61,6 +67,10 @@ namespace Cutscene
 
 			if (timer >= startCameraRotateTime && timer <= endCameraRotateTime){
 				mainCamera.eulerAngles = RotateCameraTransform();
+			}
+
+			if (timer >= startCameraSlerpTime && timer <= endCameraSlerpTime){
+				mainCamera.rotation = SlerpCameraRotation();
 			}
 		}
 
@@ -141,6 +151,33 @@ namespace Cutscene
 			startCameraRotation = mainCamera.eulerAngles;
 			endCameraRotation = endRotation;
 			cameraRotateCurve = rotateCurve;
+		}
+
+
+		/// <summary>
+		/// Slerp the camera between rotations. As above, this is the function that actually turns the camera, with the values used set by
+		/// SlerpCamera() below. 
+		/// </summary>
+		/// <returns>The camera's new rotation.</returns>
+		private Quaternion SlerpCameraRotation(){
+			return Quaternion.Slerp(startCameraSlerp,
+									cameraSlerpChange,
+									cameraSlerpCurve.Evaluate((timer - startCameraSlerpTime)/(endCameraSlerpTime - startCameraSlerpTime)));
+		}
+
+
+		/// <summary>
+		/// CutsceneManager uses this to slerp the camera between rotations
+		/// </summary>
+		/// <param name="endSlerp">The camera's final rotation.</param>
+		/// <param name="slerpTime">The total time to spend rotating.</param>
+		/// <param name="slerpCurve">An animation curve, for fine-tuning the rate of rotation over time.</param>
+		public void SlerpCamera(Quaternion endSlerp, float slerpTime, AnimationCurve slerpCurve){
+			startCameraSlerpTime = Time.time;
+			endCameraSlerpTime = Time.time + slerpTime;
+			startCameraSlerp = mainCamera.rotation;
+			cameraSlerpChange = endSlerp;
+			cameraSlerpCurve = slerpCurve;
 		}
 	}
 }

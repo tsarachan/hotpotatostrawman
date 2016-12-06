@@ -34,7 +34,6 @@ public class BallBehavior : MonoBehaviour {
 	protected virtual void Start(){
 		rb = GetComponent<Rigidbody>();
 		scene = GameObject.Find(SCENE_ORGANIZER).transform;
-		powerUpScript = GameObject.Find(SUPER_METER).GetComponent<PowerUp>();
 	}
 
 	/// <summary>

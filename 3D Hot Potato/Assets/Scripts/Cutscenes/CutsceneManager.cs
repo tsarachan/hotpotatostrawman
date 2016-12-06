@@ -83,10 +83,17 @@ namespace Cutscene
 		public float p2YSkidAngle = -90.0f;
 		public AnimationCurve p2YSkidCurve;
 
-		public float p2ZSkidSartTime = 0.0f;
+		public float p2ZSkidStartTime = 0.0f;
 		public float p2ZSkidDuration = 1.5f;
 		public float p2ZSkidAngle = 45.0f;
 		public AnimationCurve p2ZSkidCurve;
+
+		[Header("The camera pans up")]
+		public float cameraSlerpStartTime = 0.0f;
+		public float cameraSlerpDuration = 1.5f;
+		public Vector3 cameraSlerpAngle = new Vector3(0.0f, 0.0f, 0.0f); //this is an amount of change, not the final angle
+		public AnimationCurve slerpCurve;
+
 
 
 		private void Start(){
@@ -116,7 +123,8 @@ namespace Cutscene
 			temp.Add(p1YSkidStartTime);
 			temp.Add(p1ZSkidSartTime);
 			temp.Add(p2YSkidStartTime);
-			temp.Add(p2ZSkidSartTime);
+			temp.Add(p2ZSkidStartTime);
+			temp.Add(cameraSlerpStartTime);
 
 			return temp;
 		}
@@ -159,6 +167,9 @@ namespace Cutscene
 					break;
 				case 8:
 					p2SkidScript.RotateAlongZ(p2ZSkidAngle, p2ZSkidDuration, p2ZSkidCurve);
+					break;
+				case 9:
+					cameraMoveScript.SlerpCamera(Quaternion.Euler(cameraSlerpAngle), cameraSlerpDuration, slerpCurve);
 					break;
 				default:
 					Debug.Log("Illegal index: " + index);
