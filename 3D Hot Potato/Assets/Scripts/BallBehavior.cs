@@ -103,7 +103,7 @@ public class BallBehavior : MonoBehaviour {
 		}
 
 		transform.parent = catchingPlayer;
-		//the player models are turned, so z is the vertical axis for local position
+
 		//changes to the player model may require changing the offset axis here
 		transform.localPosition = new Vector3(0.0f, verticalOffset, 0.0f);
 	}
