@@ -47,9 +47,10 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 		if (transform.Find(BALL_OBJ) != null){
 			transform.Find(BALL_OBJ).parent = transform.root;
 		}
-
-		GetComponent<Renderer>().enabled = false; //make the player disappear
+			
 		transform.GetChild(0).gameObject.SetActive(false); //shut off the point light
+		transform.GetChild(1).GetComponent<Renderer>().enabled = false; GetComponent<Renderer>().enabled = false; //make the lightsteed disappear
+		transform.GetChild(2).gameObject.SetActive(false); //shut off the rider, so that it disappears as well
 
 		ObjectPooling.ObjectPool.ClearPools();
 
