@@ -15,6 +15,8 @@ public class PlayerBallInteraction : MonoBehaviour {
 
 
 	private const string PLAYER_ORGANIZER = "Players";
+	private const string PLAYER_1_NAME = "Player 1";
+	private const string PLAYER_2_NAME = "Player 2";
 	private Transform otherPlayer;
 
 	private bool ballCarrier = false;
@@ -35,17 +37,11 @@ public class PlayerBallInteraction : MonoBehaviour {
 	/// </summary>
 	/// <returns>The other player's transform.</returns>
 	private Transform GetOtherPlayer(){
-		Transform temp = transform;
-
-		foreach (Transform player in transform.root.Find(PLAYER_ORGANIZER)){
-			if (player.name != transform.name){
-				temp = player;
-			}
+		if (transform.name == PLAYER_1_NAME){
+			return GameObject.Find(PLAYER_2_NAME).transform;
+		} else {
+			return GameObject.Find(PLAYER_1_NAME).transform;
 		}
-
-		if (temp == transform) { Debug.Log("Couldn't find other player for " + transform.name); }
-
-		return temp;
 	}
 
 
