@@ -24,6 +24,7 @@ namespace Cutscene
 		private PlayerSkid p1SkidScript;
 		private const string P1_AXIS = "P1 axis";
 		private PlayerMovement p2MovementScript;
+		private PlayerBallInteraction p2BallScript;
 		private const string P2 = "Player 2";
 		private PlayerSkid p2SkidScript;
 		private const string P2_AXIS = "P2 axis";
@@ -57,6 +58,9 @@ namespace Cutscene
 		[Header("P2 dodges")]
 		public float p2DodgeStartTime = 0.0f;
 		public float p2DodgeDuration = 1.0f;
+
+		[Header("P2 passes to P1")]
+		public float p2PassTime = 0.0f;
 
 		[Header("P1 moves off-screen")]
 		public float p1LeaveStartTime = 0.0f;
@@ -105,6 +109,7 @@ namespace Cutscene
 			enemyDirected1 = GameObject.Find(ENEMY_1).GetComponent<EnemyDirected>();
 			p1MovementScript = GameObject.Find(P1).GetComponent<PlayerMovement>();
 			p2MovementScript = GameObject.Find(P2).GetComponent<PlayerMovement>();
+			p2BallScript = GameObject.Find(P2).GetComponent<PlayerBallInteraction>();
 			p1SkidScript = GameObject.Find(P1_AXIS).GetComponent<PlayerSkid>();
 			p2SkidScript = GameObject.Find(P2_AXIS).GetComponent<PlayerSkid>();
 			eventTimes = GetEventTimes();
@@ -122,6 +127,7 @@ namespace Cutscene
 			temp.Add(moveBackStartTime);
 			temp.Add(enemyMoveStartTime);
 			temp.Add(p2DodgeStartTime);
+			temp.Add(p2PassTime);
 			temp.Add(p1LeaveStartTime);
 			temp.Add(p2LeaveStartTime);
 			temp.Add(p1YSkidStartTime);
@@ -154,6 +160,9 @@ namespace Cutscene
 					break;
 				case 2:
 					StartCoroutine(MovePlayer(p2MovementScript, p2DodgeDuration, new List<string> { DOWN, RIGHT }));
+					break;
+				case 3:
+					p2BallScript.Throw();
 					break;
 				case 3:
 					StartCoroutine(MovePlayer(p1MovementScript, p1LeaveDuration, new List<string> {DOWN}));
@@ -189,6 +198,7 @@ namespace Cutscene
 
 			return index;
 		}
+			
 
 
 		/// <summary>
