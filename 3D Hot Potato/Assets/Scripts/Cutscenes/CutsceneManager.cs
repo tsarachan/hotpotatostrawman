@@ -164,28 +164,28 @@ namespace Cutscene
 				case 3:
 					p2BallScript.Throw();
 					break;
-				case 3:
+				case 4:
 					StartCoroutine(MovePlayer(p1MovementScript, p1LeaveDuration, new List<string> {DOWN}));
 					break;
-				case 4:
+				case 5:
 					StartCoroutine(MovePlayer(p2MovementScript, p2LeaveDuration, new List<string> {DOWN}));
 					break;
-				case 5:
+				case 6:
 					p1SkidScript.RotateAlongY(p1YSkidAngle, p1YSkidDuration, p1YSkidCurve);
 					break;
-				case 6:
+				case 7:
 					p1SkidScript.RotateAlongZ(p1ZSkidAngle, p1ZSkidDuration, p1ZSkidCurve);
 					break;
-				case 7:
+				case 8:
 					StartCoroutine(MovePlayer(p2MovementScript, p2ForwardDuration, new List<string> {DOWN}));
 					break;
-				case 8:
+				case 9:
 					p2SkidScript.RotateAlongY(p2YSkidAngle, p2YSkidDuration, p2YSkidCurve);
 					break;
-				case 9:
+				case 10:
 					p2SkidScript.RotateAlongZ(p2ZSkidAngle, p2ZSkidDuration, p2ZSkidCurve);
 					break;
-				case 10:
+				case 11:
 					cameraMoveScript.SlerpCamera(Quaternion.Euler(cameraSlerpAngle), cameraSlerpDuration, slerpCurve);
 					break;
 				default:
