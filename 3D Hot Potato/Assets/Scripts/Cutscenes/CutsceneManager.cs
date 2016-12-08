@@ -77,6 +77,10 @@ namespace Cutscene
 		public float p1ZSkidAngle = -45.0f;
 		public AnimationCurve p1ZSkidCurve;
 
+		[Header("P2 moves forward while stopping")]
+		public float p2ForwardStartTime = 0.0f;
+		public float p2ForwardDuration = 0.25f;
+
 		[Header("P2 skids to a stop")]
 		public float p2YSkidStartTime = 0.0f;
 		public float p2YSkidDuration = 1.5f;
@@ -122,6 +126,7 @@ namespace Cutscene
 			temp.Add(p2LeaveStartTime);
 			temp.Add(p1YSkidStartTime);
 			temp.Add(p1ZSkidSartTime);
+			temp.Add(p2ForwardStartTime);
 			temp.Add(p2YSkidStartTime);
 			temp.Add(p2ZSkidStartTime);
 			temp.Add(cameraSlerpStartTime);
@@ -163,12 +168,15 @@ namespace Cutscene
 					p1SkidScript.RotateAlongZ(p1ZSkidAngle, p1ZSkidDuration, p1ZSkidCurve);
 					break;
 				case 7:
-					p2SkidScript.RotateAlongY(p2YSkidAngle, p2YSkidDuration, p2YSkidCurve);
+					StartCoroutine(MovePlayer(p2MovementScript, p2ForwardDuration, new List<string> {DOWN}));
 					break;
 				case 8:
-					p2SkidScript.RotateAlongZ(p2ZSkidAngle, p2ZSkidDuration, p2ZSkidCurve);
+					p2SkidScript.RotateAlongY(p2YSkidAngle, p2YSkidDuration, p2YSkidCurve);
 					break;
 				case 9:
+					p2SkidScript.RotateAlongZ(p2ZSkidAngle, p2ZSkidDuration, p2ZSkidCurve);
+					break;
+				case 10:
 					cameraMoveScript.SlerpCamera(Quaternion.Euler(cameraSlerpAngle), cameraSlerpDuration, slerpCurve);
 					break;
 				default:
