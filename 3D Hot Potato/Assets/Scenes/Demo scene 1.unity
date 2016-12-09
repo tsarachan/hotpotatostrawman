@@ -1513,8 +1513,9 @@ MonoBehaviour:
     m_RotationOrder: 0
   p2DodgeStartTime: 7
   p2DodgeDuration: 0.25
+  p2PassTime: 8
   p1LeaveStartTime: 8
-  p1LeaveDuration: 1
+  p1LeaveDuration: 2
   p2LeaveStartTime: 8
   p2LeaveDuration: 1
   p1YSkidStartTime: 0
@@ -1535,6 +1536,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  p2ForwardStartTime: 0
+  p2ForwardDuration: 0.25
   p2YSkidStartTime: 0
   p2YSkidDuration: 1.5
   p2YSkidAngle: -90
