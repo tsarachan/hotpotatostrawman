@@ -2004,7 +2004,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6c3afd766fad4b478117820f5436a8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  index: 5
+  index: 6
   moveBackStartTime: 2
   moveBackDuration: 4
   moveBackToPos: {x: 0, y: 0, z: 0}
@@ -2045,6 +2045,7 @@ MonoBehaviour:
     m_RotationOrder: 0
   p2DodgeStartTime: 7
   p2DodgeDuration: 0.25
+  p2PassTime: 0
   p1LeaveStartTime: 8
   p1LeaveDuration: 1
   p2LeaveStartTime: 8
