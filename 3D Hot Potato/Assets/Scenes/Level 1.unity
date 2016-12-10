@@ -362,7 +362,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 260184033}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -4219,6 +4219,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 786970158}
     m_Modifications:
+    - target: {fileID: 114000013751932324, guid: 49022445d95ae4379a19baa564fa5ccb,
+        type: 2}
+      propertyPath: startMovingCurve.m_Curve.Array.size
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4000010758677996, guid: 49022445d95ae4379a19baa564fa5ccb, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -4255,6 +4260,36 @@ Prefab:
         type: 2}
       propertyPath: resetZ
       value: -56
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000013751932324, guid: 49022445d95ae4379a19baa564fa5ccb,
+        type: 2}
+      propertyPath: startMovingCurve.m_Curve.Array.data[0].inSlope
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000013751932324, guid: 49022445d95ae4379a19baa564fa5ccb,
+        type: 2}
+      propertyPath: startMovingCurve.m_Curve.Array.data[0].outSlope
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000013751932324, guid: 49022445d95ae4379a19baa564fa5ccb,
+        type: 2}
+      propertyPath: startMovingCurve.m_Curve.Array.data[1].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000013751932324, guid: 49022445d95ae4379a19baa564fa5ccb,
+        type: 2}
+      propertyPath: startMovingCurve.m_Curve.Array.data[1].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000013751932324, guid: 49022445d95ae4379a19baa564fa5ccb,
+        type: 2}
+      propertyPath: startMovingCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000013751932324, guid: 49022445d95ae4379a19baa564fa5ccb,
+        type: 2}
+      propertyPath: timeToFullSpeed
+      value: 1.8
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
@@ -4382,6 +4417,23 @@ MonoBehaviour:
   speed: 50
   startPos: {x: 0, y: -1, z: 143.25}
   resetZ: -56
+  startMovingCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+    - time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  timeToFullSpeed: 1.8
 --- !u!1 &2058022943
 GameObject:
   m_ObjectHideFlags: 0

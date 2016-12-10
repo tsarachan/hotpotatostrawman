@@ -12,10 +12,24 @@ public class EnvironmentMove : MonoBehaviour {
 	private float freezeTimer = 0.0f;
 	private float freezeDuration;
 
+	//these stop the buildings when the game hasn't started, and then bring the buildings up to speed
+	//when the game gets underway
+	private bool gameHasStarted = false;
+	public bool GameHasStarted{
+		get { return gameHasStarted; }
+		set { gameHasStarted = value; }
+	}
+	private float currentSpeed = 0.0f;
+	public AnimationCurve startMovingCurve;
+	private float timer = 0.0f;
+	public float timeToFullSpeed = 1.0f;
+
 
 	protected virtual void Update(){
-		if (!frozen){ //if freezing is not implemented, this will always happen
-			transform.localPosition -= Vector3.forward * speed * Time.deltaTime;
+		if (!frozen && GameHasStarted){
+			currentSpeed = GetCurrentSpeed();
+
+			transform.localPosition -= Vector3.forward * currentSpeed * Time.deltaTime;
 
 			if (transform.localPosition.z <= resetZ) {
 			
@@ -25,6 +39,13 @@ public class EnvironmentMove : MonoBehaviour {
 			frozen = RunFreezeTimer();
 		}
 
+	}
+
+
+	private float GetCurrentSpeed(){
+		timer += Time.deltaTime;
+
+		return Mathf.Lerp(0.0f, speed, startMovingCurve.Evaluate(timer/timeToFullSpeed));
 	}
 
 	/// <summary>

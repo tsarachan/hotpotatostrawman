@@ -33,7 +33,6 @@ public class InputManager : MonoBehaviour {
 	private const string PLAYER_ORGANIZER = "Players";
 	private Dictionary<char, PlayerMovement> playerMovementScripts = new Dictionary<char, PlayerMovement>();
 	private Dictionary<char, PlayerBallInteraction> playerBallInteractionScripts = new Dictionary<char, PlayerBallInteraction>();
-	private LevelManager levelManager;
 
 	//variables relating to the thumbstick
 	public float deadZone = 0.3f; //must be between 0.0 and 1.0
@@ -61,6 +60,9 @@ public class InputManager : MonoBehaviour {
 	private Dictionary<PlayerMovement, Dictionary<KeyCode, string>> movementKeys = 
 		new Dictionary<PlayerMovement, Dictionary<KeyCode, string>>();
 
+	//variables needed to start the game with the first pass
+	private LevelManager levelManager;
+	private const string ROAD_TREADMILL = "Treadmill";
 
 
 
@@ -138,7 +140,7 @@ public class InputManager : MonoBehaviour {
 				//if a player has picked up the ball, start the game upon the first pass
 				//this will try to keep restarting the game--it's inefficient, but not causing performance problems
 				if (playerBallInteractionScripts[player].BallCarrier){
-					levelManager.GameHasStarted = true;
+					StartGame();
 				}
 			}
 		}
@@ -152,7 +154,7 @@ public class InputManager : MonoBehaviour {
 			//if a player has picked up the ball, start the game upon the first pass
 			//this will try to keep restarting the game--it's inefficient, but not causing performance problems
 			if (script.BallCarrier){
-				levelManager.GameHasStarted = true;
+				StartGame();
 			}
 		}
 	}
@@ -180,6 +182,18 @@ public class InputManager : MonoBehaviour {
 					moveScript.Move(movementKeys[moveScript][key]);
 				}
 			}
+		}
+	}
+
+
+	/// <summary>
+	/// Do everything required to set the game in motion.
+	/// </summary>
+	private void StartGame(){
+		levelManager.GameHasStarted = true;
+
+		foreach (Transform roadSection in GameObject.Find(ROAD_TREADMILL).transform){
+			roadSection.GetComponent<EnvironmentMove>().GameHasStarted = true;
 		}
 	}
 }
