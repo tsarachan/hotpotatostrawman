@@ -31,9 +31,12 @@ public class BallBehavior : MonoBehaviour {
 	protected const string SUPER_METER = "Super meter";
 	protected PowerUp powerUpScript;
 
+	protected AudioSource audioSource;
+
 	protected virtual void Start(){
 		rb = GetComponent<Rigidbody>();
 		scene = GameObject.Find(SCENE_ORGANIZER).transform;
+		audioSource = GetComponent<AudioSource>();
 	}
 
 	/// <summary>
@@ -44,6 +47,11 @@ public class BallBehavior : MonoBehaviour {
 	public virtual void Pass(Vector3 start, Transform destination){
 		transform.parent = scene; //stop being a child of the ball carrier, so that the ball can move between players
 		co = StartCoroutine(PassBetweenPlayers(start, destination));
+
+		//play a sound when the ball is thrown, unless the passes are happening fast enough that the sounds would overlap
+		if (!audioSource.isPlaying){
+			audioSource.Play();
+		}
 	}
 
 	/// <summary>
