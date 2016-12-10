@@ -55,9 +55,10 @@ public class InputManager : MonoBehaviour {
 	private KeyCode p2LeftKey = KeyCode.J;
 	private KeyCode p2RightKey = KeyCode.L;
 	private KeyCode p2PassKey = KeyCode.N;
-	private Dictionary<KeyCode, string> p2KeyboardControls = new Dictionary<KeyCode, string>();
 
-	private Dictionary<PlayerMovement, Dictionary<KeyCode, string>> keyboardControls = 
+	private Dictionary<PlayerBallInteraction, KeyCode> passKeys = new Dictionary<PlayerBallInteraction, KeyCode>();
+	private Dictionary<KeyCode, string> p2KeyboardControls = new Dictionary<KeyCode, string>();
+	private Dictionary<PlayerMovement, Dictionary<KeyCode, string>> movementKeys = 
 		new Dictionary<PlayerMovement, Dictionary<KeyCode, string>>();
 
 
@@ -71,7 +72,8 @@ public class InputManager : MonoBehaviour {
 		}
 
 		levelManager = GetComponent<LevelManager>();
-		keyboardControls = SetUpKeyboardMovement();
+		movementKeys = SetUpKeyboardMovement();
+		passKeys = SetUpKeyboardPassing();
 	}
 
 
@@ -105,10 +107,30 @@ public class InputManager : MonoBehaviour {
 		return temp;
 	}
 
+
+	/// <summary>
+	/// Adds keyboard passing keys to a dictionary that can be checked in Update().
+	/// </summary>
+	/// <returns>A dictionary of keyboard keys used for passing.</returns>
+	private Dictionary<PlayerBallInteraction, KeyCode> SetUpKeyboardPassing(){
+		Dictionary<PlayerBallInteraction, KeyCode> temp = new Dictionary<PlayerBallInteraction, KeyCode>();
+
+		foreach (char key in playerBallInteractionScripts.Keys){
+			if (key == '1'){
+				temp.Add(playerBallInteractionScripts[key], p1PassKey);
+			} else if (key == '2'){
+				temp.Add(playerBallInteractionScripts[key], p2PassKey);
+			}
+		}
+
+		return temp;
+	}
+
 	/// <summary>
 	/// Send button presses to player scripts when players input them.
 	/// </summary>
 	private void Update(){
+		//controller buttons
 		foreach (char player in playerBallInteractionScripts.Keys){
 			if (Input.GetButtonDown(O_BUTTON + player)){
 				playerBallInteractionScripts[player].Throw();
@@ -118,6 +140,19 @@ public class InputManager : MonoBehaviour {
 				if (playerBallInteractionScripts[player].BallCarrier){
 					levelManager.GameHasStarted = true;
 				}
+			}
+		}
+
+		//keyboard controls
+		foreach (PlayerBallInteraction script in passKeys.Keys){
+			if (Input.GetKeyDown(passKeys[script])){
+				script.Throw();
+			}
+
+			//if a player has picked up the ball, start the game upon the first pass
+			//this will try to keep restarting the game--it's inefficient, but not causing performance problems
+			if (script.BallCarrier){
+				levelManager.GameHasStarted = true;
 			}
 		}
 	}
@@ -138,10 +173,11 @@ public class InputManager : MonoBehaviour {
 		}
 
 		//keyboard controls
-		foreach (PlayerMovement moveScript in keyboardControls.Keys){
-			foreach (KeyCode key in keyboardControls[moveScript].Keys){
+		//check each movement key for each player; if it's pressed, send the instruction to move
+		foreach (PlayerMovement moveScript in movementKeys.Keys){
+			foreach (KeyCode key in movementKeys[moveScript].Keys){
 				if (Input.GetKey(key)){
-					moveScript.Move(keyboardControls[moveScript][key]);
+					moveScript.Move(movementKeys[moveScript][key]);
 				}
 			}
 		}
