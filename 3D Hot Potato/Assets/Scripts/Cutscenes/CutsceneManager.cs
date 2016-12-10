@@ -84,6 +84,10 @@ namespace Cutscene
 		[Header("P2 moves forward while stopping")]
 		public float p2ForwardStartTime = 0.0f;
 		public float p2ForwardDuration = 0.25f;
+		private Transform p2Axis;
+		public float p2BaseSpeed = 1.0f;
+		private float p2CurrentSpeed = 1.0f;
+		public AnimationCurve p2MoveCurve;
 
 		[Header("P2 skids to a stop")]
 		public float p2YSkidStartTime = 0.0f;
@@ -112,6 +116,8 @@ namespace Cutscene
 			p2BallScript = GameObject.Find(P2).GetComponent<PlayerBallInteraction>();
 			p1SkidScript = GameObject.Find(P1_AXIS).GetComponent<PlayerSkid>();
 			p2SkidScript = GameObject.Find(P2_AXIS).GetComponent<PlayerSkid>();
+			p2Axis = GameObject.Find(P2_AXIS).transform;
+			p2CurrentSpeed = p2BaseSpeed;
 			eventTimes = GetEventTimes();
 		}
 
@@ -177,7 +183,7 @@ namespace Cutscene
 					p1SkidScript.RotateAlongZ(p1ZSkidAngle, p1ZSkidDuration, p1ZSkidCurve);
 					break;
 				case 8:
-					StartCoroutine(MovePlayer(p2MovementScript, p2ForwardDuration, new List<string> {DOWN}));
+					StartCoroutine(MovePlayerAxis(p2Axis, p2ForwardDuration, UP));
 					break;
 				case 9:
 					p2SkidScript.RotateAlongY(p2YSkidAngle, p2YSkidDuration, p2YSkidCurve);
@@ -212,6 +218,34 @@ namespace Cutscene
 			while(moveTimer <= duration){
 				foreach (string direction in directions){
 					moveScript.Move(direction);
+				}
+
+				moveTimer += Time.deltaTime;
+
+				yield return null;
+			}
+
+			yield break;
+		}
+
+
+		/// <summary>
+		/// Move a player's entire axis, so that players can be moved around the scene and then still rotate
+		/// reasonably.
+		/// </summary>
+		private IEnumerator MovePlayerAxis(Transform axis, float duration, string direction){
+			float moveTimer = 0.0f;
+
+			while (moveTimer < duration){
+				p2CurrentSpeed = Mathf.Lerp(p2BaseSpeed, 0.0f, p2MoveCurve.Evaluate(timer/duration));
+
+				switch (direction){
+					case UP:
+						axis.position += new Vector3(0.0f, 0.0f, p2CurrentSpeed);
+						break;
+					default:
+						Debug.Log("Illegal direction: " + direction);
+						break;
 				}
 
 				moveTimer += Time.deltaTime;
