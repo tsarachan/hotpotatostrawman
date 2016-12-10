@@ -95,6 +95,14 @@ public class LevelManager : MonoBehaviour {
 	private int enemiesPerWave = 0;
 	private List<int> possibleSpawnersThisWave = new List<int>();
 
+	//these control whether the game has started
+	//the game starts when the ball is first passed; BallBehavior sets this to true as part of being thrown
+	private bool gameHasStarted = false;
+	public bool GameHasStarted{
+		get { return gameHasStarted; }
+		set { gameHasStarted = value; }
+	}
+
 
 	private void Start(){
 		spawners = FindSpawners();
@@ -117,7 +125,7 @@ public class LevelManager : MonoBehaviour {
 
 		//this is the overall loop: whenever the timer reaches the next read time, do something
 		//ReadInItem increases nextReadTime, and the cycle continues
-		if (!worldOver){
+		if (!worldOver && GameHasStarted){
 			timer += Time.deltaTime;
 
 			if (timer >= nextReadTime){

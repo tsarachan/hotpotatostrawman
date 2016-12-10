@@ -5,7 +5,7 @@
  * This script requires that player objects have different characters as the last characters in their names.
  * E.g., "Player 1" and "Player 2" are fine, "Player 1" and "Player 21" will cause a problem.
  * 
- * To add another control, follow these steps:
+ * To add another controller button or axis, follow these steps:
  * 1. Declare a string, and initialize it with the name of the control from the input manager.
  * 2. Declare and initialize a Dictionary<char, [script the control should talk to]>.
  * 3. Add a line in Start for the dictionary, following the pattern of the lines already there.
@@ -33,6 +33,7 @@ public class InputManager : MonoBehaviour {
 	private const string PLAYER_ORGANIZER = "Players";
 	private Dictionary<char, PlayerMovement> playerMovementScripts = new Dictionary<char, PlayerMovement>();
 	private Dictionary<char, PlayerBallInteraction> playerBallInteractionScripts = new Dictionary<char, PlayerBallInteraction>();
+	private LevelManager levelManager;
 
 	//variables relating to the thumbstick
 	public float deadZone = 0.3f; //must be between 0.0 and 1.0
@@ -41,13 +42,67 @@ public class InputManager : MonoBehaviour {
 	private const string LEFT = "left";
 	private const string RIGHT = "right";
 
+	//keyboard controls
+	private KeyCode p1UpKey = KeyCode.DownArrow;
+	private KeyCode p1DownKey = KeyCode.UpArrow;
+	private KeyCode p1LeftKey = KeyCode.LeftArrow;
+	private KeyCode p1RightKey = KeyCode.RightArrow;
+	private KeyCode p1PassKey = KeyCode.Z;
+	private Dictionary<KeyCode, string> p1KeyboardControls = new Dictionary<KeyCode, string>();
 
-	//initialize data structures
+	private KeyCode p2UpKey = KeyCode.K;
+	private KeyCode p2DownKey = KeyCode.I;
+	private KeyCode p2LeftKey = KeyCode.J;
+	private KeyCode p2RightKey = KeyCode.L;
+	private KeyCode p2PassKey = KeyCode.N;
+	private Dictionary<KeyCode, string> p2KeyboardControls = new Dictionary<KeyCode, string>();
+
+	private Dictionary<PlayerMovement, Dictionary<KeyCode, string>> keyboardControls = 
+		new Dictionary<PlayerMovement, Dictionary<KeyCode, string>>();
+
+
+
+
+	//initialize variables and data structures
 	private void Start(){
 		foreach (Transform player in GameObject.Find(PLAYER_ORGANIZER).transform){
 			playerMovementScripts.Add(player.name.Last(), player.GetComponent<PlayerMovement>());
 			playerBallInteractionScripts.Add(player.name.Last(), player.GetComponent<PlayerBallInteraction>());
 		}
+
+		levelManager = GetComponent<LevelManager>();
+		keyboardControls = SetUpKeyboardMovement();
+	}
+
+
+	/// <summary>
+	/// Populate dictionaries with keyboard movement controls, so that they can be checked in FixedUpdate().
+	/// 
+	/// The throw keys are intentionally left out, so that FixedUpdate() can just check movement-related inputs.
+	/// </summary>
+	/// <returns>A dictionary of dictionaries, which gives access to all player movement keyboard controls.</returns>
+	private Dictionary<PlayerMovement, Dictionary<KeyCode, string>> SetUpKeyboardMovement(){
+		Dictionary<PlayerMovement, Dictionary<KeyCode, string>> temp = new Dictionary<PlayerMovement, Dictionary<KeyCode, string>>();
+
+		p1KeyboardControls.Add(p1UpKey, UP);
+		p1KeyboardControls.Add(p1DownKey, DOWN);
+		p1KeyboardControls.Add(p1LeftKey, LEFT);
+		p1KeyboardControls.Add(p1RightKey, RIGHT);
+
+		p2KeyboardControls.Add(p2UpKey, UP);
+		p2KeyboardControls.Add(p2DownKey, DOWN);
+		p2KeyboardControls.Add(p2LeftKey, LEFT);
+		p2KeyboardControls.Add(p2RightKey, RIGHT);
+
+		foreach (char key in playerMovementScripts.Keys){
+			if (key == '1'){
+				temp.Add(playerMovementScripts[key], p1KeyboardControls);
+			} else if (key == '2'){
+				temp.Add(playerMovementScripts[key], p2KeyboardControls);
+			}
+		}
+
+		return temp;
 	}
 
 	/// <summary>
@@ -57,22 +112,38 @@ public class InputManager : MonoBehaviour {
 		foreach (char player in playerBallInteractionScripts.Keys){
 			if (Input.GetButtonDown(O_BUTTON + player)){
 				playerBallInteractionScripts[player].Throw();
+
+				//if a player has picked up the ball, start the game upon the first pass
+				//this will try to keep restarting the game--it's inefficient, but not causing performance problems
+				if (playerBallInteractionScripts[player].BallCarrier){
+					levelManager.GameHasStarted = true;
+				}
 			}
 		}
 	}
 
 	/// <summary>
-	/// Send movement instructions to player scripts when their players move the thumbstick.
+	/// Send movement instructions to player scripts when their players move the thumbstick or hit a keyboard key.
 	/// 
 	/// This is in FixedUpdate on the assumption that players move with physics.
 	/// </summary>
 	private void FixedUpdate(){
+		//thumbstick controls
 		foreach (char player in playerMovementScripts.Keys){
 			if (Input.GetAxis(VERT_AXIS + player) > deadZone) { playerMovementScripts[player].Move(UP); }
 			else if (Input.GetAxis(VERT_AXIS + player) < -deadZone) { playerMovementScripts[player].Move(DOWN); }
 
 			if (Input.GetAxis(HORIZ_AXIS + player) < -deadZone) { playerMovementScripts[player].Move(LEFT); }
 			else if (Input.GetAxis(HORIZ_AXIS + player) > deadZone) { playerMovementScripts[player].Move(RIGHT); }
+		}
+
+		//keyboard controls
+		foreach (PlayerMovement moveScript in keyboardControls.Keys){
+			foreach (KeyCode key in keyboardControls[moveScript].Keys){
+				if (Input.GetKey(key)){
+					moveScript.Move(keyboardControls[moveScript][key]);
+				}
+			}
 		}
 	}
 }
