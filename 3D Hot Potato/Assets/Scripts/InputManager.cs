@@ -135,26 +135,26 @@ public class InputManager : MonoBehaviour {
 		//controller buttons
 		foreach (char player in playerBallInteractionScripts.Keys){
 			if (Input.GetButtonDown(O_BUTTON + player)){
-				playerBallInteractionScripts[player].Throw();
-
 				//if a player has picked up the ball, start the game upon the first pass
 				//this will try to keep restarting the game--it's inefficient, but not causing performance problems
 				if (playerBallInteractionScripts[player].BallCarrier){
 					StartGame();
 				}
+
+				playerBallInteractionScripts[player].Throw();
 			}
 		}
 
 		//keyboard controls
 		foreach (PlayerBallInteraction script in passKeys.Keys){
 			if (Input.GetKeyDown(passKeys[script])){
-				script.Throw();
-			}
+				//if a player has picked up the ball, start the game upon the first pass
+				//this will try to keep restarting the game--it's inefficient, but not causing performance problems
+				if (script.BallCarrier){
+					StartGame();
+				}
 
-			//if a player has picked up the ball, start the game upon the first pass
-			//this will try to keep restarting the game--it's inefficient, but not causing performance problems
-			if (script.BallCarrier){
-				StartGame();
+				script.Throw();
 			}
 		}
 	}
