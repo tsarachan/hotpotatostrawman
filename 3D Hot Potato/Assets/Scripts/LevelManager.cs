@@ -318,17 +318,13 @@ public class LevelManager : MonoBehaviour {
 		nextSpawnTimes.Clear(); //reset the list of when enemies will spawn
 		spawnIndex = 0; //reset the index variable used to go through the list of spawn times
 
-		Debug.Log("numWaves == " + numWaves);
-
 		//add times when enemies will spawn to the list
 		//this will always add 0.0, so the first wave will spawn right away
 		//if there are additional waves, this will add times when they should appear
 		for (int i = 0; i < numWaves; i++){
 			nextSpawnTimes.Add(i * timeBetweenWaves + (timeVariance * OneOrNegativeOne()));
-			Debug.Log("Added " + nextSpawnTimes[i] + " to nextSpawnTimes");
 		}
-
-		Debug.Log("nextSpawnTimes.Count == " + nextSpawnTimes.Count);
+			
 		//SpawnAWave() needs this information to make enemies
 		enemyToMake = enemyName;
 		enemiesPerWave = numPerWave;
@@ -350,7 +346,6 @@ public class LevelManager : MonoBehaviour {
 	/// </summary>
 	/// <returns>spawnIndex's new value.</returns>
 	private int SpawnAWave(){
-		Debug.Log("SpawnAWave() called; enemyToMake == " + enemyToMake);
 		possibleSpawnersThisWave = ShuffleList(possibleSpawnersThisWave);
 
 		for (int i = 0; i < enemiesPerWave; i++){

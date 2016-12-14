@@ -63,6 +63,7 @@ public class InputManager : MonoBehaviour {
 	//variables needed to start the game with the first pass
 	private LevelManager levelManager;
 	private const string ROAD_TREADMILL = "Treadmill";
+	private const string BUILDING_ORGANIZER = "Buildings";
 
 
 
@@ -194,6 +195,10 @@ public class InputManager : MonoBehaviour {
 
 		foreach (Transform roadSection in GameObject.Find(ROAD_TREADMILL).transform){
 			roadSection.GetComponent<EnvironmentMove>().GameHasStarted = true;
+		}
+
+		foreach (Transform building in GameObject.Find(BUILDING_ORGANIZER).transform){
+			building.GetComponent<EnvironmentMove>().GameHasStarted = true;
 		}
 	}
 }

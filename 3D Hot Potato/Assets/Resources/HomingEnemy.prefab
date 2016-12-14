@@ -192,11 +192,11 @@ MonoBehaviour:
   - 6
   - 8
   speedBoost: 4.2
-  onScreenTime: 1.8
+  onScreenTime: 2.4
   leavingScreenColor: {r: 1, g: 0.32941177, b: 0.94509804, a: 1}
   preparingToChargeColor: {r: 1, g: 0.029411793, b: 0.12981711, a: 0}
-  enterDistance: 35
-  enterTime: 2
+  enterDistance: 75
+  enterTime: 0.5
   enterCurve:
     serializedVersion: 2
     m_Curve:

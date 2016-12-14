@@ -35,8 +35,11 @@ public class EnemyHoming : EnemyBase {
 
 	//these variables are used to bring enemies onto the screen, allowing players to see them before they start attacking
 	private bool enteringScreen = true;
-	public float enterDistance = 5.0f; //how far the homing enemy will move before it starts attacking
-	public float enterTime = 2.0f;
+	public float enterDistance = 5.0f; //how far homing enemies will lerp before attacking
+	private float sideSpawnXCoord = 35.0f; //if the enemy is past this X coordinate, it's coming from a side spawner
+	private float buildingXCoord = 0.0f; //we'll find a building, and use its X coordinate to figure out how far out spawners might be
+	private const string BUILDINGS_ORGANIZER = "Buildings";
+	public float enterTime = 2.0f; //time spent lerping into the scene
 	private float timer = 0.0f;
 	public AnimationCurve enterCurve;
 	private Vector3 start;
@@ -50,9 +53,8 @@ public class EnemyHoming : EnemyBase {
 		//destroyParticle = Resources.Load("DestroyParticle") as GameObject;
 		myMaxSpeed = maxSpeeds[Random.Range(0, maxSpeeds.Length)];
 		start = transform.position;
-		end = new Vector3(transform.position.x,
-			transform.position.y,
-			transform.position.z - enterDistance);
+		buildingXCoord = GameObject.Find(BUILDINGS_ORGANIZER).transform.GetChild(0).position.x;
+		end = DetermineEntryEndPoint();
 		myPointLight = transform.GetChild(0).GetComponent<Light>();
 		startColor = myPointLight.color;
 		startIntensity = myPointLight.intensity;
@@ -76,6 +78,17 @@ public class EnemyHoming : EnemyBase {
 		}
 	}
 
+	private Vector3 DetermineEntryEndPoint(){
+		//check to see if this enemy is off to the left side; if so, it needs to lerp sideways
+		if (transform.position.x < -Mathf.Abs(buildingXCoord)){
+			return new Vector3(transform.position.x + enterDistance, transform.position.y, transform.position.z);
+		} else if (transform.position.x > Mathf.Abs(buildingXCoord)){ //check if the enemy is off to the right side
+			return new Vector3(transform.position.x - enterDistance, transform.position.y, transform.position.z);
+		} else { //not off to the side; the enemy is coming from the top
+			return new Vector3(transform.position.x, transform.position.y, transform.position.z - enterDistance);
+		}
+	}
+
 	private void FixedUpdate(){
 		//if frozen, this enemy is immobilized. It retains its old force. 
 //		if (frozen){
@@ -95,7 +108,14 @@ public class EnemyHoming : EnemyBase {
 				rb.AddForce(direction * Speed, ForceMode.Force);
 				if(stayTimer >= onScreenTime - 1.5f){
 					myPointLight.color = preparingToChargeColor;
-					myPointLight.intensity = 8.0f; //set the light to maximum intensity to signify danger
+//					if(myPointLight.intensity < 5f){
+//						myPointLight.intensity = 5.1f;
+//					}
+//					else if(myPointLight.intensity <8f){
+//						Debug.Log("reached this");
+//						myPointLight.intensity += 0.003f;
+//					}
+					//myPointLight.intensity = 8.0f; //set the light to maximum intensity to signify danger
 				}
 			} else {
 				//stop changing direction; the enemy goes off-screen
@@ -103,6 +123,9 @@ public class EnemyHoming : EnemyBase {
 				myPointLight.color = leavingScreenColor;
 				myPointLight.intensity = 8.0f; //set the light to maximum intensity to signify danger
 			}
+
+			//increase intensity of point light while on screen
+			myPointLight.intensity = Mathf.Lerp(startIntensity, 8.0f, stayTimer/onScreenTime);
 
 			//This is a bodge to limit maximum speed. The better way would be to impose a countervailing force.
 			//Directly manipulating rigidbody velocity could lead to physics problems.
@@ -145,6 +168,10 @@ public class EnemyHoming : EnemyBase {
 		timer = 0.0f;
 		stayTimer = 0.0f;
 		enteringScreen = true;
+
+		//find the end point of the enemy's entry onto the screen
+		start = transform.position;
+		end = DetermineEntryEndPoint();
 
 
 		//reset the enemy's light
