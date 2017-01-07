@@ -5004,10 +5004,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b968e56a8788b4b85a776ca00a3d432f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxForwardLean: -45
-  maxBackwardLean: 60
+  maxForwardLean: 10
+  maxBackwardLean: 35
   maxSideLean: 45
-  rotationSpeed: 10
+  rotationSpeed: 3
 --- !u!1 &2108749853
 GameObject:
   m_ObjectHideFlags: 0

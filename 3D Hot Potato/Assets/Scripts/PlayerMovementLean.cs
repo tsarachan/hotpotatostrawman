@@ -13,7 +13,7 @@ public class PlayerMovementLean : MonoBehaviour {
 
 	//how far the rotation target will turn in different directions. These values are in degrees.
 	public float maxForwardLean = 45.0f;
-	public float maxBackwardLean = -60.0f;
+	public float maxBackwardLean = 60.0f; //this must be a positive number!
 	public float maxSideLean = 45.0f;
 
 	//possible directions for leaning; these must match the directions in InputManager
@@ -36,12 +36,13 @@ public class PlayerMovementLean : MonoBehaviour {
 		Vector3 temp = rotationTarget.eulerAngles;
 
 		switch(dir){
+			//note that up and down are reversed in the input manager, and thus here as well
 			case UP:
-				temp.x = maxForwardLean;
+				temp.x = -maxBackwardLean;
 				rotationTarget.rotation = Quaternion.Euler(temp);
 				break;
 			case DOWN:
-				temp.x = maxBackwardLean;
+				temp.x = maxForwardLean;
 				rotationTarget.rotation = Quaternion.Euler(temp);
 				break;
 			case LEFT:
