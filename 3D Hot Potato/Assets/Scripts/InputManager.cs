@@ -33,6 +33,7 @@ public class InputManager : MonoBehaviour {
 	private const string PLAYER_ORGANIZER = "Players";
 	private Dictionary<char, PlayerMovement> playerMovementScripts = new Dictionary<char, PlayerMovement>();
 	private Dictionary<char, PlayerBallInteraction> playerBallInteractionScripts = new Dictionary<char, PlayerBallInteraction>();
+	private Dictionary<char, PlayerMovementLean> playerLeanScripts = new Dictionary<char, PlayerMovementLean>();
 
 	//variables relating to the thumbstick
 	public float deadZone = 0.3f; //must be between 0.0 and 1.0
@@ -59,6 +60,8 @@ public class InputManager : MonoBehaviour {
 	private Dictionary<KeyCode, string> p2KeyboardControls = new Dictionary<KeyCode, string>();
 	private Dictionary<PlayerMovement, Dictionary<KeyCode, string>> movementKeys = 
 		new Dictionary<PlayerMovement, Dictionary<KeyCode, string>>();
+	private Dictionary<PlayerMovementLean, Dictionary<KeyCode, string>> leanKeys = 
+		new Dictionary<PlayerMovementLean, Dictionary<KeyCode, string>>();
 
 	//variables needed to start the game with the first pass
 	private LevelManager levelManager;
@@ -72,10 +75,12 @@ public class InputManager : MonoBehaviour {
 		foreach (Transform player in GameObject.Find(PLAYER_ORGANIZER).transform){
 			playerMovementScripts.Add(player.name.Last(), player.GetComponent<PlayerMovement>());
 			playerBallInteractionScripts.Add(player.name.Last(), player.GetComponent<PlayerBallInteraction>());
+			playerLeanScripts.Add(player.name.Last(), player.GetComponent<PlayerMovementLean>());
 		}
 
 		levelManager = GetComponent<LevelManager>();
 		movementKeys = SetUpKeyboardMovement();
+		leanKeys = SetUpKeyboardLean();
 		passKeys = SetUpKeyboardPassing();
 	}
 
@@ -104,6 +109,25 @@ public class InputManager : MonoBehaviour {
 				temp.Add(playerMovementScripts[key], p1KeyboardControls);
 			} else if (key == '2'){
 				temp.Add(playerMovementScripts[key], p2KeyboardControls);
+			}
+		}
+
+		return temp;
+	}
+
+	/// <summary>
+	/// Populate dictionaries with keyboard controls, so that they can be checked in FixedUpdate().
+	/// </summary>
+	/// <returns>A dictionary of dictionaries, which gives access to keyboard controls for leaning.</returns>
+	private Dictionary<PlayerMovementLean, Dictionary<KeyCode, string>> SetUpKeyboardLean(){
+		Dictionary<PlayerMovementLean, Dictionary<KeyCode, string>> temp = 
+			new Dictionary<PlayerMovementLean, Dictionary<KeyCode, string>>();
+
+		foreach (char key in playerLeanScripts.Keys){
+			if (key == '1'){
+				temp.Add(playerLeanScripts[key], p1KeyboardControls);
+			} else if (key == '2'){
+				temp.Add(playerLeanScripts[key], p2KeyboardControls);
 			}
 		}
 
@@ -168,11 +192,37 @@ public class InputManager : MonoBehaviour {
 	private void FixedUpdate(){
 		//thumbstick controls
 		foreach (char player in playerMovementScripts.Keys){
-			if (Input.GetAxis(VERT_AXIS + player) > deadZone) { playerMovementScripts[player].Move(UP); }
-			else if (Input.GetAxis(VERT_AXIS + player) < -deadZone) { playerMovementScripts[player].Move(DOWN); }
+			if (Input.GetAxis(VERT_AXIS + player) > deadZone){
+				playerMovementScripts[player].Move(UP);
 
-			if (Input.GetAxis(HORIZ_AXIS + player) < -deadZone) { playerMovementScripts[player].Move(LEFT); }
-			else if (Input.GetAxis(HORIZ_AXIS + player) > deadZone) { playerMovementScripts[player].Move(RIGHT); }
+				//sanity check: playerLeanScripts and playerMovementScripts should always have the same keys,
+				//but make sure to avoid null reference exceptions
+				if (playerLeanScripts.ContainsKey(player)){
+					playerLeanScripts[player].Lean(UP);
+				}
+			}
+			else if (Input.GetAxis(VERT_AXIS + player) < -deadZone){
+				playerMovementScripts[player].Move(DOWN);
+
+				if (playerLeanScripts.ContainsKey(player)){
+					playerLeanScripts[player].Lean(DOWN);
+				}
+			}
+
+			if (Input.GetAxis(HORIZ_AXIS + player) < -deadZone){
+				playerMovementScripts[player].Move(LEFT);
+
+				if (playerLeanScripts.ContainsKey(player)){
+					playerLeanScripts[player].Lean(LEFT);
+				}
+			}
+			else if (Input.GetAxis(HORIZ_AXIS + player) > deadZone){
+				playerMovementScripts[player].Move(RIGHT);
+
+				if (playerLeanScripts.ContainsKey(player)){
+					playerLeanScripts[player].Lean(RIGHT);
+				}
+			}
 		}
 
 		//keyboard controls
@@ -181,6 +231,16 @@ public class InputManager : MonoBehaviour {
 			foreach (KeyCode key in movementKeys[moveScript].Keys){
 				if (Input.GetKey(key)){
 					moveScript.Move(movementKeys[moveScript][key]);
+				}
+			}
+		}
+
+		//check each movement key for each player; if it's pressed, send the instruction to lean
+		foreach (PlayerMovementLean leanScript in leanKeys.Keys){
+			foreach (KeyCode key in leanKeys[leanScript].Keys){
+				if (Input.GetKey(key)){
+					leanScript.Lean(leanKeys[leanScript][key]);
+					Debug.Log("Input detected");
 				}
 			}
 		}
