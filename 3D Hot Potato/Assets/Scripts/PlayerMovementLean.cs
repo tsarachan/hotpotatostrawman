@@ -1,4 +1,9 @@
-﻿using UnityEngine;
+﻿/*
+ * 
+ * This script rotates the player's cycle and rider according to the current input (or lack thereof).
+ * 
+ */
+using UnityEngine;
 using System.Collections;
 
 public class PlayerMovementLean : MonoBehaviour {
@@ -26,12 +31,17 @@ public class PlayerMovementLean : MonoBehaviour {
 	public float rotationSpeed = 10.0f;
 
 
+	//initialize variables
 	private void Start(){
 		cycleAndRider = transform.Find(CYCLE_AND_RIDER_OBJ);
 		rotationTarget = transform.Find(ROTATION_TARGET_OBJ);
 	}
 
 
+	/// <summary>
+	/// InputManager calls this to set the target rotation the cycle and rider will turn towards.
+	/// </summary>
+	/// <param name="dir">The direction of movement, provided by InputManager.</param>
 	public void Lean(string dir){
 		Vector3 temp = rotationTarget.eulerAngles;
 
@@ -60,13 +70,18 @@ public class PlayerMovementLean : MonoBehaviour {
 	}
 
 
-	private void Update(){
+	/// <summary>
+	/// Rotate the cycle and rider toward the target, and then pull the rotation target back to no rotation.
+	/// 
+	/// In each frame of continuous movement, the target will always be set to the intended rotation by InputManager,
+	/// then this function will rotate the player toward the target and reset the target. The reset is harmless,
+	/// since InputManager will put it back where it's supposed to be before this turns the player.
+	/// </summary>
+	private void LateUpdate(){
 		cycleAndRider.rotation = Quaternion.RotateTowards(cycleAndRider.rotation,
 														  rotationTarget.rotation,
-														  rotationSpeed);
+														  rotationSpeed * Time.deltaTime);
 
-		rotationTarget.rotation = Quaternion.RotateTowards(rotationTarget.rotation,
-														   Quaternion.identity,
-														   rotationSpeed);
+		rotationTarget.rotation = Quaternion.identity;
 	}
 }

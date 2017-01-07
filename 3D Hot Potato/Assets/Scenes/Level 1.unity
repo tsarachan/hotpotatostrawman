@@ -5007,7 +5007,7 @@ MonoBehaviour:
   maxForwardLean: 10
   maxBackwardLean: 35
   maxSideLean: 45
-  rotationSpeed: 3
+  rotationSpeed: 70
 --- !u!1 &2108749853
 GameObject:
   m_ObjectHideFlags: 0
