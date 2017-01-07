@@ -738,10 +738,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b968e56a8788b4b85a776ca00a3d432f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxForwardLean: 45
-  maxBackwardLean: -60
+  maxForwardLean: 10
+  maxBackwardLean: 35
   maxSideLean: 45
-  rotationSpeed: 10
+  rotationSpeed: 70
 --- !u!65 &290731065
 BoxCollider:
   m_ObjectHideFlags: 0
