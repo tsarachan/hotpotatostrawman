@@ -240,7 +240,6 @@ public class InputManager : MonoBehaviour {
 			foreach (KeyCode key in leanKeys[leanScript].Keys){
 				if (Input.GetKey(key)){
 					leanScript.Lean(leanKeys[leanScript][key]);
-					Debug.Log("Input detected");
 				}
 			}
 		}
