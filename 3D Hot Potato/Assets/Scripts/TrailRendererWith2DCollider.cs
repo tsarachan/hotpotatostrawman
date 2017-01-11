@@ -223,12 +223,24 @@ public class TrailRendererWith2DCollider : MonoBehaviour {
 
 			//trail vertices
 			int vertIndex = i * 2;
-			vertices[vertIndex] = leftVert.Position;
-			vertices[vertIndex + 1] = rightVert.Position;
+
+			Vector3 newLeftPos = leftVert.Position;
+			newLeftPos.z = trans.position.z - i;
+			vertices[vertIndex] = newLeftPos;
+
+			Vector3 newRightPos = rightVert.Position;
+			newRightPos.z = trans.position.z - i;
+			vertices[vertIndex + 1] = newRightPos;
+
+//			vertices[vertIndex] = leftVert.Position;
+//			vertices[vertIndex + 1] = rightVert.Position;
 
 			//collider vertices 
-			colliderPath[i] = leftVert.Position;
-			colliderPath[colliderPath.Length - (i + 1) ] = rightVert.Position;
+//			colliderPath[i] = leftVert.Position;
+//			colliderPath[colliderPath.Length - (i + 1) ] = rightVert.Position;
+
+			colliderPath[i] = newLeftPos;
+			colliderPath[colliderPath.Length - (i + 1) ] = newRightPos;
 
 			//trail uvs
 			float uvValue = leftVert.TimeAlive / timeDelta;

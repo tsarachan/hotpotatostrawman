@@ -63,7 +63,7 @@ public class InputManager : MonoBehaviour {
 	private Dictionary<PlayerMovementLean, Dictionary<KeyCode, string>> leanKeys = 
 		new Dictionary<PlayerMovementLean, Dictionary<KeyCode, string>>();
 
-	//variables needed to start the game with the first pass
+	//additional variables needed to start the game with the first pass
 	private LevelManager levelManager;
 	private const string ROAD_TREADMILL = "Treadmill";
 	private const string BUILDING_ORGANIZER = "Buildings";
@@ -258,6 +258,10 @@ public class InputManager : MonoBehaviour {
 
 		foreach (Transform building in GameObject.Find(BUILDING_ORGANIZER).transform){
 			building.GetComponent<EnvironmentMove>().GameHasStarted = true;
+		}
+
+		foreach (Transform player in GameObject.Find(PLAYER_ORGANIZER).transform){
+			player.GetComponent<BackwardsTrail>().StartGame();
 		}
 	}
 }
