@@ -17,6 +17,9 @@ public class BackwardsTrail : MonoBehaviour {
 	private Mesh mesh; //the mesh that will be used to render the trail
 	public Material trailMaterial; //the trail's material. This is set in Start(), and can't be changed at runtime
 
+	//the position, in the player's local space, where the trail should begin
+	public Vector3 startPoint = new Vector3(0.0f, 1.6f, -1.9f);
+
 	//the position, in the player's local space, where the trail should end when there is no input
 	public Vector3 neutralPoint = new Vector3(0.0f, 0.0f, -1.0f);
 
@@ -35,7 +38,7 @@ public class BackwardsTrail : MonoBehaviour {
 		GameObject trail = new GameObject(gameObject.name + " trail", new[] { typeof(MeshRenderer), typeof(MeshFilter) } );
 		mesh = trail.GetComponent<MeshFilter>().mesh = new Mesh();
 		trail.GetComponent<Renderer>().material = trailMaterial;
-		trail.GetComponent<Renderer>().material.color = trailColor;
+		//trail.GetComponent<Renderer>().material.color = trailColor;
 	}
 
 
@@ -74,8 +77,8 @@ public class BackwardsTrail : MonoBehaviour {
 		Vector3[] vertices = new Vector3[3];
 
 		vertices[0] = trailEnd.position;
-		vertices[1] = transform.position + new Vector3(distToCorner, 0.0f, 0.0f);
-		vertices[2] = transform.position + new Vector3(-distToCorner, 0.0f, 0.0f);
+		vertices[1] = transform.position + startPoint + new Vector3(distToCorner, 0.0f, 0.0f);
+		vertices[2] = transform.position + startPoint + new Vector3(-distToCorner, 0.0f, 0.0f);
 
 		mesh.vertices = vertices;
 
