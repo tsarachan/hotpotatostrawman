@@ -2,13 +2,17 @@
  * 
  * This script takes in all inputs, and sends them out to the appropriate player scripts.
  * 
- * This script requires that player objects have different characters as the last characters in their names.
- * E.g., "Player 1" and "Player 2" are fine, "Player 1" and "Player 21" will cause a problem.
+ * This script requires that player objects have successive numbers as the last characters in their names,
+ * starting with 1.
+ * E.g., "Player 1" and "Player 2" are fine, "Player 1" and "Player 21" will cause a problem, as will "Player A."
  * 
- * To add another controller button or axis, follow these steps:
- * 1. Declare a string, and initialize it with the name of the control from the input manager.
- * 2. Declare and initialize a Dictionary<char, [script the control should talk to]>.
- * 3. Add a line in Start for the dictionary, following the pattern of the lines already there.
+ * Every player's scripts and keyboard controls are contained in a Player object. The Player class is at
+ * the bottom of this script.
+ * 
+ * To add a new script that receives inputs, follow these steps:
+ * 1. Declare the script in the Player class.
+ * 2. Add the script to the Player constructor, following the format the existing scripts use.
+ * 3. Get the script component in MakePlayers().
  * 
  */
 
@@ -18,22 +22,19 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class InputManager : MonoBehaviour {
+	
 
-	/*
-	 * 
-	 * Put a string for every control players will use. Use the input axes from the input manager.
-	 * Leave off the number for the player.
-	 * 
-	 */
+	//gamepad axes and buttons. Player numbers are intentionally left off.
 	private const string VERT_AXIS = "PS4_LStick_Vert_";
 	private const string HORIZ_AXIS = "PS4_LStick_Horiz_";
 	private const string O_BUTTON = "PS4_O_";
 
-	//these are used to get the player scripts so that inputs can be directed
+
+	//the players
 	private const string PLAYER_ORGANIZER = "Players";
-	private Dictionary<char, PlayerMovement> playerMovementScripts = new Dictionary<char, PlayerMovement>();
-	private Dictionary<char, PlayerBallInteraction> playerBallInteractionScripts = new Dictionary<char, PlayerBallInteraction>();
-	private Dictionary<char, PlayerMovementLean> playerLeanScripts = new Dictionary<char, PlayerMovementLean>();
+	private const string PLAYER_OBJ = "Player ";
+	private Dictionary<char, Player> players = new Dictionary<char, Player>();
+
 
 	//variables relating to the thumbstick
 	public float deadZone = 0.3f; //must be between 0.0 and 1.0
@@ -42,26 +43,20 @@ public class InputManager : MonoBehaviour {
 	private const string LEFT = "left";
 	private const string RIGHT = "right";
 
+
 	//keyboard controls
-	private KeyCode p1UpKey = KeyCode.DownArrow;
-	private KeyCode p1DownKey = KeyCode.UpArrow;
-	private KeyCode p1LeftKey = KeyCode.LeftArrow;
-	private KeyCode p1RightKey = KeyCode.RightArrow;
-	private KeyCode p1PassKey = KeyCode.Z;
-	private Dictionary<KeyCode, string> p1KeyboardControls = new Dictionary<KeyCode, string>();
+	private const KeyCode p1UpKey = KeyCode.DownArrow;
+	private const KeyCode p1DownKey = KeyCode.UpArrow;
+	private const KeyCode p1LeftKey = KeyCode.LeftArrow;
+	private const KeyCode p1RightKey = KeyCode.RightArrow;
+	private const KeyCode p1PassKey = KeyCode.Z;
 
-	private KeyCode p2UpKey = KeyCode.K;
-	private KeyCode p2DownKey = KeyCode.I;
-	private KeyCode p2LeftKey = KeyCode.J;
-	private KeyCode p2RightKey = KeyCode.L;
-	private KeyCode p2PassKey = KeyCode.N;
+	private const KeyCode p2UpKey = KeyCode.K;
+	private const KeyCode p2DownKey = KeyCode.I;
+	private const KeyCode p2LeftKey = KeyCode.J;
+	private const KeyCode p2RightKey = KeyCode.L;
+	private const KeyCode p2PassKey = KeyCode.N;
 
-	private Dictionary<PlayerBallInteraction, KeyCode> passKeys = new Dictionary<PlayerBallInteraction, KeyCode>();
-	private Dictionary<KeyCode, string> p2KeyboardControls = new Dictionary<KeyCode, string>();
-	private Dictionary<PlayerMovement, Dictionary<KeyCode, string>> movementKeys = 
-		new Dictionary<PlayerMovement, Dictionary<KeyCode, string>>();
-	private Dictionary<PlayerMovementLean, Dictionary<KeyCode, string>> leanKeys = 
-		new Dictionary<PlayerMovementLean, Dictionary<KeyCode, string>>();
 
 	//additional variables needed to start the game with the first pass
 	private LevelManager levelManager;
@@ -72,176 +67,153 @@ public class InputManager : MonoBehaviour {
 
 	//initialize variables and data structures
 	private void Start(){
-		foreach (Transform player in GameObject.Find(PLAYER_ORGANIZER).transform){
-			playerMovementScripts.Add(player.name.Last(), player.GetComponent<PlayerMovement>());
-			playerBallInteractionScripts.Add(player.name.Last(), player.GetComponent<PlayerBallInteraction>());
-			playerLeanScripts.Add(player.name.Last(), player.GetComponent<PlayerMovementLean>());
-		}
-
+		players = MakePlayers();
 		levelManager = GetComponent<LevelManager>();
-		movementKeys = SetUpKeyboardMovement();
-		leanKeys = SetUpKeyboardLean();
-		passKeys = SetUpKeyboardPassing();
 	}
 
 
 	/// <summary>
-	/// Populate dictionaries with keyboard movement controls, so that they can be checked in FixedUpdate().
-	/// 
-	/// The throw keys are intentionally left out, so that FixedUpdate() can just check movement-related inputs.
+	/// Creates an object for each player. The object contains references to all of the scripts that player
+	/// needs to send input to, as well as the player's keyboard controls.
 	/// </summary>
-	/// <returns>A dictionary of dictionaries, which gives access to all player movement keyboard controls.</returns>
-	private Dictionary<PlayerMovement, Dictionary<KeyCode, string>> SetUpKeyboardMovement(){
-		Dictionary<PlayerMovement, Dictionary<KeyCode, string>> temp = new Dictionary<PlayerMovement, Dictionary<KeyCode, string>>();
+	/// <returns>A dictionary containing the player objects, indexed by the player's number.</returns>
+	private Dictionary<char, Player> MakePlayers(){
+		Dictionary<char, Player> temp = new Dictionary<char, Player>();
 
-		p1KeyboardControls.Add(p1UpKey, UP);
-		p1KeyboardControls.Add(p1DownKey, DOWN);
-		p1KeyboardControls.Add(p1LeftKey, LEFT);
-		p1KeyboardControls.Add(p1RightKey, RIGHT);
+		for (int i = 1; i < 3; i++){
+			Transform playerObj = transform.root.Find(PLAYER_ORGANIZER).Find(PLAYER_OBJ + i.ToString());
 
-		p2KeyboardControls.Add(p2UpKey, UP);
-		p2KeyboardControls.Add(p2DownKey, DOWN);
-		p2KeyboardControls.Add(p2LeftKey, LEFT);
-		p2KeyboardControls.Add(p2RightKey, RIGHT);
-
-		foreach (char key in playerMovementScripts.Keys){
-			if (key == '1'){
-				temp.Add(playerMovementScripts[key], p1KeyboardControls);
-			} else if (key == '2'){
-				temp.Add(playerMovementScripts[key], p2KeyboardControls);
+			if (i == 1){
+				Player newPlayer = new Player(char.Parse(i.ToString()),
+											  playerObj.GetComponent<PlayerMovement>(),
+											  playerObj.GetComponent<PlayerBallInteraction>(),
+											  playerObj.GetComponent<PlayerMovementLean>(),
+											  p1UpKey,
+											  p1DownKey,
+											  p1LeftKey,
+											  p1RightKey,
+											  p1PassKey);
+				temp.Add(char.Parse(i.ToString()), newPlayer);
+			} else if (i == 2) {
+				Player newPlayer = new Player(char.Parse(i.ToString()),
+											  playerObj.GetComponent<PlayerMovement>(),
+											  playerObj.GetComponent<PlayerBallInteraction>(),
+											  playerObj.GetComponent<PlayerMovementLean>(),
+											  p2UpKey,
+											  p2DownKey,
+											  p2LeftKey,
+											  p2RightKey,
+											  p2PassKey);
+				temp.Add(char.Parse(i.ToString()), newPlayer);
+			} else {
+				Debug.Log("Illegal player number: " + i);
 			}
 		}
 
-		return temp;
-	}
-
-	/// <summary>
-	/// Populate dictionaries with keyboard controls, so that they can be checked in FixedUpdate().
-	/// </summary>
-	/// <returns>A dictionary of dictionaries, which gives access to keyboard controls for leaning.</returns>
-	private Dictionary<PlayerMovementLean, Dictionary<KeyCode, string>> SetUpKeyboardLean(){
-		Dictionary<PlayerMovementLean, Dictionary<KeyCode, string>> temp = 
-			new Dictionary<PlayerMovementLean, Dictionary<KeyCode, string>>();
-
-		foreach (char key in playerLeanScripts.Keys){
-			if (key == '1'){
-				temp.Add(playerLeanScripts[key], p1KeyboardControls);
-			} else if (key == '2'){
-				temp.Add(playerLeanScripts[key], p2KeyboardControls);
-			}
+		if (temp.Count == 2) {
+			return temp;
+		} else {
+			Debug.Log("Illegal number of players: " + temp.Count);
+			return temp;
 		}
-
-		return temp;
 	}
 
-
-	/// <summary>
-	/// Adds keyboard passing keys to a dictionary that can be checked in Update().
-	/// </summary>
-	/// <returns>A dictionary of keyboard keys used for passing.</returns>
-	private Dictionary<PlayerBallInteraction, KeyCode> SetUpKeyboardPassing(){
-		Dictionary<PlayerBallInteraction, KeyCode> temp = new Dictionary<PlayerBallInteraction, KeyCode>();
-
-		foreach (char key in playerBallInteractionScripts.Keys){
-			if (key == '1'){
-				temp.Add(playerBallInteractionScripts[key], p1PassKey);
-			} else if (key == '2'){
-				temp.Add(playerBallInteractionScripts[key], p2PassKey);
-			}
-		}
-
-		return temp;
-	}
 
 	/// <summary>
 	/// Send button presses to player scripts when players input them.
 	/// </summary>
 	private void Update(){
 		//controller buttons
-		foreach (char player in playerBallInteractionScripts.Keys){
+		foreach (char player in players.Keys){
 			if (Input.GetButtonDown(O_BUTTON + player)){
 				//if a player has picked up the ball, start the game upon the first pass
 				//this will try to keep restarting the game--it's inefficient, but not causing performance problems
-				if (playerBallInteractionScripts[player].BallCarrier){
+				if (players[player].BallScript.BallCarrier){
 					StartGame();
 				}
 
-				playerBallInteractionScripts[player].Throw();
+				players[player].BallScript.Throw();
 			}
 		}
 
-		//keyboard controls
-		foreach (PlayerBallInteraction script in passKeys.Keys){
-			if (Input.GetKeyDown(passKeys[script])){
-				//if a player has picked up the ball, start the game upon the first pass
-				//this will try to keep restarting the game--it's inefficient, but not causing performance problems
-				if (script.BallCarrier){
-					StartGame();
-				}
-
-				script.Throw();
-			}
-		}
+		/* 
+		 * 
+		 * Player keyboard controls are checked in FixedUpdate(). This may lead to slight variations in play
+		 * between keyboard and controller play, since FixedUpdate() can run more than once per frame.
+		 * 
+		 */
 	}
 
+
 	/// <summary>
-	/// Send movement instructions to player scripts when their players move the thumbstick or hit a keyboard key.
+	/// Send instructions to player scripts when their players move the thumbstick or hit a keyboard key.
 	/// 
 	/// This is in FixedUpdate on the assumption that players move with physics.
 	/// </summary>
 	private void FixedUpdate(){
 		//thumbstick controls
-		foreach (char player in playerMovementScripts.Keys){
+		foreach (char player in players.Keys){
 			if (Input.GetAxis(VERT_AXIS + player) > deadZone){
-				playerMovementScripts[player].Move(UP);
-
-				//sanity check: playerLeanScripts and playerMovementScripts should always have the same keys,
-				//but make sure to avoid null reference exceptions
-				if (playerLeanScripts.ContainsKey(player)){
-					playerLeanScripts[player].Lean(UP);
-				}
+				players[player].MoveScript.Move(UP);
+				players[player].LeanScript.Lean(UP);
 			}
 			else if (Input.GetAxis(VERT_AXIS + player) < -deadZone){
-				playerMovementScripts[player].Move(DOWN);
-
-				if (playerLeanScripts.ContainsKey(player)){
-					playerLeanScripts[player].Lean(DOWN);
-				}
+				players[player].MoveScript.Move(DOWN);
+				players[player].LeanScript.Lean(DOWN);
 			}
 
 			if (Input.GetAxis(HORIZ_AXIS + player) < -deadZone){
-				playerMovementScripts[player].Move(LEFT);
-
-				if (playerLeanScripts.ContainsKey(player)){
-					playerLeanScripts[player].Lean(LEFT);
-				}
+				players[player].MoveScript.Move(LEFT);
+				players[player].LeanScript.Lean(LEFT);
 			}
 			else if (Input.GetAxis(HORIZ_AXIS + player) > deadZone){
-				playerMovementScripts[player].Move(RIGHT);
-
-				if (playerLeanScripts.ContainsKey(player)){
-					playerLeanScripts[player].Lean(RIGHT);
-				}
+				players[player].MoveScript.Move(RIGHT);
+				players[player].LeanScript.Lean(RIGHT);
 			}
 		}
 
 		//keyboard controls
-		//check each movement key for each player; if it's pressed, send the instruction to move
-		foreach (PlayerMovement moveScript in movementKeys.Keys){
-			foreach (KeyCode key in movementKeys[moveScript].Keys){
-				if (Input.GetKey(key)){
-					moveScript.Move(movementKeys[moveScript][key]);
+		foreach (char player in players.Keys){
+			foreach (KeyCode control in players[player].keyboardControls){
+				if (Input.GetKey(control)){
+					InputByKey(player, control);
 				}
 			}
 		}
+	}
 
-		//check each movement key for each player; if it's pressed, send the instruction to lean
-		foreach (PlayerMovementLean leanScript in leanKeys.Keys){
-			foreach (KeyCode key in leanKeys[leanScript].Keys){
-				if (Input.GetKey(key)){
-					leanScript.Lean(leanKeys[leanScript][key]);
-				}
-			}
+
+	/// <summary>
+	/// Handles all keyboard inputs.
+	/// </summary>
+	/// <param name="numOfPlayer">The dictionary index for the player who gave the input.</param>
+	/// <param name="keyPressed">The key pressed.</param>
+	private void InputByKey(char numOfPlayer, KeyCode keyPressed){
+		switch(keyPressed){
+			case p1UpKey:
+			case p2UpKey:
+				players[numOfPlayer].MoveScript.Move(UP);
+				break;
+			case p1DownKey:
+			case p2DownKey:
+				players[numOfPlayer].MoveScript.Move(DOWN);
+				break;
+			case p1LeftKey:
+			case p2LeftKey:
+				players[numOfPlayer].MoveScript.Move(LEFT);
+				break;
+			case p1RightKey:
+			case p2RightKey:
+				players[numOfPlayer].MoveScript.Move(RIGHT);
+				break;
+			case p1PassKey:
+			case p2PassKey:
+				players[numOfPlayer].BallScript.Throw();
+				StartGame();
+				break;
+			default:
+				Debug.Log("Illegal key: " + keyPressed.ToString());
+				break;
 		}
 	}
 
@@ -262,6 +234,62 @@ public class InputManager : MonoBehaviour {
 
 		foreach (Transform player in GameObject.Find(PLAYER_ORGANIZER).transform){
 			player.GetComponent<BackwardsTrail>().StartGame();
+		}
+	}
+
+
+	/// <summary>
+	/// This class contains references to each script a player needs to send inputs to.
+	/// It also includes all of a player's keyboard controls.
+	/// 
+	/// To make a new player, use the syntax that appears in MakePlayers(), above.
+	/// 
+	/// </summary>
+	private class Player {
+		//scripts each player has that receive input
+		private PlayerMovement moveScript;
+		private PlayerBallInteraction ballScript;
+		private PlayerMovementLean leanScript;
+
+		public PlayerMovement MoveScript { get { return moveScript; } }
+		public PlayerBallInteraction BallScript { get { return ballScript; } }
+		public PlayerMovementLean LeanScript { get { return leanScript; } }
+
+		//keyboard controls
+		private KeyCode upKey;
+		private KeyCode downKey;
+		private KeyCode leftKey;
+		private KeyCode rightKey;
+		private KeyCode passKey;
+		public List<KeyCode> keyboardControls = new List<KeyCode>();
+
+		//gamepad controls
+		private char playerNum;
+
+		//constructor for players
+		public Player(char playerNum,
+					  PlayerMovement moveScript,
+					  PlayerBallInteraction ballScript,
+					  PlayerMovementLean leanScript,
+					  KeyCode upKey,
+					  KeyCode downKey,
+					  KeyCode leftKey,
+					  KeyCode rightKey,
+					  KeyCode passKey){
+			this.playerNum = playerNum;
+			this.moveScript = moveScript;
+			this.ballScript = ballScript;
+			this.leanScript = leanScript;
+			this.upKey = upKey;
+			this.downKey = downKey;
+			this.leftKey = leftKey;
+			this.rightKey = rightKey;
+			this.passKey = passKey;
+			this.keyboardControls.Add(upKey);
+			this.keyboardControls.Add(downKey);
+			this.keyboardControls.Add(leftKey);
+			this.keyboardControls.Add(rightKey);
+			this.keyboardControls.Add(passKey);
 		}
 	}
 }
