@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,13 +7,37 @@ using System.Linq;
 public class ScoreManager : MonoBehaviour {
 
 
-	private Dictionary<string, ScoreCategory> scoreCategories = new Dictionary<string, ScoreCategory>();
+	private Dictionary<string, Metric> metrics = new Dictionary<string, Metric>();
 
 	private const char HIGH_SCORE_GOOD = '>';
 	private const char LOW_SCORE_GOOD = '<';
 
 	//nonsense value for initialization
 	private const int VERY_LOW = -10000;
+
+	//UI elements for displaying scores at the end of a world
+	private Transform p1ScoreDisplay;
+	private Text p1MetricName;
+	private Text p1MetricMessage;
+	private const string P1_SCORE_OBJ = "P1 score display";
+	private Transform p2ScoreDisplay;
+	private Text p2MetricName;
+	private Text p2MetricMessage;
+	private const string P2_SCORE_OBJ = "P2 score display";
+	private const string SCORE_CANVAS = "Score canvas";
+	private const string NAME_OBJ = "Metric name";
+	private const string MESSAGE_OBJ = "Metric message";
+
+	//timers and locations for bringing the UI elements into view when a world ends
+	private bool worldOver = false;
+	public float moveOnScreenDuration = 1.0f;
+	private float timer = 0.0f;
+	private Vector3 p1ScoreDisplayStart = new Vector3(0.0f, 0.0f, 0.0f);
+	public Vector3 p1ScoreDisplayEnd = new Vector3(0.0f, 0.0f, 0.0f);
+	private Vector3 p2ScoreDisplayStart = new Vector3(0.0f, 0.0f, 0.0f);
+	public Vector3 p2ScoreDisplayEnd = new Vector3(0.0f, 0.0f, 0.0f);
+	public AnimationCurve p1ScoreDisplayCurve;
+	public AnimationCurve p2ScoreDisplayCurve;
 
 
 	//---------------METRICS---------------
@@ -28,10 +53,10 @@ public class ScoreManager : MonoBehaviour {
 	 * 
 	 */
 	private const string TEAM_PLAYER = "number of passes";
-	private const int TEAM_PLAYER_DEFAULT_SCORE = 10;
+	private const int TEAM_PLAYER_DEFAULT_SCORE = 1;
 	private const string TEAM_PLAYER_NAME = "Team Player";
 	private const string TEAM_PLAYER_MESSAGE = " passes";
-	private const char TEAM_PLAYER_COMPARATOR = '>';
+	private const char TEAM_PLAYER_COMPARATOR = HIGH_SCORE_GOOD;
 
 
 	//default accomplishment for players who get through a world
@@ -39,18 +64,45 @@ public class ScoreManager : MonoBehaviour {
 	private const int SURVIVOR_DEFAULT_SCORE = 0; //this is never used--nothing adds to it
 	private const string SURVIVOR_NAME = "Survivor";
 	private const string SURVIVOR_MESSAGE = " deaths";
-	private const char SURVIVOR_COMPARATOR = '>';
+	private const char SURVIVOR_COMPARATOR = HIGH_SCORE_GOOD;
 
 
+	//initialize variables and set up dictiontary of metrics to track
 	private void Start(){
-		scoreCategories.Add(TEAM_PLAYER, new ScoreCategory(TEAM_PLAYER_DEFAULT_SCORE,
-														   TEAM_PLAYER_NAME,
-														   TEAM_PLAYER_MESSAGE,
-														   HIGH_SCORE_GOOD));
+		p1ScoreDisplay = GameObject.Find(P1_SCORE_OBJ).transform;
+		p1ScoreDisplayStart = p1ScoreDisplay.position;
+		p1MetricName = p1ScoreDisplay.Find(SCORE_CANVAS).Find(NAME_OBJ).GetComponent<Text>();
+		p1MetricMessage = p1ScoreDisplay.Find(SCORE_CANVAS).Find(MESSAGE_OBJ).GetComponent<Text>();
+
+		p2ScoreDisplay = GameObject.Find(P2_SCORE_OBJ).transform;
+		p2ScoreDisplayStart = p2ScoreDisplay.position;
+		p2MetricName = p2ScoreDisplay.Find(SCORE_CANVAS).Find(NAME_OBJ).GetComponent<Text>();
+		p2MetricMessage = p2ScoreDisplay.Find(SCORE_CANVAS).Find(MESSAGE_OBJ).GetComponent<Text>();
+
+		metrics.Add(TEAM_PLAYER, new Metric(TEAM_PLAYER_DEFAULT_SCORE,
+											TEAM_PLAYER_NAME,
+											TEAM_PLAYER_MESSAGE,
+											HIGH_SCORE_GOOD));
+		metrics.Add(SURVIVOR, new Metric(SURVIVOR_DEFAULT_SCORE,
+										 SURVIVOR_NAME,
+										 SURVIVOR_MESSAGE,
+										 HIGH_SCORE_GOOD));
 	}
 
-	//for debugging only; remove when the script is ready!
+
 	private void Update(){
+		if (worldOver){
+			timer += Time.deltaTime;
+
+			p1ScoreDisplay.position = Vector3.Lerp(p1ScoreDisplayStart,
+												   p1ScoreDisplayEnd,
+												   p1ScoreDisplayCurve.Evaluate(timer/moveOnScreenDuration));
+			p2ScoreDisplay.position = Vector3.Lerp(p2ScoreDisplayStart,
+												   p2ScoreDisplayEnd,
+												   p2ScoreDisplayCurve.Evaluate(timer/moveOnScreenDuration));
+		}
+
+		//for debugging only; remove when the script is ready!
 		if (Input.GetKeyDown(KeyCode.Space)){
 			FindBestPerformances();
 		}
@@ -59,18 +111,18 @@ public class ScoreManager : MonoBehaviour {
 
 	public void Score(string category, string playerName){
 		//error check: make sure the type of score is valid
-		if (!scoreCategories.ContainsKey(category)){
+		if (!metrics.ContainsKey(category)){
 			Debug.Log("Illegal category: " + category);
 			return;
 		}
 
 		//this is a category where the game should keep a running tally of a high score, so add to the tally
-		if (scoreCategories[category].Comparator == HIGH_SCORE_GOOD){
+		if (metrics[category].Comparator == HIGH_SCORE_GOOD){
 			//add to the appropriate player's score
 			if (playerName.Last() == '1'){
-				scoreCategories[category].P1Value++;
+				metrics[category].P1Value++;
 			} else if (playerName.Last() == '2'){
-				scoreCategories[category].P2Value++;
+				metrics[category].P2Value++;
 			} else {
 				Debug.Log("Illegal playerName: " + playerName);
 			}
@@ -79,19 +131,19 @@ public class ScoreManager : MonoBehaviour {
 
 	public void Score(string category, string playerName, int value){
 		//error check: make sure the type of score is valid
-		if (!scoreCategories.ContainsKey(category)){
+		if (!metrics.ContainsKey(category)){
 			Debug.Log("Illegal category: " + category);
 			return;
 		}
 
 		//this is a category where low scores are good (golf scoring), so only change the value if it's lower
 		if (playerName.Last() == '1'){
-			if (scoreCategories[category].P1Value > value){
-				scoreCategories[category].P1Value = value;
+			if (metrics[category].P1Value > value){
+				metrics[category].P1Value = value;
 			}
 		} else if (playerName.Last() == '2'){
-			if (scoreCategories[category].P2Value > value){
-				scoreCategories[category].P2Value = value;
+			if (metrics[category].P2Value > value){
+				metrics[category].P2Value = value;
 			}
 		} else {
 			Debug.Log("Illegal playerName: " + playerName);
@@ -99,34 +151,40 @@ public class ScoreManager : MonoBehaviour {
 	}
 
 
-	private class ScoreCategory {
+	private class Metric {
 		public int P1Value { get; set; }
 		public int P2Value { get; set; }
 		public int GoodValue { get; private set; }
 		public char Comparator { get; set; } //is a high score good, or a low score?
 
-		private string successName = "";
-		private string successMessage = "";
+		public string SuccessName = "";
+		public string SuccessMessage = "";
 
 
-		public ScoreCategory(int goodValue, string successName, string successMessage, char comparator){
+		public Metric(int goodValue, string successName, string successMessage, char comparator){
 			this.GoodValue = goodValue;
-			this.successName = successName;
-			this.successMessage = successMessage;
+			this.SuccessName = successName;
+			this.SuccessMessage = successMessage;
 			this.Comparator = comparator;
+
+			//default initializations
+			this.P1Value = 0;
+			this.P2Value = 0;
 		}
 	}
 
 
 	public void FindBestPerformances(){
 		string p1BestPerformance = FindPlayerBest('1');
-		//string p2BestPerformance = FindPlayerBest('2');
+		string p2BestPerformance = FindPlayerBest('2');
 
-		if (p1BestPerformance != SURVIVOR){
-			Debug.Log("p1 best: " + p1BestPerformance + ", with value of " + scoreCategories[p1BestPerformance].P1Value);
-		} else if (p1BestPerformance == SURVIVOR){
-			Debug.Log("You made it!");
-		}
+		p1MetricName.text = metrics[p1BestPerformance].SuccessName;
+		p1MetricMessage.text = metrics[p1BestPerformance].P1Value + metrics[p1BestPerformance].SuccessMessage;
+
+		p2MetricName.text = metrics[p2BestPerformance].SuccessName;
+		p2MetricMessage.text = metrics[p2BestPerformance].P2Value + metrics[p2BestPerformance].SuccessMessage;
+
+		worldOver = true;
 	}
 
 	private string FindPlayerBest(char playerNum){
@@ -137,36 +195,36 @@ public class ScoreManager : MonoBehaviour {
 			//check each the value for each category against the "good" score for that category
 			//if it's a category where a high score is good, look for performances above the good score
 			//if a low score is good, look for performances below the good score
-			foreach (string category in scoreCategories.Keys){
-				if (scoreCategories[category].Comparator == HIGH_SCORE_GOOD){
-					if (scoreCategories[category].P1Value > scoreCategories[category].GoodValue &&
-						scoreCategories[category].P1Value > delta){
+			foreach (string category in metrics.Keys){
+				if (metrics[category].Comparator == HIGH_SCORE_GOOD){
+					if (metrics[category].P1Value > metrics[category].GoodValue &&
+						metrics[category].P1Value > delta){
 						bestCategory = category;
-						delta = scoreCategories[category].P1Value - scoreCategories[category].GoodValue;
+						delta = metrics[category].P1Value - metrics[category].GoodValue;
 					}
-				} else if (scoreCategories[category].Comparator == LOW_SCORE_GOOD){
-					if (scoreCategories[category].P1Value < scoreCategories[category].GoodValue &&
-						scoreCategories[category].P1Value < delta){
+				} else if (metrics[category].Comparator == LOW_SCORE_GOOD){
+					if (metrics[category].P1Value < metrics[category].GoodValue &&
+						metrics[category].P1Value < delta){
 						bestCategory = category;
-						delta = scoreCategories[category].GoodValue - scoreCategories[category].P1Value;
+						delta = metrics[category].GoodValue - metrics[category].P1Value;
 					}
 				}
 			}
 		}
 		//do the same for player 2
 		else if (playerNum == '2'){
-			foreach (string category in scoreCategories.Keys){
-				if (scoreCategories[category].Comparator == HIGH_SCORE_GOOD){
-					if (scoreCategories[category].P2Value > scoreCategories[category].GoodValue &&
-						scoreCategories[category].P2Value > delta){
+			foreach (string category in metrics.Keys){
+				if (metrics[category].Comparator == HIGH_SCORE_GOOD){
+					if (metrics[category].P2Value > metrics[category].GoodValue &&
+						metrics[category].P2Value > delta){
 						bestCategory = category;
-						delta = scoreCategories[category].P2Value - scoreCategories[category].GoodValue;
+						delta = metrics[category].P2Value - metrics[category].GoodValue;
 					}
-				} else if (scoreCategories[category].Comparator == LOW_SCORE_GOOD){
-					if (scoreCategories[category].P2Value < scoreCategories[category].GoodValue &&
-						scoreCategories[category].P2Value < delta){
+				} else if (metrics[category].Comparator == LOW_SCORE_GOOD){
+					if (metrics[category].P2Value < metrics[category].GoodValue &&
+						metrics[category].P2Value < delta){
 						bestCategory = category;
-						delta = scoreCategories[category].GoodValue - scoreCategories[category].P2Value;
+						delta = metrics[category].GoodValue - metrics[category].P2Value;
 					}
 				}
 			}
