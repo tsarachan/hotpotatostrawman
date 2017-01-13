@@ -1,4 +1,22 @@
-﻿using UnityEngine;
+﻿/*
+ * 
+ * This script tracks various metrics about players, and then displays the one on which each player did best
+ * at the end of a world.
+ * 
+ * Each metric is an object of the Metric class. That object contains, among other things, a baseline good score on
+ * that metric, as well as player 1's and 2's performance.
+ * 
+ * When a world ends, this script measures each player's performance on each metric relative to the baseline good
+ * score, and displays one on which the player did best.
+ * 
+ * To add a new metric, do the following:
+ * 1. Go down to the metrics region below, and create a new variable for each of the five things a metric needs.
+ * Instructions are in the region's comments.
+ * 
+ * 2. Add the metric to the metrics dictionary, using the syntax in Start().
+ * 
+ */
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
@@ -39,7 +57,7 @@ public class ScoreManager : MonoBehaviour {
 	public AnimationCurve p1ScoreDisplayCurve;
 	public AnimationCurve p2ScoreDisplayCurve;
 
-
+	#region metrics
 	//---------------METRICS---------------
 	/*
 	 * 
@@ -66,9 +84,11 @@ public class ScoreManager : MonoBehaviour {
 	private const string SURVIVOR_MESSAGE = " deaths";
 	private const char SURVIVOR_COMPARATOR = HIGH_SCORE_GOOD;
 
+	#endregion
 
 	//initialize variables and set up dictiontary of metrics to track
 	private void Start(){
+		//set up the UI elements that display metrics at the end of a world
 		p1ScoreDisplay = GameObject.Find(P1_SCORE_OBJ).transform;
 		p1ScoreDisplayStart = p1ScoreDisplay.position;
 		p1MetricName = p1ScoreDisplay.Find(SCORE_CANVAS).Find(NAME_OBJ).GetComponent<Text>();
@@ -79,6 +99,7 @@ public class ScoreManager : MonoBehaviour {
 		p2MetricName = p2ScoreDisplay.Find(SCORE_CANVAS).Find(NAME_OBJ).GetComponent<Text>();
 		p2MetricMessage = p2ScoreDisplay.Find(SCORE_CANVAS).Find(MESSAGE_OBJ).GetComponent<Text>();
 
+		//add all metrics to the dictionary
 		metrics.Add(TEAM_PLAYER, new Metric(TEAM_PLAYER_DEFAULT_SCORE,
 											TEAM_PLAYER_NAME,
 											TEAM_PLAYER_MESSAGE,
@@ -89,7 +110,9 @@ public class ScoreManager : MonoBehaviour {
 										 HIGH_SCORE_GOOD));
 	}
 
-
+	/// <summary>
+	/// When the world is over, scroll the UI elements onto the screen.
+	/// </summary>
 	private void Update(){
 		if (worldOver){
 			timer += Time.deltaTime;
@@ -109,6 +132,13 @@ public class ScoreManager : MonoBehaviour {
 	}
 
 
+	/// <summary>
+	/// Call this whenever a player scores on a metric where a high score is better.
+	/// 
+	/// IMPORTANT: this method assumes that the player object names end in "1" and "2."
+	/// </summary>
+	/// <param name="category">The metric on which the player scored.</param>
+	/// <param name="playerName">The name of the player's gameobject.</param>
 	public void Score(string category, string playerName){
 		//error check: make sure the type of score is valid
 		if (!metrics.ContainsKey(category)){
@@ -129,6 +159,15 @@ public class ScoreManager : MonoBehaviour {
 		}
 	}
 
+
+	/// <summary>
+	/// Call this when a player scores on a metric where a low score is better.
+	/// 
+	/// IMPORTANT: this method assumes that the player object names end in "1" and "2."
+	/// </summary>
+	/// <param name="category">The metric on which the player scored.</param>
+	/// <param name="playerName">The name of the player's gameobject.</param>
+	/// <param name="value">The value that might be a new low score.</param>
 	public void Score(string category, string playerName, int value){
 		//error check: make sure the type of score is valid
 		if (!metrics.ContainsKey(category)){
@@ -149,31 +188,11 @@ public class ScoreManager : MonoBehaviour {
 			Debug.Log("Illegal playerName: " + playerName);
 		}
 	}
+		
 
-
-	private class Metric {
-		public int P1Value { get; set; }
-		public int P2Value { get; set; }
-		public int GoodValue { get; private set; }
-		public char Comparator { get; set; } //is a high score good, or a low score?
-
-		public string SuccessName = "";
-		public string SuccessMessage = "";
-
-
-		public Metric(int goodValue, string successName, string successMessage, char comparator){
-			this.GoodValue = goodValue;
-			this.SuccessName = successName;
-			this.SuccessMessage = successMessage;
-			this.Comparator = comparator;
-
-			//default initializations
-			this.P1Value = 0;
-			this.P2Value = 0;
-		}
-	}
-
-
+	/// <summary>
+	/// Call this when a world ends to determine what metric each player did best on, and then display them.
+	/// </summary>
 	public void FindBestPerformances(){
 		string p1BestPerformance = FindPlayerBest('1');
 		string p2BestPerformance = FindPlayerBest('2');
@@ -187,6 +206,12 @@ public class ScoreManager : MonoBehaviour {
 		worldOver = true;
 	}
 
+
+	/// <summary>
+	/// Determines which metric a player performed best on.
+	/// </summary>
+	/// <returns>The player's best metric, or "survivor" if the player didn't beat any baseline good scores.</returns>
+	/// <param name="playerNum">The player's number, 1 or 2.</param>
 	private string FindPlayerBest(char playerNum){
 		string bestCategory = "";
 		int delta = VERY_LOW;
@@ -238,5 +263,30 @@ public class ScoreManager : MonoBehaviour {
 		//uh-oh! The player didn't have any scores better than the good scores. Give the player a default accomplishment.
 		return SURVIVOR;
 	}
-	//eof
+
+
+	/// <summary>
+	/// This private class creates objects containing all the necessary information about each metric.
+	/// </summary>
+	private class Metric {
+		public int P1Value { get; set; }
+		public int P2Value { get; set; }
+		public int GoodValue { get; private set; }
+		public char Comparator { get; set; } //is a high score good, or a low score?
+
+		public string SuccessName = "";
+		public string SuccessMessage = "";
+
+
+		public Metric(int goodValue, string successName, string successMessage, char comparator){
+			this.GoodValue = goodValue;
+			this.SuccessName = successName;
+			this.SuccessMessage = successMessage;
+			this.Comparator = comparator;
+
+			//default initializations
+			this.P1Value = 0;
+			this.P2Value = 0;
+		}
+	}
 }
