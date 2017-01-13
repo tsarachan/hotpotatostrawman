@@ -27,9 +27,29 @@ public class PlayerBallInteraction : MonoBehaviour {
 
 	public float verticalOffset = 2.0f;
 
+
+	//---------------SCORING---------------
+	/*
+	 * 
+	 * All variables relating to scoring go here.
+	 * 
+	 * IMPORTANT: the strings here must match the strings in ScoreManager; otherwise ScoreManager won't
+	 * know where to record the information.
+	 * 
+	 * 
+	 */
+	//variables relating to the score manager itself
+	private ScoreManager scoreManager;
+	private const string MANAGER_OBJ = "Managers";
+
+	//types of scoring that this script will record. All of these must appear, identically, in ScoreManager.
+	private const string NUMBER_OF_PASSES = "number of passes";
+
+
 	private void Start(){
 		ballBehavior = GameObject.Find(BALL_OBJ).GetComponent<BallBehavior>();
 		otherPlayer = GetOtherPlayer();
+		scoreManager = GameObject.Find(MANAGER_OBJ).GetComponent<ScoreManager>();
 	}
 
 	/// <summary>
@@ -62,6 +82,7 @@ public class PlayerBallInteraction : MonoBehaviour {
 	public void Throw(){
 		if (transform.Find(BALL_OBJ)){ //sanity check to make sure this player has the ball; avoids null references
 			ballBehavior.Pass(transform.Find(BALL_OBJ).position, otherPlayer);
+			scoreManager.Score(NUMBER_OF_PASSES, gameObject.name);
 			BallCarrier = false;
 		}
 	}
