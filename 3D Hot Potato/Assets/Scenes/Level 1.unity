@@ -1651,6 +1651,7 @@ GameObject:
   - 4: {fileID: 891422876}
   - 114: {fileID: 891422877}
   - 114: {fileID: 891422878}
+  - 114: {fileID: 891422879}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -1695,6 +1696,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   filename: Levels.json
+--- !u!114 &891422879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 891422875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6387fc43232b74c21892945845bed971, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &938853229
 GameObject:
   m_ObjectHideFlags: 0
