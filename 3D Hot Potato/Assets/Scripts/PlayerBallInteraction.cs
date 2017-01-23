@@ -27,6 +27,8 @@ public class PlayerBallInteraction : MonoBehaviour {
 
 	public float verticalOffset = 2.0f;
 
+	private CatchBehavior catchBehavior;
+
 
 	//---------------SCORING---------------
 	/*
@@ -50,6 +52,7 @@ public class PlayerBallInteraction : MonoBehaviour {
 		ballBehavior = GameObject.Find(BALL_OBJ).GetComponent<BallBehavior>();
 		otherPlayer = GetOtherPlayer();
 		scoreManager = GameObject.Find(MANAGER_OBJ).GetComponent<ScoreManager>();
+		catchBehavior = GetComponent<CatchBehavior>();
 	}
 
 	/// <summary>
@@ -84,6 +87,7 @@ public class PlayerBallInteraction : MonoBehaviour {
 			ballBehavior.Pass(transform.Find(BALL_OBJ).position, otherPlayer);
 			scoreManager.Score(NUMBER_OF_PASSES, gameObject.name);
 			BallCarrier = false;
+			catchBehavior.CantSpecialCatch();
 		}
 	}
 }

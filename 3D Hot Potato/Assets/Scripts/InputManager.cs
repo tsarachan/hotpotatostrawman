@@ -69,7 +69,6 @@ public class InputManager : MonoBehaviour {
 	private void Start(){
 		players = MakePlayers();
 		levelManager = GetComponent<LevelManager>();
-		Debug.Log(players['2'].CatchScript);
 	}
 
 

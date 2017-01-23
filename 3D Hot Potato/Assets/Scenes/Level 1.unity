@@ -1105,9 +1105,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51dab81295a1649e98c3c5fb03a8ca37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  awesomeCatchDistance: 1
-  explosionRadius: 5
+  awesomeCatchDistance: 100
+  explosionRadius: 100
   explosionForce: 100
+  cantCatchAfterThrow: 1
 --- !u!1001 &322946120
 Prefab:
   m_ObjectHideFlags: 0
@@ -1282,6 +1283,7 @@ Transform:
   - {fileID: 1144013404}
   - {fileID: 738773130}
   - {fileID: 1999500631}
+  - {fileID: 824935126}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!1001 &427933103
@@ -1831,6 +1833,34 @@ Transform:
   - {fileID: 871473179}
   m_Father: {fileID: 393844137}
   m_RootOrder: 0
+--- !u!1 &824935125
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 824935126}
+  m_Layer: 0
+  m_Name: Particles
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &824935126
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 824935125}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 393844137}
+  m_RootOrder: 12
 --- !u!1 &832521678
 GameObject:
   m_ObjectHideFlags: 0
@@ -5884,6 +5914,7 @@ MonoBehaviour:
   awesomeCatchDistance: 100
   explosionRadius: 100
   explosionForce: 100
+  cantCatchAfterThrow: 1
 --- !u!114 &2058022956
 MonoBehaviour:
   m_ObjectHideFlags: 0
