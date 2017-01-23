@@ -892,6 +892,7 @@ GameObject:
   - 65: {fileID: 290731065}
   - 96: {fileID: 290731071}
   - 114: {fileID: 290731066}
+  - 114: {fileID: 290731072}
   m_Layer: 0
   m_Name: Player 2
   m_TagString: Untagged
@@ -1093,6 +1094,20 @@ TrailRenderer:
       rgba: 16777215
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
+--- !u!114 &290731072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 290731061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51dab81295a1649e98c3c5fb03a8ca37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  awesomeCatchDistance: 1
+  explosionRadius: 5
+  explosionForce: 100
 --- !u!1001 &322946120
 Prefab:
   m_ObjectHideFlags: 0
@@ -5652,6 +5667,7 @@ GameObject:
   - 96: {fileID: 2058022953}
   - 65: {fileID: 2058022947}
   - 114: {fileID: 2058022956}
+  - 114: {fileID: 2058022955}
   m_Layer: 0
   m_Name: Player 1
   m_TagString: Untagged
@@ -5854,6 +5870,20 @@ MonoBehaviour:
   maxBackwardLean: 35
   maxSideLean: 45
   rotationSpeed: 70
+--- !u!114 &2058022955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2058022943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51dab81295a1649e98c3c5fb03a8ca37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  awesomeCatchDistance: 100
+  explosionRadius: 100
+  explosionForce: 100
 --- !u!114 &2058022956
 MonoBehaviour:
   m_ObjectHideFlags: 0

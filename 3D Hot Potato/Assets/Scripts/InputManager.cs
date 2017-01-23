@@ -69,6 +69,7 @@ public class InputManager : MonoBehaviour {
 	private void Start(){
 		players = MakePlayers();
 		levelManager = GetComponent<LevelManager>();
+		Debug.Log(players['2'].CatchScript);
 	}
 
 
@@ -88,6 +89,7 @@ public class InputManager : MonoBehaviour {
 											  playerObj.GetComponent<PlayerMovement>(),
 											  playerObj.GetComponent<PlayerBallInteraction>(),
 											  playerObj.GetComponent<PlayerMovementLean>(),
+											  playerObj.GetComponent<CatchBehavior>(),
 											  p1UpKey,
 											  p1DownKey,
 											  p1LeftKey,
@@ -99,6 +101,7 @@ public class InputManager : MonoBehaviour {
 											  playerObj.GetComponent<PlayerMovement>(),
 											  playerObj.GetComponent<PlayerBallInteraction>(),
 											  playerObj.GetComponent<PlayerMovementLean>(),
+											  playerObj.GetComponent<CatchBehavior>(),
 											  p2UpKey,
 											  p2DownKey,
 											  p2LeftKey,
@@ -133,6 +136,7 @@ public class InputManager : MonoBehaviour {
 				}
 
 				players[player].BallScript.Throw();
+				players[player].CatchScript.AttemptSpecialCatch();
 			}
 		}
 
@@ -250,10 +254,12 @@ public class InputManager : MonoBehaviour {
 		private PlayerMovement moveScript;
 		private PlayerBallInteraction ballScript;
 		private PlayerMovementLean leanScript;
+		private CatchBehavior catchScript;
 
 		public PlayerMovement MoveScript { get { return moveScript; } }
 		public PlayerBallInteraction BallScript { get { return ballScript; } }
 		public PlayerMovementLean LeanScript { get { return leanScript; } }
+		public CatchBehavior CatchScript { get { return catchScript; } }
 
 		//keyboard controls
 		private KeyCode upKey;
@@ -271,6 +277,7 @@ public class InputManager : MonoBehaviour {
 					  PlayerMovement moveScript,
 					  PlayerBallInteraction ballScript,
 					  PlayerMovementLean leanScript,
+					  CatchBehavior catchScript,
 					  KeyCode upKey,
 					  KeyCode downKey,
 					  KeyCode leftKey,
@@ -280,6 +287,7 @@ public class InputManager : MonoBehaviour {
 			this.moveScript = moveScript;
 			this.ballScript = ballScript;
 			this.leanScript = leanScript;
+			this.catchScript = catchScript;
 			this.upKey = upKey;
 			this.downKey = downKey;
 			this.leftKey = leftKey;
