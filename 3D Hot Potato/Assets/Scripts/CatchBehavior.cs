@@ -10,6 +10,7 @@ public class CatchBehavior : MonoBehaviour {
 	public float explosionRadius = 5.0f;
 	public float explosionForce = 100.0f;
 	public float cantCatchAfterThrow = 1.0f;
+	public float shortRange = 10.0f; //within this distance is short range; greater is long range
 
 
 	//variables for determining who has the ball
@@ -32,7 +33,7 @@ public class CatchBehavior : MonoBehaviour {
 
 
 	//the particle that will be sent out to mark catches
-	private const string SPECIAL_CATCH_PARTICLE = "Catch particle";
+	private const string LONG_RANGE_CATCH_PARTICLE = "Catch particle";
 
 
 	//internal variables
@@ -75,29 +76,50 @@ public class CatchBehavior : MonoBehaviour {
 			cantCatchTimer > cantCatchAfterThrow){ //discard thrower's extra inputs
 			Debug.Log("Attemping special catch");
 			if (Vector3.Distance(transform.position, ball.position) <= awesomeCatchDistance){
-				SpecialCatch();
+				AwesomeCatch();
 				Debug.Log("Close enough for special catch");
 			}
 		}
 	}
 
 
-	private void SpecialCatch(){
-		Collider[] enemies = Physics.OverlapSphere(transform.position,
-												   explosionRadius,
-												   enemyLayerMask);
-		
-		Debug.Log("found " + enemies.Length + " enemies");
+	private void AwesomeCatch(){
 
-		foreach (Collider enemy in enemies){
-			Vector3 direction = (enemy.transform.position - transform.position).normalized;
+		//determine whether the short range or long range effect should happen
+		bool isShortRange = true;
 
-			enemy.attachedRigidbody.AddForce(direction * explosionForce,
-											 ForceMode.Impulse);
+		if (Vector3.Distance(transform.position, otherBallScript.transform.position) > shortRange){
+			isShortRange = false;
 		}
 
-		GameObject specialCatchParticle = ObjectPooling.ObjectPool.GetObj(SPECIAL_CATCH_PARTICLE);
-		specialCatchParticle.transform.position = transform.position;
+		if (isShortRange) {
+			//do the short range awesome effect
+		} else {
+			//apply the long-range effect to enemies caught in the burst
+			Collider[] enemies = Physics.OverlapSphere(transform.position,
+													   explosionRadius,
+													   enemyLayerMask);
+
+			foreach (Collider enemy in enemies){
+				LongRangeAwesomeEffect(enemy.gameObject);
+			}
+
+			//create an effect to show where the burst occurred
+			GameObject longRangeCatchParticle = ObjectPooling.ObjectPool.GetObj(LONG_RANGE_CATCH_PARTICLE);
+			longRangeCatchParticle.transform.position = transform.position;
+		}
+
+
+	}
+
+
+	private void ShortRangeAwesomeEffect(GameObject enemy){
+
+	}
+
+
+	private void LongRangeAwesomeEffect(GameObject enemy){
+		enemy.GetComponent<EnemyBase>().GetDestroyed();
 	}
 
 
@@ -107,7 +129,7 @@ public class CatchBehavior : MonoBehaviour {
 	/// This timer helps avoid accidental special catches when the player holds the button after throwing.
 	/// </summary>
 	/// <returns><c>true</c> if this instance cant special catch; otherwise, <c>false</c>.</returns>
-	public void CantSpecialCatch(){
+	public void CantAwesomeCatch(){
 		cantCatchTimer = 0.0f;
 	}
 }

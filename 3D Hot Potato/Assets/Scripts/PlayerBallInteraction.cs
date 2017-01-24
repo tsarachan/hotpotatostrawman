@@ -87,7 +87,7 @@ public class PlayerBallInteraction : MonoBehaviour {
 			ballBehavior.Pass(transform.Find(BALL_OBJ).position, otherPlayer);
 			scoreManager.Score(NUMBER_OF_PASSES, gameObject.name);
 			BallCarrier = false;
-			catchBehavior.CantSpecialCatch();
+			catchBehavior.CantAwesomeCatch();
 		}
 	}
 }
