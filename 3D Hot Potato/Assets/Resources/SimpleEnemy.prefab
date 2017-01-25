@@ -188,14 +188,14 @@ MonoBehaviour:
   startVelocity: {x: 0, y: 0, z: 0}
   chanceOfGoForBall: 0
   target: {fileID: 0}
-  speed: 50
+  speed: 100
   maxSpeeds:
   - 3
   - 6
   - 8
   speedBoost: 1
   onScreenTime: 0
-  leavingScreenColor: {r: 1, g: 0.32941177, b: 0.94509804, a: 1}
+  leavingScreenColor: {r: 0.1397059, g: 1, b: 0.31682524, a: 1}
   preparingToChargeColor: {r: 1, g: 0.029411793, b: 0.12981711, a: 0}
   enterDistance: 75
   enterTime: 0.5
