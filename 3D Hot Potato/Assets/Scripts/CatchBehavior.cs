@@ -7,8 +7,6 @@ public class CatchBehavior : MonoBehaviour {
 
 	//tunable variables--how close the catch has to be, how strong the burst is, etc.
 	public float awesomeCatchDistance = 1.0f;
-	public float explosionRadius = 5.0f;
-	public float explosionForce = 100.0f;
 	public float cantCatchAfterThrow = 1.0f;
 	public float shortRange = 10.0f; //within this distance is short range; greater is long range
 
@@ -25,18 +23,12 @@ public class CatchBehavior : MonoBehaviour {
 	private const string BALL_OBJ = "Ball";
 
 
-	//variables for finding nearby enemies
-	private Transform enemies;
-	private const string ENEMY_ORGANIZER = "Enemies";
-	private int enemyLayer = 9;
-	private int enemyLayerMask;
-
-
 	//variables for the different types of catches
 	private DigitalRuby.LightningBolt.LightningBoltScript boltScript;
 	private const string PARTICLES_ORGANIZER = "Particles";
 	private const string LIGHTNING_OBJ = "Lightning prefab";
-	private const string LONG_RANGE_CATCH_PARTICLE = "Catch particle";
+	private GameObject burst;
+	private const string BURST_OBJ = "Burst prefab";
 
 
 	//internal variables
@@ -47,8 +39,6 @@ public class CatchBehavior : MonoBehaviour {
 		myBallScript = GetComponent<PlayerBallInteraction>();
 		otherBallScript = FindOtherBallScript();
 		ball = GameObject.Find(BALL_OBJ).transform;
-		enemies = GameObject.Find(ENEMY_ORGANIZER).transform;
-		enemyLayerMask = 1 << enemyLayer;
 
 		boltScript = transform.root.Find(PARTICLES_ORGANIZER).Find(LIGHTNING_OBJ)
 			.GetComponent<DigitalRuby.LightningBolt.LightningBoltScript>();
@@ -100,19 +90,9 @@ public class CatchBehavior : MonoBehaviour {
 			ShortRangeAwesomeEffect();
 		} else {
 			//apply the long-range effect to enemies caught in the burst
-			Collider[] enemies = Physics.OverlapSphere(transform.position,
-													   explosionRadius,
-													   enemyLayerMask);
-
-			foreach (Collider enemy in enemies){
-				LongRangeAwesomeEffect(enemy.gameObject);
-			}
-
-			//create an effect to show where the burst occurred
-			GameObject longRangeCatchParticle = ObjectPooling.ObjectPool.GetObj(LONG_RANGE_CATCH_PARTICLE);
-			longRangeCatchParticle.transform.position = transform.position;
+			LongRangeAwesomeEffect();
 		}
-
+		cantCatchTimer = 0.0f;
 
 	}
 
@@ -122,15 +102,17 @@ public class CatchBehavior : MonoBehaviour {
 	}
 
 
-	private void LongRangeAwesomeEffect(GameObject enemy){
-		enemy.GetComponent<EnemyBase>().GetDestroyed();
+	private void LongRangeAwesomeEffect(){
+		burst = ObjectPooling.ObjectPool.GetObj(BURST_OBJ);
+		burst.transform.position = transform.position;
 	}
 
 
 	/// <summary>
-	/// PlayerBallInteraction's Throw() resets this every time the player throws.
+	/// This timer helps avoid accidental awesome catches when the player holds the button for a few frames.
 	/// 
-	/// This timer helps avoid accidental special catches when the player holds the button after throwing.
+	/// PlayerBallInteraction's Throw() resets this every time the player throws.
+	/// It's also called every time the player makes an awesome catch.
 	/// </summary>
 	/// <returns><c>true</c> if this instance cant special catch; otherwise, <c>false</c>.</returns>
 	public void CantAwesomeCatch(){
