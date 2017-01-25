@@ -1,4 +1,9 @@
-﻿using System.Collections;
+﻿/*
+ * 
+ * This script is on the bursts players create when they get an awesome catch at long range.
+ * 
+ */
+using System.Collections;
 using UnityEngine;
 
 public class BurstBehavior : ObjectPooling.Poolable {
@@ -29,12 +34,14 @@ public class BurstBehavior : ObjectPooling.Poolable {
 	private const string PARTICLES_ORGANIZER = "Particles";
 
 
+	//initialize variables
 	private void Start(){
 		transform.parent = GameObject.Find(PARTICLES_ORGANIZER).transform;
 		enemyLayerMask = 1 << enemyLayer;
 	}
 
 
+	//handle timers and move the burst backwards off the screen
 	private void Update(){
 		existTimer = ManageLifetime();
 		transform.position = SlideBackwards();
@@ -45,6 +52,11 @@ public class BurstBehavior : ObjectPooling.Poolable {
 	}
 
 
+	/// <summary>
+	/// Keeps track of how long the burst has been in play. When the timer is up, return the burst to
+	/// the object pool.
+	/// </summary>
+	/// <returns>The updated timer.</returns>
 	private float ManageLifetime(){
 		float temp = existTimer;
 
@@ -59,6 +71,11 @@ public class BurstBehavior : ObjectPooling.Poolable {
 	}
 
 
+	/// <summary>
+	/// Calculates how quickly the burst should move. This doesn't *move* the burst--that happens
+	/// in Update(). It only determines how fast the burst should be going.
+	/// </summary>
+	/// <returns>The burst's next position.</returns>
 	private Vector3 SlideBackwards(){
 		float speed = Mathf.Lerp(0.0f, maxSpeed, moveCurve.Evaluate(existTimer/existDuration));
 		
@@ -70,6 +87,9 @@ public class BurstBehavior : ObjectPooling.Poolable {
 	}
 
 
+	/// <summary>
+	/// Finds enemies within the burst so that something bad can happen to them.
+	/// </summary>
 	private void BlowAwayEnemies(){
 		Collider[] enemies = Physics.OverlapSphere(transform.position,
 												   explosionRadius,
@@ -82,16 +102,22 @@ public class BurstBehavior : ObjectPooling.Poolable {
 	}
 
 
+	/// <summary>
+	/// Whatever is going to happen to enemies caught in the burst goes here.
+	/// </summary>
+	/// <param name="enemy">The enemy to be affected.</param>
 	private void BlowAwayEffect(GameObject enemy){
 		enemy.GetComponent<EnemyBase>().GetDestroyed();
 	}
 
 
+	//override function to remove Poolable's reference to velocity
 	public override void Reset(){
 		gameObject.SetActive(true);
 	}
 
 
+	//override function to remove Poolable' reference to velocity
 	public override void ShutOff(){
 		gameObject.SetActive(false);
 	}

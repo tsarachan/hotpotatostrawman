@@ -1,4 +1,12 @@
-﻿using UnityEngine;
+﻿/*
+ * 
+ * Each player has this script. It determines when they have made an awesome catch, and then calls other functions
+ * appropriately.
+ * 
+ * This script does not carry out the awesome catch's effect. It only establishes that an awesome catch occurred.
+ * 
+ */
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -35,6 +43,7 @@ public class CatchBehavior : MonoBehaviour {
 	private float cantCatchTimer = 0.0f;
 
 
+	//initialize variables
 	private void Start(){
 		myBallScript = GetComponent<PlayerBallInteraction>();
 		otherBallScript = FindOtherBallScript();
@@ -46,11 +55,16 @@ public class CatchBehavior : MonoBehaviour {
 	}
 
 
+	//handle timer
 	private void Update(){
 		cantCatchTimer += Time.deltaTime;
 	}
 
 
+	/// <summary>
+	/// Gets a reference to the other player's ball script, so that this player can tell who has the ball.
+	/// </summary>
+	/// <returns>The other player's PlayerBallInteraction script.</returns>
 	private PlayerBallInteraction FindOtherBallScript(){
 		PlayerBallInteraction temp;
 
@@ -68,6 +82,11 @@ public class CatchBehavior : MonoBehaviour {
 	}
 
 
+	/// <summary>
+	/// Call this function whenever a player tries for the awesome catch.
+	/// 
+	/// All the logic for whether or not awesome catches occur is in the if-statements in this function.
+	/// </summary>
 	public void AttemptAwesomeCatch(){
 		if (!myBallScript.BallCarrier && !otherBallScript.BallCarrier &&  //neither player has the ball--it's in the air
 			cantCatchTimer > cantCatchAfterThrow){ //discard thrower's extra inputs
@@ -78,8 +97,14 @@ public class CatchBehavior : MonoBehaviour {
 	}
 
 
+	/// <summary>
+	/// If a player makes an awesome catch, this function determines which effect to apply--the short range one or
+	/// the long range one.
+	/// 
+	/// It then uses the cantCatchTimer to prevent multiple awesome catches when the player holds the button down
+	/// for more than a frame.
+	/// </summary>
 	private void AwesomeCatch(){
-		//determine whether the short range or long range effect should happen
 		bool isShortRange = true;
 
 		if (Vector3.Distance(transform.position, otherBallScript.transform.position) > shortRange){
@@ -89,7 +114,6 @@ public class CatchBehavior : MonoBehaviour {
 		if (isShortRange) {
 			ShortRangeAwesomeEffect();
 		} else {
-			//apply the long-range effect to enemies caught in the burst
 			LongRangeAwesomeEffect();
 		}
 		cantCatchTimer = 0.0f;
@@ -97,11 +121,17 @@ public class CatchBehavior : MonoBehaviour {
 	}
 
 
+	/// <summary>
+	/// Sets the short-range awesome catch effect in motion.
+	/// </summary>
 	private void ShortRangeAwesomeEffect(){
 		boltScript.SetState(true);
 	}
 
 
+	/// <summary>
+	/// Sets the long-range awesome catch effect in motion.
+	/// </summary>
 	private void LongRangeAwesomeEffect(){
 		burst = ObjectPooling.ObjectPool.GetObj(BURST_OBJ);
 		burst.transform.position = transform.position;
@@ -114,7 +144,6 @@ public class CatchBehavior : MonoBehaviour {
 	/// PlayerBallInteraction's Throw() resets this every time the player throws.
 	/// It's also called every time the player makes an awesome catch.
 	/// </summary>
-	/// <returns><c>true</c> if this instance cant special catch; otherwise, <c>false</c>.</returns>
 	public void CantAwesomeCatch(){
 		cantCatchTimer = 0.0f;
 	}
