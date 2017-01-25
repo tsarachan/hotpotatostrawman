@@ -135,7 +135,7 @@ public class InputManager : MonoBehaviour {
 				}
 
 				players[player].BallScript.Throw();
-				players[player].CatchScript.AttemptSpecialCatch();
+				players[player].CatchScript.AttemptAwesomeCatch();
 			}
 		}
 
@@ -212,6 +212,7 @@ public class InputManager : MonoBehaviour {
 			case p1PassKey:
 			case p2PassKey:
 				players[numOfPlayer].BallScript.Throw();
+				players[numOfPlayer].CatchScript.AttemptAwesomeCatch();
 				StartGame();
 				break;
 			default:

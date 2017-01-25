@@ -32,7 +32,10 @@ public class CatchBehavior : MonoBehaviour {
 	private int enemyLayerMask;
 
 
-	//the particle that will be sent out to mark catches
+	//variables for the different types of catches
+	private DigitalRuby.LightningBolt.LightningBoltScript boltScript;
+	private const string PARTICLES_ORGANIZER = "Particles";
+	private const string LIGHTNING_OBJ = "Lightning prefab";
 	private const string LONG_RANGE_CATCH_PARTICLE = "Catch particle";
 
 
@@ -46,6 +49,10 @@ public class CatchBehavior : MonoBehaviour {
 		ball = GameObject.Find(BALL_OBJ).transform;
 		enemies = GameObject.Find(ENEMY_ORGANIZER).transform;
 		enemyLayerMask = 1 << enemyLayer;
+
+		boltScript = transform.root.Find(PARTICLES_ORGANIZER).Find(LIGHTNING_OBJ)
+			.GetComponent<DigitalRuby.LightningBolt.LightningBoltScript>();
+		boltScript.SetState(false);
 	}
 
 
@@ -71,20 +78,17 @@ public class CatchBehavior : MonoBehaviour {
 	}
 
 
-	public void AttemptSpecialCatch(){
+	public void AttemptAwesomeCatch(){
 		if (!myBallScript.BallCarrier && !otherBallScript.BallCarrier &&  //neither player has the ball--it's in the air
 			cantCatchTimer > cantCatchAfterThrow){ //discard thrower's extra inputs
-			Debug.Log("Attemping special catch");
 			if (Vector3.Distance(transform.position, ball.position) <= awesomeCatchDistance){
 				AwesomeCatch();
-				Debug.Log("Close enough for special catch");
 			}
 		}
 	}
 
 
 	private void AwesomeCatch(){
-
 		//determine whether the short range or long range effect should happen
 		bool isShortRange = true;
 
@@ -93,7 +97,7 @@ public class CatchBehavior : MonoBehaviour {
 		}
 
 		if (isShortRange) {
-			//do the short range awesome effect
+			ShortRangeAwesomeEffect();
 		} else {
 			//apply the long-range effect to enemies caught in the burst
 			Collider[] enemies = Physics.OverlapSphere(transform.position,
@@ -113,8 +117,8 @@ public class CatchBehavior : MonoBehaviour {
 	}
 
 
-	private void ShortRangeAwesomeEffect(GameObject enemy){
-
+	private void ShortRangeAwesomeEffect(){
+		boltScript.SetState(true);
 	}
 
 
