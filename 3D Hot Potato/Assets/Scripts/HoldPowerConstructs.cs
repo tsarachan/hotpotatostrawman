@@ -42,6 +42,6 @@ public class HoldPowerConstructs : HoldPower {
 
 		GameObject construct = ObjectPooling.ObjectPool.GetObj(CONSTRUCT_NAME);
 		construct.transform.position = transform.position;
-		construct.GetComponent<ParticleCubeBehavior>().SetDirection(new Vector3(0.0f, lastAngle, 0.0f));
+		//construct.GetComponent<ParticleCubeBehavior>().Activate(new Vector3(0.0f, lastAngle, 0.0f));
 	}
 }
