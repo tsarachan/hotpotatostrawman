@@ -62,8 +62,16 @@ public class HoldPowerHeatSeeking : HoldPower {
 
 
 	private void FireMissiles(){
-		foreach(Transform missile in constructs){
-			missile.GetComponent<MissileBehavior>().Launch();
+		Debug.Log(constructs.childCount);
+
+		List<Transform> missiles = new List<Transform>();
+
+		for (int i = 0; i < constructs.childCount; i++){
+			missiles.Add(constructs.GetChild(i));
+		}
+
+		for (int i = 0; i < missiles.Count; i++){
+			missiles[i].GetComponent<MissileBehavior>().Launch();
 		}
 
 		GameObject constructRing = Instantiate(Resources.Load(CONSTRUCT_ORGANIZER),
