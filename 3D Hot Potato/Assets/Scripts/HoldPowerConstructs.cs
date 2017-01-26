@@ -4,44 +4,57 @@ using UnityEngine;
 public class HoldPowerConstructs : HoldPower {
 
 	//tunable variables
-	public float timeBetweenConstructs = 0.2f;
-	public float offsetAngle = 20.0f; //affects new constructs' direction
+	public float rotationSpeed = 1.0f;
+	public float deployDuration = 1.0f;
+	public AnimationCurve deployCurve;
+	public float retractDuration = 0.3f;
+	public AnimationCurve retractCurve;
+	public float deployedScale = 1.0f;
 
-
-	//the gameobject that this player is going to send out 
-	private GameObject construct;
-	private const string CONSTRUCT_NAME = "Hold power construct";
 
 
 	//internal variables
-	private float constructTimer = 0.0f;
-	private float lastAngle = 0.0f;
+	private Transform constructs;
+	private const string CONSTRUCT_ORGANIZER = "Construct axis";
+	private float deployTimer = 0.0f;
+	private float deployStartTime = 0.0f;
+	private float retractTimer = 0.0f;
+	private float retractStartTime = 0.0f;
 
+
+	protected override void Start(){
+		base.Start();
+
+		constructs = transform.Find(CONSTRUCT_ORGANIZER);
+	}
 
 	protected override void Update(){
 		holdTimer = RunHoldTimer();
 
 		if (holdTimer > holdDuration){
-			constructTimer += Time.deltaTime;
-
-			if (constructTimer >= timeBetweenConstructs){
-				ActivateHoldPower();
-				constructTimer = 0.0f;
-			}
+			ActivateHoldPower();
+		} else {
+			constructs.localScale = Retract();
 		}
 	}
-
 
 	protected override void ActivateHoldPower(){
-		if (lastAngle > 0){
-			lastAngle = lastAngle - 180.0f + offsetAngle;
-		} else {
-			lastAngle = lastAngle + 180.0f + offsetAngle;
-		}
+		deployTimer += Time.deltaTime;
 
+		float currentScale = Mathf.Lerp(0.0f, deployedScale, deployCurve.Evaluate(deployTimer/deployDuration));
 
-		GameObject construct = ObjectPooling.ObjectPool.GetObj(CONSTRUCT_NAME);
-		construct.transform.position = transform.position;
-		//construct.GetComponent<ParticleCubeBehavior>().Activate(new Vector3(0.0f, lastAngle, 0.0f));
+		constructs.localScale = new Vector3(currentScale, currentScale, currentScale);
+
+		constructs.Rotate(new Vector3(0.0f, rotationSpeed, 0.0f), Space.Self);
 	}
+
+
+	private Vector3 Retract(){
+		retractTimer += Time.deltaTime;
+
+		float currentScale = Mathf.Lerp(deployedScale, 0.0f, retractCurve.Evaluate(retractTimer/retractDuration));
+
+		return new Vector3(currentScale, currentScale, currentScale);
+	}
+
 }
