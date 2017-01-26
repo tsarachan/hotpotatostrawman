@@ -4,28 +4,31 @@ using UnityEngine;
 public class HoldPowerConstructs : HoldPower {
 
 	//tunable variables
-	public float rotationSpeed = 1.0f;
-	public float deployDuration = 1.0f;
+	public float rotationSpeed = 1.0f; //how quickly the constructs rotate around their center
+	public float deployDuration = 1.0f; //time needed for the construct ring's x, y, and z scales to reach deployedScale, below
 	public AnimationCurve deployCurve;
-	public float retractDuration = 0.3f;
+	public float retractDuration = 0.3f; //how long the construct ring takes to retract after a pass
 	public AnimationCurve retractCurve;
-	public float deployedScale = 1.0f;
+	public float deployedScale = 1.0f; //the construct's x, y, and z scale when fully deployed
 
 
 
 	//internal variables
 	private Transform constructs;
-	private const string CONSTRUCT_ORGANIZER = "Construct axis";
+	private const string CONSTRUCT_ORGANIZER = "Construct ring";
 	private float deployTimer = 0.0f;
-	private float deployStartTime = 0.0f;
 	private float retractTimer = 0.0f;
-	private float retractStartTime = 0.0f;
 
 
 	protected override void Start(){
 		base.Start();
 
-		constructs = transform.Find(CONSTRUCT_ORGANIZER);
+		GameObject constructRing = Instantiate(Resources.Load(CONSTRUCT_ORGANIZER),
+											   transform.position,
+											   Quaternion.identity,
+											   transform) as GameObject;
+
+		constructs = constructRing.transform;
 	}
 
 	protected override void Update(){
