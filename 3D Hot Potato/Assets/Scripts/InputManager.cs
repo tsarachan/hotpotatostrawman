@@ -196,18 +196,22 @@ public class InputManager : MonoBehaviour {
 			case p1UpKey:
 			case p2UpKey:
 				players[numOfPlayer].MoveScript.Move(UP);
+				players[numOfPlayer].LeanScript.Lean(UP);
 				break;
 			case p1DownKey:
 			case p2DownKey:
 				players[numOfPlayer].MoveScript.Move(DOWN);
+				players[numOfPlayer].LeanScript.Lean(DOWN);
 				break;
 			case p1LeftKey:
 			case p2LeftKey:
 				players[numOfPlayer].MoveScript.Move(LEFT);
+				players[numOfPlayer].LeanScript.Lean(LEFT);
 				break;
 			case p1RightKey:
 			case p2RightKey:
 				players[numOfPlayer].MoveScript.Move(RIGHT);
+				players[numOfPlayer].LeanScript.Lean(RIGHT);
 				break;
 			case p1PassKey:
 			case p2PassKey:
