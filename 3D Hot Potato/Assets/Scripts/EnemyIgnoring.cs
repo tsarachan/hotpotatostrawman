@@ -31,7 +31,6 @@ public class EnemyIgnoring : EnemyBase {
 	private void Start(){
 		rb = GetComponent<Rigidbody>();
 		direction = GetDirection();
-
 	}
 
 
@@ -85,5 +84,25 @@ public class EnemyIgnoring : EnemyBase {
 	public override void GetDestroyed(){
 		GetComponent<ParticleBurst>().MakeBurst();
 		ObjectPooling.ObjectPool.AddObj(gameObject); //shut this off and return it to the pool
+	}
+
+
+	/// <summary>
+	/// Call this function to restore default values when an enemy comes out of the pool and into play.
+	/// 
+	/// Call this *before* the enemy is moved into position, so that everything is in a predictable state when the enemy's own script takes over.
+	/// </summary>
+	public override void Reset(){
+		gameObject.SetActive(true);
+
+		//reset timers so that the enemy behaves correctly when coming out of the pool.
+		timer = 0.0f;
+		enteringScreen = true;
+
+		//find the end point of the enemy's entry onto the screen
+		start = transform.position;
+		end = DetermineEntryEndPoint();
+
+		GetComponent<Rigidbody>().velocity = startVelocity; //sanity check: make absolutely sure the velocity is zero
 	}
 }
