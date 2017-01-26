@@ -44,13 +44,7 @@ public class EnemyIgnoring : EnemyBase {
 
 
 	private Vector3 GetDirection(){
-		if (transform.position.x < -Mathf.Abs(buildingXCoord)){
-			return Vector3.right;
-		} else if (transform.position.x > Mathf.Abs(buildingXCoord)){ //check if the enemy is off to the right side
-			return -Vector3.right;
-		} else { //not off to the side; the enemy is coming from the top
-			return -Vector3.forward;
-		}
+		return -Vector3.forward;
 	}
 
 
@@ -59,14 +53,7 @@ public class EnemyIgnoring : EnemyBase {
 	/// </summary>
 	/// <returns>The entry end point.</returns>
 	private Vector3 DetermineEntryEndPoint(){
-		//check to see if this enemy is off to the left side; if so, it needs to lerp sideways
-		if (transform.position.x < -Mathf.Abs(buildingXCoord)){
-			return new Vector3(transform.position.x + enterDistance, transform.position.y, transform.position.z);
-		} else if (transform.position.x > Mathf.Abs(buildingXCoord)){ //check if the enemy is off to the right side
-			return new Vector3(transform.position.x - enterDistance, transform.position.y, transform.position.z);
-		} else { //not off to the side; the enemy is coming from the top
-			return new Vector3(transform.position.x, transform.position.y, transform.position.z - enterDistance);
-		}
+		return new Vector3(transform.position.x, transform.position.y, transform.position.z - enterDistance);
 	}
 
 
