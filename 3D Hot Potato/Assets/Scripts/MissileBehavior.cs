@@ -27,6 +27,7 @@ public class MissileBehavior : MonoBehaviour {
 	}
 
 	public void Launch(){
+		Debug.Log("Launch() called for " + gameObject.name);
 		transform.parent = transform.root; //de-parent the missile so that it doesn't move with the player anymore
 
 		//find a target
