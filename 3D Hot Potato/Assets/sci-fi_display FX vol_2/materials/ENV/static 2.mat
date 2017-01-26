@@ -8,7 +8,7 @@ Material:
   m_PrefabInternal: {fileID: 0}
   m_Name: static 2
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: _DETAIL_MULX2 _EMISSION _NORMALMAP
+  m_ShaderKeywords: _EMISSION
   m_LightmapFlags: 1
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -18,7 +18,7 @@ Material:
     - first:
         name: _BumpMap
       second:
-        m_Texture: {fileID: 2800000, guid: 70ab96ead1b79ad41af2ad42295662a1, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - first:
@@ -36,19 +36,19 @@ Material:
     - first:
         name: _DetailNormalMap
       second:
-        m_Texture: {fileID: 2800000, guid: 643ea9a5492269b46a512d09f434cfa2, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - first:
         name: _EmissionMap
       second:
-        m_Texture: {fileID: 2800000, guid: 2b8d4092db5136a4bbb786b1e66b0af8, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 9, y: 9}
         m_Offset: {x: 0, y: 0}
     - first:
         name: _MainTex
       second:
-        m_Texture: {fileID: 2800000, guid: 7c8ff5a4292f12143975da6aca63037d, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 9, y: 9}
         m_Offset: {x: 0, y: 0}
     - first:
@@ -83,11 +83,17 @@ Material:
         name: _DstBlend
       second: 0
     - first:
+        name: _GlossMapScale
+      second: 1
+    - first:
         name: _Glossiness
       second: 0.706
     - first:
+        name: _GlossyReflections
+      second: 1
+    - first:
         name: _Metallic
-      second: 0
+      second: 0.067
     - first:
         name: _Mode
       second: 0
@@ -97,6 +103,12 @@ Material:
     - first:
         name: _Parallax
       second: 0.02
+    - first:
+        name: _SmoothnessTextureChannel
+      second: 0
+    - first:
+        name: _SpecularHighlights
+      second: 1
     - first:
         name: _SrcBlend
       second: 1
@@ -109,7 +121,7 @@ Material:
     m_Colors:
     - first:
         name: _Color
-      second: {r: 1, g: 1, b: 1, a: 1}
+      second: {r: 0.33333334, g: 0.14117648, b: 0.6039216, a: 1}
     - first:
         name: _EmissionColor
-      second: {r: 0.02205882, g: 0.070973605, b: 0.1, a: 1}
+      second: {r: 0.22077921, g: 0.09350653, b: 0.4, a: 1}
