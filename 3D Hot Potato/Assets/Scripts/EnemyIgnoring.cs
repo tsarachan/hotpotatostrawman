@@ -26,11 +26,15 @@ public class EnemyIgnoring : EnemyBase {
 	public AnimationCurve enterCurve;
 	private Vector3 direction;
 
+	//parent the transform
+	private const string ENEMY_ORGANIZER = "Enemies";
+
 
 
 	private void Start(){
 		rb = GetComponent<Rigidbody>();
 		direction = GetDirection();
+		transform.parent = GameObject.Find(ENEMY_ORGANIZER).transform;
 	}
 
 

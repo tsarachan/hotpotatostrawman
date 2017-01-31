@@ -62,8 +62,6 @@ public class HoldPowerHeatSeeking : HoldPower {
 
 
 	private void FireMissiles(){
-		Debug.Log(constructs.childCount);
-
 		List<Transform> missiles = new List<Transform>();
 
 		for (int i = 0; i < constructs.childCount; i++){

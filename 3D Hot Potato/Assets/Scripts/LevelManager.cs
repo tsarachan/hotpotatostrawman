@@ -201,7 +201,7 @@ public class LevelManager : MonoBehaviour {
 		whichEnemy: the exact name of the prefab to the spawned. Again, this says "enemy" because that's the normal use, but it could be other things.
 		waves: how many waves of that prefab should be spawned. The example always has 1 wave per line, but it can be more. Must be an int.
 		numPerWave: how many of the prefab to spawn in each wave. Must be an int.
-		whichSpawners: the spawners were the spawned prefabs will appear. Must be ints.
+		whichSpawners: the spawners where the spawned prefabs will appear. Must be ints.
 		timeBetweenWaves: the number of seconds between spawning waves. Can be a float.
 		timeVariance: this will be randomly added or subtracted to the time between each wave. Can be a float.
 
@@ -293,7 +293,7 @@ public class LevelManager : MonoBehaviour {
 
 	//determine what the readIndex should be, based on how far through the Act the game is
 	private int GetNewReadIndex(JSONNode node){
-		//are is there still more to do in this act?
+		//is there still more to do in this act?
 		if (readIndex < node[WORLD + worldNumber.ToString()][ACT + actNumber.ToString()].Count - 1){
 			readIndex++;
 			return readIndex;

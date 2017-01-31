@@ -302,8 +302,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 689ad17ccae4544a8939c774dd5892b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  horizontalResolution: 800
-  verticalResolution: 800
+  horizontalResolution: 500
+  verticalResolution: 500
   strength: 1
   colormap: {fileID: 11400000, guid: 7677d1143a3e04d2ca4f0e956b743266, type: 2}
 --- !u!4 &141210834 stripped
@@ -513,7 +513,6 @@ GameObject:
   m_Component:
   - component: {fileID: 210616821}
   - component: {fileID: 210616826}
-  - component: {fileID: 210616825}
   - component: {fileID: 210616824}
   - component: {fileID: 210616822}
   - component: {fileID: 210616823}
@@ -531,12 +530,12 @@ Transform:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 210616820}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 66, y: -232, z: 255}
   m_LocalScale: {x: 10, y: 500, z: 10}
   m_Children: []
-  m_Father: {fileID: 393844137}
-  m_RootOrder: 14
+  m_Father: {fileID: 1144013404}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &210616822
 Rigidbody:
@@ -570,10 +569,22 @@ MonoBehaviour:
   resetZ: -25
   startMovingCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   timeToFullSpeed: 1
 --- !u!23 &210616824
 MeshRenderer:
@@ -607,19 +618,6 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
---- !u!65 &210616825
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 65172837236583528, guid: 971b16031af7a44c0a62f23734856a44,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 210616820}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &210616826
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1377,7 +1375,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   awesomeCatchDistance: 5
   cantCatchAfterThrow: 0.25
-  shortRange: 10
+  shortRange: 20
 --- !u!1001 &322946120
 Prefab:
   m_ObjectHideFlags: 0
@@ -1552,11 +1550,6 @@ Transform:
   - {fileID: 738773130}
   - {fileID: 1999500631}
   - {fileID: 824935126}
-  - {fileID: 2090255272}
-  - {fileID: 210616821}
-  - {fileID: 820216308}
-  - {fileID: 1841212676}
-  - {fileID: 623556651}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1760,7 +1753,6 @@ GameObject:
   m_Component:
   - component: {fileID: 623556651}
   - component: {fileID: 623556656}
-  - component: {fileID: 623556655}
   - component: {fileID: 623556654}
   - component: {fileID: 623556652}
   - component: {fileID: 623556653}
@@ -1778,12 +1770,12 @@ Transform:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 623556650}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -193, y: -154, z: 199}
   m_LocalScale: {x: 50, y: 200, z: 35}
   m_Children: []
-  m_Father: {fileID: 393844137}
-  m_RootOrder: 17
+  m_Father: {fileID: 1144013404}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &623556652
 Rigidbody:
@@ -1866,19 +1858,6 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
---- !u!65 &623556655
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 65460298375165902, guid: fe778914fec4742d48c8eb3571f0d40b,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 623556650}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &623556656
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2256,7 +2235,6 @@ GameObject:
   m_Component:
   - component: {fileID: 820216308}
   - component: {fileID: 820216313}
-  - component: {fileID: 820216312}
   - component: {fileID: 820216311}
   - component: {fileID: 820216309}
   - component: {fileID: 820216310}
@@ -2274,12 +2252,12 @@ Transform:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 820216307}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 154.8, y: -284, z: 147}
   m_LocalScale: {x: 60, y: 500, z: 60}
   m_Children: []
-  m_Father: {fileID: 393844137}
-  m_RootOrder: 15
+  m_Father: {fileID: 1144013404}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &820216309
 Rigidbody:
@@ -2313,10 +2291,22 @@ MonoBehaviour:
   resetZ: -25
   startMovingCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   timeToFullSpeed: 1
 --- !u!23 &820216311
 MeshRenderer:
@@ -2350,19 +2340,6 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
---- !u!65 &820216312
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 65399054385180028, guid: aa643e073ad354eb8b170b2f159b52da,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 820216307}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &820216313
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -3218,6 +3195,11 @@ Transform:
   m_Children:
   - {fileID: 388797816}
   - {fileID: 141210834}
+  - {fileID: 2090255272}
+  - {fileID: 210616821}
+  - {fileID: 820216308}
+  - {fileID: 1841212676}
+  - {fileID: 623556651}
   m_Father: {fileID: 393844137}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6568,7 +6550,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1841212676}
   - component: {fileID: 1841212681}
-  - component: {fileID: 1841212680}
   - component: {fileID: 1841212679}
   - component: {fileID: 1841212677}
   - component: {fileID: 1841212678}
@@ -6586,12 +6567,12 @@ Transform:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1841212675}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 121, y: -162, z: 306.9}
   m_LocalScale: {x: 50, y: 200, z: 35}
   m_Children: []
-  m_Father: {fileID: 393844137}
-  m_RootOrder: 16
+  m_Father: {fileID: 1144013404}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &1841212677
 Rigidbody:
@@ -6625,10 +6606,22 @@ MonoBehaviour:
   resetZ: -25
   startMovingCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   timeToFullSpeed: 1
 --- !u!23 &1841212679
 MeshRenderer:
@@ -6662,19 +6655,6 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
---- !u!65 &1841212680
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 65399987923798440, guid: 3bc7883b0e9af4e059f5826e87577f15,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1841212675}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &1841212681
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -7444,7 +7424,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   awesomeCatchDistance: 5
   cantCatchAfterThrow: 0.25
-  shortRange: 10
+  shortRange: 20
 --- !u!114 &2058022956
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7543,7 +7523,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2090255272}
   - component: {fileID: 2090255277}
-  - component: {fileID: 2090255276}
   - component: {fileID: 2090255275}
   - component: {fileID: 2090255273}
   - component: {fileID: 2090255274}
@@ -7561,12 +7540,12 @@ Transform:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2090255271}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -67, y: -15, z: 133}
   m_LocalScale: {x: 35, y: 200, z: 35}
   m_Children: []
-  m_Father: {fileID: 393844137}
-  m_RootOrder: 13
+  m_Father: {fileID: 1144013404}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &2090255273
 Rigidbody:
@@ -7600,10 +7579,22 @@ MonoBehaviour:
   resetZ: -25
   startMovingCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   timeToFullSpeed: 1
 --- !u!23 &2090255275
 MeshRenderer:
@@ -7637,19 +7628,6 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
---- !u!65 &2090255276
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 65215929191394572, guid: 6b4ebbe36af3f437e92225997b2cafb8,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2090255271}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &2090255277
 MeshFilter:
   m_ObjectHideFlags: 0
