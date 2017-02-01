@@ -199,8 +199,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startVelocity: {x: 0, y: 0, z: 0}
-  speed: 50
+  speed: 25
   enterDistance: 75
+  maxOffset: 10
+  frequency: 3
   enterTime: 0.5
   enterCurve:
     serializedVersion: 2
