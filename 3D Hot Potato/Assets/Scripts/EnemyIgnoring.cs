@@ -7,6 +7,8 @@ public class EnemyIgnoring : EnemyBase {
 	//-------tunable variables-------
 	public float speed = 1.0f;
 	public float enterDistance = 0.0f;
+	public float maxOffset = 10.0f; //how far the enemy will move as part of the sine wave
+	public float frequency = 2.0f; //the frequency of the wave
 
 
 	//-------internal variables-------
@@ -25,6 +27,10 @@ public class EnemyIgnoring : EnemyBase {
 	private float timer = 0.0f;
 	public AnimationCurve enterCurve;
 	private Vector3 direction;
+	private delegate Vector3 OffsetPosition();
+	private OffsetPosition offsetPosition;
+	private float offsetTimer = 0.0f;
+	private float startXPos = 0.0f;
 
 	//parent the transform
 	private const string ENEMY_ORGANIZER = "Enemies";
@@ -34,7 +40,14 @@ public class EnemyIgnoring : EnemyBase {
 	private void Start(){
 		rb = GetComponent<Rigidbody>();
 		direction = GetDirection();
+		offsetPosition = GetXOffset;
+		startXPos = transform.position.x;
 		transform.parent = GameObject.Find(ENEMY_ORGANIZER).transform;
+	}
+
+
+	private Vector3 GetDirection(){
+		return -Vector3.forward;
 	}
 
 
@@ -42,13 +55,22 @@ public class EnemyIgnoring : EnemyBase {
 		if (enteringScreen){
 			rb.MovePosition(MoveOntoScreen());
 		} else {
-			rb.MovePosition(transform.position + direction * speed * Time.fixedDeltaTime);
+			rb.MovePosition(offsetPosition());
+
+			//rb.MovePosition(transform.position + offset() + direction * speed * Time.fixedDeltaTime);
+			//rb.MovePosition(transform.position + direction * speed * Time.fixedDeltaTime);
 		}
 	}
 
 
-	private Vector3 GetDirection(){
-		return -Vector3.forward;
+	private Vector3 GetXOffset(){
+		offsetTimer += Time.fixedDeltaTime;
+
+		Vector3 temp = new Vector3(startXPos + Mathf.Sin(offsetTimer * frequency) * maxOffset,
+								   transform.position.y,
+								   transform.position.z - speed * Time.fixedDeltaTime);
+
+		return temp;
 	}
 
 
@@ -89,10 +111,14 @@ public class EnemyIgnoring : EnemyBase {
 		//reset timers so that the enemy behaves correctly when coming out of the pool.
 		timer = 0.0f;
 		enteringScreen = true;
+		offsetTimer = 0.0f;
 
 		//find the end point of the enemy's entry onto the screen
 		start = transform.position;
 		end = DetermineEntryEndPoint();
+
+		//revise the starting X position
+		startXPos = transform.position.x;
 
 		GetComponent<Rigidbody>().velocity = startVelocity; //sanity check: make absolutely sure the velocity is zero
 	}
