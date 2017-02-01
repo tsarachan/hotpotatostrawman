@@ -33,10 +33,15 @@ public class BallBehavior : MonoBehaviour {
 
 	protected AudioSource audioSource;
 
+
+	//used to reset the ball when the game starts
+	private Vector3 myStartPos = new Vector3(0.0f, 0.0f, 0.0f);
+
 	protected virtual void Start(){
 		rb = GetComponent<Rigidbody>();
 		scene = GameObject.Find(SCENE_ORGANIZER).transform;
 		audioSource = GetComponent<AudioSource>();
+		myStartPos = transform.position;
 	}
 
 	/// <summary>
@@ -114,5 +119,10 @@ public class BallBehavior : MonoBehaviour {
 
 		//changes to the player model may require changing the offset axis here
 		transform.localPosition = new Vector3(0.0f, verticalOffset, 0.0f);
+	}
+
+
+	public void ResetBall(){
+		transform.position = myStartPos;
 	}
 }

@@ -10,6 +10,18 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 	private const string BALL_OBJ = "Ball";
 	private const string HUNT = "Hunt"; //if this is in the name, it's vulnerable to the ball and destroys non-ball carriers
 
+
+	//these are involved in resetting the game
+	private const string MANAGER_OBJ = "Managers";
+	private LevelManager levelManager;
+	private Vector3 myStartPos = new Vector3(0.0f, 0.0f, 0.0f);
+
+
+	private void Start(){
+		levelManager = GameObject.Find(MANAGER_OBJ).GetComponent<LevelManager>();
+		myStartPos = transform.position;
+	}
+
 	private void OnCollisionEnter(Collision collision){
 		if (collision.gameObject.name.Contains(ENEMY_OBJ)){
 			if (collision.gameObject.name.Contains(HUNT)){
@@ -52,17 +64,32 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 		transform.GetChild(1).GetChild(0).GetComponent<Renderer>().enabled = false; //make the lightsteed disappear
 		transform.GetChild(1).GetChild(1).gameObject.SetActive(false); //shut off the rider, so that it disappears as well
 
-		ObjectPooling.ObjectPool.ClearPools();
+		//ObjectPooling.ObjectPool.ClearPools();
 
 		StartCoroutine(ResetGame());
 	}
 
 	private IEnumerator ResetGame(){
+
 		yield return new WaitForSeconds(timeToResetGame);
 
+		levelManager.StopGame();
+		//SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
-		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+		yield return new WaitForSeconds(timeToResetGame);
+
+		levelManager.RestartGame();
 
 		yield break;
+	}
+
+
+	public void ResetPlayer(){
+		transform.position = myStartPos;
+
+		transform.GetChild(0).gameObject.SetActive(true); //turn the point light back on
+		transform.GetChild(1).GetChild(0).GetComponent<Renderer>().enabled = true; //restore the lightsteed
+		transform.GetChild(1).GetChild(1).gameObject.SetActive(true); //bring back the rider
+		GetComponent<PlayerBallInteraction>().BallCarrier = false; //without this setting, players can be destroyed without the ball on restart
 	}
 }

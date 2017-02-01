@@ -104,9 +104,31 @@ public class LevelManager : MonoBehaviour {
 	}
 
 
+	//these are used to restart the game
+	private const string ENEMY_ORGANIZER = "Enemies";
+	private Transform enemies;
+	private const string ENEMY_TAG = "Enemy";
+	private PlayerEnemyInteraction p1EnemyScript;
+	private const string PLAYER_1 = "Player 1";
+	private PlayerEnemyInteraction p2EnemyScript;
+	private const string PLAYER_2 = "Player 2";
+	private BallBehavior ballScript;
+	private const string BALL = "Ball";
+	private bool checkpointReached = false; //did the players hit a checkpoint on their last run?
+	private int checkpointWorldNum = 0;
+	private int checkpointActNum = 0;
+	private float checkpointNextReadTime = 0.0f;
+	private int checkpointReadIndex = 0;
+	public float restartGracePeriod = 1.0f; //how long players have after a restart before enemies appear
+
+
 	private void Start(){
 		spawners = FindSpawners();
 		ObjectPooling.ObjectPool.GameOver = false; //start the game
+		enemies = GameObject.Find(ENEMY_ORGANIZER).transform;
+		p1EnemyScript = GameObject.Find(PLAYER_1).GetComponent<PlayerEnemyInteraction>();
+		p2EnemyScript = GameObject.Find(PLAYER_2).GetComponent<PlayerEnemyInteraction>();
+		ballScript = GameObject.Find(BALL).GetComponent<BallBehavior>();
 	}
 
 	private List<Transform> FindSpawners(){
@@ -123,23 +145,30 @@ public class LevelManager : MonoBehaviour {
 
 	private void Update(){
 
-		//this is the overall loop: whenever the timer reaches the next read time, do something
-		//ReadInItem increases nextReadTime, and the cycle continues
-		if (!worldOver && GameHasStarted){
-			timer += Time.deltaTime;
-
-			if (timer >= nextReadTime){
-				//Debug.Log("calling ReadInItem()");
-				readIndex = ReadInItem();
-			}
+		//debug control for checkpoints
+		if (Input.GetKeyDown(KeyCode.Space) && GameHasStarted){
+			SetCheckpoint();
+		} else if (Input.GetKeyDown(KeyCode.Space) && !GameHasStarted){
+			RestartGame();
 		}
 
-		if (spawnIndex < nextSpawnTimes.Count){
-			spawnTimer += Time.deltaTime;
+		//this is the overall loop: whenever the timer reaches the next read time, do something
+		//ReadInItem increases nextReadTime, and the cycle continues
+		if (GameHasStarted){
+			if (!worldOver){
+				timer += Time.deltaTime;
 
-			if (spawnTimer >= nextSpawnTimes[spawnIndex]){
-				//Debug.Log("SpawnAWave() called");
-				spawnIndex = SpawnAWave();
+				if (timer >= nextReadTime){
+					readIndex = ReadInItem();
+				}
+			}
+
+			if (spawnIndex < nextSpawnTimes.Count){
+				spawnTimer += Time.deltaTime;
+
+				if (spawnTimer >= nextSpawnTimes[spawnIndex]){
+					spawnIndex = SpawnAWave();
+				}
 			}
 		}
 	}
@@ -398,5 +427,52 @@ public class LevelManager : MonoBehaviour {
 		}
 
 		return list;
+	}
+
+
+	public void SetCheckpoint(){
+		Debug.Log("nextReadTime == " + nextReadTime);
+		Debug.Log("timer == " + timer);
+		checkpointReached = true;
+		checkpointWorldNum = worldNumber;
+		checkpointActNum = actNumber;
+		checkpointNextReadTime = nextReadTime;
+		checkpointReadIndex = readIndex;
+	}
+
+	public void StopGame(){
+		if (GameHasStarted){
+			GameHasStarted = false;
+
+			foreach (Transform enemy in enemies){
+				if (enemy.tag == ENEMY_TAG){
+					enemy.GetComponent<EnemyBase>().GetDestroyed();
+				}
+			}
+		}
+	}
+
+
+	public void RestartGame(){
+		if (!GameHasStarted){
+			p1EnemyScript.ResetPlayer();
+			p2EnemyScript.ResetPlayer();
+			ballScript.ResetBall();
+
+			timer = checkpointNextReadTime - restartGracePeriod;
+
+			if (checkpointReached){
+				worldNumber = checkpointWorldNum;
+				actNumber = checkpointActNum;
+				nextReadTime = checkpointNextReadTime;
+				readIndex = checkpointReadIndex;
+			}
+				
+			spawnIndex = 0;
+			spawnTimer = 0.0f;
+			nextSpawnTimes.Clear();
+
+			//GameHasStarted = true;
+		}
 	}
 }

@@ -126,9 +126,9 @@ public class ScoreManager : MonoBehaviour {
 		}
 
 		//for debugging only; remove when the script is ready!
-		if (Input.GetKeyDown(KeyCode.Space)){
-			FindBestPerformances();
-		}
+//		if (Input.GetKeyDown(KeyCode.Space)){
+//			FindBestPerformances();
+//		}
 	}
 
 
