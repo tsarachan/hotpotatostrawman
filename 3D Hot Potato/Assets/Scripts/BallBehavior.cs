@@ -47,7 +47,7 @@ public class BallBehavior : MonoBehaviour {
 
 	//variables used to show a particle when the battery star is in position for an awesome catch
 	private GameObject awesomeCatchParticle;
-	private const string AWESOME_CATCH_PARTICLE = "ETF_Lightning Spark";
+	private const string AWESOME_CATCH_PARTICLE = "Ball particle";
 	private float awesomeCatchDistance = 0.0f;
 	private CatchBehavior p1CatchScript; //player 1's awesome catch distance will serve for both players
 	private const string PLAYER_1 = "Player 1";
