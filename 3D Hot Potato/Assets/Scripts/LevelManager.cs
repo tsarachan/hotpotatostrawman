@@ -431,8 +431,6 @@ public class LevelManager : MonoBehaviour {
 
 
 	public void SetCheckpoint(){
-		Debug.Log("nextReadTime == " + nextReadTime);
-		Debug.Log("timer == " + timer);
 		checkpointReached = true;
 		checkpointWorldNum = worldNumber;
 		checkpointActNum = actNumber;
@@ -459,13 +457,18 @@ public class LevelManager : MonoBehaviour {
 			p2EnemyScript.ResetPlayer();
 			ballScript.ResetBall();
 
-			timer = checkpointNextReadTime - restartGracePeriod;
-
 			if (checkpointReached){
+				timer = checkpointNextReadTime - restartGracePeriod;
 				worldNumber = checkpointWorldNum;
 				actNumber = checkpointActNum;
 				nextReadTime = checkpointNextReadTime;
 				readIndex = checkpointReadIndex;
+			} else {
+				timer = 0.0f;
+				worldNumber = 1;
+				actNumber = 1;
+				nextReadTime = 0.0f;
+				readIndex = 0;
 			}
 				
 			spawnIndex = 0;

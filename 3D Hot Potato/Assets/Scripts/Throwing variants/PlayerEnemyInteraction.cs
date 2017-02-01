@@ -76,7 +76,7 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 		levelManager.StopGame();
 		//SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
-		yield return new WaitForSeconds(timeToResetGame);
+		//yield return new WaitForSeconds(timeToResetGame);
 
 		levelManager.RestartGame();
 
