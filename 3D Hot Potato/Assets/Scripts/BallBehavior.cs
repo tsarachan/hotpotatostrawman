@@ -9,41 +9,58 @@ using System.Collections;
 
 public class BallBehavior : MonoBehaviour {
 
-	protected Rigidbody rb;
 
+	//----------Tunable variables----------
 	public AnimationCurve normalTossCurve; //can be used to make the ball move faster at start then lose speed over time, etc.
 	public float flightTimePerUnitDistance = 0.1f; //effectively speed
 	public AnimationCurve verticalCurve; //used to give the ball a "lob" effect
 	public float verticalHeight = 2.0f; //height the ball reaches at the apex of the lob
-
 	public float verticalOffset = 2.0f; //how high above a player the ball is held
 
-	protected const string PLAYER_OBJ = "Player";
 
+	//----------Internal variables----------
+	protected Rigidbody rb;
+	protected AudioSource audioSource;
+
+	//variables for parenting the ball to the root transform while in the air
 	protected const string SCENE_ORGANIZER = "Scene";
 	protected Transform scene;
 
+	//this will store the coroutine that moves the ball, so that it can be stopped early if necessary
 	protected Coroutine co;
 	public Coroutine Co{
 		get { return co; }
 	}
 
+	//if powerups based on a super meter are being used, these variables set up the meter
 	protected const string SUPER_METER = "Super meter";
 	protected PowerUp powerUpScript;
 
-	protected AudioSource audioSource;
 
+	//the player who's going to catch a pass. CatchBehavior uses this to decide who can do awesome catches.
 	public Transform IntendedReceiver { get; set; }
 
 
 	//used to reset the ball when the game starts
 	private Vector3 myStartPos = new Vector3(0.0f, 0.0f, 0.0f);
 
+
+	//variables used to show a particle when the battery star is in position for an awesome catch
+	private GameObject awesomeCatchParticle;
+	private const string AWESOME_CATCH_PARTICLE = "ETF_Lightning Spark";
+	private float awesomeCatchDistance = 0.0f;
+	private CatchBehavior p1CatchScript; //player 1's awesome catch distance will serve for both players
+	private const string PLAYER_1 = "Player 1";
+
+
+	//initialize variables
 	protected virtual void Start(){
 		rb = GetComponent<Rigidbody>();
 		scene = GameObject.Find(SCENE_ORGANIZER).transform;
 		audioSource = GetComponent<AudioSource>();
 		myStartPos = transform.position;
+		awesomeCatchParticle = transform.Find(AWESOME_CATCH_PARTICLE).gameObject;
+		awesomeCatchDistance = GameObject.Find(PLAYER_1).GetComponent<CatchBehavior>().GetAwesomeCatchDistance();
 	}
 
 	/// <summary>
@@ -87,6 +104,10 @@ public class BallBehavior : MonoBehaviour {
 
 			rb.MovePosition(nextPoint);
 
+			if (Vector3.Distance(transform.position, destination.position) <= awesomeCatchDistance){
+				awesomeCatchParticle.SetActive(true);
+			}
+
 			yield return null;
 		}
 
@@ -124,6 +145,8 @@ public class BallBehavior : MonoBehaviour {
 		transform.localPosition = new Vector3(0.0f, verticalOffset, 0.0f);
 
 		IntendedReceiver = transform; //default assignment
+
+		awesomeCatchParticle.SetActive(false);
 	}
 
 

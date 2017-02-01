@@ -14,8 +14,6 @@ public class CatchBehavior : MonoBehaviour {
 
 	//----------Tunable variables----------
 	public float awesomeCatchDistance = 10.0f; //how much leeway players have to get the awesome catch
-	public float slowdownDuration = 1.5f; //how long players are slowed down when they mess up the awesome catch
-	public float cantCatchAfterThrow = 1.0f; //discard excess inputs for this long after a throw; prevents throwing from doing awesome catches
 
 
 	//----------Internal variables----------
@@ -170,5 +168,14 @@ public class CatchBehavior : MonoBehaviour {
 	private void Player2AwesomeCatchEffect(){
 		GameObject burst = ObjectPooling.ObjectPool.GetObj(myPower.name);
 		burst.transform.position = transform.position;
+	}
+
+
+	/// <summary>
+	/// Called by BallBehavior to get the distance where the awesome catch can happen.
+	/// </summary>
+	/// <returns>The awesome catch distance.</returns>
+	public float GetAwesomeCatchDistance(){
+		return awesomeCatchDistance;
 	}
 }
