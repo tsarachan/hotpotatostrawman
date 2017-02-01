@@ -6,65 +6,103 @@
  * This script does not carry out the awesome catch's effect. It only establishes that an awesome catch occurred.
  * 
  */
-using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 public class CatchBehavior : MonoBehaviour {
 
+	//----------Tunable variables----------
+	public float awesomeCatchDistance = 10.0f; //how much leeway players have to get the awesome catch
+	public float slowdownDuration = 1.5f; //how long players are slowed down when they mess up the awesome catch
+	public float cantCatchAfterThrow = 1.0f; //discard excess inputs for this long after a throw; prevents throwing from doing awesome catches
 
-	//tunable variables--how close the catch has to be, how strong the burst is, etc.
-	public float awesomeCatchDistance = 1.0f;
-	public float cantCatchAfterThrow = 1.0f;
-	public float shortRange = 10.0f; //within this distance is short range; greater is long range
+
+	//----------Internal variables----------
+
+	//variables used to load the player powers
+	private GameObject myPower;
+	private const string LIGHTNING_OBJ = "Burst prefab";
+	private const string TETHER_OBJ = "Lightning prefab";
+	private const string PARTICLE_ORGANIZER = "Particles";
 
 
-	//variables for determining who has the ball
+	//variables for determining whether an awesome catch occurred
 	private PlayerBallInteraction myBallScript;
 	private PlayerBallInteraction otherBallScript;
 	private const string PLAYER_1_OBJ = "Player 1";
 	private const string PLAYER_2_OBJ = "Player 2";
-
-
-	//variables relating to the ball
 	private Transform ball;
 	private const string BALL_OBJ = "Ball";
+	private bool readyForAwesomeCatch = false;
+	private BallBehavior ballBehavior;
 
 
-	//variables for the different types of catches
-	private DigitalRuby.LightningBolt.LightningBoltScript boltScript;
-	private const string PARTICLES_ORGANIZER = "Particles";
-	private const string LIGHTNING_OBJ = "Lightning prefab";
-	private GameObject burst;
-	private const string BURST_OBJ = "Burst prefab";
+	//variables for keeping track of how many inputs the player has made during this throw, and for slowing players who mash
+	private int inputs = 0;
+	private PlayerMovement movementScript;
 
 
-	//internal variables
+	//this helps discard excess inputs when throwing
 	private float cantCatchTimer = 0.0f;
 
 
 	//initialize variables
 	private void Start(){
+		myPower = LoadMyPower();
 		myBallScript = GetComponent<PlayerBallInteraction>();
 		otherBallScript = FindOtherBallScript();
 		ball = GameObject.Find(BALL_OBJ).transform;
-
-		boltScript = transform.root.Find(PARTICLES_ORGANIZER).Find(LIGHTNING_OBJ)
-			.GetComponent<DigitalRuby.LightningBolt.LightningBoltScript>();
-		boltScript.SetState(false);
-	}
-
-
-	//handle timer
-	private void Update(){
-		cantCatchTimer += Time.deltaTime;
+		ballBehavior = ball.GetComponent<BallBehavior>();
+		movementScript = GetComponent<PlayerMovement>();
 	}
 
 
 	/// <summary>
-	/// Gets a reference to the other player's ball script, so that this player can tell who has the ball.
+	/// Finds the appropriate prefab for each player's catch power, and then sets any necessary initial states.
 	/// </summary>
-	/// <returns>The other player's PlayerBallInteraction script.</returns>
+	/// <returns>A gameobject, either instantiated or loaded from Resources, for the player's power.</returns>
+	private GameObject LoadMyPower(){
+		if (gameObject.name == PLAYER_1_OBJ){
+			GameObject tether = Instantiate(Resources.Load(TETHER_OBJ),
+											new Vector3(0.0f, 0.0f, 0.0f),
+											Quaternion.identity,
+											GameObject.Find(PARTICLE_ORGANIZER).transform) as GameObject;
+
+			tether.SetActive(false);
+
+				
+			return tether;
+		} else if (gameObject.name == PLAYER_2_OBJ){
+			return Resources.Load(LIGHTNING_OBJ) as GameObject;
+		} else {
+			Debug.Log("Couldn't figure out which player power to load for " + gameObject.name);
+			return Resources.Load(TETHER_OBJ) as GameObject;
+		}
+	}
+
+
+	/// <summary>
+	/// Every time the player catches the ball, see if it's an awesome catch. Either way, reset the values that determine whether
+	/// an awesome catch is possible.
+	/// </summary>
+	/// <param name="other">The collider the player encountered.</param>
+	private void OnTriggerEnter(Collider other){
+		if (other.gameObject.name == BALL_OBJ){
+			if (readyForAwesomeCatch){
+				AwesomeCatch();
+			}
+
+			inputs = 0;
+			readyForAwesomeCatch = false;
+		}
+	}
+
+
+	//	/// <summary>
+	//	/// Gets a reference to the other player's ball script, so that this player can tell who has the ball.
+	//	/// </summary>
+	//	/// <returns>The other player's PlayerBallInteraction script.</returns>
 	private PlayerBallInteraction FindOtherBallScript(){
 		PlayerBallInteraction temp;
 
@@ -82,69 +120,55 @@ public class CatchBehavior : MonoBehaviour {
 	}
 
 
-	/// <summary>
-	/// Call this function whenever a player tries for the awesome catch.
-	/// 
-	/// All the logic for whether or not awesome catches occur is in the if-statements in this function.
-	/// </summary>
+	//	/// <summary>
+	//	/// Call this function whenever a player tries for the awesome catch.
+	//	/// 
+	//	/// All the logic for whether or not awesome catches occur is in the if-statements in this function.
+	//	/// </summary>
 	public void AttemptAwesomeCatch(){
-		if (!myBallScript.BallCarrier && !otherBallScript.BallCarrier &&  //neither player has the ball--it's in the air
-			cantCatchTimer > cantCatchAfterThrow){ //discard thrower's extra inputs
-			if (Vector3.Distance(transform.position, ball.position) <= awesomeCatchDistance){
-				AwesomeCatch();
+		if (ballBehavior.IntendedReceiver == transform){ //make sure the ball is coming to this player
+			if(inputs > 0){ //if this is true, the player has already tried for an awesome catch and is mashing
+				movementScript.SlowMaxSpeed();
+				readyForAwesomeCatch = false;
+			} else if (Vector3.Distance(transform.position, ball.position) > awesomeCatchDistance){ //if true, pushed button too early--missed catch
+				inputs++;
+				movementScript.SlowMaxSpeed();
+				readyForAwesomeCatch = false;
+			} else { //success! An awesome catch can occur
+				readyForAwesomeCatch = AwesomeCatch();
 			}
 		}
 	}
 
 
 	/// <summary>
-	/// If a player makes an awesome catch, this function determines which effect to apply--the short range one or
-	/// the long range one.
-	/// 
-	/// It then uses the cantCatchTimer to prevent multiple awesome catches when the player holds the button down
-	/// for more than a frame.
+	/// Chooses the correct awesome catch effect for this player.
 	/// </summary>
-	private void AwesomeCatch(){
-		bool isShortRange = true;
-
-		if (Vector3.Distance(transform.position, otherBallScript.transform.position) > shortRange){
-			isShortRange = false;
-		}
-
-		if (isShortRange) {
-			ShortRangeAwesomeEffect();
+	/// <returns><c>true</c> so that the awesome catch will happen when the player catches the ball.</returns>
+	private bool AwesomeCatch(){
+		if (gameObject.name == PLAYER_1_OBJ){
+			Player1AwesomeCatchEffect();
 		} else {
-			LongRangeAwesomeEffect();
+			Player2AwesomeCatchEffect();
 		}
-		cantCatchTimer = 0.0f;
 
+		return true;
 	}
 
 
 	/// <summary>
-	/// Sets the short-range awesome catch effect in motion.
+	/// Activate the tether between player 1 and player 2
 	/// </summary>
-	private void ShortRangeAwesomeEffect(){
-		boltScript.SetState(true);
+	private void Player1AwesomeCatchEffect(){
+		myPower.SetActive(true);
 	}
 
 
 	/// <summary>
-	/// Sets the long-range awesome catch effect in motion.
+	/// Cause a bolt of lightning to appear at player 2's location
 	/// </summary>
-	private void LongRangeAwesomeEffect(){
-		burst = ObjectPooling.ObjectPool.GetObj(BURST_OBJ);
+	private void Player2AwesomeCatchEffect(){
+		GameObject burst = ObjectPooling.ObjectPool.GetObj(myPower.name);
 		burst.transform.position = transform.position;
-	}
-
-
-	/// <summary>
-	/// This timer helps avoid accidental awesome catches when the player holds the button for a few frames.
-	/// 
-	/// PlayerBallInteraction's Throw() resets this every time the player throws.
-	/// It's also called every time the player makes an awesome catch.
-	/// </summary>
-	public void CantAwesomeCatch(){
-		cantCatchTimer = 0.0f;
 	}
 }

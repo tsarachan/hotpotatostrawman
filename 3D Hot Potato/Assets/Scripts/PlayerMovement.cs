@@ -8,6 +8,11 @@ public class PlayerMovement : MonoBehaviour {
 
 	public float maxSpeed = 1.0f; //player maximum speed
 	public float accel = 0.3f; //amount player accelerates each frame of input
+	public float slowSpeed = 0.5f; //player speed when slowed for a missed awesome catch
+	public float slowDuration = 1.0f; //how long the player is slowed after a missed awesome catch
+
+	public float currentMaxSpeed = 0.0f; //the player's maximum speed, either the normal maximum or the slowed maximum
+	private float slowTimer = 0.0f; //keeps track of how long the player has been slowed
 
 	private bool stopped = false; //players are stopped, for example, when they destroy an enemy
 	public bool Stopped{
@@ -26,6 +31,19 @@ public class PlayerMovement : MonoBehaviour {
 
 	private void Start(){
 		rb = GetComponent<Rigidbody>();
+		currentMaxSpeed = maxSpeed;
+	}
+
+
+	//if currently slowed down, track time until it's appropriate to speed back up
+	private void Update(){
+		if (currentMaxSpeed == slowSpeed){
+			slowTimer += Time.deltaTime;
+
+			if (slowTimer >= slowDuration){
+				currentMaxSpeed = maxSpeed;
+			}
+		}
 	}
 		
 
@@ -35,7 +53,7 @@ public class PlayerMovement : MonoBehaviour {
 		if (!Stopped){
 			//This is a bodge to limit maximum speed. The better way would be to impose a countervailing force.
 			//Directly manipulating rigidbody velocity could lead to physics problems.
-			if (rb.velocity.magnitude > maxSpeed) { rb.velocity = rb.velocity.normalized * maxSpeed; }
+			if (rb.velocity.magnitude > currentMaxSpeed) { rb.velocity = rb.velocity.normalized * currentMaxSpeed; }
 
 		//not moving because movement paused while fighting an enemy
 		} else if (Stopped) {
@@ -87,5 +105,12 @@ public class PlayerMovement : MonoBehaviour {
 		} else {
 			return true;
 		}
+	}
+
+
+	public void SlowMaxSpeed(){
+		Debug.Log("SlowMaxSpeed() called");
+		currentMaxSpeed = slowSpeed;
+		slowTimer = 0.0f;
 	}
 }

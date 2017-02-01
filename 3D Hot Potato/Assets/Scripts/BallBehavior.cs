@@ -33,6 +33,8 @@ public class BallBehavior : MonoBehaviour {
 
 	protected AudioSource audioSource;
 
+	public Transform IntendedReceiver { get; set; }
+
 
 	//used to reset the ball when the game starts
 	private Vector3 myStartPos = new Vector3(0.0f, 0.0f, 0.0f);
@@ -51,6 +53,7 @@ public class BallBehavior : MonoBehaviour {
 	/// <param name="destination">The catching player.</param>
 	public virtual void Pass(Vector3 start, Transform destination){
 		transform.parent = scene; //stop being a child of the ball carrier, so that the ball can move between players
+		IntendedReceiver = destination;
 		co = StartCoroutine(PassBetweenPlayers(start, destination));
 
 		//play a sound when the ball is thrown, unless the passes are happening fast enough that the sounds would overlap
@@ -119,9 +122,14 @@ public class BallBehavior : MonoBehaviour {
 
 		//changes to the player model may require changing the offset axis here
 		transform.localPosition = new Vector3(0.0f, verticalOffset, 0.0f);
+
+		IntendedReceiver = transform; //default assignment
 	}
 
 
+	/// <summary>
+	/// When the game restarts after the players die, call this.
+	/// </summary>
 	public void ResetBall(){
 		transform.position = myStartPos;
 	}
