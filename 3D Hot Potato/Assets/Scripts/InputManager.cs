@@ -29,6 +29,10 @@ public class InputManager : MonoBehaviour {
 	private const string HORIZ_AXIS = "PS4_LStick_Horiz_";
 	private const string O_BUTTON = "PS4_O_";
 
+	private const string VERT_AXIS_360 = "360_LStick_Vert_";
+	private const string HORIZ_AXIS_360 = "360_LStick_Horiz_";
+	private const string A_BUTTON = "360_A_";
+
 
 	//the players
 	private const string PLAYER_ORGANIZER = "Players";
@@ -127,7 +131,8 @@ public class InputManager : MonoBehaviour {
 	private void Update(){
 		//controller buttons
 		foreach (char player in players.Keys){
-			if (Input.GetButtonDown(O_BUTTON + player)){
+			if (Input.GetButtonDown(O_BUTTON + player) ||
+				Input.GetButtonDown(A_BUTTON + player)){
 				//if a player has picked up the ball, start the game upon the first pass
 				//this will try to keep restarting the game--it's inefficient, but not causing performance problems
 				if (players[player].BallScript.BallCarrier){
@@ -156,20 +161,24 @@ public class InputManager : MonoBehaviour {
 	private void FixedUpdate(){
 		//thumbstick controls
 		foreach (char player in players.Keys){
-			if (Input.GetAxis(VERT_AXIS + player) > deadZone){
+			if (Input.GetAxis(VERT_AXIS + player) > deadZone ||
+				Input.GetAxis(VERT_AXIS_360 + player) > deadZone){
 				players[player].MoveScript.Move(UP);
 				players[player].LeanScript.Lean(UP);
 			}
-			else if (Input.GetAxis(VERT_AXIS + player) < -deadZone){
+			else if (Input.GetAxis(VERT_AXIS + player) < -deadZone ||
+					 Input.GetAxis(VERT_AXIS_360 + player) < -deadZone){
 				players[player].MoveScript.Move(DOWN);
 				players[player].LeanScript.Lean(DOWN);
 			}
 
-			if (Input.GetAxis(HORIZ_AXIS + player) < -deadZone){
+			if (Input.GetAxis(HORIZ_AXIS + player) < -deadZone ||
+				Input.GetAxis(HORIZ_AXIS_360 + player) < -deadZone){
 				players[player].MoveScript.Move(LEFT);
 				players[player].LeanScript.Lean(LEFT);
 			}
-			else if (Input.GetAxis(HORIZ_AXIS + player) > deadZone){
+			else if (Input.GetAxis(HORIZ_AXIS + player) > deadZone ||
+					 Input.GetAxis(HORIZ_AXIS_360 + player) > deadZone){
 				players[player].MoveScript.Move(RIGHT);
 				players[player].LeanScript.Lean(RIGHT);
 			}
