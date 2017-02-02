@@ -14,6 +14,8 @@ public class CatchBehavior : MonoBehaviour {
 
 	//----------Tunable variables----------
 	public float awesomeCatchDistance = 10.0f; //how much leeway players have to get the awesome catch
+	public int catchResolution = 75; //new horizontal and vertical pixel resolution as juice for awesome catches
+	public float catchResolutionChangeDuration = 0.5f;
 
 
 	//----------Internal variables----------
@@ -45,6 +47,10 @@ public class CatchBehavior : MonoBehaviour {
 	private float cantCatchTimer = 0.0f;
 
 
+	//variables for juice
+	private AlpacaSound.RetroPixelPro.RetroPixelPro pixelScript;
+
+
 	//initialize variables
 	private void Start(){
 		myPower = LoadMyPower();
@@ -53,6 +59,7 @@ public class CatchBehavior : MonoBehaviour {
 		ball = GameObject.Find(BALL_OBJ).transform;
 		ballBehavior = ball.GetComponent<BallBehavior>();
 		movementScript = GetComponent<PlayerMovement>();
+		pixelScript = Camera.main.GetComponent<AlpacaSound.RetroPixelPro.RetroPixelPro>();
 	}
 
 
@@ -149,6 +156,8 @@ public class CatchBehavior : MonoBehaviour {
 		} else {
 			Player2AwesomeCatchEffect();
 		}
+
+		pixelScript.SetTemporaryResolution(catchResolution, catchResolution, catchResolutionChangeDuration);
 
 		return true;
 	}

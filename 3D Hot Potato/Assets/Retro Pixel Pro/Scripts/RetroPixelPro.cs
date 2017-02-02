@@ -38,6 +38,15 @@ namespace AlpacaSound.RetroPixelPro
 		Texture2D colormapPalette;
 		Material m_material = null;
 
+		//added variables to allow runtime changes to the resolution
+		private int normalHorizontalResolution = 500;
+		private int normalVerticalResolution = 500;
+		private int modifiedHorizontalResolution = 0;
+		private int modifiedVerticalResolution = 0;
+		private float resolutionResetDuration = 1.0f;
+		private float resolutionResetTimer = 10000.0f; //nonsense initialization so it doesn't start out changing
+		public AnimationCurve resolutionResetCurve;
+
 		public Material material
 		{
 			get
@@ -69,6 +78,9 @@ namespace AlpacaSound.RetroPixelPro
 				Debug.LogWarning("This system does not support image effects.");
 				enabled = false;
 			}
+
+			normalHorizontalResolution = horizontalResolution;
+			normalVerticalResolution = verticalResolution;
 		}
 
 		Colormap oldColormap = null;
@@ -82,6 +94,24 @@ namespace AlpacaSound.RetroPixelPro
 			}
 
 			oldColormap = colormap;
+
+			if (resolutionResetTimer <= resolutionResetDuration){
+				RestoreNormalResolution();
+			}
+		}
+
+		private void RestoreNormalResolution(){
+			resolutionResetTimer += Time.deltaTime;
+
+			horizontalResolution = (int)Mathf.Lerp(modifiedHorizontalResolution,
+												   normalHorizontalResolution,
+												   resolutionResetCurve.Evaluate(resolutionResetTimer/
+																				 resolutionResetDuration));
+
+			verticalResolution = (int)Mathf.Lerp(modifiedVerticalResolution,
+												 normalVerticalResolution,
+												 resolutionResetCurve.Evaluate(resolutionResetTimer/
+																			   resolutionResetDuration));
 		}
 
 
@@ -173,7 +203,12 @@ namespace AlpacaSound.RetroPixelPro
 			material.SetTexture("_ColorMap", colormapTexture);
 		}
 
-
+		public void SetTemporaryResolution(int tempHorizRes, int tempVertRes, float time){
+			modifiedHorizontalResolution = tempHorizRes;
+			modifiedVerticalResolution = tempVertRes;
+			resolutionResetDuration = time;
+			resolutionResetTimer = 0.0f;
+		}
 	}
 }
 
