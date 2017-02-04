@@ -335,7 +335,6 @@ public class LevelManager : MonoBehaviour {
 			return 0;
 		} else { //if not, this world is over
 			worldOver = true;
-			Debug.Log("world over");
 			return 0;
 		}
 	}
