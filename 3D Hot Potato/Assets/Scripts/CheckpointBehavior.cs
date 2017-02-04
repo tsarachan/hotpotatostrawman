@@ -9,6 +9,14 @@ public class CheckpointBehavior : ObjectPooling.Poolable {
 
 
 	//internal variables
+
+	//these are the variables that this checkpoint will feed into LevelManager if it's hit
+	public int CurrentWorldNum { get; set; }
+	public int CurrentActNum { get; set; }
+	public float CurrentNextReadTime { get; set; }
+	public int CurrentReadIndex { get; set; }
+
+
 	private LevelManager levelManager;
 	private const string MANAGER_OBJ = "Managers";
 	private Rigidbody rb;
@@ -22,6 +30,15 @@ public class CheckpointBehavior : ObjectPooling.Poolable {
 		levelManager = GameObject.Find(MANAGER_OBJ).GetComponent<LevelManager>();
 		rb = GetComponent<Rigidbody>();
 		checkpointText = GameObject.Find(CHECKPOINT_TEXT).GetComponent<UIElementMove>();
+		GetCurrentLevelNumbers();
+	}
+
+
+	private void GetCurrentLevelNumbers(){
+		CurrentWorldNum = levelManager.GetWorldNum();
+		CurrentActNum = levelManager.GetActNum();
+		CurrentNextReadTime = levelManager.GetNextReadTime();
+		CurrentReadIndex = levelManager.GetReadIndex();
 	}
 
 
@@ -32,14 +49,15 @@ public class CheckpointBehavior : ObjectPooling.Poolable {
 
 	public void OnTriggerEnter(Collider other){
 		if (other.tag == PLAYER_TAG){ //don't set a checkpoint if, frex., an enemy goes through the point
-			levelManager.SetCheckpoint();
+			levelManager.SetCheckpoint(CurrentWorldNum, CurrentActNum, CurrentNextReadTime, CurrentReadIndex);
 			checkpointText.StartUIElementMoving();
 		}
 	}
 
 
 	public override void Reset(){
-		//intentionally blank
+		levelManager = GameObject.Find(MANAGER_OBJ).GetComponent<LevelManager>();
+		GetCurrentLevelNumbers();
 	}
 
 

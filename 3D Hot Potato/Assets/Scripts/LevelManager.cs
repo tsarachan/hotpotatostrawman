@@ -145,13 +145,6 @@ public class LevelManager : MonoBehaviour {
 
 	private void Update(){
 
-		//debug control for checkpoints
-		if (Input.GetKeyDown(KeyCode.Space) && GameHasStarted){
-			SetCheckpoint();
-		} else if (Input.GetKeyDown(KeyCode.Space) && !GameHasStarted){
-			RestartGame();
-		}
-
 		//this is the overall loop: whenever the timer reaches the next read time, do something
 		//ReadInItem increases nextReadTime, and the cycle continues
 		if (GameHasStarted){
@@ -429,12 +422,12 @@ public class LevelManager : MonoBehaviour {
 	}
 
 
-	public void SetCheckpoint(){
+	public void SetCheckpoint(int worldNum, int actNum, float nextRead, int index){
 		checkpointReached = true;
-		checkpointWorldNum = worldNumber;
-		checkpointActNum = actNumber;
-		checkpointNextReadTime = nextReadTime;
-		checkpointReadIndex = readIndex;
+		checkpointWorldNum = worldNum;
+		checkpointActNum = actNum;
+		checkpointNextReadTime = nextRead;
+		checkpointReadIndex = index;
 	}
 
 	public void StopGame(){
@@ -474,7 +467,26 @@ public class LevelManager : MonoBehaviour {
 			spawnTimer = 0.0f;
 			nextSpawnTimes.Clear();
 
-			//GameHasStarted = true;
+			GameHasStarted = true;
+			worldOver = false;
 		}
+	}
+
+
+	//These next functions are for checkpoints. They use them to get the data they'll feed back in if they're collected successfully
+	public int GetWorldNum(){
+		return worldNumber;
+	}
+
+	public int GetActNum(){
+		return actNumber;
+	}
+
+	public float GetNextReadTime(){
+		return nextReadTime;
+	}
+
+	public int GetReadIndex(){
+		return readIndex;
 	}
 }
