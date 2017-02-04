@@ -151,7 +151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startVelocity: {x: 0, y: 0, z: 0}
-  speed: 25
+  speed: 50
 --- !u!212 &212559316057873440
 SpriteRenderer:
   m_ObjectHideFlags: 1
