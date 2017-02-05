@@ -34,9 +34,10 @@ public class EnemyLMoving : EnemyBase {
 	private const string BUILDINGS_ORGANIZER = "Buildings";
 
 
-	//the ball, so that this enemy can turn toward it
+	//the ball, so that this enemy can turn toward it or its intended receiver
 	private Transform ball;
 	private const string BALL_OBJ = "Ball";
+	private BallBehavior ballBehavior;
 
 
 	//parent the transform
@@ -53,6 +54,7 @@ public class EnemyLMoving : EnemyBase {
 		transform.parent = GameObject.Find(ENEMY_ORGANIZER).transform;
 		playAreaSide = Mathf.Abs(GameObject.Find(BUILDINGS_ORGANIZER).transform.GetChild(0).position.x);
 		ball = GameObject.Find(BALL_OBJ).transform;
+		ballBehavior = ball.GetComponent<BallBehavior>();
 		myNum = Random.Range(1, 100);
 	}
 
@@ -60,8 +62,16 @@ public class EnemyLMoving : EnemyBase {
 	//detect whether this enemy is parallel with the ball; if so, go toward the ball
 	private void Update(){
 		if (!enteringScreen){
-			if (Mathf.Abs(transform.position.x - ball.position.x) <= parallelTolerance ||
-				Mathf.Abs(transform.position.z - ball.position.z) <= parallelTolerance){
+			Transform target;
+
+			if (ballBehavior.IntendedReceiver != null){
+				target = ballBehavior.IntendedReceiver;
+			} else {
+				target = ball;
+			}
+
+			if (Mathf.Abs(transform.position.x - target.position.x) <= parallelTolerance ||
+				Mathf.Abs(transform.position.z - target.position.z) <= parallelTolerance){
 				turns++;
 
 				if (turns <= maxTurns){
