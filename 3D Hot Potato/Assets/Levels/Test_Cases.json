@@ -1,8 +1,8 @@
 {
 "world1":{
 		"act1":[
-			{"action":"spawn", "whichEnemy":"IgnoringEnemy", "waves":1, "numPerWave":4, "whichSpawners":[4, 5, 6, 7], "timeBetweenWaves":0, "timeVariance":0},
+			{"action":"spawn", "whichEnemy":"L-MovingEnemy", "waves":1, "numPerWave":1, "whichSpawners":[4], "timeBetweenWaves":0, "timeVariance":0},
 			{"action":"wait", "time":3},
-			{"action":"spawn", "whichEnemy":"IgnoringEnemy", "waves":1, "numPerWave":4, "whichSpawners":[4, 5, 6, 7], "timeBetweenWaves":0, "timeVariance":0}
+			{"action":"spawn", "whichEnemy":"L-MovingEnemy", "waves":1, "numPerWave":4, "whichSpawners":[11], "timeBetweenWaves":0, "timeVariance":0}
 		]}
 }
