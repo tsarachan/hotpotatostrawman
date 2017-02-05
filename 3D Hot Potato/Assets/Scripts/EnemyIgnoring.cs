@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyIgnoring : EnemyBase {
 
+
 	//-------tunable variables-------
 	public float speed = 1.0f;
 	public float enterDistance = 0.0f;
@@ -16,7 +17,7 @@ public class EnemyIgnoring : EnemyBase {
 
 
 	//variables for finding the buildings, so that this enemy knows where it is and how to come on the screen
-	private float buildingXCoord = 0.0f; //we'll find a building, and use its X coordinate to figure out how far out spawners might be
+	private float playAreaSide = 0.0f; //we'll find a building, and use its X coordinate to figure out how far out spawners might be
 	private const string BUILDINGS_ORGANIZER = "Buildings";
 
 	//finding where the enemy is going
@@ -43,6 +44,7 @@ public class EnemyIgnoring : EnemyBase {
 		offsetPosition = GetXOffset;
 		startXPos = transform.position.x;
 		transform.parent = GameObject.Find(ENEMY_ORGANIZER).transform;
+		playAreaSide = Mathf.Abs(GameObject.Find(BUILDINGS_ORGANIZER).transform.GetChild(0).position.x);
 	}
 
 
@@ -66,7 +68,15 @@ public class EnemyIgnoring : EnemyBase {
 	private Vector3 GetXOffset(){
 		offsetTimer += Time.fixedDeltaTime;
 
-		Vector3 temp = new Vector3(startXPos + Mathf.Sin(offsetTimer * frequency) * maxOffset,
+		//get the new X position for this enemy, clamped to the left and right sides of the play area
+		float xPos = startXPos + Mathf.Sin(offsetTimer * frequency) * maxOffset;
+		if (xPos > playAreaSide){
+			xPos = playAreaSide;
+		} else if (xPos < -playAreaSide){
+			xPos = -playAreaSide;
+		}
+
+		Vector3 temp = new Vector3(xPos,
 								   transform.position.y,
 								   transform.position.z - speed * Time.fixedDeltaTime);
 

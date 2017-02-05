@@ -49,10 +49,10 @@ public class InputManager : MonoBehaviour {
 
 
 	//keyboard controls
-	private const KeyCode p1UpKey = KeyCode.DownArrow;
-	private const KeyCode p1DownKey = KeyCode.UpArrow;
-	private const KeyCode p1LeftKey = KeyCode.LeftArrow;
-	private const KeyCode p1RightKey = KeyCode.RightArrow;
+	private const KeyCode p1UpKey = KeyCode.S;
+	private const KeyCode p1DownKey = KeyCode.W;
+	private const KeyCode p1LeftKey = KeyCode.A;
+	private const KeyCode p1RightKey = KeyCode.D;
 	private const KeyCode p1PassKey = KeyCode.Z;
 
 	private const KeyCode p2UpKey = KeyCode.K;

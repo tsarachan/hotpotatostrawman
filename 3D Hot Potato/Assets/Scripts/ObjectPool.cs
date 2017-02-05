@@ -84,7 +84,9 @@ namespace ObjectPooling
 					objectPool.Add(obj.name, new Queue<GameObject>());
 				}
 
-				objectPool[obj.name].Enqueue(obj);
+				if (!objectPool[obj.name].Contains(obj)){
+					objectPool[obj.name].Enqueue(obj);
+				}
 
 //				Debug.Log("Pool for " + obj.name + " now contains " + objectPool[obj.name].Count + " in AddObj()");
 //				Debug.Log("objectPool.Count == " + objectPool.Count);
