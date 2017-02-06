@@ -84,8 +84,14 @@ Material:
         name: _DstBlend
       second: 10
     - first:
+        name: _GlossMapScale
+      second: 1
+    - first:
         name: _Glossiness
       second: 0.56
+    - first:
+        name: _GlossyReflections
+      second: 1
     - first:
         name: _InvFade
       second: 3
@@ -101,6 +107,12 @@ Material:
     - first:
         name: _Parallax
       second: 0.02
+    - first:
+        name: _SmoothnessTextureChannel
+      second: 0
+    - first:
+        name: _SpecularHighlights
+      second: 1
     - first:
         name: _SrcBlend
       second: 5
