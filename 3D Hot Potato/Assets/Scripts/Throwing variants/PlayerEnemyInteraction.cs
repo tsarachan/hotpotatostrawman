@@ -69,6 +69,14 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 			}
 		}
 	}
+
+
+	/// <summary>
+	/// Exploding enemies call this when they catch a player in their blast radius.
+	/// </summary>
+	public void InAnExplosion(){
+		LoseTheGame();
+	}
 		
 
 	private void LoseTheGame(){

@@ -47,5 +47,6 @@ public class UIElementMove : MonoBehaviour {
 
 	public void StartUIElementMoving(){
 		isMoving = true;
+		timer = 0.0f;
 	}
 }

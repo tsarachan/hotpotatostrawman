@@ -36,11 +36,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4836757568638668}
   - component: {fileID: 33762930864146392}
-  - component: {fileID: 65103890641659794}
   - component: {fileID: 23205858685542314}
   - component: {fileID: 54024704538719602}
   - component: {fileID: 114588043926597738}
-  - component: {fileID: 114987980580337828}
+  - component: {fileID: 114108270502680150}
+  - component: {fileID: 65352860160531508}
   m_Layer: 9
   m_Name: ExplodingEnemy
   m_TagString: Enemy
@@ -128,7 +128,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
---- !u!65 &65103890641659794
+--- !u!65 &65352860160531508
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -138,7 +138,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1.0000001, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!108 &108931444346857032
 Light:
@@ -174,7 +174,7 @@ Light:
   m_BounceIntensity: 3.4
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!114 &114588043926597738
+--- !u!114 &114108270502680150
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -182,27 +182,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1334280377974138}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f9ed74837a3e42f39fe239a0bcaa86a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  numCubes: 4
-  forceMax: 2
---- !u!114 &114987980580337828
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1334280377974138}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb0373001bafe4ccda50e29b539ba92c, type: 3}
+  m_Script: {fileID: 11500000, guid: 6c24c959a32104bafa3182f78f6e12a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   startVelocity: {x: 0, y: 0, z: 0}
-  speed: 50
+  speed: 25
   enterDistance: 75
   maxOffset: 0
-  frequency: 2
+  frequency: 0
+  explosionRadius: 10
+  timeTillExplosion: 1
   enterTime: 0.5
   enterCurve:
     serializedVersion: 2
@@ -222,3 +211,16 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!114 &114588043926597738
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1334280377974138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f9ed74837a3e42f39fe239a0bcaa86a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  numCubes: 4
+  forceMax: 2
