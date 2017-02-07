@@ -4,8 +4,14 @@ using System.Collections;
 
 public class PlayerEnemyInteraction : MonoBehaviour {
 
-	public float timeToResetGame = 1.0f;
+	//----------Tunable variables----------
 
+	public float timeToResetGame = 1.0f; //how long it takes for the game to reset after losing
+
+
+	//----------Internal variables----------
+
+	//variables used to identify enemies
 	private const string ENEMY_OBJ = "Enemy";
 	private const string BALL_OBJ = "Ball";
 	private const string HUNT = "Hunt"; //if this is in the name, it's vulnerable to the ball and destroys non-ball carriers
@@ -17,11 +23,17 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 	private Vector3 myStartPos = new Vector3(0.0f, 0.0f, 0.0f);
 
 
+	//initialize variables
 	private void Start(){
 		levelManager = GameObject.Find(MANAGER_OBJ).GetComponent<LevelManager>();
 		myStartPos = transform.position;
 	}
 
+
+	/// <summary>
+	/// Handles collisions with enemies that have non-trigger colliders.
+	/// </summary>
+	/// <param name="collision">The collision.</param>
 	private void OnCollisionEnter(Collision collision){
 		if (collision.gameObject.name.Contains(ENEMY_OBJ)){
 			if (collision.gameObject.name.Contains(HUNT)){
@@ -41,6 +53,12 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 		}
 	}
 
+
+
+	/// <summary>
+	/// Handles collisions with enemies that have trigger colliders.
+	/// </summary>
+	/// <param name="other">The enemy's collider.</param>
 	private void OnTriggerEnter(Collider other){
 		if (other.gameObject.name.Contains(ENEMY_OBJ)){
 			if (!GetComponent<PlayerBallInteraction>().BallCarrier){  //try to destroy non-hunt enemies when not the ball carrier
@@ -51,6 +69,7 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 			}
 		}
 	}
+		
 
 	private void LoseTheGame(){
 		GetComponent<ParticleBurst>().MakeBurst(); //throw some particles

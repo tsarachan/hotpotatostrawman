@@ -370,13 +370,11 @@ public class LevelManager : MonoBehaviour {
 		possibleSpawnersThisWave = ShuffleList(possibleSpawnersThisWave);
 
 		for (int i = 0; i < enemiesPerWave; i++){
-			GameObject obj = ObjectPooling.ObjectPool.GetObj(enemyToMake);
-
 			if (i < possibleSpawnersThisWave.Count){ //backstop check to make sure the condition in the comments above is met
+				GameObject obj = ObjectPooling.ObjectPool.GetObj(enemyToMake);
 				obj.transform.position = FindSpawnerLoc(possibleSpawnersThisWave[i]);
+				obj.GetComponent<ObjectPooling.Poolable>().Reset();
 			}
-
-			obj.GetComponent<ObjectPooling.Poolable>().Reset();
 		}
 
 		spawnIndex++;
