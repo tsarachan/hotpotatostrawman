@@ -16,10 +16,10 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 4000010104998154}
-  - 108: {fileID: 108000011789704342}
+  - component: {fileID: 4000010104998154}
+  - component: {fileID: 108000011789704342}
   m_Layer: 0
   m_Name: Point light
   m_TagString: Untagged
@@ -32,10 +32,10 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 4000010458405332}
-  - 108: {fileID: 108000010696298078}
+  - component: {fileID: 4000010458405332}
+  - component: {fileID: 108000010696298078}
   m_Layer: 9
   m_Name: Point light
   m_TagString: Untagged
@@ -48,14 +48,14 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 4000011711327692}
-  - 33: {fileID: 33000013339527836}
-  - 136: {fileID: 136000013917059594}
-  - 23: {fileID: 23000010278779656}
-  - 54: {fileID: 54000013024504818}
-  - 114: {fileID: 114000011744017546}
+  - component: {fileID: 4000011711327692}
+  - component: {fileID: 33000013339527836}
+  - component: {fileID: 136000013917059594}
+  - component: {fileID: 23000010278779656}
+  - component: {fileID: 54000013024504818}
+  - component: {fileID: 114000011744017546}
   m_Layer: 0
   m_Name: Cannon
   m_TagString: Untagged
@@ -68,13 +68,13 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 4000010631490134}
-  - 114: {fileID: 114000011560322152}
+  - component: {fileID: 4000010631490134}
+  - component: {fileID: 114000011560322152}
   m_Layer: 0
   m_Name: BossBattle
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -84,15 +84,15 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 4000014247467580}
-  - 33: {fileID: 33000013947230504}
-  - 65: {fileID: 65000010429874730}
-  - 23: {fileID: 23000012160575912}
-  - 54: {fileID: 54000011724914074}
-  - 114: {fileID: 114000011141832818}
-  - 114: {fileID: 114000014106643244}
+  - component: {fileID: 4000014247467580}
+  - component: {fileID: 33000013947230504}
+  - component: {fileID: 65000010429874730}
+  - component: {fileID: 23000012160575912}
+  - component: {fileID: 54000011724914074}
+  - component: {fileID: 114000011141832818}
+  - component: {fileID: 114000014106643244}
   m_Layer: 9
   m_Name: BossEnemy
   m_TagString: Untagged
@@ -109,10 +109,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000011711327692}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000010458405332
 Transform:
   m_ObjectHideFlags: 1
@@ -122,10 +122,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000014247467580}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000010631490134
 Transform:
   m_ObjectHideFlags: 1
@@ -135,12 +135,12 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 4000014247467580}
   - {fileID: 4000011711327692}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000011711327692
 Transform:
   m_ObjectHideFlags: 1
@@ -150,11 +150,11 @@ Transform:
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 5}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_Children:
   - {fileID: 4000010104998154}
   m_Father: {fileID: 4000010631490134}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!4 &4000014247467580
 Transform:
   m_ObjectHideFlags: 1
@@ -164,11 +164,11 @@ Transform:
   m_LocalRotation: {x: 0.35355338, y: 0.35355338, z: -0.1464466, w: 0.8535535}
   m_LocalPosition: {x: 0, y: 0, z: 28.3}
   m_LocalScale: {x: 6, y: 6, z: 6}
-  m_LocalEulerAnglesHint: {x: 45, y: 45, z: 0}
   m_Children:
   - {fileID: 4000010458405332}
   m_Father: {fileID: 4000010631490134}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 45, y: 45, z: 0}
 --- !u!23 &23000010278779656
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -183,7 +183,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_Materials:
   - {fileID: 2100000, guid: 8f16d3464a3dd4b798cef3c92516862d, type: 2}
-  m_SubsetIndices: 
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
@@ -191,7 +193,7 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_SelectedWireframeHidden: 0
+  m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
@@ -212,7 +214,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_Materials:
   - {fileID: 2100000, guid: 5d013537665c24294bffba6bea0c8c79, type: 2}
-  m_SubsetIndices: 
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
@@ -220,7 +224,7 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_SelectedWireframeHidden: 0
+  m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
@@ -381,12 +385,14 @@ MonoBehaviour:
   enterCurve:
     serializedVersion: 2
     m_Curve:
-    - time: 0
+    - serializedVersion: 2
+      time: 0
       value: 0
       inSlope: 2
       outSlope: 2
       tangentMode: 0
-    - time: 1
+    - serializedVersion: 2
+      time: 1
       value: 1
       inSlope: 0
       outSlope: 0

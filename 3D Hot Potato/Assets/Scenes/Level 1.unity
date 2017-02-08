@@ -10638,7 +10638,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 891422875}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: beca32a3c8df64f9fa0fd2df0091573c, type: 3}
   m_Name: 
@@ -13463,6 +13463,10 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 104020, guid: 6e52f6e5c549dca4381c78a24c505338, type: 2}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6e52f6e5c549dca4381c78a24c505338, type: 2}
   m_IsPrefabParent: 0
@@ -14771,6 +14775,10 @@ Prefab:
     - target: {fileID: 411730, guid: 6e52f6e5c549dca4381c78a24c505338, type: 2}
       propertyPath: m_LocalEulerAnglesHint.y
       value: -180
+      objectReference: {fileID: 0}
+    - target: {fileID: 104020, guid: 6e52f6e5c549dca4381c78a24c505338, type: 2}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6e52f6e5c549dca4381c78a24c505338, type: 2}
@@ -19181,7 +19189,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1947035287
+  randomSeed: -1994659828
   InitialModule:
     serializedVersion: 3
     enabled: 1

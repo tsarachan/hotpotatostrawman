@@ -50,10 +50,7 @@ public class EnemyBossBattle : EnemyBase {
 	/// When the boss battle ends, the level is over. Destroy all existing enemies, and clear all enemies still to be spawned.
 	/// </summary>
 	public override void GetDestroyed(){
-		Instantiate(Resources.Load("ClearEnemies"), transform.position, Quaternion.identity); //get rid of all existing enemies
-
-		//clear the arrays used to spawn enemies, so that no more spawn
-		GameObject.Find("Enemy spawners").GetComponent<SpawnEnemies>().StopSpawning();
+		//Instantiate(Resources.Load("ClearEnemies"), transform.position, Quaternion.identity); //get rid of all existing enemies
 
 		Destroy(gameObject); //get rid of the boss battle setpiece--the boss and the cannon
 
