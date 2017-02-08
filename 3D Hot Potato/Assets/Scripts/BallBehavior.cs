@@ -154,6 +154,7 @@ public class BallBehavior : MonoBehaviour {
 	/// When the game restarts after the players die, call this.
 	/// </summary>
 	public void ResetBall(){
+		transform.parent = scene;
 		transform.position = myStartPos;
 	}
 }
