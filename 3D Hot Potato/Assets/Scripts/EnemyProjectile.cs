@@ -18,6 +18,13 @@ public class EnemyProjectile : EnemyBase {
 	//----------Internal variables----------
 
 	private float existTimer = 0.0f;
+	private const string ENEMY_ORGANIZER = "Enemies";
+
+
+	//initialize variables
+	private void Start(){
+		transform.parent = GameObject.Find(ENEMY_ORGANIZER).transform;
+	}
 
 
 	/// <summary>
