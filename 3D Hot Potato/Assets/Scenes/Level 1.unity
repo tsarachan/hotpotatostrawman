@@ -18691,6 +18691,7 @@ GameObject:
   - component: {fileID: 2058022956}
   - component: {fileID: 2058022955}
   - component: {fileID: 2058022957}
+  - component: {fileID: 2058022958}
   m_Layer: 11
   m_Name: Player 1
   m_TagString: Player
@@ -19054,6 +19055,18 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 0
   deployedScale: 1
+--- !u!114 &2058022958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2058022943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5f0bed24df224d689a66839bd67aa91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bounce: 200
 --- !u!1 &2090577727
 GameObject:
   m_ObjectHideFlags: 0
