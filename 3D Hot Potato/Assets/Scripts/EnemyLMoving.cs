@@ -47,6 +47,10 @@ public class EnemyLMoving : EnemyBase {
 	//how many times this enemy has turned so far
 	private int turns = 0;
 
+	//which direction is the enemy currently moving in? Used to decide which parallel to check for
+	private enum Directions { HORIZ, VERT };
+	private int currentDir = 0;
+
 
 	//initialize variables
 	private void Start(){
@@ -70,13 +74,13 @@ public class EnemyLMoving : EnemyBase {
 				target = ball;
 			}
 
-			if (Mathf.Abs(transform.position.x - target.position.x) <= parallelTolerance ||
-				Mathf.Abs(transform.position.z - target.position.z) <= parallelTolerance){
-				turns++;
-
-				if (turns <= maxTurns){
-					parallelToBall = true;
-					direction = GetDirection();
+			if (currentDir == (int)Directions.HORIZ){
+				if (CheckVertParallel(target) && turns < maxTurns){
+					currentDir = Turn();
+				}
+			} else if (currentDir == (int)Directions.VERT){
+				if (CheckHorizParallel(target) && turns < maxTurns){
+					currentDir = Turn();
 				}
 			}
 		}
@@ -92,6 +96,26 @@ public class EnemyLMoving : EnemyBase {
 		}
 	}
 
+
+	private bool CheckHorizParallel(Transform target){
+		return Mathf.Abs(transform.position.z - target.position.z) <= parallelTolerance;
+	}
+
+	private bool CheckVertParallel(Transform target){
+		return Mathf.Abs(transform.position.x - target.position.x) <= parallelTolerance;
+	}
+
+
+	private int Turn(){
+		parallelToBall = true;
+		direction = GetDirection();
+
+		if (currentDir == (int)Directions.HORIZ){
+			return (int)Directions.VERT;
+		} else {
+			return (int)Directions.HORIZ;
+		}
+	}
 
 	/// <summary>
 	/// Bring the enemy onto the screen.
@@ -117,10 +141,13 @@ public class EnemyLMoving : EnemyBase {
 		//first step: if coming onto the screen, get the direction needed to do that
 		if (!parallelToBall){
 			if (transform.position.x < -Mathf.Abs(playAreaSide)){
+				currentDir = (int)Directions.HORIZ;
 				return Vector3.right;
 			} else if (transform.position.x > Mathf.Abs(playAreaSide)){ //check if the enemy is off to the right side
+				currentDir = (int)Directions.HORIZ;
 				return -Vector3.right;
 			} else { //not off to the side; the enemy is coming from the top
+				currentDir = (int)Directions.VERT;
 				return -Vector3.forward;
 			}
 		} //second step; if already on the screen, find the ball and go toward it
@@ -161,6 +188,8 @@ public class EnemyLMoving : EnemyBase {
 		//find the end point of the enemy's entry onto the screen
 		start = transform.position;
 		end = DetermineEntryEndPoint();
+
+		turns = 0;
 
 		GetComponent<Rigidbody>().velocity = startVelocity; //sanity check: make absolutely sure the velocity is zero
 
