@@ -11,6 +11,9 @@ public class EnemyIgnoring : EnemyBase {
 	public float maxOffset = 10.0f; //how far the enemy will move as part of the sine wave
 	public float frequency = 2.0f; //the frequency of the wave
 
+	//if the enemy is in the scene for this long, it's offscreen and goes back to the object pool
+	public float existDuration = 4.0f;
+
 
 	//-------internal variables-------
 	private Rigidbody rb;
@@ -36,6 +39,9 @@ public class EnemyIgnoring : EnemyBase {
 	//parent the transform
 	private const string ENEMY_ORGANIZER = "Enemies";
 
+	//timer for keeping track of how long this enemy should stay in the scene
+	private float existTimer = 0.0f;
+
 
 
 	private void Start(){
@@ -50,6 +56,19 @@ public class EnemyIgnoring : EnemyBase {
 
 	private Vector3 GetDirection(){
 		return -Vector3.forward;
+	}
+
+
+	/// <summary>
+	/// Keeps track of how long this enemy has been in the scene. If it's long enough that the
+	/// enemy is sure to be offscreen and no longer relevant, put it back in the object pool.
+	/// </summary>
+	private void Update(){
+		existTimer += Time.deltaTime;
+
+		if (existTimer >= existDuration){
+			ObjectPooling.ObjectPool.AddObj(gameObject);
+		}
 	}
 
 
@@ -122,6 +141,7 @@ public class EnemyIgnoring : EnemyBase {
 		timer = 0.0f;
 		enteringScreen = true;
 		offsetTimer = 0.0f;
+		existTimer = 0.0f;
 
 		//find the end point of the enemy's entry onto the screen
 		start = transform.position;
