@@ -18,6 +18,10 @@ public abstract class EnemyBase : ObjectPooling.Poolable {
 	protected float freezeTimer = 0.0f;
 
 
+	//the particle that enemies generate when they're destroyed
+	protected const string DESTROY_PARTICLE = "Plexus prefab";
+
+
 	/// <summary>
 	/// Call this function to freeze the enemy in place.
 	/// 

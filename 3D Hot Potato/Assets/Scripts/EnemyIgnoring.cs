@@ -124,7 +124,9 @@ public class EnemyIgnoring : EnemyBase {
 
 
 	public override void GetDestroyed(){
-		GetComponent<ParticleBurst>().MakeBurst();
+		GameObject destroyParticle = ObjectPooling.ObjectPool.GetObj(DESTROY_PARTICLE);
+		destroyParticle.transform.position = transform.position;
+		destroyParticle.GetComponent<ParticlePlexus>().LineColor = GetComponent<Renderer>().material.color;
 		ObjectPooling.ObjectPool.AddObj(gameObject); //shut this off and return it to the pool
 	}
 

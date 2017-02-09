@@ -13,6 +13,7 @@ public class ParticlePlexus : MonoBehaviour {
 
 	public LineRenderer lineRendererTemplate;
 	private List<LineRenderer> lineRenderers = new List<LineRenderer>();
+	public Color LineColor { get; set; }
 
 	private Transform focalTransform;
 
@@ -86,6 +87,8 @@ public class ParticlePlexus : MonoBehaviour {
 
 					lr.SetPosition(0, p1Position);
 					lr.SetPosition(1, p2Position);
+					lr.startColor = LineColor;
+					lr.endColor = LineColor;
 
 					lineRendererIndex++;
 				}
