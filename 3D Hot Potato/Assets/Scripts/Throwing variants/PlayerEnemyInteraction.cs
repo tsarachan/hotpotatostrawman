@@ -42,6 +42,7 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 	private const string SCENE_ORGANIZER = "Scene";
 	private float bounceLowestPos = 0.0f;
 	private const string ROAD_OBJ = "Basic_road";
+	private const string IMPACT_PARTICLE = "Impact particle";
 
 
 	//needed to shut things off and turn them back on correctly
@@ -147,12 +148,20 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 
 		float timer = 0.0f;
 
+		GameObject impactParticle = ObjectPooling.ObjectPool.GetObj(IMPACT_PARTICLE);
+
 		while (timer <= timeToResetGame){
 			Vector3 pos = rider.transform.position + -Vector3.forward * riderFallSpeed;
 			pos.y = Mathf.LerpUnclamped(bounceLowestPos, bounceHeight, bounceCurve.Evaluate(timer/timeToResetGame));
 
 			rider.transform.position = pos;
 			rider.transform.Rotate(Vector3.right * riderTumbleSpeed * Time.deltaTime);
+
+			//create an impact particle when the rider hits the ground
+			if (pos.y <= Mathf.Epsilon){
+				impactParticle.transform.position = pos;
+				impactParticle.GetComponent<ParticleSystem>().Play();
+			}
 
 			timer += Time.deltaTime;
 
