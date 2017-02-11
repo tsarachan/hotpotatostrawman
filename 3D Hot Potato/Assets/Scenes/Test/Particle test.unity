@@ -723,7 +723,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 260184033}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -17.41, y: 2.84, z: 0}
+  m_LocalPosition: {x: 0, y: 2.84, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1153795568}
@@ -1214,6 +1214,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeToResetGame: 1
+  riderTumbleSpeed: 1440
 --- !u!114 &290731070
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1579,7 +1580,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100016, guid: 314c29baddf5640df98e8e021017b8a2, type: 3}
       propertyPath: m_Name
-      value: lightrunner1 (1)
+      value: lightrunner1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 314c29baddf5640df98e8e021017b8a2, type: 3}
@@ -10829,7 +10830,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 926364734
+  randomSeed: -614354091
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -14005,7 +14006,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1094098399}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -17.55, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2058022944}
@@ -16103,6 +16104,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeToResetGame: 1
+  riderTumbleSpeed: 1080
 --- !u!114 &2058022952
 MonoBehaviour:
   m_ObjectHideFlags: 0

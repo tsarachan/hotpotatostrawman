@@ -735,7 +735,7 @@ ParticleSystem:
     enabled: 1
     serializedVersion: 3
     rateOverTime:
-      scalar: 40
+      scalar: 80
       maxCurve:
         serializedVersion: 2
         m_Curve:

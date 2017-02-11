@@ -7,6 +7,7 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 	//----------Tunable variables----------
 
 	public float timeToResetGame = 1.0f; //how long it takes for the game to reset after losing
+	public float riderTumbleSpeed = 1.0f; //how quickly the rider spins after falling off the bike
 
 
 	//----------Internal variables----------
@@ -23,10 +24,44 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 	private Vector3 myStartPos = new Vector3(0.0f, 0.0f, 0.0f);
 
 
+	//the particle displayed when a player is destroyed
+	private const string DEATH_PARTICLE = "Player destruction plexus";
+
+
+	//variables used to make the rider tumble off-screen
+	private Transform rider;
+	private Transform cycleAndRider;
+	private const string RIDER_ORGANIZER = "Cycle and rider";
+	private const string RIDER_OBJ = "lightrunner1";
+	private Vector3 riderLocalStartPos = new Vector3(0.0f, 0.0f, 0.0f);
+	private Quaternion riderLocalStartRot;
+	private float riderFallSpeed = 1.0f; //rider's speed after falling; should be same as environment's speed
+	private const string ROAD_OBJ = "Basic_road"; //get the environment's speed from this
+	private Transform scene; //parent the rider to this when falling
+	private const string SCENE_ORGANIZER = "Scene";
+
+
+	//needed to shut things off and turn them back on correctly
+	private const string POINT_LIGHT = "Point light";
+	private const string CYCLE = "Model";
+
+
 	//initialize variables
 	private void Start(){
 		levelManager = GameObject.Find(MANAGER_OBJ).GetComponent<LevelManager>();
 		myStartPos = transform.position;
+		cycleAndRider = transform.Find(RIDER_ORGANIZER);
+		rider = cycleAndRider.Find(RIDER_OBJ);
+		riderLocalStartPos = rider.localPosition;
+		riderLocalStartRot = rider.localRotation;
+		scene = GameObject.Find(SCENE_ORGANIZER).transform;
+	}
+
+	//debug instruction
+	private void Update(){
+		if (Input.GetKeyDown(KeyCode.Space)){
+			LoseTheGame();
+		}
 	}
 
 
@@ -80,16 +115,21 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 		
 
 	private void LoseTheGame(){
-		GetComponent<ParticleBurst>().MakeBurst(); //throw some particles
-
 		//de-parent the ball to avoid null reference exceptions
 		if (transform.Find(BALL_OBJ) != null){
 			transform.Find(BALL_OBJ).parent = transform.root;
 		}
-			
-		transform.GetChild(0).gameObject.SetActive(false); //shut off the point light
-		transform.GetChild(1).GetChild(0).GetComponent<Renderer>().enabled = false; //make the lightsteed disappear
-		transform.GetChild(1).GetChild(1).gameObject.SetActive(false); //shut off the rider, so that it disappears as well
+
+		GameObject deathParticle = ObjectPooling.ObjectPool.GetObj(DEATH_PARTICLE);
+		deathParticle.transform.position = transform.position;
+
+		Color lineColor = GetComponent<Renderer>().material.color;
+		lineColor.a = 1.0f;
+		deathParticle.GetComponent<ParticlePlexus>().LineColor = lineColor;
+
+		transform.Find(POINT_LIGHT).gameObject.SetActive(false); //shut off the point light
+		transform.Find(RIDER_ORGANIZER).Find(CYCLE).GetComponent<Renderer>().enabled = false; //make the lightsteed disappear
+		//transform.GetChild(1).GetChild(1).gameObject.SetActive(false); //shut off the rider, so that it disappears as well
 
 		//ObjectPooling.ObjectPool.ClearPools();
 
@@ -99,12 +139,18 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 	private IEnumerator ResetGame(){
 		levelManager.StopGame();
 
+		rider.parent = scene; //parent the rider to something in a constant location, so it doesn't move with inputs
 
-		yield return new WaitForSeconds(timeToResetGame);
-	
-		//SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+		float timer = 0.0f;
 
-		//yield return new WaitForSeconds(timeToResetGame);
+		while (timer <= timeToResetGame){
+			rider.transform.position += -Vector3.forward * riderFallSpeed;
+			rider.transform.Rotate(Vector3.right * riderTumbleSpeed * Time.deltaTime);
+
+			timer += Time.deltaTime;
+
+			yield return null;
+		}
 
 		levelManager.RestartGame();
 
@@ -114,10 +160,13 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 
 	public void ResetPlayer(){
 		transform.position = myStartPos;
+		rider.parent = transform.Find(RIDER_ORGANIZER); //re-parent the rider
+		rider.localPosition = riderLocalStartPos;
+		rider.localRotation = riderLocalStartRot;
 
-		transform.GetChild(0).gameObject.SetActive(true); //turn the point light back on
-		transform.GetChild(1).GetChild(0).GetComponent<Renderer>().enabled = true; //restore the lightsteed
-		transform.GetChild(1).GetChild(1).gameObject.SetActive(true); //bring back the rider
+		transform.Find(POINT_LIGHT).gameObject.SetActive(true); //turn the point light back on
+		transform.Find(RIDER_ORGANIZER).Find(CYCLE).GetComponent<Renderer>().enabled = true; //restore the lightsteed
+//		transform.GetChild(1).GetChild(1).gameObject.SetActive(true); //bring back the rider
 		GetComponent<PlayerBallInteraction>().BallCarrier = false; //without this setting, players can be destroyed without the ball on restart
 	}
 }
