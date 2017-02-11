@@ -1215,6 +1215,55 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeToResetGame: 1
   riderTumbleSpeed: 1440
+  bounceCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0.50283
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.2
+      value: 0.0070763547
+      inSlope: -4.281424
+      outSlope: 10.80634
+      tangentMode: 1
+    - serializedVersion: 2
+      time: 0.4
+      value: 1.00283
+      inSlope: -0.013514665
+      outSlope: -0.013514665
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.6
+      value: 0.0028300285
+      inSlope: -11.047433
+      outSlope: 25.598013
+      tangentMode: 1
+    - serializedVersion: 2
+      time: 0.71289796
+      value: 1.0039102
+      inSlope: 1.1233151
+      outSlope: -0.07054226
+      tangentMode: 1
+    - serializedVersion: 2
+      time: 0.85
+      value: 0.0029539617
+      inSlope: -17.942936
+      outSlope: 8.342331
+      tangentMode: 1
+    - serializedVersion: 2
+      time: 1
+      value: 0.50283
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+    m_PreInfinity: 2
+    m_PostInfinity: 1
+    m_RotationOrder: 0
+  bounceHeight: 4
 --- !u!114 &290731070
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16105,6 +16154,55 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeToResetGame: 1
   riderTumbleSpeed: 1080
+  bounceCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0.50283
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.2
+      value: 0.0070763547
+      inSlope: -4.281424
+      outSlope: 10.80634
+      tangentMode: 1
+    - serializedVersion: 2
+      time: 0.4
+      value: 1.00283
+      inSlope: -0.013514665
+      outSlope: -0.013514665
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.6
+      value: 0.0028300285
+      inSlope: -11.047433
+      outSlope: 25.598013
+      tangentMode: 1
+    - serializedVersion: 2
+      time: 0.71289796
+      value: 1.0039102
+      inSlope: 1.1233151
+      outSlope: -0.07054226
+      tangentMode: 1
+    - serializedVersion: 2
+      time: 0.85
+      value: 0.0029539617
+      inSlope: -17.942936
+      outSlope: 8.342331
+      tangentMode: 1
+    - serializedVersion: 2
+      time: 1
+      value: 0.50283
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+    m_PreInfinity: 2
+    m_PostInfinity: 1
+    m_RotationOrder: 0
+  bounceHeight: 2
 --- !u!114 &2058022952
 MonoBehaviour:
   m_ObjectHideFlags: 0

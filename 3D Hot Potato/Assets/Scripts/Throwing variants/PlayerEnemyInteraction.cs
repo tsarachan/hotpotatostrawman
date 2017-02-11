@@ -8,6 +8,8 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 
 	public float timeToResetGame = 1.0f; //how long it takes for the game to reset after losing
 	public float riderTumbleSpeed = 1.0f; //how quickly the rider spins after falling off the bike
+	public AnimationCurve bounceCurve; //how the rider bounces off the ground after falling
+	public float bounceHeight = 1.0f; //the highest Y position the rider reaches while bouncing (lowest is road)
 
 
 	//----------Internal variables----------
@@ -35,10 +37,11 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 	private const string RIDER_OBJ = "lightrunner1";
 	private Vector3 riderLocalStartPos = new Vector3(0.0f, 0.0f, 0.0f);
 	private Quaternion riderLocalStartRot;
-	private float riderFallSpeed = 1.0f; //rider's speed after falling; should be same as environment's speed
-	private const string ROAD_OBJ = "Basic_road"; //get the environment's speed from this
+	private float riderFallSpeed = 1.0f;
 	private Transform scene; //parent the rider to this when falling
 	private const string SCENE_ORGANIZER = "Scene";
+	private float bounceLowestPos = 0.0f;
+	private const string ROAD_OBJ = "Basic_road";
 
 
 	//needed to shut things off and turn them back on correctly
@@ -55,6 +58,7 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 		riderLocalStartPos = rider.localPosition;
 		riderLocalStartRot = rider.localRotation;
 		scene = GameObject.Find(SCENE_ORGANIZER).transform;
+		bounceLowestPos = GameObject.Find(ROAD_OBJ).transform.position.y;
 	}
 
 	//debug instruction
@@ -144,7 +148,10 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 		float timer = 0.0f;
 
 		while (timer <= timeToResetGame){
-			rider.transform.position += -Vector3.forward * riderFallSpeed;
+			Vector3 pos = rider.transform.position + -Vector3.forward * riderFallSpeed;
+			pos.y = Mathf.LerpUnclamped(bounceLowestPos, bounceHeight, bounceCurve.Evaluate(timer/timeToResetGame));
+
+			rider.transform.position = pos;
 			rider.transform.Rotate(Vector3.right * riderTumbleSpeed * Time.deltaTime);
 
 			timer += Time.deltaTime;
