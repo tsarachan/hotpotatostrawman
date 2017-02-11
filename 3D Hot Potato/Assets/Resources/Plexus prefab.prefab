@@ -77,8 +77,8 @@ ParticleSystem:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1486777706494808}
   serializedVersion: 5
-  lengthInSec: 0.5
-  simulationSpeed: 1
+  lengthInSec: 0.2
+  simulationSpeed: 2
   looping: 0
   prewarm: 0
   playOnAwake: 1
@@ -580,7 +580,7 @@ ParticleSystem:
     enabled: 1
     serializedVersion: 3
     rateOverTime:
-      scalar: 20
+      scalar: 40
       maxCurve:
         serializedVersion: 2
         m_Curve:

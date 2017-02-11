@@ -21,7 +21,6 @@ public class ParticlePlexus : MonoBehaviour {
 	private void Start () {
 		myParticleSystem = GetComponent<ParticleSystem>();
 		particleSystemModule = myParticleSystem.main;
-		
 	}
 	
 	// Update is called once per frame
