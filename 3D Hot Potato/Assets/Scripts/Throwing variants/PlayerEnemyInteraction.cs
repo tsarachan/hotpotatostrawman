@@ -132,6 +132,12 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 		lineColor.a = 1.0f;
 		deathParticle.GetComponent<ParticlePlexus>().LineColor = lineColor;
 
+		//for unclear reasons, the particle system's main module has to be assigned to a variable in order
+		//to change the start color.
+		ParticleSystem.MainModule mainModule = deathParticle.GetComponent<ParticleSystem>().main;
+
+		mainModule.startColor = lineColor;
+
 		transform.Find(POINT_LIGHT).gameObject.SetActive(false); //shut off the point light
 		transform.Find(RIDER_ORGANIZER).Find(CYCLE).GetComponent<Renderer>().enabled = false; //make the lightsteed disappear
 		//transform.GetChild(1).GetChild(1).gameObject.SetActive(false); //shut off the rider, so that it disappears as well
