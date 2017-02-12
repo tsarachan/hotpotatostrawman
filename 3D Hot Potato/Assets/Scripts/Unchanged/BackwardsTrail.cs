@@ -104,4 +104,25 @@ public class BackwardsTrail : MonoBehaviour {
 		gameHasStarted = true;
 		GetComponent<TrailRenderer>().enabled = false;
 	}
+
+
+	/// <summary>
+	/// Shuts off the trail by clearing the existing information that would cause it to be drawn, and then setting
+	/// gameHasStarted to false so that new information is not collected.
+	/// </summary>
+	public void StopGame(){
+		gameHasStarted = false;
+
+		Vector3[] vertices = new Vector3[3];
+
+		mesh.vertices = vertices;
+
+		int[] triangles = new int[3];
+
+		mesh.triangles = triangles;
+
+		Vector3[] normals = new Vector3[3];
+
+		mesh.normals = normals;
+	}
 }

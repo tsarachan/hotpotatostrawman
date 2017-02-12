@@ -141,6 +141,7 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 		transform.Find(POINT_LIGHT).gameObject.SetActive(false); //shut off the point light
 		transform.Find(RIDER_ORGANIZER).Find(CYCLE).GetComponent<Renderer>().enabled = false; //make the lightsteed disappear
 		//transform.GetChild(1).GetChild(1).gameObject.SetActive(false); //shut off the rider, so that it disappears as well
+		GetComponent<BackwardsTrail>().StopGame();
 
 		//ObjectPooling.ObjectPool.ClearPools();
 
@@ -190,5 +191,6 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 		transform.Find(RIDER_ORGANIZER).Find(CYCLE).GetComponent<Renderer>().enabled = true; //restore the lightsteed
 //		transform.GetChild(1).GetChild(1).gameObject.SetActive(true); //bring back the rider
 		GetComponent<PlayerBallInteraction>().BallCarrier = false; //without this setting, players can be destroyed without the ball on restart
+		GetComponent<BackwardsTrail>().StartGame();
 	}
 }
