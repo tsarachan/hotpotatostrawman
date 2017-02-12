@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 114952434919471772}
   m_Layer: 0
   m_Name: Plexus prefab
-  m_TagString: Untagged
+  m_TagString: Particle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -69,6 +69,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startVelocity: {x: 0, y: 0, z: 0}
+  parent: Particles
   lifetime: 2
 --- !u!198 &198874591826802944
 ParticleSystem:

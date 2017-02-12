@@ -8,8 +8,14 @@ using UnityEngine;
 
 public class LifetimeLimiter : ObjectPooling.Poolable {
 
+	public string parent;
 	public float lifetime = 2.0f;
 	private float timer = 0.0f;
+
+
+	private void Start(){
+		transform.parent = GameObject.Find(parent).transform;
+	}
 
 
 	private void Update(){

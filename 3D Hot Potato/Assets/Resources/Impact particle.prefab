@@ -54,6 +54,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startVelocity: {x: 0, y: 0, z: 0}
+  parent: Particles
   lifetime: 2
 --- !u!198 &198125677917938318
 ParticleSystem:

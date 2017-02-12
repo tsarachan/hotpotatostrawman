@@ -110,7 +110,7 @@ GameObject:
   - component: {fileID: 114219800220313816}
   m_Layer: 0
   m_Name: Player destruction plexus
-  m_TagString: Untagged
+  m_TagString: Particle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -210,6 +210,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startVelocity: {x: 0, y: 0, z: 0}
+  parent: Particles
   lifetime: 2
 --- !u!114 &114819595268689862
 MonoBehaviour:

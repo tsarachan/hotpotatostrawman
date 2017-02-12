@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 114855257515847962}
   m_Layer: 0
   m_Name: Spark prefab
-  m_TagString: Untagged
+  m_TagString: Particle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -54,6 +54,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startVelocity: {x: 0, y: 0, z: 0}
+  parent: Particles
   lifetime: 2
 --- !u!198 &198350789998534626
 ParticleSystem:

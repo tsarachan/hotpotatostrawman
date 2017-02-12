@@ -120,6 +120,9 @@ public class LevelManager : MonoBehaviour {
 	private float checkpointNextReadTime = 0.0f;
 	private int checkpointReadIndex = 0;
 	public float restartGracePeriod = 1.0f; //how long players have after a restart before enemies appear
+	private Transform particles;
+	private const string PARTICLE_ORGANIZER = "Particles";
+	private const string PARTICLE_TAG = "Particle";
 
 
 	private void Start(){
@@ -129,6 +132,7 @@ public class LevelManager : MonoBehaviour {
 		p1EnemyScript = GameObject.Find(PLAYER_1).GetComponent<PlayerEnemyInteraction>();
 		p2EnemyScript = GameObject.Find(PLAYER_2).GetComponent<PlayerEnemyInteraction>();
 		ballScript = GameObject.Find(BALL).GetComponent<BallBehavior>();
+		particles = GameObject.Find(PARTICLE_ORGANIZER).transform;
 	}
 
 	private List<Transform> FindSpawners(){
@@ -446,6 +450,12 @@ public class LevelManager : MonoBehaviour {
 			p1EnemyScript.ResetPlayer();
 			p2EnemyScript.ResetPlayer();
 			ballScript.ResetBall();
+
+			foreach (Transform particle in particles){
+				if (particle.tag == PARTICLE_TAG){
+					ObjectPooling.ObjectPool.AddObj(particle.gameObject);
+				}
+			}
 
 			if (checkpointReached){
 				timer = checkpointNextReadTime - restartGracePeriod;
