@@ -530,7 +530,7 @@ ParticleSystem:
     enabled: 1
     serializedVersion: 3
     rateOverTime:
-      scalar: 50
+      scalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -607,7 +607,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
       minMaxState: 0
-    cnt0: 10
+    cnt0: 25
     cnt1: 10
     cnt2: 10
     cnt3: 10
@@ -619,7 +619,7 @@ ParticleSystem:
     time1: 1
     time2: 2
     time3: 3
-    m_BurstCount: 0
+    m_BurstCount: 1
   SizeModule:
     enabled: 0
     curve:
