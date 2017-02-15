@@ -102,6 +102,7 @@ public class LevelManager : MonoBehaviour {
 		get { return gameHasStarted; }
 		set { gameHasStarted = value; }
 	}
+	public bool RestartingGame { get; set; }
 
 
 	//these are used to restart the game
@@ -133,6 +134,7 @@ public class LevelManager : MonoBehaviour {
 		p2EnemyScript = GameObject.Find(PLAYER_2).GetComponent<PlayerEnemyInteraction>();
 		ballScript = GameObject.Find(BALL).GetComponent<BallBehavior>();
 		particles = GameObject.Find(PARTICLE_ORGANIZER).transform;
+		RestartingGame = false;
 	}
 
 	private List<Transform> FindSpawners(){
@@ -437,6 +439,7 @@ public class LevelManager : MonoBehaviour {
 		if (GameHasStarted){
 			GameHasStarted = false;
 			Debug.Log("GameHasStarted set == " + GameHasStarted);
+			RestartingGame = true;
 
 			foreach (Transform enemy in enemies){
 				if (enemy.tag == ENEMY_TAG && enemy.gameObject.activeInHierarchy == true){
@@ -448,9 +451,9 @@ public class LevelManager : MonoBehaviour {
 
 
 	public void RestartGame(){
-		Debug.Log("RestartGame() called");
+		Debug.Log("RestartGame() called; GameHasStarted == " + GameHasStarted);
 		if (!GameHasStarted){
-			Debug.Log("Resetting");
+			Debug.Log("Restarting");
 			p1EnemyScript.ResetPlayer();
 			p2EnemyScript.ResetPlayer();
 			ballScript.ResetBall();
@@ -480,6 +483,7 @@ public class LevelManager : MonoBehaviour {
 			nextSpawnTimes.Clear();
 
 			GameHasStarted = true;
+			RestartingGame = false;
 			worldOver = false;
 			ObjectPooling.ObjectPool.GameOver = false;
 		}
@@ -501,5 +505,13 @@ public class LevelManager : MonoBehaviour {
 
 	public int GetReadIndex(){
 		return readIndex;
+	}
+
+
+	public void StartGame(GameObject source){
+		if (!RestartingGame && !GameHasStarted){
+			GameHasStarted = true;
+			Debug.Log(source.name);
+		}
 	}
 }

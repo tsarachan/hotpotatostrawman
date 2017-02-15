@@ -32,14 +32,8 @@ namespace BossBattle2 {
 		public int numStrikes = 10; //the number of lightning particles emitted during a strike
 
 		//all of these variables are for the particle that grows to show that the weapon is powering up
-		public float startLightningSize = 0.5f;
-		public float maxLightningSize = 3.0f;
-		public float startSparklesSize = 0.5f;
-		public float maxSparklesSize = 3.0f;
-		public float startRingSize = 0.35f;
-		public float maxRingSize = 1.5f;
-		public float startRaySize = 0.05f;
-		public float maxRaySize = 1.0f;
+		public float startEmission = 0.0f;
+		public float maxEmission = 100.0f;
 
 
 		//variables relating to the bolts that connect the platforms to the lightning weapon
@@ -82,19 +76,19 @@ namespace BossBattle2 {
 
 
 		//the lightning weapon's power
-		private GameObject lightningWeapon; //the ball that charges up
-		private ParticleSystem lightningStrike; //the bolt of lightning
-		private ParticleSystem lightningSplash; //the subemitter that produces "splashes" of particles on collision
-		private const string LIGHTNING_WEAPON = "Lightning weapon";
-		private const string LIGHTNING_STRIKE = "Lightning strike";
+		private ParticleSystem lightningStrike1; //p1's bolt of lightning
+		private ParticleSystem lightningStrike2; //p2's bolt of lightning
+		private const string LIGHTNING_STRIKE_1 = "Lightning strike 1";
+		private const string LIGHTNING_STRIKE_2 = "Lightning strike 2";
 		private const string SPLASH = "SubEmitter0";
 
 
-		//the beams that charge the lightning weapon
-		private LineRenderer p1Line;
-		private LineRenderer p2Line;
-		private const string P1_BOLT = "Connected bolt 1";
-		private const string P2_BOLT = "Connected bolt 2";
+		//the particles that depict the weapon's charge
+		private ParticleSystem p1ChargeParticle;
+		private ParticleSystem p2ChargeParticle;
+		private const string CHARGE_PARTICLE = "Charge-up particles";
+		private const string CHARGE_POINT_1 = "Charge-up point 1";
+		private const string CHARGE_POINT_2 = "Charge-up point 2";
 
 
 		//keeps track of how long the players have been charging
@@ -148,24 +142,17 @@ namespace BossBattle2 {
 			launchForward = transform.Find(BOSS_OBJ).Find(LAUNCH_POINT_FORWARD);
 			launchRear = transform.Find(BOSS_OBJ).Find(LAUNCH_POINT_REAR);
 			axis = transform.Find(AXIS);
-			lightningWeapon = transform.Find(LIGHTNING_WEAPON).gameObject;
-			lightningStrike = transform.Find(LIGHTNING_STRIKE).GetComponent<ParticleSystem>();
-			lightningSplash = transform.Find(LIGHTNING_STRIKE).Find(SPLASH).GetComponent<ParticleSystem>();
+			lightningStrike1 = transform.Find(LIGHTNING_STRIKE_1).GetComponent<ParticleSystem>();
+			lightningStrike2 = transform.Find(LIGHTNING_STRIKE_2).GetComponent<ParticleSystem>();
 			pixelScript = Camera.main.GetComponent<AlpacaSound.RetroPixelPro.RetroPixelPro>();
-			p1Line = transform.Find(P1_BOLT).GetComponent<LineRenderer>();
-			p2Line = transform.Find(P2_BOLT).GetComponent<LineRenderer>();
+			p1ChargeParticle = transform.Find(AXIS).Find(CHARGE_POINT_1)
+				.Find(CHARGE_PARTICLE).GetComponent<ParticleSystem>();
+			p2ChargeParticle = transform.Find(AXIS).Find(CHARGE_POINT_2)
+				.Find(CHARGE_PARTICLE).GetComponent<ParticleSystem>();
 			P1Charging = false;
 			P2Charging = false;
 			projectileEnemy = Resources.Load(PROJECTILE_ENEMY) as GameObject;
 			projectileHuntEnemy = Resources.Load(PROJECTILE_HUNT_ENEMY) as GameObject;
-			lightningModule = lightningWeapon.transform.Find(LIGHTNING_EFFECT)
-				.GetComponent<ParticleSystem>().main;
-			sparklesModule = lightningWeapon.transform.Find(SPARKLES_EFFECT)
-				.GetComponent<ParticleSystem>().main;
-			ringModule = lightningWeapon.transform.Find(RING_EFFECT)
-				.GetComponent<ParticleSystem>().main;
-			rayModule = lightningWeapon.transform.Find(RAY_EFFECT)
-				.GetComponent<ParticleSystem>().main;
 			start = transform.position;
 			end = new Vector3(transform.position.x,
 				transform.position.y,
@@ -235,15 +222,13 @@ namespace BossBattle2 {
 
 
 		private void ChargeUpParticles(float product){
-			p1Line.startWidth = Mathf.Lerp(startLineWidth, maxLineWidth, product);
-			p1Line.endWidth = Mathf.Lerp(startLineWidth, maxLineWidth, product);
-			p2Line.startWidth = Mathf.Lerp(startLineWidth, maxLineWidth, product);
-			p2Line.endWidth = Mathf.Lerp(startLineWidth, maxLineWidth, product);
+			//here again, Unity wants these modules assigned to a variable to interact with them
+			//not sure why that's necessary, but it works OK
+			ParticleSystem.EmissionModule p1Module = p1ChargeParticle.emission;
+			p1Module.rateOverTime = Mathf.Lerp(startEmission, maxEmission, chargeTimer/chargeRequired);
 
-			lightningModule.startSize = Mathf.Lerp(startLightningSize, maxLightningSize, product);
-			sparklesModule.startSize = Mathf.Lerp(startSparklesSize, maxSparklesSize, product);
-			ringModule.startSize = Mathf.Lerp(startRingSize, maxRingSize, product);
-			rayModule.startSize = Mathf.Lerp(startRaySize, maxRaySize, product);
+			ParticleSystem.EmissionModule p2Module = p2ChargeParticle.emission;
+			p2Module.rateOverTime = Mathf.Lerp(startEmission, maxEmission, chargeTimer/chargeRequired);
 		}
 
 
@@ -263,7 +248,8 @@ namespace BossBattle2 {
 		private int Fire(){
 			health--;
 			pixelScript.SetTemporaryResolution(feedbackResolution, feedbackResolution, resolutionChangeDuration);
-			lightningStrike.Emit(numStrikes);
+			lightningStrike1.Emit(numStrikes);
+			lightningStrike2.Emit(numStrikes);
 
 			if (health <= 0){
 				boss.gameObject.SetActive(false);

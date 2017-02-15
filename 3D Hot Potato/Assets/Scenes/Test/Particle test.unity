@@ -774,7 +774,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -2042281259
+  randomSeed: 2131798369
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -18697,6 +18697,108 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 0
   timeToFullSpeed: 1.8
+--- !u!1001 &2010670957
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4402704684465202, guid: 02f64e91fc6f34e1f8a3ab27f7cfb52b, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4402704684465202, guid: 02f64e91fc6f34e1f8a3ab27f7cfb52b, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4402704684465202, guid: 02f64e91fc6f34e1f8a3ab27f7cfb52b, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4402704684465202, guid: 02f64e91fc6f34e1f8a3ab27f7cfb52b, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4402704684465202, guid: 02f64e91fc6f34e1f8a3ab27f7cfb52b, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4402704684465202, guid: 02f64e91fc6f34e1f8a3ab27f7cfb52b, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4402704684465202, guid: 02f64e91fc6f34e1f8a3ab27f7cfb52b, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4402704684465202, guid: 02f64e91fc6f34e1f8a3ab27f7cfb52b, type: 2}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 198860387211668546, guid: 02f64e91fc6f34e1f8a3ab27f7cfb52b,
+        type: 2}
+      propertyPath: SubModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198860387211668546, guid: 02f64e91fc6f34e1f8a3ab27f7cfb52b,
+        type: 2}
+      propertyPath: randomSeed
+      value: 1844133659
+      objectReference: {fileID: 0}
+    - target: {fileID: 198860387211668546, guid: 02f64e91fc6f34e1f8a3ab27f7cfb52b,
+        type: 2}
+      propertyPath: SubModule.subEmitters.Array.data[0].type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198860387211668546, guid: 02f64e91fc6f34e1f8a3ab27f7cfb52b,
+        type: 2}
+      propertyPath: CollisionModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198833449127561496, guid: 02f64e91fc6f34e1f8a3ab27f7cfb52b,
+        type: 2}
+      propertyPath: randomSeed
+      value: 157467954
+      objectReference: {fileID: 0}
+    - target: {fileID: 198833449127561496, guid: 02f64e91fc6f34e1f8a3ab27f7cfb52b,
+        type: 2}
+      propertyPath: InitialModule.startSize.scalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 198799390131161406, guid: 02f64e91fc6f34e1f8a3ab27f7cfb52b,
+        type: 2}
+      propertyPath: randomSeed
+      value: -731142616
+      objectReference: {fileID: 0}
+    - target: {fileID: 198799390131161406, guid: 02f64e91fc6f34e1f8a3ab27f7cfb52b,
+        type: 2}
+      propertyPath: InitialModule.startSize.scalar
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 198073806894461850, guid: 02f64e91fc6f34e1f8a3ab27f7cfb52b,
+        type: 2}
+      propertyPath: randomSeed
+      value: 905624724
+      objectReference: {fileID: 0}
+    - target: {fileID: 198073806894461850, guid: 02f64e91fc6f34e1f8a3ab27f7cfb52b,
+        type: 2}
+      propertyPath: InitialModule.startSize.scalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198715826107433168, guid: 02f64e91fc6f34e1f8a3ab27f7cfb52b,
+        type: 2}
+      propertyPath: randomSeed
+      value: -774558049
+      objectReference: {fileID: 0}
+    - target: {fileID: 198715826107433168, guid: 02f64e91fc6f34e1f8a3ab27f7cfb52b,
+        type: 2}
+      propertyPath: InitialModule.startSize.scalar
+      value: 3
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 02f64e91fc6f34e1f8a3ab27f7cfb52b, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &2058022943
 GameObject:
   m_ObjectHideFlags: 0

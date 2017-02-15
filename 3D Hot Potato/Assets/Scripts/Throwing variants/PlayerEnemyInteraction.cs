@@ -120,6 +120,7 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 		
 
 	private void LoseTheGame(){
+		Debug.Log("LoseTheGame() called");
 		//de-parent the ball to avoid null reference exceptions
 		if (transform.Find(BALL_OBJ) != null){
 			transform.Find(BALL_OBJ).parent = transform.root;
@@ -157,6 +158,8 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 		float timer = 0.0f;
 
 		GameObject impactParticle = ObjectPooling.ObjectPool.GetObj(IMPACT_PARTICLE);
+
+		Debug.Log("Ready for while loop in ResetGame()");
 
 		while (timer <= timeToResetGame){
 			Vector3 pos = rider.transform.position + -Vector3.forward * riderFallSpeed;

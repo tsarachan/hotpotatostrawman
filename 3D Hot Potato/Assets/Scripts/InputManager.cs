@@ -239,7 +239,7 @@ public class InputManager : MonoBehaviour {
 	/// Do everything required to set the game in motion.
 	/// </summary>
 	private void StartGame(){
-		levelManager.GameHasStarted = true;
+		levelManager.StartGame(gameObject);
 
 		foreach (Transform roadSection in GameObject.Find(ROAD_TREADMILL).transform){
 			roadSection.GetComponent<EnvironmentMove>().GameHasStarted = true;
