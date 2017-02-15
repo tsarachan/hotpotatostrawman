@@ -185,6 +185,7 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 
 
 	public void ResetPlayer(){
+		Debug.Log("Resetting player " + gameObject.name);
 		transform.position = myStartPos;
 		rider.parent = transform.Find(RIDER_ORGANIZER); //re-parent the rider
 		rider.localPosition = riderLocalStartPos;
@@ -195,5 +196,7 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 //		transform.GetChild(1).GetChild(1).gameObject.SetActive(true); //bring back the rider
 		GetComponent<PlayerBallInteraction>().BallCarrier = false; //without this setting, players can be destroyed without the ball on restart
 		GetComponent<BackwardsTrail>().StartGame();
+
+		Debug.Log("Successfully reset " + gameObject.name);
 	}
 }

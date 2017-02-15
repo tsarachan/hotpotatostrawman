@@ -439,7 +439,6 @@ public class LevelManager : MonoBehaviour {
 			Debug.Log("GameHasStarted set == " + GameHasStarted);
 
 			foreach (Transform enemy in enemies){
-				Debug.Log("Looking at " + enemy.name + ", which is tagged "  + enemy.tag + ", and is " + enemy.gameObject.activeInHierarchy);
 				if (enemy.tag == ENEMY_TAG && enemy.gameObject.activeInHierarchy == true){
 					enemy.GetComponent<EnemyBase>().GetDestroyed();
 				}

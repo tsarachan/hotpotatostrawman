@@ -135,6 +135,7 @@ namespace BossBattle2 {
 		private Vector3 start;
 		private Vector3 end;
 		private Vector3 bossStartRotation = new Vector3(45.0f, 45.0f, 0.0f);
+		private Vector3 axisStartRotation = new Vector3(0.0f, 0.0f, 0.0f);
 
 
 		//used to parent the boss battle
@@ -174,12 +175,14 @@ namespace BossBattle2 {
 
 
 		/// <summary>
-		/// Update this instance.
+		/// Bring the battle into view, and then run the battle.
 		/// </summary>
 		private void Update(){
 			if (enteringScreen){
 				transform.position = MoveOntoScreen();
-			} else {
+
+			//if the boss is active, do all the things involved in the battle
+			} else if (boss.activeInHierarchy){
 				axis.Rotate(Vector3.up * axisRotationSpeed * Time.deltaTime);
 
 				//division is expensive and this battle has lots of particles, so
@@ -263,7 +266,7 @@ namespace BossBattle2 {
 			lightningStrike.Emit(numStrikes);
 
 			if (health <= 0){
-				Destroy(boss);
+				boss.gameObject.SetActive(false);
 			}
 
 			return health;
@@ -287,6 +290,10 @@ namespace BossBattle2 {
 			enemySpawnTimer = 0.0f;
 			boss = transform.Find(BOSS_OBJ).gameObject;
 			boss.transform.rotation = Quaternion.Euler(bossStartRotation);
+			axis = transform.Find(AXIS);
+			axis.rotation = Quaternion.Euler(axisStartRotation);
+			health = 3;
+			chargeTimer = 0.0f;
 
 
 			gameObject.SetActive(true);
