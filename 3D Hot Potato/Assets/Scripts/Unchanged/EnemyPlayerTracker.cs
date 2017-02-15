@@ -99,7 +99,20 @@ public class EnemyPlayerTracker : EnemyBase {
 	}
 
 	public override void GetDestroyed(){
-		GetComponent<ParticleBurst>().MakeBurst();
+		GameObject destroyParticle = ObjectPooling.ObjectPool.GetObj(DESTROY_PARTICLE);
+		destroyParticle.transform.position = transform.position;
+
+		Color myColor = GetComponent<Renderer>().material.color;
+
+		destroyParticle.GetComponent<ParticlePlexus>().LineColor = myColor;
+
+
+		//for reasons unclear, Unity throws an error if you try to set the start color of the particles without
+		//first assigning the main module to its own variable
+		ParticleSystem.MainModule mainModule = destroyParticle.GetComponent<ParticleSystem>().main;
+
+		mainModule.startColor = myColor;
+
 		ObjectPooling.ObjectPool.AddObj(gameObject); //shut this off and return it to the pool
 	}
 
