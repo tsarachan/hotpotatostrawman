@@ -3,32 +3,54 @@ using System.Collections;
 
 public class EnemyHoming : EnemyBase {
 
+	//----------Tunable variables----------
+
 	public float chanceOfGoForBall = 0.8f; //between 1.0 and 0.0
-	protected const string BALL_OBJ = "Ball";
-	public Transform target;
-	private Rigidbody rb;
 	public float speed = 0.3f;
+	public float[] maxSpeeds = { 2.0f, 5.0f, 7.0f };
+	public float speedBoost = 2f; //speed multiplier for when the enemy stops homing
+	public float onScreenTime = 10.0f; //how long before the enemy stops homing and rushes its target
+	public Color preparingToChargeColor; //when the enemy is getting ready to rush, the point light will adopt this color
+	public Color leavingScreenColor; //the color of the point light when the enemy is rushing
+
+	/*
+	 * 
+	 * This is how many seconds in advance of the enemy charging a particle will play.
+	 * Unfortunately, limitations in how Unity allows scripts to access particle systems makes it impossible to
+	 * get this number automatically.
+	 * 
+	 */
+	public float warningTime = 1.5f;
+
+
+	//----------Internal variables----------
+
+
+	protected const string BALL_OBJ = "Ball";
+	private Transform target;
+	private Rigidbody rb;
 	public float Speed{
 		get { return speed; }
 		set { speed = value; }
 	}
-	public float[] maxSpeeds = { 2.0f, 5.0f, 7.0f };
+
 	private float myMaxSpeed = 0.0f;
 	private GameObject destroyParticle;
-	public float speedBoost = 2f; //speed multiplier for when the enemy stops homing
+
 
 	private const string PLAYER_ORGANIZER = "Players";
 	private Transform playerOrganizer;
 
 	private const string ENEMY_ORGANIZER = "Enemies";
 
-	public float onScreenTime = 10.0f;
+
 	private float stayTimer = 0.0f;
+
 
 	private Vector3 direction;
 	private Light myPointLight;
-	public Color leavingScreenColor;
-	public Color preparingToChargeColor; //Zach added this. Feel free to remove it.
+
+
 	private Color startColor;
 	private float startIntensity;
 
@@ -45,6 +67,13 @@ public class EnemyHoming : EnemyBase {
 	private Vector3 start;
 	private Vector3 end;
 
+
+	//these variables are for the particle that will indicate to players that the enemy is about to rush
+	private GameObject rushWarningParticleAxis;
+	private const string RUSH_WARNING_PARTICLE_AXIS = "Spinner axis";
+	private const string RUSH_WARNING_PARTICLE = "Spinner";
+
+
 	private void Start(){
 		transform.parent = GameObject.Find(ENEMY_ORGANIZER).transform;
 		playerOrganizer = GameObject.Find(PLAYER_ORGANIZER).transform;
@@ -58,6 +87,8 @@ public class EnemyHoming : EnemyBase {
 		myPointLight = transform.GetChild(0).GetComponent<Light>();
 		startColor = myPointLight.color;
 		startIntensity = myPointLight.intensity;
+		rushWarningParticleAxis = transform.Find(RUSH_WARNING_PARTICLE_AXIS).gameObject;
+		rushWarningParticleAxis.SetActive(false);
 	}
 
 
@@ -66,7 +97,7 @@ public class EnemyHoming : EnemyBase {
 	/// <summary>
 	/// Decide which player to chase.
 	/// </summary>
-	/// <returns>The target.</returns>
+	/// <returns>The targeted player's transform.</returns>
 	private Transform ChooseTarget(){
 		float randomValue = Random.Range(0.0f, 1.0f); //if this is <= chanceOfGoForBall, the enemy will want to chase the ball
 
@@ -78,6 +109,11 @@ public class EnemyHoming : EnemyBase {
 		}
 	}
 
+
+	/// <summary>
+	/// Find the location where this enemy should stop lerping and starting homing.
+	/// </summary>
+	/// <returns>The location where the homing AI takes over.</returns>
 	private Vector3 DetermineEntryEndPoint(){
 		//check to see if this enemy is off to the left side; if so, it needs to lerp sideways
 		if (transform.position.x < -Mathf.Abs(buildingXCoord)){
@@ -86,6 +122,16 @@ public class EnemyHoming : EnemyBase {
 			return new Vector3(transform.position.x - enterDistance, transform.position.y, transform.position.z);
 		} else { //not off to the side; the enemy is coming from the top
 			return new Vector3(transform.position.x, transform.position.y, transform.position.z - enterDistance);
+		}
+	}
+
+
+	/// <summary>
+	/// Handles the particle that warns the player that this enemy is getting ready to rush
+	/// </summary>
+	private void Update(){
+		if (stayTimer >= onScreenTime - warningTime){
+			rushWarningParticleAxis.SetActive(true);
 		}
 	}
 
@@ -99,10 +145,10 @@ public class EnemyHoming : EnemyBase {
 //			rb.isKinematic = false; //when not frozen, the enemy can move
 //		}
 
-		if (enteringScreen){
+		if (enteringScreen){ //first check: if still entering the play area, move accordingly
 			rb.MovePosition(MoveOntoScreen());
-		} else {
-			if (stayTimer <= onScreenTime){
+		} else { //done entering the play area
+			if (stayTimer <= onScreenTime){ //not yet time to rush; add force in the direction of the target
 				direction = GetDirection();
 				stayTimer += Time.deltaTime;
 				rb.AddForce(direction * Speed, ForceMode.Force);
@@ -194,6 +240,10 @@ public class EnemyHoming : EnemyBase {
 			myPointLight.color = startColor;
 			myPointLight.intensity = startIntensity;
 		}
+
+		//reset the rush warning particle
+		rushWarningParticleAxis = transform.Find(RUSH_WARNING_PARTICLE_AXIS).gameObject;
+		rushWarningParticleAxis.SetActive(false);
 
 		GetComponent<Rigidbody>().velocity = startVelocity; //sanity check: make absolutely sure the velocity is zero
 	}
