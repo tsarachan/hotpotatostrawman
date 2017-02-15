@@ -120,7 +120,6 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 		
 
 	private void LoseTheGame(){
-		Debug.Log("LoseTheGame() called");
 		//de-parent the ball to avoid null reference exceptions
 		if (transform.Find(BALL_OBJ) != null){
 			transform.Find(BALL_OBJ).parent = transform.root;
@@ -150,7 +149,6 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 	}
 
 	private IEnumerator ResetGame(){
-		Debug.Log("ResetGame() called");
 		levelManager.StopGame();
 
 		rider.parent = scene; //parent the rider to something in a constant location, so it doesn't move with inputs
@@ -158,8 +156,6 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 		float timer = 0.0f;
 
 		GameObject impactParticle = ObjectPooling.ObjectPool.GetObj(IMPACT_PARTICLE);
-
-		Debug.Log("Ready for while loop in ResetGame()");
 
 		while (timer <= timeToResetGame){
 			Vector3 pos = rider.transform.position + -Vector3.forward * riderFallSpeed;
@@ -181,14 +177,11 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 
 		levelManager.RestartGame();
 
-		Debug.Log("ResetGame() ending");
-
 		yield break;
 	}
 
 
 	public void ResetPlayer(){
-		Debug.Log("Resetting player " + gameObject.name);
 		transform.position = myStartPos;
 		rider.parent = transform.Find(RIDER_ORGANIZER); //re-parent the rider
 		rider.localPosition = riderLocalStartPos;
@@ -199,7 +192,5 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 //		transform.GetChild(1).GetChild(1).gameObject.SetActive(true); //bring back the rider
 		GetComponent<PlayerBallInteraction>().BallCarrier = false; //without this setting, players can be destroyed without the ball on restart
 		GetComponent<BackwardsTrail>().StartGame();
-
-		Debug.Log("Successfully reset " + gameObject.name);
 	}
 }

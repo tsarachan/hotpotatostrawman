@@ -260,6 +260,14 @@ namespace BossBattle2 {
 
 
 		public override void GetDestroyed(){
+			//set the charge-up particles to stop emitting; otherwise they'll be active as the boss battle
+			//comes back on scene
+			ParticleSystem.EmissionModule p1Module = p1ChargeParticle.emission;
+			p1Module.rateOverTime = 0.0f;
+
+			ParticleSystem.EmissionModule p2Module = p2ChargeParticle.emission;
+			p2Module.rateOverTime = 0.0f;
+
 			ObjectPooling.ObjectPool.AddObj(gameObject);
 		}
 
