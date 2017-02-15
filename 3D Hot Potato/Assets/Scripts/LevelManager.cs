@@ -433,11 +433,14 @@ public class LevelManager : MonoBehaviour {
 	}
 
 	public void StopGame(){
+		Debug.Log("StopGame() called");
 		if (GameHasStarted){
 			GameHasStarted = false;
+			Debug.Log("GameHasStarted set == " + GameHasStarted);
 
 			foreach (Transform enemy in enemies){
-				if (enemy.tag == ENEMY_TAG){
+				Debug.Log("Looking at " + enemy.name + ", which is tagged "  + enemy.tag + ", and is " + enemy.gameObject.activeInHierarchy);
+				if (enemy.tag == ENEMY_TAG && enemy.gameObject.activeInHierarchy == true){
 					enemy.GetComponent<EnemyBase>().GetDestroyed();
 				}
 			}
@@ -446,7 +449,9 @@ public class LevelManager : MonoBehaviour {
 
 
 	public void RestartGame(){
+		Debug.Log("RestartGame() called");
 		if (!GameHasStarted){
+			Debug.Log("Resetting");
 			p1EnemyScript.ResetPlayer();
 			p2EnemyScript.ResetPlayer();
 			ballScript.ResetBall();

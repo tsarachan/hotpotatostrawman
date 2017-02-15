@@ -149,6 +149,7 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 	}
 
 	private IEnumerator ResetGame(){
+		Debug.Log("ResetGame() called");
 		levelManager.StopGame();
 
 		rider.parent = scene; //parent the rider to something in a constant location, so it doesn't move with inputs
@@ -176,6 +177,8 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 		}
 
 		levelManager.RestartGame();
+
+		Debug.Log("ResetGame() ending");
 
 		yield break;
 	}
