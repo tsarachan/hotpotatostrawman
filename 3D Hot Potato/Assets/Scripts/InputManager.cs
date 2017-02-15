@@ -187,7 +187,7 @@ public class InputManager : MonoBehaviour {
 		//keyboard controls
 		foreach (char player in players.Keys){
 			foreach (KeyCode control in players[player].keyboardControls){
-				if (Input.GetKey(control)){
+				if (Input.GetKeyDown(control)){
 					InputByKey(player, control);
 				}
 			}
