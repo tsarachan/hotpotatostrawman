@@ -511,7 +511,6 @@ public class LevelManager : MonoBehaviour {
 	public void StartGame(GameObject source){
 		if (!RestartingGame && !GameHasStarted){
 			GameHasStarted = true;
-			Debug.Log(source.name);
 		}
 	}
 }
