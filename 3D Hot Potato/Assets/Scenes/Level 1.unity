@@ -42,7 +42,7 @@ RenderSettings:
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 7
-  m_GIWorkflowMode: 1
+  m_GIWorkflowMode: 0
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -1214,6 +1214,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeToResetGame: 1
+  riderTumbleSpeed: 1
+  bounceCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  bounceHeight: 1
 --- !u!114 &290731070
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1579,7 +1587,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100016, guid: 314c29baddf5640df98e8e021017b8a2, type: 3}
       propertyPath: m_Name
-      value: lightrunner1 (1)
+      value: lightrunner1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 314c29baddf5640df98e8e021017b8a2, type: 3}
@@ -10642,7 +10650,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: beca32a3c8df64f9fa0fd2df0091573c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  filename: Levels2.json
+  filename: Levels3.json
   restartGracePeriod: 1
 --- !u!114 &891422879
 MonoBehaviour:
@@ -16143,6 +16151,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeToResetGame: 1
+  riderTumbleSpeed: 1
+  bounceCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  bounceHeight: 1
 --- !u!114 &2058022952
 MonoBehaviour:
   m_ObjectHideFlags: 0
