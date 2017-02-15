@@ -30,6 +30,7 @@ namespace BossBattle2 {
 		//variables relating to the lightning weapon
 		public float chargeRequired = 2.0f; //how long the players have to stay in the charge areas to fire a shot at the boss
 		public int numStrikes = 10; //the number of lightning particles emitted during a strike
+		public float weaponOnDelay = 2.5f; //how long after the lightning blasts the weapon switches on
 
 		//all of these variables are for the particle that grows to show that the weapon is powering up
 		public float startEmission = 0.0f;

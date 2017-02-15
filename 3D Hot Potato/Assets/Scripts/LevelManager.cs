@@ -435,10 +435,8 @@ public class LevelManager : MonoBehaviour {
 	}
 
 	public void StopGame(){
-		Debug.Log("StopGame() called");
 		if (GameHasStarted){
 			GameHasStarted = false;
-			Debug.Log("GameHasStarted set == " + GameHasStarted);
 			RestartingGame = true;
 
 			foreach (Transform enemy in enemies){
@@ -451,9 +449,7 @@ public class LevelManager : MonoBehaviour {
 
 
 	public void RestartGame(){
-		Debug.Log("RestartGame() called; GameHasStarted == " + GameHasStarted);
 		if (!GameHasStarted){
-			Debug.Log("Restarting");
 			p1EnemyScript.ResetPlayer();
 			p2EnemyScript.ResetPlayer();
 			ballScript.ResetBall();
