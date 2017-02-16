@@ -25,12 +25,18 @@ public class CheckpointBehavior : ObjectPooling.Poolable {
 	private const string CHECKPOINT_TEXT = "Checkpoint text";
 
 
+	//variables relating to the checkpoint's sound effect
+	private AudioSource audioSource;
+	private bool checkpointActivated = false;
+
+
 
 	private void Start(){
 		levelManager = GameObject.Find(MANAGER_OBJ).GetComponent<LevelManager>();
 		rb = GetComponent<Rigidbody>();
 		checkpointText = GameObject.Find(CHECKPOINT_TEXT).GetComponent<UIElementMove>();
 		GetCurrentLevelNumbers();
+		audioSource = GetComponent<AudioSource>();
 	}
 
 
@@ -48,9 +54,11 @@ public class CheckpointBehavior : ObjectPooling.Poolable {
 
 
 	public void OnTriggerEnter(Collider other){
-		if (other.tag == PLAYER_TAG){ //don't set a checkpoint if, frex., an enemy goes through the point
+		if (!checkpointActivated && other.tag == PLAYER_TAG){ //don't set a checkpoint if, frex., an enemy goes through the point
 			levelManager.SetCheckpoint(CurrentWorldNum, CurrentActNum, CurrentNextReadTime, CurrentReadIndex);
 			checkpointText.StartUIElementMoving();
+			checkpointActivated = true;
+			audioSource.Play();
 		}
 	}
 
@@ -58,6 +66,8 @@ public class CheckpointBehavior : ObjectPooling.Poolable {
 	public override void Reset(){
 		levelManager = GameObject.Find(MANAGER_OBJ).GetComponent<LevelManager>();
 		GetCurrentLevelNumbers();
+		checkpointActivated = false;
+		audioSource = GetComponent<AudioSource>();
 	}
 
 

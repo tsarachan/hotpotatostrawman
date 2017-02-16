@@ -50,6 +50,12 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 	private const string CYCLE = "Model";
 
 
+	//the audio
+	private AudioSource audioSource;
+	private AudioClip deathSFX;
+	private const string DEATH_SFX = "Audio/PlayerDeathSFX";
+
+
 	//initialize variables
 	private void Start(){
 		levelManager = GameObject.Find(MANAGER_OBJ).GetComponent<LevelManager>();
@@ -60,6 +66,8 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 		riderLocalStartRot = rider.localRotation;
 		scene = GameObject.Find(SCENE_ORGANIZER).transform;
 		bounceLowestPos = GameObject.Find(ROAD_OBJ).transform.position.y;
+		audioSource = GetComponent<AudioSource>();
+		deathSFX = Resources.Load(DEATH_SFX) as AudioClip;
 	}
 
 	//debug instruction
@@ -137,6 +145,9 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 		ParticleSystem.MainModule mainModule = deathParticle.GetComponent<ParticleSystem>().main;
 
 		mainModule.startColor = lineColor;
+
+		audioSource.clip = deathSFX;
+		audioSource.Play();
 
 		transform.Find(POINT_LIGHT).gameObject.SetActive(false); //shut off the point light
 		transform.Find(RIDER_ORGANIZER).Find(CYCLE).GetComponent<Renderer>().enabled = false; //make the lightsteed disappear
