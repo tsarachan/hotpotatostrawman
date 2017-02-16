@@ -43,6 +43,13 @@ public class EnemyIgnoring : EnemyBase {
 	private float existTimer = 0.0f;
 
 
+	//variables for audio
+	private AudioSource audioSource;
+	private const string SPEAKERS = "Speakers";
+	private AudioClip deathClip;
+	private const string DEATH_CLIP = "Audio/EnemyDeathSFX";
+
+
 
 	private void Start(){
 		rb = GetComponent<Rigidbody>();
@@ -51,6 +58,22 @@ public class EnemyIgnoring : EnemyBase {
 		startXPos = transform.position.x;
 		transform.parent = GameObject.Find(ENEMY_ORGANIZER).transform;
 		playAreaSide = Mathf.Abs(GameObject.Find(BUILDINGS_ORGANIZER).transform.GetChild(0).position.x);
+		audioSource = GetAudioSource();
+		deathClip = Resources.Load(DEATH_CLIP) as AudioClip;
+
+	}
+
+
+	private AudioSource GetAudioSource(){
+		foreach (Transform speaker in transform.root.Find(SPEAKERS)){
+			if (speaker.name.Contains(gameObject.name)){
+				return speaker.GetComponent<AudioSource>();
+			}
+		}
+
+		//this should never happen
+		Debug.Log("Couldn't find audioSource for " + gameObject.name);
+		return null;
 	}
 
 
@@ -137,6 +160,9 @@ public class EnemyIgnoring : EnemyBase {
 		ParticleSystem.MainModule mainModule = destroyParticle.GetComponent<ParticleSystem>().main;
 
 		mainModule.startColor = myColor;
+
+		audioSource.clip = deathClip;
+		audioSource.Play();
 
 		ObjectPooling.ObjectPool.AddObj(gameObject); //shut this off and return it to the pool
 	}
