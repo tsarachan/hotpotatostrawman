@@ -74,6 +74,16 @@ public class EnemyHoming : EnemyBase {
 	private const string RUSH_WARNING_PARTICLE = "Spinner";
 
 
+	//these are used to shut off the model when the enemy is destroyed
+	private GameObject model;
+	private const string MODEL = "Model";
+
+
+	//is this a simple enemy? Used to avoid checking for features the simple enemy doesn't use
+	private const string SIMPLE = "Simple";
+
+
+
 	private void Start(){
 		transform.parent = GameObject.Find(ENEMY_ORGANIZER).transform;
 		playerOrganizer = GameObject.Find(PLAYER_ORGANIZER).transform;
@@ -87,8 +97,11 @@ public class EnemyHoming : EnemyBase {
 		myPointLight = transform.GetChild(0).GetComponent<Light>();
 		startColor = myPointLight.color;
 		startIntensity = myPointLight.intensity;
-		rushWarningParticleAxis = transform.Find(RUSH_WARNING_PARTICLE_AXIS).gameObject;
-		rushWarningParticleAxis.SetActive(false);
+		if (!gameObject.name.Contains(SIMPLE)){
+			rushWarningParticleAxis = transform.Find(RUSH_WARNING_PARTICLE_AXIS).gameObject;
+			rushWarningParticleAxis.SetActive(false);
+		}
+		model = transform.Find(MODEL).gameObject;
 	}
 
 
@@ -130,8 +143,12 @@ public class EnemyHoming : EnemyBase {
 	/// Handles the particle that warns the player that this enemy is getting ready to rush
 	/// </summary>
 	private void Update(){
-		if (stayTimer >= onScreenTime - warningTime){
+		if (!gameObject.name.Contains(SIMPLE) && stayTimer >= onScreenTime - warningTime){
 			rushWarningParticleAxis.SetActive(true);
+		}
+
+		if (stayTimer < onScreenTime){
+			transform.rotation = Quaternion.LookRotation((target.position - transform.position).normalized, Vector3.up);
 		}
 	}
 
@@ -201,7 +218,7 @@ public class EnemyHoming : EnemyBase {
 		GameObject destroyParticle = ObjectPooling.ObjectPool.GetObj(DESTROY_PARTICLE);
 		destroyParticle.transform.position = transform.position;
 
-		Color myColor = GetComponent<Renderer>().material.color;
+		Color myColor = model.GetComponent<Renderer>().material.color;
 
 		destroyParticle.GetComponent<ParticlePlexus>().LineColor = myColor;
 
@@ -242,8 +259,14 @@ public class EnemyHoming : EnemyBase {
 		}
 
 		//reset the rush warning particle
-		rushWarningParticleAxis = transform.Find(RUSH_WARNING_PARTICLE_AXIS).gameObject;
-		rushWarningParticleAxis.SetActive(false);
+		if (!gameObject.name.Contains(SIMPLE)){
+			rushWarningParticleAxis = transform.Find(RUSH_WARNING_PARTICLE_AXIS).gameObject;
+			rushWarningParticleAxis.SetActive(false);
+		}
+
+		//make sure the model is switched on
+		model = transform.Find(MODEL).gameObject;
+		model.SetActive(true);
 
 		GetComponent<Rigidbody>().velocity = startVelocity; //sanity check: make absolutely sure the velocity is zero
 	}
