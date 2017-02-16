@@ -83,6 +83,17 @@ public class EnemyHoming : EnemyBase {
 	private const string SIMPLE = "Simple";
 
 
+	//variables for audio
+	private AudioSource audioSource;
+	private const string HOMING = "Homing";
+	private const string HUNT = "Hunt";
+	private const string SPEAKERS = "Speakers";
+	private AudioClip deathClip;
+	private AudioClip chargeClip;
+	private const string DEATH_CLIP = "Audio/EnemyDeathSFX";
+	private const string CHARGE_CLIP = "Audio/EnemyChargeSFX";
+
+
 
 	private void Start(){
 		transform.parent = GameObject.Find(ENEMY_ORGANIZER).transform;
@@ -102,9 +113,23 @@ public class EnemyHoming : EnemyBase {
 			rushWarningParticleAxis.SetActive(false);
 		}
 		model = transform.Find(MODEL).gameObject;
+		audioSource = GetAudioSource();
+		deathClip = Resources.Load(DEATH_CLIP) as AudioClip;
+		chargeClip = Resources.Load(CHARGE_CLIP) as AudioClip;
 	}
 
 
+	private AudioSource GetAudioSource(){
+		foreach (Transform speaker in transform.root.Find(SPEAKERS)){
+			if (speaker.name.Contains(gameObject.name)){
+				return speaker.GetComponent<AudioSource>();
+			}
+		}
+
+		//this should never happen
+		Debug.Log("Couldn't find audioSource for " + gameObject.name);
+		return null;
+	}
 
 
 	/// <summary>
@@ -149,6 +174,15 @@ public class EnemyHoming : EnemyBase {
 
 		if (stayTimer < onScreenTime){
 			transform.rotation = Quaternion.LookRotation((target.position - transform.position).normalized, Vector3.up);
+		}
+
+
+		//TODO: Better control over charge audio start time so it starts at a consistent time
+		if (stayTimer >= onScreenTime - 0.2f && stayTimer < onScreenTime){
+			if (!audioSource.isPlaying){
+				audioSource.clip = chargeClip;
+				audioSource.Play();
+			}
 		}
 	}
 
@@ -228,6 +262,12 @@ public class EnemyHoming : EnemyBase {
 		ParticleSystem.MainModule mainModule = destroyParticle.GetComponent<ParticleSystem>().main;
 
 		mainModule.startColor = myColor;
+
+		if (!audioSource.isPlaying ||
+			(audioSource.isPlaying && audioSource.clip != deathClip)){
+			audioSource.clip = deathClip;
+			audioSource.Play();
+		}
 
 		ObjectPooling.ObjectPool.AddObj(gameObject); //shut this off and return it to the pool
 	}
