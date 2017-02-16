@@ -37,11 +37,6 @@ namespace BossBattle2 {
 		public float maxEmission = 100.0f;
 
 
-		//variables relating to the bolts that connect the platforms to the lightning weapon
-		public float startLineWidth = 0.05f;
-		public float maxLineWidth = 1.0f;
-
-
 		//how quickly the charging platforms rotate
 		public float axisRotationSpeed = 10.0f;
 
@@ -143,8 +138,8 @@ namespace BossBattle2 {
 			launchForward = transform.Find(BOSS_OBJ).Find(LAUNCH_POINT_FORWARD);
 			launchRear = transform.Find(BOSS_OBJ).Find(LAUNCH_POINT_REAR);
 			axis = transform.Find(AXIS);
-			lightningStrike1 = transform.Find(LIGHTNING_STRIKE_1).GetComponent<ParticleSystem>();
-			lightningStrike2 = transform.Find(LIGHTNING_STRIKE_2).GetComponent<ParticleSystem>();
+			lightningStrike1 = transform.Find(AXIS).Find(CHARGE_POINT_1).Find(LIGHTNING_STRIKE_1).GetComponent<ParticleSystem>();
+			lightningStrike2 = transform.Find(AXIS).Find(CHARGE_POINT_2).Find(LIGHTNING_STRIKE_2).GetComponent<ParticleSystem>();
 			pixelScript = Camera.main.GetComponent<AlpacaSound.RetroPixelPro.RetroPixelPro>();
 			p1ChargeParticle = transform.Find(AXIS).Find(CHARGE_POINT_1)
 				.Find(CHARGE_PARTICLE).GetComponent<ParticleSystem>();
