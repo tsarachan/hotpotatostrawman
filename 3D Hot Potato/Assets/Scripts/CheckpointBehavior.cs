@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class CheckpointBehavior : ObjectPooling.Poolable {
+public class CheckpointBehavior : EnemyBase {
 
 
 	//tunable variables
@@ -23,6 +23,7 @@ public class CheckpointBehavior : ObjectPooling.Poolable {
 	private const string PLAYER_TAG = "Player";
 	private UIElementMove checkpointText;
 	private const string CHECKPOINT_TEXT = "Checkpoint text";
+	private const string ENEMIES_ORGANIZER = "Enemies";
 
 
 	//variables relating to the checkpoint's sound effect
@@ -37,6 +38,7 @@ public class CheckpointBehavior : ObjectPooling.Poolable {
 		checkpointText = GameObject.Find(CHECKPOINT_TEXT).GetComponent<UIElementMove>();
 		GetCurrentLevelNumbers();
 		audioSource = GetComponent<AudioSource>();
+		transform.parent = GameObject.Find(ENEMIES_ORGANIZER).transform;
 	}
 
 
@@ -68,6 +70,7 @@ public class CheckpointBehavior : ObjectPooling.Poolable {
 		GetCurrentLevelNumbers();
 		checkpointActivated = false;
 		audioSource = GetComponent<AudioSource>();
+		transform.parent = GameObject.Find(ENEMIES_ORGANIZER).transform;
 	}
 
 
