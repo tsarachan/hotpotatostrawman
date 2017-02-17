@@ -15,12 +15,13 @@ public class EnemyHoming : EnemyBase {
 
 	/*
 	 * 
-	 * This is how many seconds in advance of the enemy charging a particle will play.
-	 * Unfortunately, limitations in how Unity allows scripts to access particle systems makes it impossible to
+	 * This is how long it takes the warning particle to finish displaying. It's used to help calculate when
+	 * it should play.
+	 * Unfortunately, limitations in how Unity allows scripts to access particle systems make it impossible to
 	 * get this number automatically.
 	 * 
 	 */
-	public float warningTime = 1.5f;
+	public float particleTotalLifetime = 1.5f;
 
 
 	//----------Internal variables----------
@@ -168,7 +169,7 @@ public class EnemyHoming : EnemyBase {
 	/// Handles the particle that warns the player that this enemy is getting ready to rush
 	/// </summary>
 	private void Update(){
-		if (!gameObject.name.Contains(SIMPLE) && stayTimer >= onScreenTime - warningTime){
+		if (!gameObject.name.Contains(SIMPLE) && stayTimer >= onScreenTime - particleTotalLifetime){
 			rushWarningParticleAxis.SetActive(true);
 		}
 
