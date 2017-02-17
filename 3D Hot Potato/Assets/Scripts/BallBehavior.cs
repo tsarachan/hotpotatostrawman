@@ -53,6 +53,10 @@ public class BallBehavior : MonoBehaviour {
 	private const string PLAYER_1 = "Player 1";
 
 
+	//variables used to signal a player tht the ball is on the way to them
+	private const string CATCH_WARNING = "Catch warning";
+
+
 	//initialize variables
 	protected virtual void Start(){
 		rb = GetComponent<Rigidbody>();
@@ -77,6 +81,9 @@ public class BallBehavior : MonoBehaviour {
 		if (!audioSource.isPlaying){
 			audioSource.Play();
 		}
+
+		//switch on the receiver's warning that the battery star is on the way
+		destination.Find(CATCH_WARNING).gameObject.SetActive(true);
 	}
 
 	/// <summary>
@@ -147,6 +154,9 @@ public class BallBehavior : MonoBehaviour {
 		IntendedReceiver = transform; //default assignment
 
 		awesomeCatchParticle.SetActive(false);
+
+		//switch off the catching player's warning that they're the receiver
+		catchingPlayer.Find(CATCH_WARNING).gameObject.SetActive(false);
 	}
 
 
