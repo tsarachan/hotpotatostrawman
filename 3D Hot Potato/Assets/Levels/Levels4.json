@@ -195,7 +195,7 @@
 			{"action":"spawn", "whichEnemy":"IgnoringEnemy", "waves":1, "numPerWave":1, "whichSpawners":[2], "timeBetweenWaves":0, "timeVariance":0},
 			{"action":"wait", "time":0.05},
 			{"action":"spawn", "whichEnemy":"HomingEnemy", "waves":1, "numPerWave":1, "whichSpawners":[1], "timeBetweenWaves":0, "timeVariance":0},
-			{"action":"wait", "time":3},
+			{"action":"wait", "time":5},
 			{"action":"spawn", "whichEnemy":"ClearEnemies", "waves":1, "numPerWave":1, "whichSpawners":[1], "timeBetweenWaves":0, "timeVariance":0}
 			{"action":"wait", "time":1},
 			{"action":"spawn", "whichEnemy":"Checkpoint", "waves":1, "numPerWave":1, "whichSpawners":[4], "timeBetweenWaves":0, "timeVariance":0}
