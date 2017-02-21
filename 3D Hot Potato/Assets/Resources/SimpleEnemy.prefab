@@ -216,7 +216,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startVelocity: {x: 0, y: 0, z: 0}
   chanceOfGoForBall: 0
-  speed: 100
+  speed: 120
   maxSpeeds:
   - 3
   - 6
@@ -225,7 +225,7 @@ MonoBehaviour:
   onScreenTime: 0
   preparingToChargeColor: {r: 1, g: 0.029411793, b: 0.12981711, a: 0}
   leavingScreenColor: {r: 0.1397059, g: 1, b: 0.31682524, a: 1}
-  warningTime: 1.5
+  particleTotalLifetime: 1.5
   enterDistance: 75
   enterTime: 0.5
   enterCurve:
