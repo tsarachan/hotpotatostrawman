@@ -281,7 +281,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startVelocity: {x: 0, y: 0, z: 0}
-  speed: 50
+  speed: 65
   enterDistance: 75
   maxOffset: 0
   frequency: 2
