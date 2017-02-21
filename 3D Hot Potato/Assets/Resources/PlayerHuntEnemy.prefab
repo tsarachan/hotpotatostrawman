@@ -307,18 +307,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startVelocity: {x: 0, y: 0, z: 0}
   chanceOfGoForBall: 0
-  speed: 35
+  speed: 100
   maxSpeeds:
-  - 3
-  - 6
-  - 8
+  - 10
   speedBoost: 3.7
-  onScreenTime: 2.7
+  onScreenTime: 10
   preparingToChargeColor: {r: 1, g: 0.029411793, b: 0.12981711, a: 0}
   leavingScreenColor: {r: 1, g: 0.32941177, b: 0.94509804, a: 1}
-  warningTime: 1.5
+  particleTotalLifetime: 1.5
   enterDistance: 35
-  enterTime: 2
+  enterTime: 1
   enterCurve:
     serializedVersion: 2
     m_Curve:
