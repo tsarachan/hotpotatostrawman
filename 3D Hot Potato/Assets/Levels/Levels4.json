@@ -1,6 +1,7 @@
 {
 "world1":{
 		"act1":[
+			{"action":"wait", "time":2},
 			{"action":"spawn", "whichEnemy":"IgnoringEnemy", "waves":1, "numPerWave":3, "whichSpawners":[2, 4, 6], "timeBetweenWaves":0, "timeVariance":0}
 			{"action":"wait", "time":5},
 			{"action":"spawn", "whichEnemy":"IgnoringEnemy", "waves":1, "numPerWave":3, "whichSpawners":[2, 4, 6], "timeBetweenWaves":0, "timeVariance":0}
