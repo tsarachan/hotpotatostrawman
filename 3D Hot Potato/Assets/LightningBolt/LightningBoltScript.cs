@@ -53,6 +53,7 @@ namespace DigitalRuby.LightningBolt
 		private int enemyLayerMask;
 		public float activeDuration = 3.0f;
 		private float activeTimer = 0.0f;
+		public float radius = 1.0f;
 		//End added stuff
 
 
@@ -391,14 +392,23 @@ namespace DigitalRuby.LightningBolt
 
 		//added; enemies caught in the lightning are destroyed
 		private void BlastEnemies(){
-			RaycastHit hitInfo;
+			RaycastHit[] hitInfo = Physics.SphereCastAll(player1.position, 
+														 radius,
+														 player2.position - player1.position,
+														 Mathf.Infinity,
+														 enemyLayerMask,
+														 QueryTriggerInteraction.Ignore);
 
-			if (Physics.Linecast(StartObject.transform.position,
-				EndObject.transform.position,
-				out hitInfo,
-				enemyLayerMask,
-				QueryTriggerInteraction.Ignore)){
-				hitInfo.collider.gameObject.GetComponent<EnemyBase>().GetDestroyed();
+			List<EnemyBase> hitEnemies = new List<EnemyBase>();
+
+			foreach (RaycastHit hit in hitInfo){
+				if (hit.collider.tag == "Enemy"){
+					hitEnemies.Add(hit.collider.GetComponent<EnemyBase>());
+				}
+			}
+
+			for (int i = hitEnemies.Count - 1; i >= 0; i--){
+				hitEnemies[i].GetDestroyed();
 			}
 		}
     }
