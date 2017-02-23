@@ -49,8 +49,8 @@ Material:
         name: _MainTex
       second:
         m_Texture: {fileID: 2800000, guid: 780f91ce23a67784489a867a7e7dedbe, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
+        m_Scale: {x: 1.3, y: 0.46}
+        m_Offset: {x: 0.78, y: 0}
     - first:
         name: _MetallicGlossMap
       second:
@@ -87,7 +87,7 @@ Material:
       second: 0.5
     - first:
         name: _InvFade
-      second: 1
+      second: 0.83
     - first:
         name: _Metallic
       second: 0

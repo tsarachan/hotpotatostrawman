@@ -245,7 +245,7 @@ public class InputManager : MonoBehaviour {
 			roadSection.GetComponent<EnvironmentMove>().GameHasStarted = true;
 		}
 
-		foreach (Transform building in GameObject.Find(BUILDING_ORGANIZER).transform){
+		foreach (Transform building in GameObject.Find("Buildings").transform){
 			building.GetComponent<EnvironmentMove>().GameHasStarted = true;
 		}
 
