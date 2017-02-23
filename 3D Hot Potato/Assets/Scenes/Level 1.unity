@@ -20,7 +20,7 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.10980393, g: 0.1764706, b: 0.48235297, a: 1}
+  m_AmbientSkyColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 0.45
@@ -2085,8 +2085,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 689ad17ccae4544a8939c774dd5892b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  horizontalResolution: 850
-  verticalResolution: 450
+  horizontalResolution: 400
+  verticalResolution: 400
   strength: 1
   colormap: {fileID: 11400000, guid: 7677d1143a3e04d2ca4f0e956b743266, type: 2}
   resolutionResetCurve:
@@ -16592,7 +16592,7 @@ Light:
   serializedVersion: 7
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1.24
+  m_Intensity: 0.23
   m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10
@@ -16613,7 +16613,7 @@ Light:
     m_Bits: 4294967295
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1.13
+  m_BounceIntensity: 1.25
   m_ShadowRadius: 0
   m_ShadowAngle: 0
 --- !u!1 &725573281
@@ -21964,6 +21964,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxDistance: 100
+  warningTime: 1
+  detectMultiplier: 2
+  distToSpawner: {x: 68.5, y: 0, z: 0}
 --- !u!1 &890386978
 GameObject:
   m_ObjectHideFlags: 0
@@ -24933,6 +24936,14 @@ Prefab:
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2393928, guid: 6e52f6e5c549dca4381c78a24c505338, type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: abaff2e6c6f61e248a1de0b7581c0ecd, type: 2}
+    - target: {fileID: 2393928, guid: 6e52f6e5c549dca4381c78a24c505338, type: 2}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6642346c671ae614dad01dfbd7c930b8, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6e52f6e5c549dca4381c78a24c505338, type: 2}
   m_IsPrefabParent: 0
@@ -28032,6 +28043,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxDistance: 100
+  warningTime: 1
+  detectMultiplier: 2
+  distToSpawner: {x: 68.5, y: 0, z: 0}
 --- !u!1 &1130737148
 GameObject:
   m_ObjectHideFlags: 0
@@ -28308,6 +28322,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxDistance: 100
+  warningTime: 1
+  detectMultiplier: 2
+  distToSpawner: {x: 68.5, y: 0, z: 0}
 --- !u!1 &1151198994
 GameObject:
   m_ObjectHideFlags: 0
@@ -28350,6 +28367,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxDistance: 100
+  warningTime: 1
+  detectMultiplier: 2
+  distToSpawner: {x: 68.5, y: 0, z: 0}
 --- !u!1 &1153795567
 GameObject:
   m_ObjectHideFlags: 0
@@ -28940,6 +28960,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxDistance: 100
+  warningTime: 1
+  detectMultiplier: 2
+  distToSpawner: {x: 68.5, y: 0, z: 0}
 --- !u!1 &1190236944
 GameObject:
   m_ObjectHideFlags: 0
@@ -39426,7 +39449,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4000010758677996, guid: 49022445d95ae4379a19baa564fa5ccb, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114000013751932324, guid: 49022445d95ae4379a19baa564fa5ccb,
         type: 2}
@@ -41774,6 +41797,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxDistance: 100
+  warningTime: 1
+  detectMultiplier: 2
+  distToSpawner: {x: 68.5, y: 0, z: 0}
 --- !u!1 &2051796312
 GameObject:
   m_ObjectHideFlags: 0
