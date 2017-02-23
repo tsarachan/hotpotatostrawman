@@ -100,6 +100,7 @@ public class CatchBehavior : MonoBehaviour {
 
 			inputs = 0;
 			readyForAwesomeCatch = false;
+			//madeAwesomeCatch = false;
 		}
 	}
 
@@ -140,7 +141,8 @@ public class CatchBehavior : MonoBehaviour {
 				movementScript.SlowMaxSpeed();
 				readyForAwesomeCatch = false;
 			} else { //success! An awesome catch can occur
-				readyForAwesomeCatch = AwesomeCatch();
+				readyForAwesomeCatch = true;
+				//madeAwesomeCatch = true;
 			}
 		}
 	}
@@ -150,7 +152,7 @@ public class CatchBehavior : MonoBehaviour {
 	/// Chooses the correct awesome catch effect for this player.
 	/// </summary>
 	/// <returns><c>true</c> so that the awesome catch will happen when the player catches the ball.</returns>
-	private bool AwesomeCatch(){
+	private void AwesomeCatch(){
 		if (gameObject.name == PLAYER_1_OBJ){
 			Player1AwesomeCatchEffect();
 		} else {
@@ -158,8 +160,6 @@ public class CatchBehavior : MonoBehaviour {
 		}
 
 		pixelScript.SetTemporaryResolution(catchResolution, catchResolution, catchResolutionChangeDuration);
-
-		return true;
 	}
 
 
