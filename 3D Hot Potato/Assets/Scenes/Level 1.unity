@@ -20,7 +20,7 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  m_AmbientSkyColor: {r: 0.1194853, g: 0.9558824, b: 0.9558824, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 0.45
@@ -7922,7 +7922,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 273a89b429b554ed6bba89b12d115de8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 50
+  speed: 150
   startPos: {x: -25.85, y: 9.73, z: 161.1}
   resetZ: -25
   startMovingCurve:
@@ -42956,6 +42956,11 @@ Prefab:
         type: 2}
       propertyPath: startPos.z
       value: 109.74
+      objectReference: {fileID: 0}
+    - target: {fileID: 114329004517834280, guid: 35869bc2daaeb4ba1b7a90e269ae2454,
+        type: 2}
+      propertyPath: speed
+      value: 150
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 35869bc2daaeb4ba1b7a90e269ae2454, type: 2}
