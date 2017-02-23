@@ -2085,8 +2085,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 689ad17ccae4544a8939c774dd5892b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  horizontalResolution: 500
-  verticalResolution: 500
+  horizontalResolution: 850
+  verticalResolution: 450
   strength: 1
   colormap: {fileID: 11400000, guid: 7677d1143a3e04d2ca4f0e956b743266, type: 2}
   resolutionResetCurve:

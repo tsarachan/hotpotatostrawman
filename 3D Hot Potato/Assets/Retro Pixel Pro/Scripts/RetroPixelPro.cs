@@ -47,28 +47,28 @@ namespace AlpacaSound.RetroPixelPro
 		private float resolutionResetTimer = 10000.0f; //nonsense initialization so it doesn't start out changing
 		public AnimationCurve resolutionResetCurve;
 
-		public Material material
-		{
-			get
-			{
-				if (m_material == null)
-				{
-					string shaderName = "AlpacaSound/RetroPixelPro";
-					Shader shader = Shader.Find(shaderName);
-
-					if (shader == null)
-					{
-						Debug.LogWarning ("Shader '" + shaderName + "' not found. Was it deleted?");
-						enabled = false;
-					}
-
-					m_material = new Material (shader);
-					m_material.hideFlags = HideFlags.DontSave;
-				}
-
-				return m_material;
-			} 
-		}
+//		public Material material
+//		{
+//			get
+//			{
+//				if (m_material == null)
+//				{
+//					string shaderName = "AlpacaSound/RetroPixelPro";
+//					Shader shader = Shader.Find(shaderName);
+//
+//					if (shader == null)
+//					{
+//						Debug.LogWarning ("Shader '" + shaderName + "' not found. Was it deleted?");
+//						enabled = false;
+//					}
+//
+//					m_material = new Material (shader);
+//					m_material.hideFlags = HideFlags.DontSave;
+//				}
+//
+//				return m_material;
+//			} 
+//		}
 
 
 		void Start ()
@@ -90,7 +90,7 @@ namespace AlpacaSound.RetroPixelPro
 			if (colormap != null && (colormap.changedInternally || oldColormap != colormap))
 			{
 				colormap.changedInternally = false;
-				ApplyToMaterial();
+				//ApplyToMaterial();
 			}
 
 			oldColormap = colormap;
@@ -125,7 +125,7 @@ namespace AlpacaSound.RetroPixelPro
 
 		void OnEnable()
 		{
-			ApplyToMaterial();
+			//ApplyToMaterial();
 		}
 
 
@@ -149,10 +149,10 @@ namespace AlpacaSound.RetroPixelPro
 			{
 				//Debug.Log(colormap.map + ", " + colormap.palette);
 
-				material.SetFloat("_Strength", strength);
+				//material.SetFloat("_Strength", strength);
 				RenderTexture scaled = RenderTexture.GetTemporary (horizontalResolution, (int) verticalResolution);
 				scaled.filterMode = FilterMode.Point;
-				Graphics.Blit (src, scaled, material);
+				Graphics.Blit (src, scaled);
 				//Graphics.Blit (src, scaled);
 				Graphics.Blit (scaled, dest);
 				RenderTexture.ReleaseTemporary (scaled);
@@ -164,44 +164,44 @@ namespace AlpacaSound.RetroPixelPro
 		}
 
 
-		public void ApplyToMaterial()
-		{
-			if (colormap != null)
-			{
-				ApplyPalette();
-				ApplyMap();
-			}
-		}
-
-
-		void ApplyPalette()
-		{
-			colormapPalette = new Texture2D(256, 1, TextureFormat.RGB24, false);
-			colormapPalette.filterMode = FilterMode.Point;
-			colormapPalette.wrapMode = TextureWrapMode.Clamp;
-
-			for (int i = 0; i < colormap.numberOfColors; ++i)
-			{
-				colormapPalette.SetPixel(i, 0, colormap.palette[i]);
-			}
-
-			colormapPalette.Apply();
-
-			material.SetTexture("_Palette", colormapPalette);
-		}
-
-
-		public void ApplyMap()
-		{
-			int colorsteps = ColormapUtils.GetPrecisionColorsteps(colormap.colormapPrecision);
-			colormapTexture = new Texture3D(colorsteps, colorsteps, colorsteps, TextureFormat.Alpha8, false);
-			colormapTexture.filterMode = FilterMode.Point;
-			colormapTexture.wrapMode = TextureWrapMode.Clamp;
-			colormapTexture.SetPixels32(colormap.buffer);
-			colormapTexture.Apply();
-
-			material.SetTexture("_ColorMap", colormapTexture);
-		}
+//		public void ApplyToMaterial()
+//		{
+//			if (colormap != null)
+//			{
+//				ApplyPalette();
+//				ApplyMap();
+//			}
+//		}
+//
+//
+//		void ApplyPalette()
+//		{
+//			colormapPalette = new Texture2D(256, 1, TextureFormat.RGB24, false);
+//			colormapPalette.filterMode = FilterMode.Point;
+//			colormapPalette.wrapMode = TextureWrapMode.Clamp;
+//
+//			for (int i = 0; i < colormap.numberOfColors; ++i)
+//			{
+//				colormapPalette.SetPixel(i, 0, colormap.palette[i]);
+//			}
+//
+//			colormapPalette.Apply();
+//
+//			material.SetTexture("_Palette", colormapPalette);
+//		}
+//
+//
+//		public void ApplyMap()
+//		{
+//			int colorsteps = ColormapUtils.GetPrecisionColorsteps(colormap.colormapPrecision);
+//			colormapTexture = new Texture3D(colorsteps, colorsteps, colorsteps, TextureFormat.Alpha8, false);
+//			colormapTexture.filterMode = FilterMode.Point;
+//			colormapTexture.wrapMode = TextureWrapMode.Clamp;
+//			colormapTexture.SetPixels32(colormap.buffer);
+//			colormapTexture.Apply();
+//
+//			material.SetTexture("_ColorMap", colormapTexture);
+//		}
 
 		public void SetTemporaryResolution(int tempHorizRes, int tempVertRes, float time){
 			modifiedHorizontalResolution = tempHorizRes;
