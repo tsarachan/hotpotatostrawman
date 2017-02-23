@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 23872706649105098}
   m_Layer: 9
   m_Name: Model
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -74,9 +74,9 @@ GameObject:
   - component: {fileID: 33755182773585252}
   - component: {fileID: 135110441692377310}
   - component: {fileID: 23026456896798220}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sphere
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
