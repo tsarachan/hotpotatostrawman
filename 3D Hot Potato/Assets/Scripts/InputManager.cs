@@ -62,6 +62,10 @@ public class InputManager : MonoBehaviour {
 	private const KeyCode p2PassKey = KeyCode.N;
 
 
+	//used to find the directional lightning power-up
+	private const string DIRECTIONAL_LIGHTNING_PREFAB = "Directional lightning prefab";
+
+
 	//additional variables needed to start the game with the first pass
 	private LevelManager levelManager;
 	private const string ROAD_TREADMILL = "Treadmill";
@@ -93,6 +97,8 @@ public class InputManager : MonoBehaviour {
 											  playerObj.GetComponent<PlayerBallInteraction>(),
 											  playerObj.GetComponent<PlayerMovementLean>(),
 											  playerObj.GetComponent<CatchBehavior>(),
+											  playerObj.transform.Find(DIRECTIONAL_LIGHTNING_PREFAB).
+													GetComponent<DirectionalLightning>(),
 											  p1UpKey,
 											  p1DownKey,
 											  p1LeftKey,
@@ -105,6 +111,8 @@ public class InputManager : MonoBehaviour {
 											  playerObj.GetComponent<PlayerBallInteraction>(),
 											  playerObj.GetComponent<PlayerMovementLean>(),
 											  playerObj.GetComponent<CatchBehavior>(),
+											  playerObj.transform.Find(DIRECTIONAL_LIGHTNING_PREFAB).
+													GetComponent<DirectionalLightning>(),
 											  p2UpKey,
 											  p2DownKey,
 											  p2LeftKey,
@@ -165,22 +173,26 @@ public class InputManager : MonoBehaviour {
 				Input.GetAxis(VERT_AXIS_360 + player) > deadZone){
 				players[player].MoveScript.Move(UP);
 				players[player].LeanScript.Lean(UP);
+				players[player].DirectionalLightningScript.DirectRotation(UP);
 			}
 			else if (Input.GetAxis(VERT_AXIS + player) < -deadZone ||
 					 Input.GetAxis(VERT_AXIS_360 + player) < -deadZone){
 				players[player].MoveScript.Move(DOWN);
 				players[player].LeanScript.Lean(DOWN);
+				players[player].DirectionalLightningScript.DirectRotation(DOWN);
 			}
 
 			if (Input.GetAxis(HORIZ_AXIS + player) < -deadZone ||
 				Input.GetAxis(HORIZ_AXIS_360 + player) < -deadZone){
 				players[player].MoveScript.Move(LEFT);
 				players[player].LeanScript.Lean(LEFT);
+				players[player].DirectionalLightningScript.DirectRotation(LEFT);
 			}
 			else if (Input.GetAxis(HORIZ_AXIS + player) > deadZone ||
 					 Input.GetAxis(HORIZ_AXIS_360 + player) > deadZone){
 				players[player].MoveScript.Move(RIGHT);
 				players[player].LeanScript.Lean(RIGHT);
+				players[player].DirectionalLightningScript.DirectRotation(RIGHT);
 			}
 		}
 
@@ -206,21 +218,25 @@ public class InputManager : MonoBehaviour {
 			case p2UpKey:
 				players[numOfPlayer].MoveScript.Move(UP);
 				players[numOfPlayer].LeanScript.Lean(UP);
+				players[numOfPlayer].DirectionalLightningScript.DirectRotation(UP);
 				break;
 			case p1DownKey:
 			case p2DownKey:
 				players[numOfPlayer].MoveScript.Move(DOWN);
 				players[numOfPlayer].LeanScript.Lean(DOWN);
+				players[numOfPlayer].DirectionalLightningScript.DirectRotation(DOWN);
 				break;
 			case p1LeftKey:
 			case p2LeftKey:
 				players[numOfPlayer].MoveScript.Move(LEFT);
 				players[numOfPlayer].LeanScript.Lean(LEFT);
+				players[numOfPlayer].DirectionalLightningScript.DirectRotation(LEFT);
 				break;
 			case p1RightKey:
 			case p2RightKey:
 				players[numOfPlayer].MoveScript.Move(RIGHT);
 				players[numOfPlayer].LeanScript.Lean(RIGHT);
+				players[numOfPlayer].DirectionalLightningScript.DirectRotation(RIGHT);
 				break;
 			case p1PassKey:
 			case p2PassKey:
@@ -268,11 +284,13 @@ public class InputManager : MonoBehaviour {
 		private PlayerBallInteraction ballScript;
 		private PlayerMovementLean leanScript;
 		private CatchBehavior catchScript;
+		private DirectionalLightning directionalLightningScript;
 
 		public PlayerMovement MoveScript { get { return moveScript; } }
 		public PlayerBallInteraction BallScript { get { return ballScript; } }
 		public PlayerMovementLean LeanScript { get { return leanScript; } }
 		public CatchBehavior CatchScript { get { return catchScript; } }
+		public DirectionalLightning DirectionalLightningScript { get { return directionalLightningScript; } }
 
 		//keyboard controls
 		private KeyCode upKey;
@@ -291,6 +309,7 @@ public class InputManager : MonoBehaviour {
 					  PlayerBallInteraction ballScript,
 					  PlayerMovementLean leanScript,
 					  CatchBehavior catchScript,
+					  DirectionalLightning directionalLightningScript,
 					  KeyCode upKey,
 					  KeyCode downKey,
 					  KeyCode leftKey,
@@ -301,6 +320,7 @@ public class InputManager : MonoBehaviour {
 			this.ballScript = ballScript;
 			this.leanScript = leanScript;
 			this.catchScript = catchScript;
+			this.directionalLightningScript = directionalLightningScript;
 			this.upKey = upKey;
 			this.downKey = downKey;
 			this.leftKey = leftKey;

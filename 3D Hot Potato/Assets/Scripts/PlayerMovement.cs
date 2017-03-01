@@ -22,6 +22,9 @@ public class PlayerMovement : MonoBehaviour {
 	public float stopDuration = 0.25f;
 	private float stopTimer = 0.0f;
 
+	//players are locked out of moving when the lightning stream is active; DirectionalLightning controls this
+	public bool MovementLocked { get; set; }
+
 	//these match the directions in InputManager
 	private const string UP = "up";
 	private const string DOWN = "down";
@@ -32,6 +35,7 @@ public class PlayerMovement : MonoBehaviour {
 	private void Start(){
 		rb = GetComponent<Rigidbody>();
 		currentMaxSpeed = maxSpeed;
+		MovementLocked = false;
 	}
 
 
@@ -50,7 +54,7 @@ public class PlayerMovement : MonoBehaviour {
 	private void FixedUpdate(){
 
 		//normal movement
-		if (!Stopped){
+		if (!Stopped && !MovementLocked){
 			//This is a bodge to limit maximum speed. The better way would be to impose a countervailing force.
 			//Directly manipulating rigidbody velocity could lead to physics problems.
 			if (rb.velocity.magnitude > currentMaxSpeed) { rb.velocity = rb.velocity.normalized * currentMaxSpeed; }
@@ -69,7 +73,7 @@ public class PlayerMovement : MonoBehaviour {
 	/// </summary>
 	/// <param name="direction">The direction in which the player should move.</param>
 	public void Move(string direction){
-		if (!Stopped){ //the player can't move when stopped
+		if (!Stopped && !MovementLocked){ //the player can't move when stopped
 			Vector3 temp = new Vector3(0.0f, 0.0f, 0.0f);
 
 			if (direction == UP){

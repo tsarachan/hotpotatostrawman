@@ -94,6 +94,8 @@ public class CatchSandbox : MonoBehaviour {
 		GameObject directionalLightning = transform.Find(DIRECTIONAL_LIGHTNING).gameObject;
 
 		//if the directable lightning isn't already there, create it
+		//note that until InputManager is refactored, this will create the object but it won't be able receive inputs
+		//for now, the lightning stream MUST be in the hierarchy at the start of the game
 		if (directionalLightning == null){
 			directionalLightning = Instantiate(Resources.Load(DIRECTIONAL_LIGHTNING),
 											   transform.position,
@@ -104,7 +106,7 @@ public class CatchSandbox : MonoBehaviour {
 		//there should now definitely be directable lightning ready to go; if not, send an error message
 		Debug.Assert(directionalLightning != null);
 
-		directionalLightning.SetActive(true);
+		directionalLightning.GetComponent<DirectionalLightning>().Activate();
 
 		return directionalLightning;
 	}
