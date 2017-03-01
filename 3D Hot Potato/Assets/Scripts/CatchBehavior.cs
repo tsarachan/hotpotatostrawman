@@ -3,14 +3,15 @@
  * Each player has this script. It determines when they have made an awesome catch, and then calls other functions
  * appropriately.
  * 
- * This script does not carry out the awesome catch's effect. It only establishes that an awesome catch occurred.
+ * This script does not determine what awesome catches do--all of those effects are contained in CatchSandbox.
+ * All this script does is figure out when one of CatchSandbox's functions should be called.
  * 
  */
 using System.Collections;
 using System.Linq;
 using UnityEngine;
 
-public class CatchBehavior : MonoBehaviour {
+public class CatchBehavior : CatchSandbox {
 
 	//----------Tunable variables----------
 	public float awesomeCatchDistance = 10.0f; //how much leeway players have to get the awesome catch
@@ -19,12 +20,6 @@ public class CatchBehavior : MonoBehaviour {
 
 
 	//----------Internal variables----------
-
-	//variables used to load the player powers
-	private GameObject myPower;
-	private const string LIGHTNING_OBJ = "Burst prefab";
-	private const string TETHER_OBJ = "Lightning prefab";
-	private const string PARTICLE_ORGANIZER = "Particles";
 
 
 	//variables for determining whether an awesome catch occurred
@@ -53,37 +48,12 @@ public class CatchBehavior : MonoBehaviour {
 
 	//initialize variables
 	private void Start(){
-		myPower = LoadMyPower();
 		myBallScript = GetComponent<PlayerBallInteraction>();
 		otherBallScript = FindOtherBallScript();
 		ball = GameObject.Find(BALL_OBJ).transform;
 		ballBehavior = ball.GetComponent<BallBehavior>();
 		movementScript = GetComponent<PlayerMovement>();
 		pixelScript = Camera.main.GetComponent<AlpacaSound.RetroPixelPro.RetroPixelPro>();
-	}
-
-
-	/// <summary>
-	/// Finds the appropriate prefab for each player's catch power, and then sets any necessary initial states.
-	/// </summary>
-	/// <returns>A gameobject, either instantiated or loaded from Resources, for the player's power.</returns>
-	private GameObject LoadMyPower(){
-		if (gameObject.name == PLAYER_1_OBJ){
-			GameObject tether = Instantiate(Resources.Load(TETHER_OBJ),
-											new Vector3(0.0f, 0.0f, 0.0f),
-											Quaternion.identity,
-											GameObject.Find(PARTICLE_ORGANIZER).transform) as GameObject;
-
-			tether.SetActive(false);
-
-				
-			return tether;
-		} else if (gameObject.name == PLAYER_2_OBJ){
-			return Resources.Load(LIGHTNING_OBJ) as GameObject;
-		} else {
-			Debug.Log("Couldn't figure out which player power to load for " + gameObject.name);
-			return Resources.Load(TETHER_OBJ) as GameObject;
-		}
 	}
 
 
@@ -167,7 +137,7 @@ public class CatchBehavior : MonoBehaviour {
 	/// Activate the tether between player 1 and player 2
 	/// </summary>
 	private void Player1AwesomeCatchEffect(){
-		myPower.SetActive(true);
+		Tether();
 	}
 
 
@@ -175,8 +145,7 @@ public class CatchBehavior : MonoBehaviour {
 	/// Cause a bolt of lightning to appear at player 2's location
 	/// </summary>
 	private void Player2AwesomeCatchEffect(){
-		GameObject burst = ObjectPooling.ObjectPool.GetObj(myPower.name);
-		burst.transform.position = transform.position;
+		SingleBurst(transform.position);
 	}
 
 

@@ -109,7 +109,6 @@ public class PlayerMovement : MonoBehaviour {
 
 
 	public void SlowMaxSpeed(){
-		Debug.Log("SlowMaxSpeed() called");
 		currentMaxSpeed = slowSpeed;
 		slowTimer = 0.0f;
 	}
