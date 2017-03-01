@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class DirectionalLightning : MonoBehaviour {
@@ -7,6 +8,7 @@ public class DirectionalLightning : MonoBehaviour {
 
 	public float rotationSpeed = 20.0f; //speed at which the lightning stream spins around the player
 	public float duration = 3.0f; //how long the lightning stream continues
+	public float radius = 1.0f; //the radius of the spherecast that destroys enemies
 
 
 	//----------internal variables----------
@@ -30,17 +32,28 @@ public class DirectionalLightning : MonoBehaviour {
 	private const string RIGHT = "right";
 
 
+	//layermask so that the stream can detect and destroy enemies (and only enemies)
+	private int enemyLayer = 9;
+	private int enemyLayerMask;
+
+
 	//initialize variables
 	private void Start(){
 		attractor = transform.Find(ATTRACTOR_OBJ);
 		inputMarker = transform.Find(INPUT_CONTROLLED_OBJ);
 		gameObject.SetActive(false);
+		enemyLayerMask = 1 << enemyLayer;
 	}
 
 
-	//move the attractor (which in turn directs the lightning stream), and shut the stream off when time is up
+	/// <summary>
+	/// Move the attractor (which in turn directs the lightning stream), destroy enemies caught in the stream,
+	/// and shut the stream off when time is up.
+	/// </summary>
 	private void Update(){
 		attractor.rotation = RotateTowardInputDirection();
+		BlastEnemies();
+
 
 		timer += Time.deltaTime;
 
@@ -79,6 +92,33 @@ public class DirectionalLightning : MonoBehaviour {
 			default:
 				Debug.Log("Illegal direction: " + dir);
 				break;
+		}
+	}
+
+
+	/// <summary>
+	/// Uses a spherecast to detect enemies caught in the lightning stream, and then destroys all enemies detected.
+	/// </summary>
+	private void BlastEnemies(){
+		RaycastHit[] hitInfo = Physics.SphereCastAll(transform.position, 
+													 radius,
+													 attractor.position - transform.position,
+													 Vector3.Distance(attractor.position, transform.position),
+													 enemyLayerMask,
+													 QueryTriggerInteraction.Ignore);
+
+		if (hitInfo.Length > 0){
+			List<EnemyBase> hitEnemies = new List<EnemyBase>();
+
+			foreach (RaycastHit hit in hitInfo){
+				if (hit.collider.tag == "Enemy"){
+					hitEnemies.Add(hit.collider.GetComponent<EnemyBase>());
+				}
+			}
+
+			for (int i = hitEnemies.Count - 1; i >= 0; i--){
+				hitEnemies[i].GetDestroyed();
+			}
 		}
 	}
 
