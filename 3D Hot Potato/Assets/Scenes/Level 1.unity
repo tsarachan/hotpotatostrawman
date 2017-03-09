@@ -6097,7 +6097,7 @@ MonoBehaviour:
   - {x: -5, y: 0, z: 14}
   - {x: 5, y: 0, z: 14}
   - {x: 0, y: 0, z: 10}
-  timeBetweenMultibursts: 0.3
+  timeBetweenMultibursts: 0.27
   awesomeCatchDistance: 10
   catchResolution: 75
   catchResolutionChangeDuration: 0.5

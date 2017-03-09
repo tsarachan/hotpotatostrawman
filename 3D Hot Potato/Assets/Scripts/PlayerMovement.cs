@@ -6,12 +6,15 @@ public class PlayerMovement : MonoBehaviour {
 
 	private Rigidbody rb;
 
-	public float maxSpeed = 1.0f; //player maximum speed
-	public float accel = 0.3f; //amount player accelerates each frame of input
+	public float maxZSpeed = 1.0f; //player maximum speed on Z axis
+	public float maxXSpeed = 1.0f; //player maximum speed on X axis
+	public float zAccel = 0.3f; //amount player accelerates each frame of input on the Z axis
+	public float xAccel = 1.0f; //amount player accelerates each frame of input on the X axis
 	public float slowSpeed = 0.5f; //player speed when slowed for a missed awesome catch
 	public float slowDuration = 1.0f; //how long the player is slowed after a missed awesome catch
 
-	public float currentMaxSpeed = 0.0f; //the player's maximum speed, either the normal maximum or the slowed maximum
+	public float currentZMaxSpeed = 0.0f; //the player's maximum speed, either the normal maximum or the slowed maximum
+	public float currentXMaxSpeed = 0.0f;
 	private float slowTimer = 0.0f; //keeps track of how long the player has been slowed
 
 	private bool stopped = false; //players are stopped, for example, when they destroy an enemy
@@ -34,30 +37,41 @@ public class PlayerMovement : MonoBehaviour {
 
 	private void Start(){
 		rb = GetComponent<Rigidbody>();
-		currentMaxSpeed = maxSpeed;
+		currentZMaxSpeed = maxZSpeed;
+		currentXMaxSpeed = maxXSpeed;
 		MovementLocked = false;
 	}
 
 
 	//if currently slowed down, track time until it's appropriate to speed back up
 	private void Update(){
-		if (currentMaxSpeed == slowSpeed){
+		if (currentZMaxSpeed == slowSpeed){
 			slowTimer += Time.deltaTime;
 
 			if (slowTimer >= slowDuration){
-				currentMaxSpeed = maxSpeed;
+				currentZMaxSpeed = maxZSpeed;
+				currentXMaxSpeed = maxXSpeed;
 			}
 		}
 	}
 		
 
 	private void FixedUpdate(){
-
 		//normal movement
 		if (!Stopped && !MovementLocked){
 			//This is a bodge to limit maximum speed. The better way would be to impose a countervailing force.
 			//Directly manipulating rigidbody velocity could lead to physics problems.
-			if (rb.velocity.magnitude > currentMaxSpeed) { rb.velocity = rb.velocity.normalized * currentMaxSpeed; }
+			if (rb.velocity.z > currentZMaxSpeed){
+				Vector3 vel = rb.velocity;
+				vel.z = currentZMaxSpeed;
+				rb.velocity = vel;
+			}
+
+			if (rb.velocity.x > currentXMaxSpeed){
+				Vector3 vel = rb.velocity;
+				vel.x = currentXMaxSpeed;
+				rb.velocity = vel;
+			}
 
 		//not moving because movement paused while fighting an enemy
 		} else if (Stopped) {
@@ -78,21 +92,19 @@ public class PlayerMovement : MonoBehaviour {
 
 			if (direction == UP){
 				temp.z = -1.0f;
-
+				rb.AddForce(temp.normalized * zAccel, ForceMode.Force);
 			} else if (direction == DOWN){
 				temp.z = 1.0f;
-
+				rb.AddForce(temp.normalized * zAccel, ForceMode.Force);
 			}
 
 			if (direction == LEFT){
 				temp.x = -1.0f;
-
+				rb.AddForce(temp.normalized * xAccel, ForceMode.Force);
 			} else if (direction == RIGHT){
 				temp.x = 1.0f;
-
+				rb.AddForce(temp.normalized * xAccel, ForceMode.Force);
 			}
-
-			rb.AddForce(temp.normalized * accel, ForceMode.Force);
 		}
 	}
 
@@ -113,7 +125,8 @@ public class PlayerMovement : MonoBehaviour {
 
 
 	public void SlowMaxSpeed(){
-		currentMaxSpeed = slowSpeed;
+		currentZMaxSpeed = slowSpeed;
+		currentXMaxSpeed = slowSpeed;
 		slowTimer = 0.0f;
 	}
 }
