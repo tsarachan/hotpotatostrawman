@@ -2944,8 +2944,8 @@ ParticleSystem:
         m_Mode: 0
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
-      minColor: {r: 0, g: 1, b: 0.95686275, a: 1}
-      maxColor: {r: 0.91764706, g: 0.07450981, b: 0.07450981, a: 1}
+      minColor: {r: 0.47058824, g: 0.70980394, b: 1, a: 0.78431374}
+      maxColor: {r: 0.9372549, g: 0.6784314, b: 1, a: 0.78431374}
       minMaxState: 2
     startSize:
       scalar: 0.3

@@ -48,6 +48,16 @@ public class CatchBehavior : CatchSandbox {
 	private AlpacaSound.RetroPixelPro.RetroPixelPro pixelScript;
 
 
+	//SFX for missed special catch
+	private AudioClip missClip;
+	private const string MISS_CLIP = "Audio/MissedCatchSFX";
+	private AudioSource audioSource;
+
+
+	//particle effect for missed special catch
+	private const string MISS_PARTICLE = "Failed catch prefab";
+
+
 	//initialize variables
 	protected override void Start(){
 		myBallScript = GetComponent<PlayerBallInteraction>();
@@ -56,6 +66,8 @@ public class CatchBehavior : CatchSandbox {
 		ballBehavior = ball.GetComponent<BallBehavior>();
 		movementScript = GetComponent<PlayerMovement>();
 		pixelScript = Camera.main.GetComponent<AlpacaSound.RetroPixelPro.RetroPixelPro>();
+		missClip = Resources.Load(MISS_CLIP) as AudioClip;
+		audioSource = GetComponent<AudioSource>();
 
 		base.Start();
 	}
@@ -110,12 +122,15 @@ public class CatchBehavior : CatchSandbox {
 			if(inputs > 0){ //if this is true, the player has already tried for an awesome catch and is mashing
 				movementScript.SlowMaxSpeed();
 				readyForAwesomeCatch = false;
+				MissedCatchFeedback();
 			} else if (Vector3.Distance(transform.position, ball.position) > awesomeCatchDistance){ //if true, pushed button too early--missed catch
 				inputs++;
 				movementScript.SlowMaxSpeed();
 				readyForAwesomeCatch = false;
+				MissedCatchFeedback();
 			} else { //success! An awesome catch can occur
 				readyForAwesomeCatch = true;
+				Debug.Log("Detected awesome catch");
 				//madeAwesomeCatch = true;
 			}
 		}
@@ -142,6 +157,7 @@ public class CatchBehavior : CatchSandbox {
 	/// </summary>
 	private void Player1AwesomeCatchEffect(){
 		TwoPlayerDeathRay();
+		Tether();
 	}
 
 
@@ -159,5 +175,17 @@ public class CatchBehavior : CatchSandbox {
 	/// <returns>The awesome catch distance.</returns>
 	public float GetAwesomeCatchDistance(){
 		return awesomeCatchDistance;
+	}
+
+
+
+	private void MissedCatchFeedback(){
+		if (!audioSource.isPlaying){
+			audioSource.clip = missClip;
+			audioSource.Play();
+		}
+
+		GameObject missParticle = ObjectPooling.ObjectPool.GetObj(MISS_PARTICLE);
+		missParticle.transform.position = transform.position;
 	}
 }
