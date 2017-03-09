@@ -14,6 +14,8 @@ using UnityEngine;
 public class CatchBehavior : CatchSandbox {
 
 	//----------Tunable variables----------
+
+	[Header("Difficulty and SFX for awesome catches")]
 	public float awesomeCatchDistance = 10.0f; //how much leeway players have to get the awesome catch
 	public int catchResolution = 75; //new horizontal and vertical pixel resolution as juice for awesome catches
 	public float catchResolutionChangeDuration = 0.5f;
@@ -147,7 +149,7 @@ public class CatchBehavior : CatchSandbox {
 	/// Cause a bolt of lightning to appear at player 2's location
 	/// </summary>
 	private void Player2AwesomeCatchEffect(){
-		SingleBurst(transform.position);
+		StartCoroutine(MultiBurst());
 	}
 
 
