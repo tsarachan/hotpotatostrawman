@@ -20,6 +20,7 @@ public class PlayerMovementLean : MonoBehaviour {
 	public float maxForwardLean = 45.0f;
 	public float maxBackwardLean = 60.0f; //this must be a positive number!
 	public float maxSideLean = 45.0f;
+	public float maxTurnLean = 25.0f; //how far the lightcycle will turn into a lateral movement
 
 	//possible directions for leaning; these must match the directions in InputManager
 	private const string UP = "up";
@@ -28,7 +29,8 @@ public class PlayerMovementLean : MonoBehaviour {
 	private const string RIGHT = "right";
 
 	//the rate at which the parent object rotates
-	public float rotationSpeed = 10.0f;
+	public float rotationSpeed = 10.0f; //speed of rotating into a turn
+	public float returnSpeed = 20.0f; //speed of rotating back to straight
 
 
 	//initialize variables
@@ -57,10 +59,12 @@ public class PlayerMovementLean : MonoBehaviour {
 				break;
 			case LEFT:
 				temp.z = maxSideLean;
+				temp.y = -maxTurnLean;
 				rotationTarget.rotation = Quaternion.Euler(temp);
 				break;
 			case RIGHT:
 				temp.z = -maxSideLean;
+				temp.y = maxTurnLean;
 				rotationTarget.rotation = Quaternion.Euler(temp);
 				break;
 			default:
@@ -80,7 +84,7 @@ public class PlayerMovementLean : MonoBehaviour {
 	private void LateUpdate(){
 		cycleAndRider.rotation = Quaternion.RotateTowards(cycleAndRider.rotation,
 														  rotationTarget.rotation,
-														  rotationSpeed * Time.deltaTime);
+														  returnSpeed * Time.deltaTime);
 
 		rotationTarget.rotation = Quaternion.identity;
 	}

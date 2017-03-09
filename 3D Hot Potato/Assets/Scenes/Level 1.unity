@@ -5823,7 +5823,9 @@ MonoBehaviour:
   maxForwardLean: 10
   maxBackwardLean: 35
   maxSideLean: 45
+  maxTurnLean: 25
   rotationSpeed: 70
+  returnSpeed: 20
 --- !u!65 &290731065
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5896,11 +5898,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b520623cc3ab4009ad4b6041b948335, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 20
-  accel: 12
+  maxZSpeed: 1
+  maxXSpeed: 1
+  zAccel: 0.3
+  xAccel: 1
   slowSpeed: 5
   slowDuration: 2
-  currentMaxSpeed: 0
+  currentZMaxSpeed: 0
+  currentXMaxSpeed: 0
   stopDuration: 0.25
 --- !u!114 &290731069
 MonoBehaviour:
@@ -52347,11 +52352,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b520623cc3ab4009ad4b6041b948335, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 20
-  accel: 12
+  maxZSpeed: 20
+  maxXSpeed: 40
+  zAccel: 12
+  xAccel: 24
   slowSpeed: 5
   slowDuration: 2
-  currentMaxSpeed: 0
+  currentZMaxSpeed: 0
+  currentXMaxSpeed: 0
   stopDuration: 0.25
 --- !u!114 &2058022950
 MonoBehaviour:
@@ -52558,7 +52566,9 @@ MonoBehaviour:
   maxForwardLean: 10
   maxBackwardLean: 35
   maxSideLean: 45
+  maxTurnLean: 45
   rotationSpeed: 70
+  returnSpeed: 180
 --- !u!114 &2058022955
 MonoBehaviour:
   m_ObjectHideFlags: 0
