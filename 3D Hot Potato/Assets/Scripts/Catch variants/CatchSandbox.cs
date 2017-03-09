@@ -28,6 +28,18 @@ public class CatchSandbox : MonoBehaviour {
 	protected const string DIRECTIONAL_LIGHTNING = "Directional lightning prefab";
 
 
+	//variables for the beam weapon that both players aim--a replacement for the tether
+	protected const string DEATH_RAY = "Two-player death ray";
+	protected GameObject deathRay;
+
+
+	protected virtual void Start(){
+
+		//nonsense initializations for determining which powers are in use
+		deathRay = gameObject;
+	}
+
+
 	/// <summary>
 	/// Call this to activate the tether.
 	/// 
@@ -109,5 +121,29 @@ public class CatchSandbox : MonoBehaviour {
 		directionalLightning.GetComponent<DirectionalLightning>().Activate();
 
 		return directionalLightning;
+	}
+
+
+	protected GameObject TwoPlayerDeathRay(){
+		deathRay = SetUpDeathRay();
+
+		Debug.Assert(deathRay != null);
+		Debug.Assert(deathRay != gameObject);
+
+		deathRay.GetComponent<DeathRayBehavior>().Activate();
+
+		return deathRay;
+	}
+
+
+	protected GameObject SetUpDeathRay(){
+		if (deathRay != gameObject){
+			return deathRay;
+		} else {
+			return Instantiate(Resources.Load(DEATH_RAY),
+							   transform.position,
+							   Quaternion.identity,
+							   transform) as GameObject;
+		}
 	}
 }

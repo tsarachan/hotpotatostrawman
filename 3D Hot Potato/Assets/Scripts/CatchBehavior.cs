@@ -47,13 +47,15 @@ public class CatchBehavior : CatchSandbox {
 
 
 	//initialize variables
-	private void Start(){
+	protected override void Start(){
 		myBallScript = GetComponent<PlayerBallInteraction>();
 		otherBallScript = FindOtherBallScript();
 		ball = GameObject.Find(BALL_OBJ).transform;
 		ballBehavior = ball.GetComponent<BallBehavior>();
 		movementScript = GetComponent<PlayerMovement>();
 		pixelScript = Camera.main.GetComponent<AlpacaSound.RetroPixelPro.RetroPixelPro>();
+
+		base.Start();
 	}
 
 
@@ -137,7 +139,7 @@ public class CatchBehavior : CatchSandbox {
 	/// Activate the tether between player 1 and player 2
 	/// </summary>
 	private void Player1AwesomeCatchEffect(){
-		Tether();
+		TwoPlayerDeathRay();
 	}
 
 

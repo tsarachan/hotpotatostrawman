@@ -395,7 +395,7 @@ namespace DigitalRuby.LightningBolt
 			RaycastHit[] hitInfo = Physics.SphereCastAll(player1.position, 
 														 radius,
 														 player2.position - player1.position,
-														 Mathf.Infinity,
+														 Vector3.Distance(player1.position, player2.position),
 														 enemyLayerMask,
 														 QueryTriggerInteraction.Ignore);
 

@@ -173,26 +173,26 @@ public class InputManager : MonoBehaviour {
 				Input.GetAxis(VERT_AXIS_360 + player) > deadZone){
 				players[player].MoveScript.Move(UP);
 				players[player].LeanScript.Lean(UP);
-				players[player].DirectionalLightningScript.DirectRotation(UP);
+				//players[player].DirectionalLightningScript.DirectRotation(UP);
 			}
 			else if (Input.GetAxis(VERT_AXIS + player) < -deadZone ||
 					 Input.GetAxis(VERT_AXIS_360 + player) < -deadZone){
 				players[player].MoveScript.Move(DOWN);
 				players[player].LeanScript.Lean(DOWN);
-				players[player].DirectionalLightningScript.DirectRotation(DOWN);
+				//players[player].DirectionalLightningScript.DirectRotation(DOWN);
 			}
 
 			if (Input.GetAxis(HORIZ_AXIS + player) < -deadZone ||
 				Input.GetAxis(HORIZ_AXIS_360 + player) < -deadZone){
 				players[player].MoveScript.Move(LEFT);
 				players[player].LeanScript.Lean(LEFT);
-				players[player].DirectionalLightningScript.DirectRotation(LEFT);
+				//players[player].DirectionalLightningScript.DirectRotation(LEFT);
 			}
 			else if (Input.GetAxis(HORIZ_AXIS + player) > deadZone ||
 					 Input.GetAxis(HORIZ_AXIS_360 + player) > deadZone){
 				players[player].MoveScript.Move(RIGHT);
 				players[player].LeanScript.Lean(RIGHT);
-				players[player].DirectionalLightningScript.DirectRotation(RIGHT);
+				//players[player].DirectionalLightningScript.DirectRotation(RIGHT);
 			}
 		}
 
@@ -218,25 +218,25 @@ public class InputManager : MonoBehaviour {
 			case p2UpKey:
 				players[numOfPlayer].MoveScript.Move(UP);
 				players[numOfPlayer].LeanScript.Lean(UP);
-				players[numOfPlayer].DirectionalLightningScript.DirectRotation(UP);
+				//players[numOfPlayer].DirectionalLightningScript.DirectRotation(UP);
 				break;
 			case p1DownKey:
 			case p2DownKey:
 				players[numOfPlayer].MoveScript.Move(DOWN);
 				players[numOfPlayer].LeanScript.Lean(DOWN);
-				players[numOfPlayer].DirectionalLightningScript.DirectRotation(DOWN);
+				//players[numOfPlayer].DirectionalLightningScript.DirectRotation(DOWN);
 				break;
 			case p1LeftKey:
 			case p2LeftKey:
 				players[numOfPlayer].MoveScript.Move(LEFT);
 				players[numOfPlayer].LeanScript.Lean(LEFT);
-				players[numOfPlayer].DirectionalLightningScript.DirectRotation(LEFT);
+				//players[numOfPlayer].DirectionalLightningScript.DirectRotation(LEFT);
 				break;
 			case p1RightKey:
 			case p2RightKey:
 				players[numOfPlayer].MoveScript.Move(RIGHT);
 				players[numOfPlayer].LeanScript.Lean(RIGHT);
-				players[numOfPlayer].DirectionalLightningScript.DirectRotation(RIGHT);
+				//players[numOfPlayer].DirectionalLightningScript.DirectRotation(RIGHT);
 				break;
 			case p1PassKey:
 			case p2PassKey:
