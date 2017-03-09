@@ -139,7 +139,6 @@ public class CatchBehavior : CatchSandbox {
 			} else { //success! An awesome catch can occur
 				readyForAwesomeCatch = true;
 				catchText.text = CATCH;
-				Debug.Log("Detected awesome catch");
 				//madeAwesomeCatch = true;
 			}
 		}

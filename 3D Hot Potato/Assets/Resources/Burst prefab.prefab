@@ -289,7 +289,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startVelocity: {x: 0, y: 0, z: 0}
   existDuration: 2
-  explosionRadius: 10
+  explosionRadius: 5
   moveCurve:
     serializedVersion: 2
     m_Curve:
@@ -370,7 +370,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -962387755
+  randomSeed: -994058055
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -534,7 +534,7 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 0.78431374}
       minMaxState: 2
     startSize:
-      scalar: 2
+      scalar: 1
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -2923,7 +2923,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -1576218398
+  randomSeed: -1909803695
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -5422,7 +5422,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 1347094719
+  randomSeed: -2032255810
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -5586,7 +5586,7 @@ ParticleSystem:
       maxColor: {r: 0.9372549, g: 0.6784314, b: 1, a: 0.78431374}
       minMaxState: 2
     startSize:
-      scalar: 10
+      scalar: 7.5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -7975,7 +7975,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 1805246285
+  randomSeed: -1646501206
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -10570,7 +10570,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 1667627075
+  randomSeed: -1173877664
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -10734,7 +10734,7 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 0.78431374}
       minMaxState: 0
     startSize:
-      scalar: 12
+      scalar: 6
       maxCurve:
         serializedVersion: 2
         m_Curve:
