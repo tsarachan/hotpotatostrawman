@@ -105,6 +105,10 @@ public class LevelManager : MonoBehaviour {
 	public bool RestartingGame { get; set; }
 
 
+	//bosses set this in order to stop new enemies from spawning
+	public bool Hold { get; set; }
+
+
 	//these are used to restart the game
 	private const string ENEMY_ORGANIZER = "Enemies";
 	private Transform enemies;
@@ -135,6 +139,7 @@ public class LevelManager : MonoBehaviour {
 		ballScript = GameObject.Find(BALL).GetComponent<BallBehavior>();
 		particles = GameObject.Find(PARTICLE_ORGANIZER).transform;
 		RestartingGame = false;
+		Hold = false;
 	}
 
 	private List<Transform> FindSpawners(){
@@ -153,7 +158,7 @@ public class LevelManager : MonoBehaviour {
 
 		//this is the overall loop: whenever the timer reaches the next read time, do something
 		//ReadInItem increases nextReadTime, and the cycle continues
-		if (GameHasStarted){
+		if (GameHasStarted && !Hold){
 			if (!worldOver){
 				timer += Time.deltaTime;
 

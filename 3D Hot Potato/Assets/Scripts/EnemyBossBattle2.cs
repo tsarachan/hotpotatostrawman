@@ -132,6 +132,11 @@ namespace BossBattle2 {
 		private const string ENEMY_ORGANIZER = "Enemies";
 
 
+		//used to pause the level manager
+		private LevelManager levelManager;
+		private const string MANAGER_OBJ = "Managers";
+
+
 		//initialize variables
 		private void Start(){
 			boss = transform.Find(BOSS_OBJ).gameObject;
@@ -154,6 +159,8 @@ namespace BossBattle2 {
 				transform.position.y,
 				transform.position.z - enterDistance);
 			transform.parent = GameObject.Find(ENEMY_ORGANIZER).transform;
+			levelManager = GameObject.Find(MANAGER_OBJ).GetComponent<LevelManager>();
+			levelManager.Hold = true;
 		}
 
 
@@ -248,7 +255,8 @@ namespace BossBattle2 {
 			lightningStrike2.Emit(numStrikes);
 
 			if (health <= 0){
-				boss.gameObject.SetActive(false);
+				levelManager.Hold = false;
+				gameObject.SetActive(false);
 			}
 
 			return health;
@@ -263,6 +271,8 @@ namespace BossBattle2 {
 
 			ParticleSystem.EmissionModule p2Module = p2ChargeParticle.emission;
 			p2Module.rateOverTime = 0.0f;
+
+			levelManager.Hold = false;
 
 			ObjectPooling.ObjectPool.AddObj(gameObject);
 		}
@@ -284,6 +294,8 @@ namespace BossBattle2 {
 			axis.rotation = Quaternion.Euler(axisStartRotation);
 			health = 3;
 			chargeTimer = 0.0f;
+			levelManager = GameObject.Find(MANAGER_OBJ).GetComponent<LevelManager>();
+			levelManager.Hold = true;
 
 
 			gameObject.SetActive(true);
