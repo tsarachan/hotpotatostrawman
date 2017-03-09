@@ -10,6 +10,7 @@
 using System.Collections;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CatchBehavior : CatchSandbox {
 
@@ -54,8 +55,13 @@ public class CatchBehavior : CatchSandbox {
 	private AudioSource audioSource;
 
 
-	//particle effect for missed special catch
-	private const string MISS_PARTICLE = "Failed catch prefab";
+	//text notification for special catch
+	private Text catchText;
+	private const string TEXT_CANVAS = "Catch warning";
+	private const string TEXT_OBJ = "Text";
+	private const string MISS = "X";
+	private const string CATCH = "OK";
+	private const string INCOMING = "!";
 
 
 	//initialize variables
@@ -68,6 +74,7 @@ public class CatchBehavior : CatchSandbox {
 		pixelScript = Camera.main.GetComponent<AlpacaSound.RetroPixelPro.RetroPixelPro>();
 		missClip = Resources.Load(MISS_CLIP) as AudioClip;
 		audioSource = GetComponent<AudioSource>();
+		catchText = transform.Find(TEXT_CANVAS).Find(TEXT_OBJ).GetComponent<Text>();
 
 		base.Start();
 	}
@@ -86,6 +93,7 @@ public class CatchBehavior : CatchSandbox {
 
 			inputs = 0;
 			readyForAwesomeCatch = false;
+			catchText.text = INCOMING; //reset the UI that tells players the ball is approaching
 			//madeAwesomeCatch = false;
 		}
 	}
@@ -130,6 +138,7 @@ public class CatchBehavior : CatchSandbox {
 				MissedCatchFeedback();
 			} else { //success! An awesome catch can occur
 				readyForAwesomeCatch = true;
+				catchText.text = CATCH;
 				Debug.Log("Detected awesome catch");
 				//madeAwesomeCatch = true;
 			}
@@ -185,7 +194,6 @@ public class CatchBehavior : CatchSandbox {
 			audioSource.Play();
 		}
 
-		GameObject missParticle = ObjectPooling.ObjectPool.GetObj(MISS_PARTICLE);
-		missParticle.transform.position = transform.position;
+		catchText.text = MISS;
 	}
 }
