@@ -11,6 +11,16 @@ using UnityEngine;
 public class CatchSandbox : MonoBehaviour {
 
 
+	//----------Tunable variables----------
+
+	[Header("These are only relevant to p2's multiburst")]
+	public Vector3[] multiBurstPositions;
+	public float timeBetweenMultibursts = 0.3f;
+
+
+	//----------Internal variables----------
+
+
 	//variables relating to the AOE burst
 	protected const string BURST_OBJ = "Burst prefab";
 
@@ -94,6 +104,29 @@ public class CatchSandbox : MonoBehaviour {
 	}
 
 
+	protected IEnumerator MultiBurst(){
+		float timer = 0.0f;
+		int burstsSoFar = 0;
+
+		while (burstsSoFar < multiBurstPositions.Length){
+			timer += Time.deltaTime;
+
+			if (timer >= timeBetweenMultibursts){
+				GameObject burst = ObjectPooling.ObjectPool.GetObj(BURST_OBJ);
+				burst.transform.position = transform.position + multiBurstPositions[burstsSoFar];
+
+				burstsSoFar++;
+
+				timer = 0.0f;
+			}
+
+			yield return null;
+		}
+
+		yield break;
+	}
+
+
 	/// <summary>
 	/// Switches on a stream of lightning that the player can direct with the directional controller,
 	/// whether it's a keyboard or a joystick. The stream is responsible for switching itself off.
@@ -124,6 +157,10 @@ public class CatchSandbox : MonoBehaviour {
 	}
 
 
+	/// <summary>
+	/// Activates a reverse tether, which extends out from player 1 instead of extending back toward player 2.
+	/// </summary>
+	/// <returns>The ray object.</returns>
 	protected GameObject TwoPlayerDeathRay(){
 		deathRay = SetUpDeathRay();
 
