@@ -205,7 +205,7 @@
 		],
 		"act5":[
 			{"action":"spawn", "whichEnemy":"PlayerHuntEnemy", "waves":1, "numPerWave":1, "whichSpawners":[8], "timeBetweenWaves":0, "timeVariance":0},
-			{"action":"wait", "time":14},
+			{"action":"wait", "time":7},
 			{"action":"spawn", "whichEnemy":"PlayerHuntEnemy", "waves":1, "numPerWave":1, "whichSpawners":[2], "timeBetweenWaves":0, "timeVariance":0},
 			{"action":"wait", "time":2},
 			{"action":"spawn", "whichEnemy":"PlayerHuntEnemy", "waves":1, "numPerWave":1, "whichSpawners":[14], "timeBetweenWaves":0, "timeVariance":0},
