@@ -115,7 +115,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activeDuration: 3
   radius: 1
-  range: 30
+  range: 22
 --- !u!198 &198089753417897374
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -2777,7 +2777,7 @@ ParticleSystem:
     serializedVersion: 3
     enabled: 1
     startLifetime:
-      scalar: 1
+      scalar: 0.75
       maxCurve:
         serializedVersion: 2
         m_Curve:

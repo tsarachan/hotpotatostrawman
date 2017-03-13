@@ -65,11 +65,19 @@ public class PlayerMovement : MonoBehaviour {
 				Vector3 vel = rb.velocity;
 				vel.z = currentZMaxSpeed;
 				rb.velocity = vel;
+			} else if (rb.velocity.z < -currentZMaxSpeed){
+				Vector3 vel = rb.velocity;
+				vel.z = -currentZMaxSpeed;
+				rb.velocity = vel;
 			}
 
 			if (rb.velocity.x > currentXMaxSpeed){
 				Vector3 vel = rb.velocity;
 				vel.x = currentXMaxSpeed;
+				rb.velocity = vel;
+			} else if (rb.velocity.x < -currentXMaxSpeed){
+				Vector3 vel = rb.velocity;
+				vel.x = -currentXMaxSpeed;
 				rb.velocity = vel;
 			}
 

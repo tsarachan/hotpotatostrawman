@@ -94,6 +94,7 @@ public class CatchBehavior : CatchSandbox {
 			inputs = 0;
 			readyForAwesomeCatch = false;
 			catchText.text = INCOMING; //reset the UI that tells players the ball is approaching
+			catchText.color = Color.white;
 			//madeAwesomeCatch = false;
 		}
 	}
@@ -139,6 +140,7 @@ public class CatchBehavior : CatchSandbox {
 			} else { //success! An awesome catch can occur
 				readyForAwesomeCatch = true;
 				catchText.text = CATCH;
+				catchText.color = Color.green;
 				//madeAwesomeCatch = true;
 			}
 		}
@@ -194,5 +196,6 @@ public class CatchBehavior : CatchSandbox {
 		}
 
 		catchText.text = MISS;
+		catchText.color = Color.red;
 	}
 }
