@@ -50,17 +50,29 @@ public class EnemyIgnoring : EnemyBase {
 	private const string DEATH_CLIP = "Audio/EnemyDeathSFX";
 
 
+	//names of different types of enemies; used to determine how this should move
+	private const string SINE = "Sine";
+	private const string SIDEWAYS = "Sideways";
+
+
 
 	private void Start(){
 		rb = GetComponent<Rigidbody>();
-		direction = GetDirection();
-		offsetPosition = GetXOffset;
 		startXPos = transform.position.x;
+		offsetPosition = GetMovementMode();
 		transform.parent = GameObject.Find(ENEMY_ORGANIZER).transform;
 		playAreaSide = Mathf.Abs(GameObject.Find(BUILDINGS_ORGANIZER).transform.GetChild(0).position.x);
+		direction = GetDirection();
 		audioSource = GetAudioSource();
 		deathClip = Resources.Load(DEATH_CLIP) as AudioClip;
+	}
 
+	private OffsetPosition GetMovementMode(){
+		if (gameObject.name.Contains(SIDEWAYS)){
+			return MoveSideways;
+		} else {
+			return GetXOffset;
+		}
 	}
 
 
@@ -78,7 +90,13 @@ public class EnemyIgnoring : EnemyBase {
 
 
 	private Vector3 GetDirection(){
-		return -Vector3.forward;
+		if (transform.position.x < -playAreaSide){
+			return Vector3.right;
+		} else if (transform.position.x > playAreaSide){
+			return -Vector3.right;
+		} else {
+			return -Vector3.forward;
+		}
 	}
 
 
@@ -126,12 +144,23 @@ public class EnemyIgnoring : EnemyBase {
 	}
 
 
+	private Vector3 MoveSideways(){
+		return transform.position + direction * speed * Time.fixedDeltaTime;
+	}
+
+
 	/// <summary>
 	/// Find where this enemy should go to as they move onto the screen.
 	/// </summary>
 	/// <returns>The entry end point.</returns>
 	private Vector3 DetermineEntryEndPoint(){
-		return new Vector3(transform.position.x, transform.position.y, transform.position.z - enterDistance);
+		if (transform.position.x < -playAreaSide){
+			return new Vector3(transform.position.x - enterDistance, transform.position.y, transform.position.z);
+		} else if (transform.position.x > playAreaSide){
+			return new Vector3(transform.position.x + enterDistance, transform.position.y, transform.position.z);
+		} else {
+			return new Vector3(transform.position.x, transform.position.y, transform.position.z - enterDistance);
+		}
 	}
 
 
