@@ -6,9 +6,11 @@ public class PlayerMovement : MonoBehaviour {
 
 	private Rigidbody rb;
 
-	public float maxZSpeed = 1.0f; //player maximum speed on Z axis
+	public float maxZSpeed = 1.0f; //player maximum speed on forward Z axis
 	public float maxXSpeed = 1.0f; //player maximum speed on X axis
+	public float maxReverseSpeed = 50.0f; //player maximum speed in -Z direction
 	public float zAccel = 0.3f; //amount player accelerates each frame of input on the Z axis
+	public float zBrake = 50.0f; //amount player brakes each frame of input on the Z axis
 	public float xAccel = 1.0f; //amount player accelerates each frame of input on the X axis
 	public float slowSpeed = 0.5f; //player speed when slowed for a missed awesome catch
 	public float slowDuration = 1.0f; //how long the player is slowed after a missed awesome catch
@@ -65,9 +67,9 @@ public class PlayerMovement : MonoBehaviour {
 				Vector3 vel = rb.velocity;
 				vel.z = currentZMaxSpeed;
 				rb.velocity = vel;
-			} else if (rb.velocity.z < -currentZMaxSpeed){
+			} else if (rb.velocity.z < -maxReverseSpeed){
 				Vector3 vel = rb.velocity;
-				vel.z = -currentZMaxSpeed;
+				vel.z = -maxReverseSpeed;
 				rb.velocity = vel;
 			}
 
@@ -100,7 +102,7 @@ public class PlayerMovement : MonoBehaviour {
 
 			if (direction == UP){
 				temp.z = -1.0f;
-				rb.AddForce(temp.normalized * zAccel, ForceMode.Force);
+				rb.AddForce(temp.normalized * zBrake, ForceMode.Force);
 			} else if (direction == DOWN){
 				temp.z = 1.0f;
 				rb.AddForce(temp.normalized * zAccel, ForceMode.Force);

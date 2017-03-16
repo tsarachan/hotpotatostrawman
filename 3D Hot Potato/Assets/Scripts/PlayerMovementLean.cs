@@ -30,7 +30,8 @@ public class PlayerMovementLean : MonoBehaviour {
 
 	//the rate at which the parent object rotates
 	public float rotationSpeed = 10.0f; //speed of rotating into a turn
-	public float returnSpeed = 20.0f; //speed of rotating back to straight
+	public float returnSpeed = 280.0f; //speed of rotating back to straight
+	public float backRotateSpeed = 500.0f; //speed of rotating into the braking move for backwards movement
 
 
 	//initialize variables
@@ -42,6 +43,8 @@ public class PlayerMovementLean : MonoBehaviour {
 
 	/// <summary>
 	/// InputManager calls this to set the target rotation the cycle and rider will turn towards.
+	/// 
+	/// Note that case DOWN (moving backwards) is substantially different, owing to the 
 	/// </summary>
 	/// <param name="dir">The direction of movement, provided by InputManager.</param>
 	public void Lean(string dir){
@@ -49,8 +52,10 @@ public class PlayerMovementLean : MonoBehaviour {
 
 		switch(dir){
 			//note that up and down are reversed in the input manager, and thus here as well
+			//that is to say, case DOWN is forward movement, case UP is backward movement
 			case UP:
-				temp.x = -maxBackwardLean;
+				temp.y = 90.0f;
+				temp.z = -maxSideLean;
 				rotationTarget.rotation = Quaternion.Euler(temp);
 				break;
 			case DOWN:
@@ -82,9 +87,25 @@ public class PlayerMovementLean : MonoBehaviour {
 	/// since InputManager will put it back where it's supposed to be before this turns the player.
 	/// </summary>
 	private void LateUpdate(){
+		//determine how fast to rotate based on the rotation target
+		float rotateSpeed;
+
+		if (rotationTarget.rotation == Quaternion.identity){
+			//Debug.Log("setting rotateSpeed to returnSpeed; returnSpeed == " + returnSpeed);
+			rotateSpeed = returnSpeed;
+		} else if (rotationTarget.rotation == Quaternion.Euler(new Vector3(0.0f, 90.0f, -maxSideLean))){
+			//Debug.Log("rotating backwards");
+			rotateSpeed = backRotateSpeed;
+		} else {
+			//Debug.Log("setting rotateSpeed to rotationSpeed; rotationSpeed == " + rotationSpeed);
+			rotateSpeed = rotationSpeed;
+		}
+
+		Debug.Log(rotateSpeed);
+
 		cycleAndRider.rotation = Quaternion.RotateTowards(cycleAndRider.rotation,
 														  rotationTarget.rotation,
-														  returnSpeed * Time.deltaTime);
+														  rotateSpeed * Time.deltaTime);
 
 		rotationTarget.rotation = Quaternion.identity;
 	}
