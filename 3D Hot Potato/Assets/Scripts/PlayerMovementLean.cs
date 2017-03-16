@@ -101,7 +101,7 @@ public class PlayerMovementLean : MonoBehaviour {
 			rotateSpeed = rotationSpeed;
 		}
 
-		Debug.Log(rotateSpeed);
+		//Debug.Log(rotateSpeed);
 
 		cycleAndRider.rotation = Quaternion.RotateTowards(cycleAndRider.rotation,
 														  rotationTarget.rotation,

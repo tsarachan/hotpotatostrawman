@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour {
 	public float zAccel = 0.3f; //amount player accelerates each frame of input on the Z axis
 	public float zBrake = 50.0f; //amount player brakes each frame of input on the Z axis
 	public float xAccel = 1.0f; //amount player accelerates each frame of input on the X axis
+	public float curveFactor = 0.5f;
 	public float slowSpeed = 0.5f; //player speed when slowed for a missed awesome catch
 	public float slowDuration = 1.0f; //how long the player is slowed after a missed awesome catch
 
@@ -37,11 +38,17 @@ public class PlayerMovement : MonoBehaviour {
 	private const string RIGHT = "right";
 
 
+	//used to change the player's movement during turns
+	private Transform cycleAndRider;
+	private const string CYCLE_AND_RIDER_OBJ = "Cycle and rider";
+
+
 	private void Start(){
 		rb = GetComponent<Rigidbody>();
 		currentZMaxSpeed = maxZSpeed;
 		currentXMaxSpeed = maxXSpeed;
 		MovementLocked = false;
+		cycleAndRider = transform.Find(CYCLE_AND_RIDER_OBJ);
 	}
 
 
@@ -63,6 +70,7 @@ public class PlayerMovement : MonoBehaviour {
 		if (!Stopped && !MovementLocked){
 			//This is a bodge to limit maximum speed. The better way would be to impose a countervailing force.
 			//Directly manipulating rigidbody velocity could lead to physics problems.
+
 			if (rb.velocity.z > currentZMaxSpeed){
 				Vector3 vel = rb.velocity;
 				vel.z = currentZMaxSpeed;
@@ -94,6 +102,9 @@ public class PlayerMovement : MonoBehaviour {
 
 	/// <summary>
 	/// InputManager calls this function to cause the player to move.
+	/// 
+	/// Note that because UP and DOWN are reversed in InputManager, they are reversed here as well
+	/// (DOWN is forward movement, UP is backward movement).
 	/// </summary>
 	/// <param name="direction">The direction in which the player should move.</param>
 	public void Move(string direction){
@@ -111,9 +122,18 @@ public class PlayerMovement : MonoBehaviour {
 			if (direction == LEFT){
 				temp.x = -1.0f;
 				rb.AddForce(temp.normalized * xAccel, ForceMode.Force);
+
+				temp.x = 0.0f;
+				temp.z = 1.0f * ((90.0f - (360.0f - cycleAndRider.eulerAngles.y))/90.0f) * curveFactor;
+				rb.AddForce(temp * zAccel, ForceMode.Force);
 			} else if (direction == RIGHT){
 				temp.x = 1.0f;
 				rb.AddForce(temp.normalized * xAccel, ForceMode.Force);
+
+				temp.x = 0.0f;
+				temp.z = 1.0f * (cycleAndRider.eulerAngles.y/90.0f) * curveFactor;
+				rb.AddForce(temp * zAccel, ForceMode.Force);
+				Move(DOWN);
 			}
 		}
 	}

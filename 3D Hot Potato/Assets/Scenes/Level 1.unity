@@ -5901,10 +5901,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxZSpeed: 21
   maxXSpeed: 21
-  maxReverseSpeed: 50
+  maxReverseSpeed: 400
   zAccel: 12
-  zBrake: 50
+  zBrake: 30
   xAccel: 12
+  curveFactor: 0.5
   slowSpeed: 5
   slowDuration: 2
   currentZMaxSpeed: 0
@@ -52473,6 +52474,7 @@ MonoBehaviour:
   zAccel: 12
   zBrake: 30
   xAccel: 12
+  curveFactor: 0.5
   slowSpeed: 5
   slowDuration: 2
   currentZMaxSpeed: 0
