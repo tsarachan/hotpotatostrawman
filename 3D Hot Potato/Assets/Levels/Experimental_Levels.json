@@ -1,0 +1,45 @@
+{
+"world1":{
+		"act1":[
+			{"action":"spawn", "whichEnemy":"IgnoringSidewaysEnemy", "waves":1, "numPerWave":1, "whichSpawners":[80], "timeBetweenWaves":0, "timeVariance":0}
+			{"action":"wait", "time":0.2},
+			{"action":"spawn", "whichEnemy":"IgnoringSidewaysEnemy", "waves":1, "numPerWave":1, "whichSpawners":[81], "timeBetweenWaves":0, "timeVariance":0}
+			{"action":"wait", "time":0.2},
+			{"action":"spawn", "whichEnemy":"IgnoringSidewaysEnemy", "waves":1, "numPerWave":1, "whichSpawners":[82], "timeBetweenWaves":0, "timeVariance":0}
+			{"action":"wait", "time":0.2},
+			{"action":"spawn", "whichEnemy":"IgnoringSidewaysEnemy", "waves":1, "numPerWave":1, "whichSpawners":[83], "timeBetweenWaves":0, "timeVariance":0}
+			{"action":"wait", "time":0.2},
+			{"action":"spawn", "whichEnemy":"IgnoringSidewaysEnemy", "waves":1, "numPerWave":1, "whichSpawners":[84], "timeBetweenWaves":0, "timeVariance":0}
+			{"action":"wait", "time":0.2},
+			{"action":"spawn", "whichEnemy":"IgnoringSidewaysEnemy", "waves":1, "numPerWave":1, "whichSpawners":[85], "timeBetweenWaves":0, "timeVariance":0}
+			{"action":"wait", "time":0.2},
+			{"action":"spawn", "whichEnemy":"IgnoringSidewaysEnemy", "waves":1, "numPerWave":1, "whichSpawners":[86], "timeBetweenWaves":0, "timeVariance":0}
+			{"action":"wait", "time":2},
+			{"action":"spawn", "whichEnemy":"IgnoringSidewaysEnemy", "waves":1, "numPerWave":1, "whichSpawners":[96], "timeBetweenWaves":0, "timeVariance":0}
+			{"action":"wait", "time":0.2},
+			{"action":"spawn", "whichEnemy":"IgnoringSidewaysEnemy", "waves":1, "numPerWave":1, "whichSpawners":[95], "timeBetweenWaves":0, "timeVariance":0}
+			{"action":"wait", "time":0.2},
+			{"action":"spawn", "whichEnemy":"IgnoringSidewaysEnemy", "waves":1, "numPerWave":1, "whichSpawners":[94], "timeBetweenWaves":0, "timeVariance":0}
+			{"action":"wait", "time":0.2},
+			{"action":"spawn", "whichEnemy":"IgnoringSidewaysEnemy", "waves":1, "numPerWave":1, "whichSpawners":[93], "timeBetweenWaves":0, "timeVariance":0}
+			{"action":"wait", "time":0.2},
+			{"action":"spawn", "whichEnemy":"IgnoringSidewaysEnemy", "waves":1, "numPerWave":1, "whichSpawners":[92], "timeBetweenWaves":0, "timeVariance":0}
+			{"action":"wait", "time":0.2},
+			{"action":"spawn", "whichEnemy":"IgnoringSidewaysEnemy", "waves":1, "numPerWave":1, "whichSpawners":[91], "timeBetweenWaves":0, "timeVariance":0}
+			{"action":"wait", "time":0.2},
+			{"action":"spawn", "whichEnemy":"IgnoringSidewaysEnemy", "waves":1, "numPerWave":1, "whichSpawners":[90], "timeBetweenWaves":0, "timeVariance":0}
+			{"action":"wait", "time":5},
+			{"action":"spawn", "whichEnemy":"IgnoringSidewaysEnemy", "waves":1, "numPerWave":7, "whichSpawners":[80, 81, 82, 83, 84, 85, 86], "timeBetweenWaves":0, "timeVariance":0}
+			{"action":"wait", "time":1},
+			{"action":"spawn", "whichEnemy":"IgnoringSidewaysEnemy", "waves":1, "numPerWave":7, "whichSpawners":[90, 91, 92, 93, 94, 95, 96], "timeBetweenWaves":0, "timeVariance":0}
+		]},
+"world2":{
+		"act1":[
+
+			{"action":"spawn", "whichEnemy":"Checkpoint", "waves":1, "numPerWave":1, "whichSpawners":[8], "timeBetweenWaves":0, "timeVariance":0}
+			{"action":"wait", "time":3},
+		],
+		"act2":[
+			{"action":"spawn", "whichEnemy":"PlayerHuntEnemy", "waves":1, "numPerWave":1, "whichSpawners":[2, 4, 6], "timeBetweenWaves":1, "timeVariance":0}
+		]}
+}
