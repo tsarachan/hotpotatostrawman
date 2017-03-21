@@ -30,15 +30,19 @@ public class LightsaberBehavior : MonoBehaviour {
 	private float activeTimer = 0.0f;
 
 
-	private LineRenderer colorLineRenderer;
-	private LineRenderer centerLineRenderer;
-	private const string COLOR_LINE_OBJ = "Color line";
-	private const string CENTER_LINE_OBJ = "Center line";
+	private LineRenderer lineRenderer;
 
 
 	private int enemyLayer = 9;
 	private int enemyLayerMask;
 	private const string ENEMY_TAG = "Enemy";
+
+
+	private float textureOffset = 0.0f;
+
+
+	private LightsaberBehavior centerBeam;
+	private const string CENTER_BEAM_OBJ = "Center beam";
 
 
 	private void Update(){
@@ -56,13 +60,18 @@ public class LightsaberBehavior : MonoBehaviour {
 
 			end.position = Vector3.Lerp(player1.position, player2.position, extendTimer/extendDuration);
 
-			colorLineRenderer.SetPosition(0, start.position);
-			colorLineRenderer.SetPosition(1, end.position);
-
-			centerLineRenderer.SetPosition(0, start.position);
-			centerLineRenderer.SetPosition(1, end.position);
+			lineRenderer.SetPosition(0, start.position);
+			lineRenderer.SetPosition(1, end.position);
 
 			BlastEnemies();
+
+			textureOffset -= Time.deltaTime;
+
+			if (textureOffset < -10.0f){
+				textureOffset += 10.0f;
+			}
+
+			lineRenderer.sharedMaterials[1].SetTextureOffset("_MainTex", new Vector2(textureOffset, 0.0f));
 		}
 	}
 
@@ -71,6 +80,10 @@ public class LightsaberBehavior : MonoBehaviour {
 		active = true;
 		start.position = player1.position;
 		end.position = player2.position;
+
+		if (gameObject.name != CENTER_BEAM_OBJ){
+			centerBeam.ExtendConnection();
+		}
 	}
 
 
@@ -81,10 +94,14 @@ public class LightsaberBehavior : MonoBehaviour {
 		start = transform.Find(START_OBJ);
 		end = transform.Find(END_OBJ);
 
-		colorLineRenderer = transform.Find(COLOR_LINE_OBJ).GetComponent<LineRenderer>();
-		centerLineRenderer = transform.Find(CENTER_LINE_OBJ).GetComponent<LineRenderer>();
+		lineRenderer = GetComponent<LineRenderer>();
 
 		enemyLayerMask = 1 << enemyLayer;
+
+		if (gameObject.name != CENTER_BEAM_OBJ){
+			centerBeam = transform.Find(CENTER_BEAM_OBJ).GetComponent<LightsaberBehavior>();
+			centerBeam.Setup();
+		}
 	}
 
 
