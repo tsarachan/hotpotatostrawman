@@ -104,7 +104,7 @@ public class CatchSandbox : MonoBehaviour {
 	}
 
 
-	protected IEnumerator MultiBurst(){
+	protected IEnumerator MultiBurst(Vector3 center){
 		float timer = 0.0f;
 		int burstsSoFar = 0;
 
@@ -113,7 +113,7 @@ public class CatchSandbox : MonoBehaviour {
 
 			if (timer >= timeBetweenMultibursts){
 				GameObject burst = ObjectPooling.ObjectPool.GetObj(BURST_OBJ);
-				burst.transform.position = transform.position + multiBurstPositions[burstsSoFar];
+				burst.transform.position = center + multiBurstPositions[burstsSoFar];
 
 				burstsSoFar++;
 

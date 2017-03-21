@@ -166,7 +166,6 @@ public class CatchBehavior : CatchSandbox {
 	/// Activate the tether between player 1 and player 2
 	/// </summary>
 	private void Player1AwesomeCatchEffect(){
-		TwoPlayerDeathRay();
 		Tether();
 	}
 
@@ -175,7 +174,7 @@ public class CatchBehavior : CatchSandbox {
 	/// Cause a bolt of lightning to appear at player 2's location
 	/// </summary>
 	private void Player2AwesomeCatchEffect(){
-		StartCoroutine(MultiBurst());
+		StartCoroutine(MultiBurst(transform.position));
 	}
 
 
