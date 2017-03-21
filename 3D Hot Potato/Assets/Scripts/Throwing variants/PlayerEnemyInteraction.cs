@@ -152,7 +152,7 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 		transform.Find(POINT_LIGHT).gameObject.SetActive(false); //shut off the point light
 		transform.Find(RIDER_ORGANIZER).Find(CYCLE).GetComponent<Renderer>().enabled = false; //make the lightsteed disappear
 		//transform.GetChild(1).GetChild(1).gameObject.SetActive(false); //shut off the rider, so that it disappears as well
-		GetComponent<BackwardsTrail>().StopGame();
+		//GetComponent<BackwardsTrail>().StopGame();
 
 		//ObjectPooling.ObjectPool.ClearPools();
 

@@ -940,7 +940,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 273a89b429b554ed6bba89b12d115de8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 150
+  speed: 3000
   startPos: {x: -193, y: -154, z: 199}
   resetZ: -25
   startMovingCurve:
@@ -961,7 +961,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  timeToFullSpeed: 1
+  timeToFullSpeed: 5
 --- !u!54 &37579863
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1726,7 +1726,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 273a89b429b554ed6bba89b12d115de8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 75
+  speed: 1500
   startPos: {x: 66, y: -232, z: 255}
   resetZ: -25
   startMovingCurve:
@@ -1747,7 +1747,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  timeToFullSpeed: 1
+  timeToFullSpeed: 5
 --- !u!54 &93844449
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4298,7 +4298,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 273a89b429b554ed6bba89b12d115de8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 30
+  speed: 600
   startPos: {x: -213.3, y: -129.6, z: 1476}
   resetZ: -200
   startMovingCurve:
@@ -4319,7 +4319,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  timeToFullSpeed: 1
+  timeToFullSpeed: 5
 --- !u!1 &238227011
 GameObject:
   m_ObjectHideFlags: 0
@@ -5587,7 +5587,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 273a89b429b554ed6bba89b12d115de8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 30
+  speed: 600
   startPos: {x: -616, y: -129.6, z: 1476}
   resetZ: -25
   startMovingCurve:
@@ -5608,7 +5608,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  timeToFullSpeed: 1
+  timeToFullSpeed: 5
 --- !u!1 &275356388
 GameObject:
   m_ObjectHideFlags: 0
@@ -5823,10 +5823,10 @@ MonoBehaviour:
   maxForwardLean: 10
   maxBackwardLean: 35
   maxSideLean: 45
-  maxTurnLean: 25
-  rotationSpeed: 70
-  returnSpeed: 20
-  backRotateSpeed: 500
+  maxTurnLean: 45
+  rotationSpeed: 750
+  returnSpeed: 750
+  backRotateSpeed: 1000
 --- !u!65 &290731065
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5901,9 +5901,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxZSpeed: 21
   maxXSpeed: 21
-  maxReverseSpeed: 50
+  maxReverseSpeed: 21
   zAccel: 12
-  zBrake: 50
+  zBrake: 12
   xAccel: 12
   slowSpeed: 5
   slowDuration: 2
@@ -6898,7 +6898,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 273a89b429b554ed6bba89b12d115de8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 30
+  speed: 600
   startPos: {x: -213.3, y: -129.6, z: 1476}
   resetZ: -200
   startMovingCurve:
@@ -6919,7 +6919,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  timeToFullSpeed: 1
+  timeToFullSpeed: 5
 --- !u!1 &350266086
 GameObject:
   m_ObjectHideFlags: 0
@@ -6948,7 +6948,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 273a89b429b554ed6bba89b12d115de8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 75
+  speed: 1500
   startPos: {x: -34.9, y: 9.04, z: 74.8}
   resetZ: -25
   startMovingCurve:
@@ -6969,7 +6969,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  timeToFullSpeed: 1
+  timeToFullSpeed: 5
 --- !u!1 &350929074
 GameObject:
   m_ObjectHideFlags: 0
@@ -8502,7 +8502,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  timeToFullSpeed: 1
+  timeToFullSpeed: 5
 --- !u!1 &446626824
 GameObject:
   m_ObjectHideFlags: 0
@@ -9045,7 +9045,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 273a89b429b554ed6bba89b12d115de8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 30
+  speed: 600
   startPos: {x: -213.3, y: -129.6, z: 1476}
   resetZ: -200
   startMovingCurve:
@@ -9066,7 +9066,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  timeToFullSpeed: 1
+  timeToFullSpeed: 5
 --- !u!1 &478788914
 GameObject:
   m_ObjectHideFlags: 0
@@ -12513,7 +12513,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 273a89b429b554ed6bba89b12d115de8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 30
+  speed: 600
   startPos: {x: -213.3, y: -129.6, z: 1476}
   resetZ: -200
   startMovingCurve:
@@ -12534,7 +12534,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  timeToFullSpeed: 1
+  timeToFullSpeed: 5
 --- !u!1 &520807465
 GameObject:
   m_ObjectHideFlags: 0
@@ -21313,7 +21313,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 273a89b429b554ed6bba89b12d115de8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 75
+  speed: 1500
   startPos: {x: 66, y: -232, z: 255}
   resetZ: -25
   startMovingCurve:
@@ -21334,7 +21334,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  timeToFullSpeed: 1
+  timeToFullSpeed: 5
 --- !u!54 &762539267
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -22121,7 +22121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 273a89b429b554ed6bba89b12d115de8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 75
+  speed: 1500
   startPos: {x: 121, y: -121.02, z: 306.9}
   resetZ: -25
   startMovingCurve:
@@ -22142,7 +22142,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  timeToFullSpeed: 1
+  timeToFullSpeed: 5
 --- !u!54 &837652520
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -28622,7 +28622,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 273a89b429b554ed6bba89b12d115de8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 75
+  speed: 1500
   startPos: {x: -67, y: -15, z: 133}
   resetZ: -50
   startMovingCurve:
@@ -28643,7 +28643,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  timeToFullSpeed: 1
+  timeToFullSpeed: 5
 --- !u!54 &895220066
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -29079,7 +29079,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 273a89b429b554ed6bba89b12d115de8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 75
+  speed: 1500
   startPos: {x: 121, y: -121.02, z: 306.9}
   resetZ: -25
   startMovingCurve:
@@ -29100,7 +29100,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  timeToFullSpeed: 1
+  timeToFullSpeed: 5
 --- !u!54 &927389608
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -30556,7 +30556,12 @@ Prefab:
     - target: {fileID: 114000013107501376, guid: 160b6365226954d738ab267784246ee9,
         type: 2}
       propertyPath: speed
-      value: 110
+      value: 2200
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000013107501376, guid: 160b6365226954d738ab267784246ee9,
+        type: 2}
+      propertyPath: timeToFullSpeed
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 33000011208794360, guid: 160b6365226954d738ab267784246ee9, type: 2}
@@ -31445,7 +31450,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 273a89b429b554ed6bba89b12d115de8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 75
+  speed: 1500
   startPos: {x: 121, y: -121.02, z: 306.9}
   resetZ: -25
   startMovingCurve:
@@ -31466,7 +31471,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  timeToFullSpeed: 1
+  timeToFullSpeed: 5
 --- !u!54 &1074147507
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -32793,7 +32798,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 273a89b429b554ed6bba89b12d115de8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 150
+  speed: 3000
   startPos: {x: -193, y: -154, z: 199}
   resetZ: -25
   startMovingCurve:
@@ -32814,7 +32819,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  timeToFullSpeed: 1
+  timeToFullSpeed: 5
 --- !u!54 &1158293587
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -32915,7 +32920,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 273a89b429b554ed6bba89b12d115de8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 75
+  speed: 1500
   startPos: {x: 121, y: -121.02, z: 306.9}
   resetZ: -25
   startMovingCurve:
@@ -32936,7 +32941,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  timeToFullSpeed: 1
+  timeToFullSpeed: 5
 --- !u!54 &1160252797
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -33508,7 +33513,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 273a89b429b554ed6bba89b12d115de8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 75
+  speed: 1500
   startPos: {x: -67, y: -15, z: 133}
   resetZ: -50
   startMovingCurve:
@@ -33529,7 +33534,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  timeToFullSpeed: 1
+  timeToFullSpeed: 5
 --- !u!54 &1210323709
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -47610,7 +47615,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 273a89b429b554ed6bba89b12d115de8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 30
+  speed: 600
   startPos: {x: -213.3, y: -129.6, z: 1476}
   resetZ: -167
   startMovingCurve:
@@ -47631,7 +47636,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  timeToFullSpeed: 1
+  timeToFullSpeed: 5
 --- !u!1 &1806893779
 GameObject:
   m_ObjectHideFlags: 0
@@ -48124,7 +48129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 273a89b429b554ed6bba89b12d115de8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 30
+  speed: 600
   startPos: {x: -213.3, y: -129.6, z: 1476}
   resetZ: -200
   startMovingCurve:
@@ -48145,7 +48150,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  timeToFullSpeed: 1
+  timeToFullSpeed: 5
 --- !u!1 &1825595987
 GameObject:
   m_ObjectHideFlags: 0
@@ -49501,7 +49506,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 273a89b429b554ed6bba89b12d115de8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 30
+  speed: 600
   startPos: {x: -616, y: -129.6, z: 1476}
   resetZ: -25
   startMovingCurve:
@@ -49522,7 +49527,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  timeToFullSpeed: 2.5
+  timeToFullSpeed: 12.5
 --- !u!1 &1889131370
 GameObject:
   m_ObjectHideFlags: 0
@@ -49709,6 +49714,11 @@ Prefab:
     - target: {fileID: 1000010011271712, guid: 49022445d95ae4379a19baa564fa5ccb, type: 2}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000013751932324, guid: 49022445d95ae4379a19baa564fa5ccb,
+        type: 2}
+      propertyPath: speed
+      value: 10000
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
@@ -50051,7 +50061,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 273a89b429b554ed6bba89b12d115de8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 30
+  speed: 600
   startPos: {x: -213.3, y: -129.6, z: 1476}
   resetZ: -200
   startMovingCurve:
@@ -50072,7 +50082,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  timeToFullSpeed: 1
+  timeToFullSpeed: 5
 --- !u!1 &1931566040
 GameObject:
   m_ObjectHideFlags: 0
@@ -50317,7 +50327,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 273a89b429b554ed6bba89b12d115de8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 30
+  speed: 600
   startPos: {x: -616, y: -129.6, z: 1476}
   resetZ: -25
   startMovingCurve:
@@ -50338,7 +50348,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  timeToFullSpeed: 2.5
+  timeToFullSpeed: 12.5
 --- !u!1 &1945647367
 GameObject:
   m_ObjectHideFlags: 0
@@ -51655,7 +51665,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 273a89b429b554ed6bba89b12d115de8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 50
+  speed: 10000
   startPos: {x: 0, y: -1, z: 126}
   resetZ: -25
   startMovingCurve:
@@ -51744,7 +51754,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 273a89b429b554ed6bba89b12d115de8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 30
+  speed: 600
   startPos: {x: -616, y: -129.6, z: 1476}
   resetZ: -25
   startMovingCurve:
@@ -51765,7 +51775,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  timeToFullSpeed: 1
+  timeToFullSpeed: 5
 --- !u!1 &2011631970
 GameObject:
   m_ObjectHideFlags: 0
@@ -52469,9 +52479,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxZSpeed: 21
   maxXSpeed: 21
-  maxReverseSpeed: 400
+  maxReverseSpeed: 21
   zAccel: 12
-  zBrake: 30
+  zBrake: 12
   xAccel: 12
   slowSpeed: 5
   slowDuration: 2
@@ -52684,9 +52694,9 @@ MonoBehaviour:
   maxBackwardLean: 35
   maxSideLean: 45
   maxTurnLean: 45
-  rotationSpeed: 70
-  returnSpeed: 280
-  backRotateSpeed: 500
+  rotationSpeed: 750
+  returnSpeed: 750
+  backRotateSpeed: 1000
 --- !u!114 &2058022955
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53040,7 +53050,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 273a89b429b554ed6bba89b12d115de8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 30
+  speed: 600
   startPos: {x: -213.3, y: -129.6, z: 1476}
   resetZ: -167
   startMovingCurve:
@@ -53061,7 +53071,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  timeToFullSpeed: 1
+  timeToFullSpeed: 5
 --- !u!4 &2078719213 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4727467782709380, guid: 35869bc2daaeb4ba1b7a90e269ae2454,
@@ -53155,6 +53165,11 @@ Prefab:
         type: 2}
       propertyPath: speed
       value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 114329004517834280, guid: 35869bc2daaeb4ba1b7a90e269ae2454,
+        type: 2}
+      propertyPath: timeToFullSpeed
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 35869bc2daaeb4ba1b7a90e269ae2454, type: 2}
