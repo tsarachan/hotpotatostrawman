@@ -11,6 +11,13 @@ using System.Collections;
 
 public abstract class EnemyBase : ObjectPooling.Poolable {
 
+
+	public int scoreValue = 10;
+	public int ScoreValue {
+		get { return scoreValue; }
+	}
+
+
 	protected const string PLAYER_OBJ = "Player";
 
 	protected bool frozen = false;

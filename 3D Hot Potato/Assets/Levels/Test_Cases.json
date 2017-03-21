@@ -1,11 +1,7 @@
 {
 "world1":{
 		"act1":[
-			{"action":"spawn", "whichEnemy":"IgnoringSidewaysEnemy", "waves":1, "numPerWave":1, "whichSpawners":[80], "timeBetweenWaves":0, "timeVariance":0}
-			{"action":"wait", "time":6},
-			{"action":"spawn", "whichEnemy":"IgnoringSidewaysEnemy", "waves":1, "numPerWave":1, "whichSpawners":[90], "timeBetweenWaves":0, "timeVariance":0}
-			{"action":"wait", "time":6},
-			{"action":"spawn", "whichEnemy":"IgnoringEnemy", "waves":1, "numPerWave":7, "whichSpawners":[1, 2, 3, 4, 5, 6, 7], "timeBetweenWaves":2, "timeVariance":0}
+			{"action":"spawn", "whichEnemy":"IgnoringEnemy", "waves":1, "numPerWave":15, "whichSpawners":[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], "timeBetweenWaves":0, "timeVariance":0}
 			{"action":"wait", "time":1},
 		]}
 }

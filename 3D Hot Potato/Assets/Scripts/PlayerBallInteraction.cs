@@ -41,7 +41,7 @@ public class PlayerBallInteraction : MonoBehaviour {
 	 * 
 	 */
 	//variables relating to the score manager itself
-	private ScoreManager scoreManager;
+	//private ScoreManager scoreManager;
 	private const string MANAGER_OBJ = "Managers";
 
 	//types of scoring that this script will record. All of these must appear, identically, in ScoreManager.
@@ -51,7 +51,7 @@ public class PlayerBallInteraction : MonoBehaviour {
 	private void Start(){
 		ballBehavior = GameObject.Find(BALL_OBJ).GetComponent<BallBehavior>();
 		otherPlayer = GetOtherPlayer();
-		scoreManager = GameObject.Find(MANAGER_OBJ).GetComponent<ScoreManager>();
+		//scoreManager = GameObject.Find(MANAGER_OBJ).GetComponent<ScoreManager>();
 		catchBehavior = GetComponent<CatchBehavior>();
 	}
 
@@ -85,7 +85,7 @@ public class PlayerBallInteraction : MonoBehaviour {
 	public void Throw(){
 		if (transform.Find(BALL_OBJ)){ //sanity check to make sure this player has the ball; avoids null references
 			ballBehavior.Pass(transform.Find(BALL_OBJ).position, otherPlayer);
-			scoreManager.Score(NUMBER_OF_PASSES, gameObject.name);
+			//scoreManager.Score(NUMBER_OF_PASSES, gameObject.name);
 			BallCarrier = false;
 		}
 	}
