@@ -174,7 +174,7 @@ public class CatchBehavior : CatchSandbox {
 	/// Cause a bolt of lightning to appear at player 2's location
 	/// </summary>
 	private void Player2AwesomeCatchEffect(){
-		StartCoroutine(MultiBurst(transform.position));
+		StartCoroutine(MultiBurstAroundPlayer(transform.position));
 	}
 
 

@@ -127,6 +127,48 @@ public class CatchSandbox : MonoBehaviour {
 	}
 
 
+	protected IEnumerator MultiBurstAroundPlayer(Vector3 playerPosition){
+		float timer = 0.0f;
+		int burstsSoFar = 0;
+		int totalBursts = 4;
+		float distFromPlayer = 8.0f;
+
+		while (burstsSoFar < totalBursts){
+			timer += Time.deltaTime;
+
+			if (timer >= timeBetweenMultibursts){
+				GameObject burst = ObjectPooling.ObjectPool.GetObj(BURST_OBJ);
+
+				switch (burstsSoFar){
+					case 0:
+						burst.transform.position = playerPosition + new Vector3(0.0f, 0.0f, distFromPlayer);
+						break;
+					case 1:
+						burst.transform.position = playerPosition + new Vector3(-distFromPlayer, 0.0f, 0.0f);
+						break;
+					case 2:
+						burst.transform.position = playerPosition + new Vector3(distFromPlayer, 0.0f, 0.0f);
+						break;
+					case 3:
+						burst.transform.position = playerPosition + new Vector3(0.0f, 0.0f, -distFromPlayer);
+						break;
+					default:
+						Debug.Log("Illegal burstsSoFar: " + burstsSoFar);
+						break;
+				}
+
+				burstsSoFar++;
+			
+				timer = 0.0f;
+			}
+
+			yield return null;
+		}
+
+		yield break;
+	}
+
+
 	/// <summary>
 	/// Switches on a stream of lightning that the player can direct with the directional controller,
 	/// whether it's a keyboard or a joystick. The stream is responsible for switching itself off.
