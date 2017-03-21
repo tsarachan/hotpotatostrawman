@@ -30,7 +30,8 @@ public class CatchSandbox : MonoBehaviour {
 
 
 	//variables relating to the tether
-	protected const string TETHER_OBJ = "Lightning prefab";
+	protected GameObject tether;
+	protected const string TETHER_OBJ = "Lightsaber prefab";
 	protected const string PARTICLE_ORGANIZER = "Particles";
 
 
@@ -47,6 +48,7 @@ public class CatchSandbox : MonoBehaviour {
 
 		//nonsense initializations for determining which powers are in use
 		deathRay = gameObject;
+		tether = gameObject;
 	}
 
 
@@ -59,22 +61,29 @@ public class CatchSandbox : MonoBehaviour {
 	/// <returns>The tether's gameobject.</returns>
 	protected GameObject Tether(){
 		//get a reference to the tether
-		GameObject tether = transform.root.Find(PARTICLE_ORGANIZER).Find(TETHER_OBJ).gameObject;
-
-		//if there's no tether yet, make one
-		if (tether == null){
-			tether = Instantiate(Resources.Load(TETHER_OBJ),
-								 new Vector3(0.0f, 0.0f, 0.0f),
-								 Quaternion.identity,
-								 GameObject.Find(PARTICLE_ORGANIZER).transform) as GameObject;
-		}
+		GameObject tether = SetUpTether();
 
 		//at this point, there should definitely be a reference to the tether. If not, send an error message.
 		Debug.Assert(tether != null);
 
-		tether.SetActive(true);
+		tether.GetComponent<LightsaberBehavior>().ExtendConnection();
 
 		return tether;
+	}
+
+
+	protected GameObject SetUpTether(){
+		if (tether != gameObject){
+			return tether;
+		} else {
+			GameObject newTether = Instantiate(Resources.Load(TETHER_OBJ) as GameObject,
+							   				   Vector3.zero,
+							   				   Quaternion.identity,
+							   				   transform.root.Find(PARTICLE_ORGANIZER));
+			newTether.GetComponent<LightsaberBehavior>().Setup();
+
+			return newTether;
+		}
 	}
 
 
