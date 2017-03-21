@@ -63,6 +63,7 @@ public class EnemyIgnoring : EnemyBase {
 		transform.parent = GameObject.Find(ENEMY_ORGANIZER).transform;
 		playAreaSide = Mathf.Abs(GameObject.Find(BUILDINGS_ORGANIZER).transform.GetChild(0).position.x);
 		direction = GetDirection();
+		Debug.Log("my direction is " + direction);
 		audioSource = GetAudioSource();
 		deathClip = Resources.Load(DEATH_CLIP) as AudioClip;
 	}
@@ -155,10 +156,13 @@ public class EnemyIgnoring : EnemyBase {
 	/// <returns>The entry end point.</returns>
 	private Vector3 DetermineEntryEndPoint(){
 		if (transform.position.x < -playAreaSide){
+			Debug.Log("on the left");
 			return new Vector3(transform.position.x - enterDistance, transform.position.y, transform.position.z);
 		} else if (transform.position.x > playAreaSide){
+			Debug.Log("on the right");
 			return new Vector3(transform.position.x + enterDistance, transform.position.y, transform.position.z);
 		} else {
+			Debug.Log("in the middle");
 			return new Vector3(transform.position.x, transform.position.y, transform.position.z - enterDistance);
 		}
 	}
@@ -213,6 +217,8 @@ public class EnemyIgnoring : EnemyBase {
 
 		//find the end point of the enemy's entry onto the screen
 		start = transform.position;
+
+		playAreaSide = Mathf.Abs(GameObject.Find(BUILDINGS_ORGANIZER).transform.GetChild(0).position.x);
 		end = DetermineEntryEndPoint();
 
 		//revise the starting X position
