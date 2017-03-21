@@ -52,7 +52,7 @@ public class ScoreManager : MonoBehaviour {
 
 
 	public void AddScore(int value){
-		score += value + 0.5f * combo;
+		score += value + value * combo * 0.5f;
 		scoreText.text = score.ToString();
 	}
 

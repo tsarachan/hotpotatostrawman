@@ -63,7 +63,6 @@ public class EnemyIgnoring : EnemyBase {
 		transform.parent = GameObject.Find(ENEMY_ORGANIZER).transform;
 		playAreaSide = Mathf.Abs(GameObject.Find(BUILDINGS_ORGANIZER).transform.GetChild(0).position.x);
 		direction = GetDirection();
-		Debug.Log("my direction is " + direction);
 		audioSource = GetAudioSource();
 		deathClip = Resources.Load(DEATH_CLIP) as AudioClip;
 	}

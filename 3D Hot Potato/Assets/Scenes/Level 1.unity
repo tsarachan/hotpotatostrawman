@@ -25590,7 +25590,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: beca32a3c8df64f9fa0fd2df0091573c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  filename: Test_Cases.json
+  filename: Levels6.json
   restartGracePeriod: 1
 --- !u!114 &891422879
 MonoBehaviour:
@@ -33623,7 +33623,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1221236989
 Transform:
   m_ObjectHideFlags: 0

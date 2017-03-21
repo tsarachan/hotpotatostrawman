@@ -56,6 +56,10 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 	private const string DEATH_SFX = "Audio/PlayerDeathSFX";
 
 
+	//scoring
+	private ScoreManager scoreManager;
+
+
 	//initialize variables
 	private void Start(){
 		levelManager = GameObject.Find(MANAGER_OBJ).GetComponent<LevelManager>();
@@ -68,6 +72,7 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 		bounceLowestPos = GameObject.Find(ROAD_OBJ).transform.position.y;
 		audioSource = GetComponent<AudioSource>();
 		deathSFX = Resources.Load(DEATH_SFX) as AudioClip;
+		scoreManager = GameObject.Find(MANAGER_OBJ).GetComponent<ScoreManager>();
 	}
 
 	//debug instruction
@@ -88,11 +93,13 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 				if (!GetComponent<PlayerBallInteraction>().BallCarrier){  //lose when you get caught by a hunt enemy
 					LoseTheGame();
 				} else { //destroy hunt enemies when the ballcarrier
+					ScoreDestroyedEnemy(collision.gameObject);
 					collision.gameObject.GetComponent<EnemyBase>().GetDestroyed();
 					GetComponent<PlayerMovement>().Stopped = true;
 				}
 			}
 			else if (!GetComponent<PlayerBallInteraction>().BallCarrier){  //try to destroy other enemies when not the ball carrier
+				ScoreDestroyedEnemy(collision.gameObject);
 				collision.gameObject.GetComponent<EnemyBase>().GetDestroyed();
 				GetComponent<PlayerMovement>().Stopped = true;
 			} else { //this player is the ball carrier, and got caught by a non-hunt enemy; the game is over
@@ -110,6 +117,7 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 	private void OnTriggerEnter(Collider other){
 		if (other.gameObject.name.Contains(ENEMY_OBJ)){
 			if (!GetComponent<PlayerBallInteraction>().BallCarrier){  //try to destroy non-hunt enemies when not the ball carrier
+				ScoreDestroyedEnemy(other.gameObject);
 				other.gameObject.GetComponent<EnemyBase>().GetDestroyed();
 				GetComponent<PlayerMovement>().Stopped = true;
 			} else { //this player is the ball carrier and got caught by a non-hunt enemy; the game is over
@@ -203,5 +211,11 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 //		transform.GetChild(1).GetChild(1).gameObject.SetActive(true); //bring back the rider
 		GetComponent<PlayerBallInteraction>().BallCarrier = false; //without this setting, players can be destroyed without the ball on restart
 		GetComponent<BackwardsTrail>().StartGame();
+	}
+
+
+	private void ScoreDestroyedEnemy(GameObject enemy){
+		scoreManager.AddScore(enemy.GetComponent<EnemyBase>().ScoreValue);
+		scoreManager.IncreaseCombo();
 	}
 }
