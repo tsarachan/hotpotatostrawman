@@ -155,13 +155,10 @@ public class EnemyIgnoring : EnemyBase {
 	/// <returns>The entry end point.</returns>
 	private Vector3 DetermineEntryEndPoint(){
 		if (transform.position.x < -playAreaSide){
-			Debug.Log("on the left");
 			return new Vector3(transform.position.x - enterDistance, transform.position.y, transform.position.z);
 		} else if (transform.position.x > playAreaSide){
-			Debug.Log("on the right");
 			return new Vector3(transform.position.x + enterDistance, transform.position.y, transform.position.z);
 		} else {
-			Debug.Log("in the middle");
 			return new Vector3(transform.position.x, transform.position.y, transform.position.z - enterDistance);
 		}
 	}

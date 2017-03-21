@@ -5667,7 +5667,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 290731061}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 34aff172ac601410cb79d372b2619ea1, type: 3}
   m_Name: 
@@ -25590,7 +25590,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: beca32a3c8df64f9fa0fd2df0091573c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  filename: Levels6.json
+  filename: Levels5.json
   restartGracePeriod: 1
 --- !u!114 &891422879
 MonoBehaviour:
@@ -52437,7 +52437,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2058022943}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 34aff172ac601410cb79d372b2619ea1, type: 3}
   m_Name: 
