@@ -71,6 +71,8 @@ public class LevelManager : MonoBehaviour {
 	private const string TIME_BETWEEN_WAVES = "timeBetweenWaves";
 	private const string TIME_VARIANCE = "timeVariance";
 	private const string TIME = "time";
+	private const string PROGRESS = "progress";
+	private const string TITLE = "title";
 
 	private int worldNumber = 1; //which world are we on? Starts at 1.
 	private int actNumber = 1; //which act are we on? Starts at 1.
@@ -130,6 +132,11 @@ public class LevelManager : MonoBehaviour {
 	private const string PARTICLE_TAG = "Particle";
 
 
+	//these are used when putting messages on the roadway
+	private ProgressMessageBehavior progressMessage;
+	private const string PROGRESS_MESSAGE_OBJ = "Progress message";
+
+
 	private void Start(){
 		spawners = FindSpawners();
 		ObjectPooling.ObjectPool.GameOver = false; //start the game
@@ -140,6 +147,7 @@ public class LevelManager : MonoBehaviour {
 		particles = GameObject.Find(PARTICLE_ORGANIZER).transform;
 		RestartingGame = false;
 		Hold = false;
+		progressMessage = GameObject.Find(PROGRESS_MESSAGE_OBJ).GetComponent<ProgressMessageBehavior>();
 	}
 
 	private List<Transform> FindSpawners(){
@@ -268,10 +276,15 @@ public class LevelManager : MonoBehaviour {
 
 		//decide what to do based on the current action
 		switch (node[WORLD + worldNumber.ToString()][ACT + actNumber.ToString()][readIndex][ACTION]) {
-
 			//if the action is "wait," read the next line after the indicated number of seconds.
 			case WAIT:
 				nextReadTime += node[WORLD + worldNumber.ToString()][ACT + actNumber.ToString()][readIndex][TIME].AsFloat;
+				break;
+
+			case PROGRESS:
+				progressMessage.NewMessage(worldNumber,
+										   actNumber,
+										   node[WORLD + worldNumber.ToString()][ACT + actNumber.ToString()][readIndex][TITLE]);
 				break;
 
 			//if the action is "spawn", make enemies

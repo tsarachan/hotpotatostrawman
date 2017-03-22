@@ -200,7 +200,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   extendDuration: 1
-  radius: 2
+  startRadius: 0.5
   activeDuration: 3
 --- !u!114 &114497209789830786
 MonoBehaviour:
@@ -213,8 +213,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32f1a8b703aae498f955e3a9ff0d7199, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  extendDuration: 1
-  radius: 2
+  extendDuration: 0.25
+  startRadius: 1
   activeDuration: 3
 --- !u!120 &120249574816783664
 LineRenderer:
