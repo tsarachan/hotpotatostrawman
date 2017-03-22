@@ -33,6 +33,8 @@ public class CatchSandbox : MonoBehaviour {
 	protected GameObject tether;
 	protected const string TETHER_OBJ = "Lightsaber prefab";
 	protected const string PARTICLE_ORGANIZER = "Particles";
+	protected GameObject lightPillar;
+	protected const string PILLAR_OBJ = "Light pillar prefab";
 
 
 	//variables for a directable lightning bolt coming from the player
@@ -49,6 +51,7 @@ public class CatchSandbox : MonoBehaviour {
 		//nonsense initializations for determining which powers are in use
 		deathRay = gameObject;
 		tether = gameObject;
+		lightPillar = gameObject;
 	}
 
 
@@ -59,16 +62,8 @@ public class CatchSandbox : MonoBehaviour {
 	/// switch itself off.
 	/// </summary>
 	/// <returns>The tether's gameobject.</returns>
-	protected GameObject Tether(){
-		//get a reference to the tether
-		GameObject tether = SetUpTether();
-
-		//at this point, there should definitely be a reference to the tether. If not, send an error message.
-		Debug.Assert(tether != null);
-
-		tether.GetComponent<LightsaberBehavior>().ExtendConnection();
-
-		return tether;
+	protected void Tether(){
+		StartCoroutine(CallDownTether());
 	}
 
 
@@ -83,6 +78,34 @@ public class CatchSandbox : MonoBehaviour {
 			newTether.GetComponent<LightsaberBehavior>().Setup();
 
 			return newTether;
+		}
+	}
+
+
+	protected IEnumerator CallDownTether(){
+		GameObject lightPillar = SetUpLightPillar();
+
+		yield return StartCoroutine(lightPillar.GetComponent<LightPillarBehavior>().ShineDown());
+
+		GameObject tether = SetUpTether();
+
+		tether.GetComponent<LightsaberBehavior>().ExtendConnection();
+
+		yield break;
+	}
+
+
+	protected GameObject SetUpLightPillar(){
+		if (lightPillar != gameObject){
+			return lightPillar;
+		} else {
+			GameObject newPillar = Instantiate(Resources.Load(PILLAR_OBJ) as GameObject,
+											   Vector3.zero,
+											   Quaternion.identity,
+											   transform.root.Find(PARTICLE_ORGANIZER));
+			newPillar.GetComponent<LightPillarBehavior>().Setup(transform);
+
+			return newPillar;
 		}
 	}
 

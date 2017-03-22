@@ -45,6 +45,10 @@ public class LightsaberBehavior : MonoBehaviour {
 	private const string CENTER_BEAM_OBJ = "Center beam";
 
 
+	private ScoreManager scoreManager;
+	private const string MANAGER_OBJ = "Managers";
+
+
 	private void Update(){
 		if (active){
 			extendTimer += Time.deltaTime;
@@ -63,7 +67,10 @@ public class LightsaberBehavior : MonoBehaviour {
 			lineRenderer.SetPosition(0, start.position);
 			lineRenderer.SetPosition(1, end.position);
 
-			BlastEnemies();
+
+			if (gameObject.name != CENTER_BEAM_OBJ){
+				BlastEnemies();
+			}
 
 			textureOffset -= Time.deltaTime;
 
@@ -98,6 +105,8 @@ public class LightsaberBehavior : MonoBehaviour {
 
 		enemyLayerMask = 1 << enemyLayer;
 
+		scoreManager = GameObject.Find(MANAGER_OBJ).GetComponent<ScoreManager>();
+
 		if (gameObject.name != CENTER_BEAM_OBJ){
 			centerBeam = transform.Find(CENTER_BEAM_OBJ).GetComponent<LightsaberBehavior>();
 			centerBeam.Setup();
@@ -122,6 +131,8 @@ public class LightsaberBehavior : MonoBehaviour {
 		}
 
 		for (int i = hitEnemies.Count - 1; i >= 0; i--){
+			scoreManager.AddScore(hitEnemies[i].ScoreValue);
+			scoreManager.IncreaseCombo();
 			hitEnemies[i].GetDestroyed();
 		}
 	}
