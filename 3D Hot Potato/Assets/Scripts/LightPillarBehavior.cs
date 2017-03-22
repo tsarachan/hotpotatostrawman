@@ -28,6 +28,12 @@ public class LightPillarBehavior : MonoBehaviour {
 	private const string CENTER_OBJ = "Center beam";
 
 
+	//audio
+	private AudioSource audioSource;
+	private const string SPEAKER_OBJ = "TetherSpeaker";
+	private const string LIGHTSABER_SFX = "Audio/LightsaberSFX";
+
+
 	public void Setup(Transform player){
 		start = transform.Find(START_OBJ);
 		end = transform.Find(END_OBJ);
@@ -44,11 +50,16 @@ public class LightPillarBehavior : MonoBehaviour {
 			transform.Find(CENTER_OBJ).GetComponent<LightPillarBehavior>().Setup(player);
 			StartCoroutine(transform.Find(CENTER_OBJ).GetComponent<LightPillarBehavior>().ShineDown());
 		}
+
+		audioSource = GameObject.Find(SPEAKER_OBJ).GetComponent<AudioSource>();
+		audioSource.clip = Resources.Load(LIGHTSABER_SFX) as AudioClip;
 	}
 
 
 	public IEnumerator ShineDown(){
 		gameObject.SetActive(true);
+
+		audioSource.Play();
 
 		while (timer <= extendDuration * 2.0f){
 			timer += Time.deltaTime;
