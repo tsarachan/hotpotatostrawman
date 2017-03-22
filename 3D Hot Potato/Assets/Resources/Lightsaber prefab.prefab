@@ -300,7 +300,7 @@ LineRenderer:
       ctime6: 0
       ctime7: 0
       atime0: 0
-      atime1: 58982
+      atime1: 65535
       atime2: 65535
       atime3: 65535
       atime4: 0
@@ -309,9 +309,9 @@ LineRenderer:
       atime7: 0
       m_Mode: 0
       m_NumColorKeys: 2
-      m_NumAlphaKeys: 3
+      m_NumAlphaKeys: 2
     numCornerVertices: 0
-    numCapVertices: 0
+    numCapVertices: 3
     alignment: 0
     textureMode: 0
   m_UseWorldSpace: 1
@@ -371,7 +371,7 @@ LineRenderer:
         rgba: 4294913024
       key1:
         serializedVersion: 2
-        rgba: 4294967295
+        rgba: 4294913024
       key2:
         serializedVersion: 2
         rgba: 0
@@ -399,7 +399,7 @@ LineRenderer:
       ctime6: 0
       ctime7: 0
       atime0: 0
-      atime1: 58982
+      atime1: 65535
       atime2: 65535
       atime3: 65535
       atime4: 0
@@ -408,9 +408,9 @@ LineRenderer:
       atime7: 0
       m_Mode: 0
       m_NumColorKeys: 2
-      m_NumAlphaKeys: 3
+      m_NumAlphaKeys: 2
     numCornerVertices: 0
-    numCapVertices: 0
+    numCapVertices: 3
     alignment: 0
     textureMode: 0
   m_UseWorldSpace: 1

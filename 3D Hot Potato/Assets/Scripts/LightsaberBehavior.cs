@@ -7,12 +7,12 @@ public class LightsaberBehavior : MonoBehaviour {
 
 	//----------Tunable variables----------
 	public float extendDuration = 1.0f;
-	public float radius = 2.0f;
+	public float startRadius = 2.0f;
 	public float activeDuration = 3.0f;
 
 
 	//----------Internal variables----------
-	private bool active = false;
+
 
 	private Transform player1;
 	private Transform player2;
@@ -50,47 +50,51 @@ public class LightsaberBehavior : MonoBehaviour {
 
 
 	private void Update(){
-		if (active){
-			extendTimer += Time.deltaTime;
-			activeTimer += Time.deltaTime;
+		extendTimer += Time.deltaTime;
+		activeTimer += Time.deltaTime;
 
-			if (activeTimer > activeDuration){
-				extendTimer = 0.0f;
-				activeTimer = 0.0f;
-				active = false;
-			}
-
-			start.position = player1.position;
-
-			end.position = Vector3.Lerp(player1.position, player2.position, extendTimer/extendDuration);
-
-			lineRenderer.SetPosition(0, start.position);
-			lineRenderer.SetPosition(1, end.position);
-
-
-			if (gameObject.name != CENTER_BEAM_OBJ){
-				BlastEnemies();
-			}
-
-			textureOffset -= Time.deltaTime;
-
-			if (textureOffset < -10.0f){
-				textureOffset += 10.0f;
-			}
-
-			lineRenderer.sharedMaterials[1].SetTextureOffset("_MainTex", new Vector2(textureOffset, 0.0f));
+		if (activeTimer > activeDuration){
+			extendTimer = 0.0f;
+			activeTimer = 0.0f;
+			gameObject.SetActive(false);
 		}
+
+		start.position = player1.position;
+
+		end.position = Vector3.Lerp(player1.position, player2.position, extendTimer/extendDuration);
+
+		lineRenderer.SetPosition(0, start.position);
+		lineRenderer.SetPosition(1, end.position);
+
+
+		if (gameObject.name != CENTER_BEAM_OBJ){
+			BlastEnemies();
+		}
+
+		textureOffset -= Time.deltaTime;
+
+		if (textureOffset < -10.0f){
+			textureOffset += 10.0f;
+		}
+
+		lineRenderer.sharedMaterials[1].SetTextureOffset("_MainTex", new Vector2(textureOffset, 0.0f));
+
+		lineRenderer.startWidth = startRadius * (1 - (activeTimer/activeDuration));
+		lineRenderer.endWidth = startRadius * (1 - (activeTimer/activeDuration));
 	}
 
 
 	public void ExtendConnection(){
-		active = true;
+		gameObject.SetActive(true);
 		start.position = player1.position;
 		end.position = player2.position;
 
 		if (gameObject.name != CENTER_BEAM_OBJ){
 			centerBeam.ExtendConnection();
 		}
+
+		lineRenderer.startWidth = startRadius;
+		lineRenderer.endWidth = startRadius;
 	}
 
 
@@ -116,7 +120,7 @@ public class LightsaberBehavior : MonoBehaviour {
 
 	private void BlastEnemies(){
 		RaycastHit[] hitInfo = Physics.SphereCastAll(start.position, 
-													 radius,
+													 startRadius,
 													 end.position - start.position,
 													 Vector3.Distance(player1.position, player2.position),
 													 enemyLayerMask,
