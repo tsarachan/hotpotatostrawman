@@ -238,7 +238,7 @@ public class InputManager : MonoBehaviour {
 	/// <summary>
 	/// Do everything required to set the game in motion.
 	/// </summary>
-	private void StartGame(){
+	public void StartGame(){
 		levelManager.StartGame(gameObject);
 
 		foreach (Transform roadSection in GameObject.Find(ROAD_TREADMILL).transform){
