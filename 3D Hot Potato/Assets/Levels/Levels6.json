@@ -45,27 +45,55 @@
 			{"action":"wait", "time":2},
 			{"action":"spawn", "whichEnemy":"SimpleEnemy", "waves":1, "numPerWave":3, "whichSpawners":[2, 4, 6], "timeBetweenWaves":0, "timeVariance":0}
 			{"action":"wait", "time":1},
-			{"action":"spawn", "whichEnemy":"SimpleEnemy", "waves":3, "numPerWave":3, "whichSpawners":[4, 6, 8, 10, 12], "timeBetweenWaves":1, "timeVariance":0}
+			{"action":"spawn", "whichEnemy":"SimpleEnemy", "waves":1, "numPerWave":3, "whichSpawners":[4, 6, 8], "timeBetweenWaves":0, "timeVariance":0}
+			{"action":"wait", "time":0.5},
+			{"action":"spawn", "whichEnemy":"SimpleEnemy", "waves":1, "numPerWave":3, "whichSpawners":[8, 10, 12], "timeBetweenWaves":0, "timeVariance":0}
+			{"action":"wait", "time":0.5},
+			{"action":"spawn", "whichEnemy":"SimpleEnemy", "waves":1, "numPerWave":4, "whichSpawners":[4, 6, 8, 12], "timeBetweenWaves":0, "timeVariance":0}
+			{"action":"wait", "time":0.5},
+			{"action":"spawn", "whichEnemy":"IgnoringEnemy", "waves":1, "numPerWave":5, "whichSpawners":[4, 6, 8, 10, 12], "timeBetweenWaves":2, "timeVariance":0}
 			{"action":"wait", "time":1},
-			{"action":"spawn", "whichEnemy":"SimpleEnemy", "waves":1, "numPerWave":3, "whichSpawners":[4, 6, 8, 10, 12], "timeBetweenWaves":0, "timeVariance":0}
-			{"action":"wait", "time":0},
-			{"action":"spawn", "whichEnemy":"IgnoringEnemy", "waves":1, "numPerWave":3, "whichSpawners":[4, 6, 8, 10, 12], "timeBetweenWaves":2, "timeVariance":0}
+			{"action":"spawn", "whichEnemy":"IgnoringEnemy", "waves":1, "numPerWave":4, "whichSpawners":[2, 4, 12, 14], "timeBetweenWaves":0, "timeVariance":0}
+			{"action":"spawn", "whichEnemy":"SimpleEnemy", "waves":1, "numPerWave":3, "whichSpawners":[1, 3, 5], "timeBetweenWaves":0, "timeVariance":0}
 			{"action":"wait", "time":1},
-			{"action":"spawn", "whichEnemy":"IgnoringEnemy", "waves":1, "numPerWave":4, "whichSpawners":[2, 4, 12, 14], "timeBetweenWaves":2, "timeVariance":0}
-			{"action":"wait", "time":1},
+			{"action":"spawn", "whichEnemy":"IgnoringEnemy", "waves":1, "numPerWave":7, "whichSpawners":[2, 4, 6, 8, 10, 12, 14], "timeBetweenWaves":0, "timeVariance":0}
 			{"action":"spawn", "whichEnemy":"SimpleEnemy", "waves":1, "numPerWave":5, "whichSpawners":[2, 4, 8, 12, 14], "timeBetweenWaves":0, "timeVariance":0}
-			{"action":"wait", "time":0},
-			{"action":"spawn", "whichEnemy":"IgnoringEnemy", "waves":1, "numPerWave":7, "whichSpawners":[2, 4, 6, 8, 10, 12, 14], "timeBetweenWaves":2, "timeVariance":0}
 			{"action":"wait", "time":2}, 
+			{"action":"spawn", "whichEnemy":"IgnoringEnemy", "waves":1, "numPerWave":7, "whichSpawners":[1, 2, 3, 4, 5, 6, 7], "timeBetweenWaves":0, "timeVariance":0} 
 			{"action":"spawn", "whichEnemy":"SimpleEnemy", "waves":1, "numPerWave":5, "whichSpawners":[2, 4, 6, 8, 10], "timeBetweenWaves":0, "timeVariance":0} 
-			{"action":"wait", "time":0}, 
-			{"action":"spawn", "whichEnemy":"IgnoringEnemy", "waves":1, "numPerWave":7, "whichSpawners":[2, 4, 6, 8, 10, 12, 14], "timeBetweenWaves":2, "timeVariance":0} 
 			{"action":"wait", "time":0.5}, 
 			{"action":"spawn", "whichEnemy":"SimpleEnemy", "waves":1, "numPerWave":5, "whichSpawners":[6, 8, 10, 12, 14], "timeBetweenWaves":0, "timeVariance":0} 
 			{"action":"wait", "time":1}, 
-			{"action":"spawn", "whichEnemy":"SimpleEnemy", "waves":1, "numPerWave":7, "whichSpawners":[2, 4, 6, 8, 10, 12, 14], "timeBetweenWaves":2, "timeVariance":0} 
-			{"action":"wait", "time":3}, 
-			{"action":"spawn", "whichEnemy":"Checkpoint", "waves":1, "numPerWave":1, "whichSpawners":[8], "timeBetweenWaves":0, "timeVariance":0}
+			{"action":"spawn", "whichEnemy":"IgnoringEnemy", "waves":1, "numPerWave":7, "whichSpawners":[8, 9, 10, 11, 12, 13, 14], "timeBetweenWaves":0, "timeVariance":0} 
+			{"action":"wait", "time":0.5},
+			{"action":"spawn", "whichEnemy":"SimpleEnemy", "waves":1, "numPerWave":7, "whichSpawners":[2, 4, 6, 8, 10, 12, 14], "timeBetweenWaves":0, "timeVariance":0} 
+			{"action":"wait", "time":1.5},
+			{"action":"spawn", "whichEnemy":"SimpleEnemy", "waves":1, "numPerWave":3, "whichSpawners":[1, 3, 14], "timeBetweenWaves":0, "timeVariance":0}
+			{"action":"wait", "time":0.3},
+			{"action":"spawn", "whichEnemy":"SimpleEnemy", "waves":1, "numPerWave":3, "whichSpawners":[2, 5, 15], "timeBetweenWaves":0, "timeVariance":0}
+			{"action":"wait", "time":0.3},
+			{"action":"spawn", "whichEnemy":"SimpleEnemy", "waves":1, "numPerWave":3, "whichSpawners":[4, 6, 10], "timeBetweenWaves":0, "timeVariance":0}
+			{"action":"wait", "time":0.3},
+			{"action":"spawn", "whichEnemy":"SimpleEnemy", "waves":1, "numPerWave":3, "whichSpawners":[8, 9, 11], "timeBetweenWaves":0, "timeVariance":0}
+			{"action":"wait", "time":0.3},
+			{"action":"spawn", "whichEnemy":"SimpleEnemy", "waves":1, "numPerWave":3, "whichSpawners":[7, 12, 13], "timeBetweenWaves":0, "timeVariance":0}
+			{"action":"wait", "time":0.7},
+			{"action":"spawn", "whichEnemy":"SimpleEnemy", "waves":1, "numPerWave":3, "whichSpawners":[1, 3, 14], "timeBetweenWaves":0, "timeVariance":0}
+			{"action":"spawn", "whichEnemy":"IgnoringEnemy", "waves":1, "numPerWave":3, "whichSpawners":[1, 3, 14], "timeBetweenWaves":0, "timeVariance":0}
+			{"action":"wait", "time":0.3},
+			{"action":"spawn", "whichEnemy":"SimpleEnemy", "waves":1, "numPerWave":3, "whichSpawners":[2, 5, 15], "timeBetweenWaves":0, "timeVariance":0}
+			{"action":"spawn", "whichEnemy":"IgnoringEnemy", "waves":1, "numPerWave":3, "whichSpawners":[2, 5, 15], "timeBetweenWaves":0, "timeVariance":0}
+			{"action":"wait", "time":0.3},
+			{"action":"spawn", "whichEnemy":"SimpleEnemy", "waves":1, "numPerWave":3, "whichSpawners":[4, 6, 10], "timeBetweenWaves":0, "timeVariance":0}
+			{"action":"spawn", "whichEnemy":"IgnoringEnemy", "waves":1, "numPerWave":3, "whichSpawners":[4, 6, 10], "timeBetweenWaves":0, "timeVariance":0}
+			{"action":"wait", "time":0.3},
+			{"action":"spawn", "whichEnemy":"SimpleEnemy", "waves":1, "numPerWave":3, "whichSpawners":[8, 9, 11], "timeBetweenWaves":0, "timeVariance":0}
+			{"action":"spawn", "whichEnemy":"IgnoringEnemy", "waves":1, "numPerWave":3, "whichSpawners":[8, 9, 11], "timeBetweenWaves":0, "timeVariance":0}
+			{"action":"wait", "time":0.3},
+			{"action":"spawn", "whichEnemy":"SimpleEnemy", "waves":1, "numPerWave":3, "whichSpawners":[7, 12, 13], "timeBetweenWaves":0, "timeVariance":0}
+			{"action":"spawn", "whichEnemy":"IgnoringEnemy", "waves":1, "numPerWave":3, "whichSpawners":[7, 12, 13], "timeBetweenWaves":0, "timeVariance":0}
+			{"action":"wait", "time":3},
+ 			{"action":"spawn", "whichEnemy":"Checkpoint", "waves":1, "numPerWave":1, "whichSpawners":[8], "timeBetweenWaves":0, "timeVariance":0}
 			{"action":"wait", "time":3},
 		],
 		"act3":[
