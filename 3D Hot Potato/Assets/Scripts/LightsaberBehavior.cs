@@ -9,6 +9,8 @@ public class LightsaberBehavior : MonoBehaviour {
 	public float extendDuration = 1.0f;
 	public float startRadius = 2.0f;
 	public float activeDuration = 3.0f;
+	public float shieldDist = 0.1f;
+	public AnimationCurve shieldFadeCurve;
 
 
 	//----------Internal variables----------
@@ -49,6 +51,12 @@ public class LightsaberBehavior : MonoBehaviour {
 	private const string MANAGER_OBJ = "Managers";
 
 
+	private Transform shield;
+	private const string SHIELD_OBJ = "Shield";
+	private Vector3 shieldStartScale = new Vector3(5.0f, 1.0f, 0.25f);
+	private Vector3 shieldEndScale = new Vector3(0.0f, 0.0f, 0.0f);
+
+
 	private void Update(){
 		extendTimer += Time.deltaTime;
 		activeTimer += Time.deltaTime;
@@ -66,11 +74,6 @@ public class LightsaberBehavior : MonoBehaviour {
 		lineRenderer.SetPosition(0, start.position);
 		lineRenderer.SetPosition(1, end.position);
 
-
-		if (gameObject.name != CENTER_BEAM_OBJ){
-			BlastEnemies();
-		}
-
 		textureOffset -= Time.deltaTime;
 
 		if (textureOffset < -10.0f){
@@ -81,6 +84,17 @@ public class LightsaberBehavior : MonoBehaviour {
 
 		lineRenderer.startWidth = startRadius * (1 - (activeTimer/activeDuration));
 		lineRenderer.endWidth = startRadius * (1 - (activeTimer/activeDuration));
+
+		if (gameObject.name != CENTER_BEAM_OBJ){
+			BlastEnemies();
+
+			Vector3 shieldDir = (player2.position - player1.position).normalized;
+			shield.transform.position = player1.position + shieldDir * shieldDist;
+			shield.transform.rotation = Quaternion.LookRotation(shieldDir);
+			shield.transform.localScale = Vector3.Lerp(shieldStartScale,
+													   shieldEndScale,
+													   shieldFadeCurve.Evaluate(activeTimer/activeDuration));
+		}
 	}
 
 
@@ -114,6 +128,9 @@ public class LightsaberBehavior : MonoBehaviour {
 		if (gameObject.name != CENTER_BEAM_OBJ){
 			centerBeam = transform.Find(CENTER_BEAM_OBJ).GetComponent<LightsaberBehavior>();
 			centerBeam.Setup();
+
+			shield = transform.Find(SHIELD_OBJ);
+			shield.transform.localScale = shieldStartScale;
 		}
 	}
 
@@ -135,9 +152,14 @@ public class LightsaberBehavior : MonoBehaviour {
 		}
 
 		for (int i = hitEnemies.Count - 1; i >= 0; i--){
-			scoreManager.AddScore(hitEnemies[i].ScoreValue);
-			scoreManager.IncreaseCombo();
-			hitEnemies[i].GetDestroyed();
+			DestroyEnemy(hitEnemies[i]);
 		}
+	}
+
+
+	public void DestroyEnemy(EnemyBase enemy){
+		scoreManager.AddScore(enemy.ScoreValue);
+		scoreManager.IncreaseCombo();
+		enemy.GetDestroyed();
 	}
 }
