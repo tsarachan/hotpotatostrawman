@@ -80,7 +80,7 @@ public class LightsaberBehavior : MonoBehaviour {
 			textureOffset += 10.0f;
 		}
 
-		lineRenderer.sharedMaterials[1].SetTextureOffset("_MainTex", new Vector2(textureOffset, 0.0f));
+		//lineRenderer.sharedMaterials[1].SetTextureOffset("_MainTex", new Vector2(textureOffset, 0.0f));
 
 		lineRenderer.startWidth = startRadius * (1 - (activeTimer/activeDuration));
 		lineRenderer.endWidth = startRadius * (1 - (activeTimer/activeDuration));
@@ -120,6 +120,7 @@ public class LightsaberBehavior : MonoBehaviour {
 		end = transform.Find(END_OBJ);
 
 		lineRenderer = GetComponent<LineRenderer>();
+		Debug.Log(lineRenderer);
 
 		enemyLayerMask = 1 << enemyLayer;
 
