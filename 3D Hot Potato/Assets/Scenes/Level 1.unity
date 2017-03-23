@@ -8514,6 +8514,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 25
       objectReference: {fileID: 0}
+    - target: {fileID: 1222128856162186, guid: 35477c18b5cdd41b3b25376e485d107b, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 35477c18b5cdd41b3b25376e485d107b, type: 2}
   m_IsPrefabParent: 0
@@ -25837,7 +25841,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6387fc43232b74c21892945845bed971, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextComboTime: 0.5
+  nextComboTime: 1
   displayLoc: {x: -23.36, y: 11.45, z: 22.2}
   enterDuration: 0.3
   enterCurve:
@@ -50453,6 +50457,10 @@ Prefab:
         type: 2}
       propertyPath: timeToFullSpeed
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1772401113660898, guid: 35869bc2daaeb4ba1b7a90e269ae2454, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 35869bc2daaeb4ba1b7a90e269ae2454, type: 2}

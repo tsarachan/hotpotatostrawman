@@ -53,7 +53,7 @@ public class LightsaberBehavior : MonoBehaviour {
 
 	private Transform shield;
 	private const string SHIELD_OBJ = "Shield";
-	private Vector3 shieldStartScale = new Vector3(5.0f, 1.0f, 0.25f);
+	public Vector3 shieldStartScale = new Vector3(5.0f, 1.0f, 0.25f);
 	private Vector3 shieldEndScale = new Vector3(0.0f, 0.0f, 0.0f);
 
 
@@ -120,7 +120,6 @@ public class LightsaberBehavior : MonoBehaviour {
 		end = transform.Find(END_OBJ);
 
 		lineRenderer = GetComponent<LineRenderer>();
-		Debug.Log(lineRenderer);
 
 		enemyLayerMask = 1 << enemyLayer;
 

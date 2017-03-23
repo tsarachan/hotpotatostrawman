@@ -191,7 +191,7 @@ Transform:
   m_GameObject: {fileID: 1959096767687582}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 2}
-  m_LocalScale: {x: 5, y: 1, z: 0.25}
+  m_LocalScale: {x: 20, y: 1, z: 0.25}
   m_Children: []
   m_Father: {fileID: 4495198084933426}
   m_RootOrder: 3
@@ -308,6 +308,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  shieldStartScale: {x: 5, y: 1, z: 0.25}
 --- !u!114 &114497209789830786
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -322,7 +323,7 @@ MonoBehaviour:
   extendDuration: 0.25
   startRadius: 1
   activeDuration: 3
-  shieldDist: 2
+  shieldDist: 1
   shieldFadeCurve:
     serializedVersion: 2
     m_Curve:
@@ -347,6 +348,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+  shieldStartScale: {x: 7, y: 1, z: 0.25}
 --- !u!114 &114511748305629370
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -471,7 +473,7 @@ LineRenderer:
   m_ReflectionProbeUsage: 0
   m_Materials:
   - {fileID: 2100000, guid: f9afff8f9109c479ebbbe187ae74bbfe, type: 2}
-  - {fileID: 2100000, guid: 7b2003eae6d5d4afaad5ed8d92b8dbbe, type: 2}
+  - {fileID: 2100000, guid: ba4617fecc14b476989c657ab8ff3af8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
