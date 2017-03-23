@@ -118,12 +118,9 @@ public class ScoreManager : MonoBehaviour {
 
 
 	private IEnumerator MoveIntoView(){
-		Debug.Log("MoveIntoView() called");
 		if(signIsInView){
 			yield break;
 		}
-
-		Debug.Log("sign not in view");
 
 		signIsInView = true;
 
@@ -132,7 +129,6 @@ public class ScoreManager : MonoBehaviour {
 		float timer = 0.0f;
 
 		while (timer <= enterDuration){
-			Debug.Log("Moving into view; timer == " + timer);
 			timer += Time.deltaTime;
 
 			sign.position = Vector3.Lerp(startLoc, displayLoc, enterCurve.Evaluate(timer/enterDuration));
