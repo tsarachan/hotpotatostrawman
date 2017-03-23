@@ -284,8 +284,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startVelocity: {x: 0, y: 0, z: 0}
-  chanceOfGoForBall: 0
-  speed: 120
+  scoreValue: 10
+  chanceOfGoForBall: 1
+  speed: 145
   maxSpeeds:
   - 3
   - 6
