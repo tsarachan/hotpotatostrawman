@@ -46,7 +46,7 @@ public class CatchBehavior : CatchSandbox {
 
 
 	//variables for juice
-	private AlpacaSound.RetroPixelPro.RetroPixelPro pixelScript;
+	private Assets.Pixelation.Scripts.Pixelation pixelScript;
 
 
 	//SFX for missed special catch
@@ -71,7 +71,7 @@ public class CatchBehavior : CatchSandbox {
 		ball = GameObject.Find(BALL_OBJ).transform;
 		ballBehavior = ball.GetComponent<BallBehavior>();
 		movementScript = GetComponent<PlayerMovement>();
-		pixelScript = Camera.main.GetComponent<AlpacaSound.RetroPixelPro.RetroPixelPro>();
+		pixelScript = Camera.main.GetComponent<Assets.Pixelation.Scripts.Pixelation>();
 		missClip = Resources.Load(MISS_CLIP) as AudioClip;
 		audioSource = GetComponent<AudioSource>();
 		catchText = transform.Find(TEXT_CANVAS).Find(TEXT_OBJ).GetComponent<Text>();
@@ -158,7 +158,7 @@ public class CatchBehavior : CatchSandbox {
 			Player2AwesomeCatchEffect();
 		}
 
-		pixelScript.SetTemporaryResolution(catchResolution, catchResolution, catchResolutionChangeDuration);
+		pixelScript.SetTemporaryResolution(catchResolution, catchResolutionChangeDuration);
 	}
 
 
