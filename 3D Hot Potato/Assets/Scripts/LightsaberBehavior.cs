@@ -99,7 +99,6 @@ public class LightsaberBehavior : MonoBehaviour {
 
 
 	public void ExtendConnection(){
-		gameObject.SetActive(true);
 		start.position = player1.position;
 		end.position = player2.position;
 
@@ -109,6 +108,7 @@ public class LightsaberBehavior : MonoBehaviour {
 
 		lineRenderer.startWidth = startRadius;
 		lineRenderer.endWidth = startRadius;
+		gameObject.SetActive(true);
 	}
 
 

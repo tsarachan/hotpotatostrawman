@@ -34,10 +34,13 @@ public class LightPillarBehavior : MonoBehaviour {
 	private const string LIGHTSABER_SFX = "Audio/LightsaberSFX";
 
 
+	private const string CYCLE_AND_RIDER_OBJ = "Cycle and rider";
+
+
 	public void Setup(Transform player){
 		start = transform.Find(START_OBJ);
 		end = transform.Find(END_OBJ);
-		this.player = player;
+		this.player = player.Find(CYCLE_AND_RIDER_OBJ);
 		start.position = player.position + new Vector3(0.0f, startHeight, 0.0f);
 		end.position = start.position;
 		origin = start.position;
