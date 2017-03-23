@@ -199,8 +199,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf9b317e6de5341149a5329a02b09b74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  extendDuration: 1
-  startHeight: 10
+  extendDuration: 0.25
+  startHeight: 30
 --- !u!114 &114105899207958550
 MonoBehaviour:
   m_ObjectHideFlags: 1
