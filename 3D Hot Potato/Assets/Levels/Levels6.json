@@ -100,6 +100,8 @@
 			{"action":"wait", "time":3},
 		],
 		"act3":[
+			{"action":"progress", "title":"No Place like Home"}
+			{"action":"wait", "time":3.5},
 			{"action":"spawn", "whichEnemy":"HomingEnemy", "waves":1, "numPerWave":3, "whichSpawners":[4, 8, 12], "timeBetweenWaves":0, "timeVariance":0},
 			{"action":"wait", "time":3},
 			{"action":"spawn", "whichEnemy":"HomingEnemy", "waves":3, "numPerWave":5, "whichSpawners":[2, 4, 6, 8, 10, 12, 14], "timeBetweenWaves":1.5, "timeVariance":0},
@@ -184,6 +186,8 @@
 			{"action":"wait", "time":3},
 		],
 		"act4":[
+			{"action":"progress", "title":"Controlled Chaos"}
+			{"action":"wait", "time":3.5},
 			{"action":"spawn", "whichEnemy":"HomingEnemy", "waves":3, "numPerWave":7, "whichSpawners":[2, 4, 6, 8, 10, 12, 14], "timeBetweenWaves":1, "timeVariance":0},
 			{"action":"wait", "time":2},
 			{"action":"spawn", "whichEnemy":"IgnoringEnemy", "waves":1, "numPerWave":4, "whichSpawners":[2, 4, 12, 14], "timeBetweenWaves":0, "timeVariance":0}
@@ -256,6 +260,8 @@
 			{"action":"wait", "time":3},
 		],
 		"act5":[
+			{"action":"progress", "title":"Enter the Blightrunners"}
+			{"action":"wait", "time":3.5},
 			{"action":"spawn", "whichEnemy":"PlayerHuntEnemy", "waves":1, "numPerWave":1, "whichSpawners":[8], "timeBetweenWaves":0, "timeVariance":0},
 			{"action":"wait", "time":7},
 			{"action":"spawn", "whichEnemy":"PlayerHuntEnemy", "waves":1, "numPerWave":1, "whichSpawners":[2], "timeBetweenWaves":0, "timeVariance":0},
