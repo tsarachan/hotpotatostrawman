@@ -62,6 +62,8 @@ public class InputManager : MonoBehaviour {
 	private const KeyCode p2RightKey = KeyCode.L;
 	private const KeyCode p2PassKey = KeyCode.N;
 
+	private const KeyCode pauseKey = KeyCode.Space;
+
 
 	//additional variables needed to start the game with the first pass
 	private LevelManager levelManager;
@@ -204,6 +206,10 @@ public class InputManager : MonoBehaviour {
 					InputByKey(player, control);
 				}
 			}
+		}
+
+		if (Input.GetButtonDown(pauseKey)){
+			controllerMapScript.ReceivePauseInput();
 		}
 	}
 

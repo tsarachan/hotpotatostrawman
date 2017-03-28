@@ -77,9 +77,9 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 
 	//debug instruction
 	private void Update(){
-		if (Input.GetKeyDown(KeyCode.Space)){
-			LoseTheGame();
-		}
+//		if (Input.GetKeyDown(KeyCode.Space)){
+//			LoseTheGame();
+//		}
 	}
 
 
