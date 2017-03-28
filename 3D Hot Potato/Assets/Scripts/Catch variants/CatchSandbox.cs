@@ -62,7 +62,7 @@ public class CatchSandbox : MonoBehaviour {
 	/// switch itself off.
 	/// </summary>
 	/// <returns>The tether's gameobject.</returns>
-	protected void Tether(){
+	public void Tether(){
 		StartCoroutine(CallDownTether());
 	}
 

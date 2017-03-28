@@ -1,6 +1,7 @@
 {
 "world1":{
 		"act1":[
-			{"action":"progress", "title":"Enter the Blightrunners"}
+			{"action":"wait", "time":5},
+			{"action":"spawn", "whichEnemy":"Lightning rod boss", "waves":1, "numPerWave":1, "whichSpawners":[8], "timeBetweenWaves":0, "timeVariance":0}
 		]}
 }
