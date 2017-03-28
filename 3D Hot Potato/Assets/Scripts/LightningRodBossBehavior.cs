@@ -72,6 +72,11 @@
 		private Vector3 end;
 
 
+		//the level manager
+		private LevelManager levelManager;
+		private const string MANAGER_OBJ = "Managers";
+
+
 		//initialize variables
 		private void Start(){
 			transform.parent = GameObject.Find(ENEMY_ORGANIZER).transform;
@@ -94,6 +99,8 @@
 				transform.position.z - enterDistance);
 
 			StartCoroutine(NewText(STEP_1, introDuration));
+
+			levelManager = GameObject.Find(MANAGER_OBJ).GetComponent<LevelManager>();
 		}
 
 
@@ -190,6 +197,7 @@
 
 
 		private void ZeroHealthEffects(){
+			levelManager.Hold = false;
 			Debug.Log("At zero health");
 		}
 
@@ -215,6 +223,8 @@
 			end = new Vector3(transform.position.x,
 				transform.position.y,
 				transform.position.z - enterDistance);
+			levelManager = GameObject.Find(MANAGER_OBJ).GetComponent<LevelManager>();
+			levelManager.Hold = true;
 		}
 	}
 }
