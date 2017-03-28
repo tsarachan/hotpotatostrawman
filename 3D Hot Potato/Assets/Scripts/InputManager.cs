@@ -28,6 +28,7 @@ public class InputManager : MonoBehaviour {
 	private const string VERT_AXIS = "PS4_LStick_Vert_";
 	private const string HORIZ_AXIS = "PS4_LStick_Horiz_";
 	private const string O_BUTTON = "PS4_O_";
+	private const string PS_BUTTON = "PS4_PS_";
 
 	private const string VERT_AXIS_360 = "360_LStick_Vert_";
 	private const string HORIZ_AXIS_360 = "360_LStick_Horiz_";
@@ -68,11 +69,19 @@ public class InputManager : MonoBehaviour {
 	private const string BUILDING_ORGANIZER = "Buildings";
 
 
+	//variables for the pause menu with controller map
+	private ControllerInfoBehavior controllerMapScript;
+	private const string UI_CANVAS_OBJ = "UI canvas";
+	private const string CONTROLLER_MAP_OBJ = "Controller map";
+
+
 
 	//initialize variables and data structures
 	private void Start(){
 		players = MakePlayers();
 		levelManager = GetComponent<LevelManager>();
+		controllerMapScript = GameObject.Find(UI_CANVAS_OBJ).transform.Find(CONTROLLER_MAP_OBJ)
+			.GetComponent<ControllerInfoBehavior>();
 	}
 
 
@@ -141,6 +150,10 @@ public class InputManager : MonoBehaviour {
 
 				players[player].BallScript.Throw();
 				players[player].CatchScript.AttemptAwesomeCatch();
+			}
+
+			if (Input.GetButtonDown(PS_BUTTON + player)){
+				controllerMapScript.ReceivePauseInput();
 			}
 		}
 
