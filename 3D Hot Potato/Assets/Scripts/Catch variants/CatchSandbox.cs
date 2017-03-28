@@ -84,10 +84,9 @@ public class CatchSandbox : MonoBehaviour {
 
 	protected IEnumerator CallDownTether(){
 		lightPillar = SetUpLightPillar();
+		tether = SetUpTether();
 
 		yield return StartCoroutine(lightPillar.GetComponent<LightPillarBehavior>().ShineDown());
-
-		tether = SetUpTether();
 
 		tether.GetComponent<LightsaberBehavior>().ExtendConnection();
 

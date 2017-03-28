@@ -13,6 +13,10 @@
 
 		public int startingHealth = 3;
 		public float introDuration = 5.0f;
+		public float vulnerableDuration = 3.0f;
+		public float shakeSpeed = 2.0f;
+		public float shakeMagnitude = 2.0f;
+		public float shakeDuration = 2.0f;
 
 
 		//these variables are used to bring the boss battle setpiece--the boss, platforms, and the lightning weapon--
@@ -58,7 +62,7 @@
 
 
 		//timers
-		private float overallTimer = 0.0f; //used to change from starting instructions to blast-the-rod
+		private float vulnerableTimer = 0.0f;
 
 
 		//variables for bringing the boss onto the screen
@@ -77,6 +81,9 @@
 
 			//trigger the lightsaber, to guarantee that there is one in the scene to find
 			GameObject.Find(PLAYER_1_OBJ).GetComponent<CatchSandbox>().Tether();
+			Debug.Log(transform.root);
+			Debug.Log(transform.root.Find(PARTICLES_ORGANIZER));
+			Debug.Log(transform.root.Find(PARTICLES_ORGANIZER).Find(LIGHTSABER_OBJ));
 			lightsaber = transform.root.Find(PARTICLES_ORGANIZER).Find(LIGHTSABER_OBJ).gameObject;
 		
 			currentHealth = startingHealth;
@@ -93,6 +100,14 @@
 		private void Update(){
 			if (enteringScreen){
 				transform.position = MoveOntoScreen();
+			} else {
+				if (vulnerable){
+					vulnerableTimer += Time.deltaTime;
+
+					if (vulnerableTimer >= vulnerableDuration){
+						BecomeInvulnerable();
+					}
+				}
 			}
 		}
 
@@ -117,6 +132,12 @@
 
 		public void BecomeVulnerable(){
 			vulnerable = true;
+			vulnerableTimer = 0.0f;
+			instructionText.text = STEP_3;
+		}
+
+		private void BecomeInvulnerable(){
+			vulnerable = false;
 			instructionText.text = STEP_2;
 		}
 
@@ -141,13 +162,22 @@
 				gettingHit = true;
 			}
 
-			float shakeDuration = 0.5f;
+			Vector3 startPos = transform.position;
+			Vector3 temp = startPos;
+
+			BecomeInvulnerable();
 
 			for (float i = 0; i < shakeDuration; i += Time.deltaTime){
-				Debug.Log("shaking");
+				temp.x = startPos.x + shakeMagnitude * Mathf.Sin(shakeSpeed * Time.time);
+				temp.y = startPos.y + shakeMagnitude * Mathf.Sin(shakeSpeed * Time.time);
+
+
+				transform.position = temp;
 
 				yield return null;
 			}
+
+			transform.position = startPos;
 
 			currentHealth--;
 
