@@ -159,10 +159,16 @@ public class InputManager : MonoBehaviour {
 			}
 		}
 
+
+		if (Input.GetKeyDown(pauseKey)){
+			controllerMapScript.ReceivePauseInput();
+		}
+
 		/* 
 		 * 
-		 * Player keyboard controls are checked in FixedUpdate(). This may lead to slight variations in play
-		 * between keyboard and controller play, since FixedUpdate() can run more than once per frame.
+		 * Player keyboard controls for movement and passing are checked in FixedUpdate().
+		 * This may lead to slight variations in play between keyboard and controller play,
+		 * since FixedUpdate() can run more than once per frame.
 		 * 
 		 */
 	}
@@ -206,10 +212,6 @@ public class InputManager : MonoBehaviour {
 					InputByKey(player, control);
 				}
 			}
-		}
-
-		if (Input.GetKeyDown(pauseKey)){
-			controllerMapScript.ReceivePauseInput();
 		}
 	}
 
