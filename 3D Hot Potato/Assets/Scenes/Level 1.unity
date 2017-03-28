@@ -4833,7 +4833,7 @@ Transform:
   m_Children:
   - {fileID: 1438593733}
   m_Father: {fileID: 393844137}
-  m_RootOrder: 14
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &258557713
 MonoBehaviour:
@@ -7845,8 +7845,8 @@ Transform:
   - {fileID: 1999500631}
   - {fileID: 824935126}
   - {fileID: 2102826807}
-  - {fileID: 1545874042}
   - {fileID: 258557712}
+  - {fileID: 1545874042}
   - {fileID: 1725037828}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -45495,7 +45495,6 @@ GameObject:
   - component: {fileID: 1662276292}
   - component: {fileID: 1662276291}
   - component: {fileID: 1662276290}
-  - component: {fileID: 1662276289}
   m_Layer: 0
   m_Name: UI Camera
   m_TagString: Untagged
@@ -45516,13 +45515,6 @@ Transform:
   m_Father: {fileID: 1725037828}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 40.2, y: 0, z: 0}
---- !u!81 &1662276289
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1662276287}
-  m_Enabled: 1
 --- !u!92 &1662276290
 Behaviour:
   m_ObjectHideFlags: 0
@@ -45561,7 +45553,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967263
+    m_Bits: 32
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
