@@ -208,7 +208,7 @@ public class InputManager : MonoBehaviour {
 			}
 		}
 
-		if (Input.GetButtonDown(pauseKey)){
+		if (Input.GetKeyDown(pauseKey)){
 			controllerMapScript.ReceivePauseInput();
 		}
 	}
