@@ -18,6 +18,7 @@
 		public float shakeMagnitude = 2.0f;
 		public float shakeDuration = 2.0f;
 		public float beamReloadDuration = 1.0f;
+		public float sphereCastRadius = 2.0f;
 
 
 		//these variables are used to bring the boss battle setpiece--the boss, platforms, and the lightning weapon--
@@ -87,7 +88,13 @@
 		private float beamReloadTimer = 0.0f;
 		private Transform player1;
 		private Transform player2;
+		private Vector3 target;
 		private const string PLAYER_2_OBJ = "Player 2";
+		private int playerLayer = 11;
+		private int playerLayerMask;
+		private const string PLAYER_TAG = "Player";
+		private int choosePlayer = 1;
+		private float beamStartRadius = 1.0f;
 
 
 		//initialize variables
@@ -118,6 +125,8 @@
 			player1 = GameObject.Find(PLAYER_1_OBJ).transform;
 			player2 = GameObject.Find(PLAYER_2_OBJ).transform;
 			beamRenderer.enabled = false;
+			playerLayerMask = 1 << playerLayer;
+			beamStartRadius = beamRenderer.startWidth;
 		}
 
 
@@ -162,7 +171,8 @@
 				case 3:
 					//no attack until the players attack the boss successfully
 					beamRenderer.SetPosition(0, transform.position);
-					beamRenderer.SetPosition(1, player1.position);
+					target = player2.position;
+					beamRenderer.SetPosition(1, target);
 					break;
 				case 2:
 					ShootBeam();
@@ -179,11 +189,53 @@
 		private void ShootBeam(){
 			beamRenderer.enabled = true;
 
+			beamRenderer.startWidth = beamStartRadius * (beamReloadTimer/beamReloadDuration);
+			beamRenderer.endWidth = beamStartRadius * (beamReloadTimer/beamReloadDuration);
+
 			beamReloadTimer += Time.deltaTime;
 
 			if (beamReloadTimer >= beamReloadDuration){
-				beamRenderer.SetPosition(1, player1.position);
 				beamReloadTimer = 0.0f;
+				BlastPlayers();
+			}
+		}
+
+
+		private void BlastPlayers(){
+			RaycastHit[] hitInfo = Physics.SphereCastAll(transform.position, 
+														 sphereCastRadius,
+														 target - transform.position,
+														 Vector3.Distance(transform.position, target),
+														 playerLayerMask,
+														 QueryTriggerInteraction.Ignore);
+
+			List<PlayerEnemyInteraction> hitPlayers = new List<PlayerEnemyInteraction>();
+
+			foreach (RaycastHit hit in hitInfo){
+				if (hit.collider.tag == PLAYER_TAG){
+					hitPlayers.Add(hit.collider.GetComponent<PlayerEnemyInteraction>());
+				}
+			}
+
+			for (int i = hitPlayers.Count - 1; i >= 0; i--){
+				hitPlayers[i].LoseTheGame();
+				return;
+			}
+
+
+			//reposition the beam
+			target = ChoosePlayersAlternatingly();
+			beamRenderer.SetPosition(1, target);
+		}
+
+
+		private Vector3 ChoosePlayersAlternatingly(){
+			choosePlayer++;
+
+			if (choosePlayer%2 == 1){
+				return player1.position;
+			} else {
+				return player2.position;
 			}
 		}
 
