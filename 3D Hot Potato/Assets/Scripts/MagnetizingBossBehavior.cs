@@ -13,6 +13,15 @@
 		public float pushStrength = 20.0f;
 		public float armRotSpeed = 10.0f;
 
+
+		//number of seconds between the attacks that start after the boss has been hit once
+		public float stage2AttackDelay = 2.0f;
+
+
+		//number of seconds between the attacks that start after the boss has been hit twice
+		public float stage3AttackDelay = 3.0f;
+
+
 		//how many degrees off the arms can be before they snap to a player and start magnetizing
 		public float quaternionMatchTolerance = 10.0f;
 
@@ -36,7 +45,7 @@
 		private const string ROTATION_TARGET_OBJ = "Rotation target";
 
 
-		//delegate for who to aim at
+		//delegate for who to magnetically attract
 		private delegate void CurrentAction();
 		private CurrentAction currentAction;
 
@@ -57,6 +66,18 @@
 		private const string VULNERABLE_INSTRUCTIONS = "Hit it with the\r\nBattery Star!";
 
 
+		//the boss' health
+		private const int startHealth = 3;
+		private int currentHealth = 0;
+
+
+		//attacks
+		private const string SIMPLE_ENEMY = "SimpleEnemy";
+		private const string HOMING_ENEMY = "HomingEnemy";
+		private float stage2AttackTimer = 0.0f;
+		private float stage3AttackTimer = 0.0f;
+
+
 		private void Start(){
 			player1 = GameObject.Find(PLAYER_1_OBJ);
 			player2 = GameObject.Find(PLAYER_2_OBJ);
@@ -66,6 +87,7 @@
 			rotationTarget = transform.Find(ROTATION_TARGET_OBJ);
 			currentStage = Stage.Vulnerable;
 			instructionText = transform.Find(CANVAS_OBJ).Find(TEXT_OBJ).GetComponent<Text>();
+			currentHealth = startHealth;
 		}
 
 
@@ -96,6 +118,19 @@
 			}
 
 			currentAction();
+
+			switch (currentHealth){
+				case startHealth:
+					//no attacks while at starting health
+					break;
+				case 2:
+					Stage2Attack();
+					break;
+				case 1:
+					Stage2Attack();
+					Stage3Attack();
+					break;
+			}
 		}
 
 
@@ -162,14 +197,53 @@
 		}
 
 
+		private void Stage2Attack(){
+			stage2AttackTimer += Time.deltaTime;
+
+			if (stage2AttackTimer >= stage2AttackDelay){
+				stage2AttackTimer = 0.0f;
+				CreateEnemy(SIMPLE_ENEMY);
+			}
+		}
+
+
+		private void Stage3Attack(){
+			stage3AttackTimer += Time.deltaTime;
+
+			if (stage3AttackTimer >= stage3AttackDelay){
+				stage3AttackTimer = 0.0f;
+				CreateEnemy(HOMING_ENEMY);
+			}
+		}
+
+
+		private void CreateEnemy(string enemyName){
+			GameObject obj = ObjectPooling.ObjectPool.GetObj(enemyName);
+			obj.transform.position = transform.position;
+			obj.GetComponent<ObjectPooling.Poolable>().Reset();
+		}
+
+
 		public void PlayerBlock(char contactPoint){
 			if (currentStage == Stage.GrabP1 && contactPoint == '1'){
 				currentStage = Stage.SwitchToP2;
 			} else if (currentStage == Stage.GrabP2 && contactPoint == '2'){
 				currentStage = Stage.Vulnerable;
 			} else if (currentStage == Stage.Vulnerable && contactPoint == 'n'){
+				currentHealth--;
+
+				if (currentHealth <= 0){
+					StartCoroutine(ZeroHealthEffects());
+					return;
+				}
+
 				currentStage = Stage.SwitchToP1;
 			}
+		}
+
+
+		private IEnumerator ZeroHealthEffects(){
+			yield break;
 		}
 	}
 }
