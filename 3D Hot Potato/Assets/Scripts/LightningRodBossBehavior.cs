@@ -17,6 +17,7 @@
 		public float shakeSpeed = 2.0f;
 		public float shakeMagnitude = 2.0f;
 		public float shakeDuration = 2.0f;
+		public float beamReloadDuration = 1.0f;
 
 
 		//these variables are used to bring the boss battle setpiece--the boss, platforms, and the lightning weapon--
@@ -77,6 +78,18 @@
 		private const string MANAGER_OBJ = "Managers";
 
 
+		//used to prevent the boss fight from concluding multiple times
+		private bool bossFightOver = false;
+
+
+		//the boss' beam weapon
+		private LineRenderer beamRenderer;
+		private float beamReloadTimer = 0.0f;
+		private Transform player1;
+		private Transform player2;
+		private const string PLAYER_2_OBJ = "Player 2";
+
+
 		//initialize variables
 		private void Start(){
 			transform.parent = GameObject.Find(ENEMY_ORGANIZER).transform;
@@ -86,9 +99,7 @@
 
 			//trigger the lightsaber, to guarantee that there is one in the scene to find
 			GameObject.Find(PLAYER_1_OBJ).GetComponent<CatchSandbox>().Tether();
-			Debug.Log(transform.root);
-			Debug.Log(transform.root.Find(PARTICLES_ORGANIZER));
-			Debug.Log(transform.root.Find(PARTICLES_ORGANIZER).Find(LIGHTSABER_OBJ));
+
 			lightsaber = transform.root.Find(PARTICLES_ORGANIZER).Find(LIGHTSABER_OBJ).gameObject;
 		
 			currentHealth = startingHealth;
@@ -101,6 +112,12 @@
 			StartCoroutine(NewText(STEP_1, introDuration));
 
 			levelManager = GameObject.Find(MANAGER_OBJ).GetComponent<LevelManager>();
+
+			beamRenderer = GetComponent<LineRenderer>();
+			beamRenderer.SetPosition(0, transform.position);
+			player1 = GameObject.Find(PLAYER_1_OBJ).transform;
+			player2 = GameObject.Find(PLAYER_2_OBJ).transform;
+			beamRenderer.enabled = false;
 		}
 
 
@@ -108,6 +125,9 @@
 			if (enteringScreen){
 				transform.position = MoveOntoScreen();
 			} else {
+				Attack();
+
+
 				if (vulnerable){
 					vulnerableTimer += Time.deltaTime;
 
@@ -134,6 +154,37 @@
 			if (Vector3.Distance(pos, end) <= Mathf.Epsilon) { enteringScreen = false; }
 
 			return pos;
+		}
+
+
+		private void Attack(){
+			switch(currentHealth){
+				case 3:
+					//no attack until the players attack the boss successfully
+					beamRenderer.SetPosition(0, transform.position);
+					beamRenderer.SetPosition(1, player1.position);
+					break;
+				case 2:
+					ShootBeam();
+					break;
+				case 1:
+					break;
+				case 0:
+					//no attack while the boss is in the process of dying
+					break;
+			}
+		}
+
+
+		private void ShootBeam(){
+			beamRenderer.enabled = true;
+
+			beamReloadTimer += Time.deltaTime;
+
+			if (beamReloadTimer >= beamReloadDuration){
+				beamRenderer.SetPosition(1, player1.position);
+				beamReloadTimer = 0.0f;
+			}
 		}
 
 
@@ -189,22 +240,28 @@
 			currentHealth--;
 
 			if (currentHealth <= 0){
-				ZeroHealthEffects();
+				StartCoroutine(ZeroHealthEffects());
 			}
 
 			yield break;
 		}
 
 
-		private void ZeroHealthEffects(){
+		private IEnumerator ZeroHealthEffects(){
+			if (bossFightOver){
+				yield break;
+			} else {
+				bossFightOver = true;
+			}
+
 			levelManager.Hold = false;
 			Debug.Log("At zero health");
+
+			yield break;
 		}
 
 
 		private IEnumerator NewText(string text, float duration){
-			float timer = 0.0f;
-
 			for (float i = 0; i < duration; i += Time.deltaTime){
 				instructionText.text = text;
 
@@ -215,6 +272,7 @@
 
 			yield break;
 		}
+
 
 		public override void Reset(){
 			enteringScreen = true;

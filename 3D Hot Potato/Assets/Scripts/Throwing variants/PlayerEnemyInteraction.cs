@@ -135,7 +135,7 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 	}
 		
 
-	private void LoseTheGame(){
+	public void LoseTheGame(){
 		//de-parent the ball to avoid null reference exceptions
 		if (transform.Find(BALL_OBJ) != null){
 			transform.Find(BALL_OBJ).parent = transform.root;
