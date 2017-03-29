@@ -19,6 +19,7 @@
 		public float shakeDuration = 2.0f;
 		public float beamReloadDuration = 1.0f;
 		public float sphereCastRadius = 2.0f;
+		public float enemySpawnDelay = 2.0f;
 
 
 		//these variables are used to bring the boss battle setpiece--the boss, platforms, and the lightning weapon--
@@ -95,6 +96,12 @@
 		private const string PLAYER_TAG = "Player";
 		private int choosePlayer = 1;
 		private float beamStartRadius = 1.0f;
+
+
+		//the enemies the boss spawns
+		private float enemySpawnTimer = 0.0f;
+		private List<string> enemyOptions = new List<string> { "HomingEnemy" };
+		private int enemyOptionIndex = 0;
 
 
 		//initialize variables
@@ -178,6 +185,8 @@
 					ShootBeam();
 					break;
 				case 1:
+					ShootBeam();
+					MakeEnemies();
 					break;
 				case 0:
 					//no attack while the boss is in the process of dying
@@ -237,6 +246,29 @@
 			} else {
 				return (player2.position - transform.position) * 10.0f;
 			}
+		}
+
+
+		private void MakeEnemies(){
+			enemySpawnTimer += Time.deltaTime;
+
+			if (enemySpawnTimer >= enemySpawnDelay){
+				enemySpawnTimer = 0.0f;
+				GameObject obj = ObjectPooling.ObjectPool.GetObj(ChooseEnemyToSpawn());
+				obj.transform.position = transform.position;
+				obj.GetComponent<ObjectPooling.Poolable>().Reset();
+			}
+		}
+
+
+		private string ChooseEnemyToSpawn(){
+			enemyOptionIndex++;
+
+			if (enemyOptionIndex > enemyOptions.Count - 1){
+				enemyOptionIndex = 0;
+			}
+
+			return enemyOptions[enemyOptionIndex];
 		}
 
 
