@@ -340,6 +340,7 @@
 
 			levelManager.Hold = false;
 			Debug.Log("At zero health");
+			ObjectPooling.ObjectPool.AddObj(gameObject);
 
 			yield break;
 		}
