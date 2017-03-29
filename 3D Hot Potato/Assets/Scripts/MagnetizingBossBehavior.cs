@@ -3,6 +3,7 @@
 	using System.Collections;
 	using System.Collections.Generic;
 	using UnityEngine;
+	using UnityEngine.UI;
 
 	public class MagnetizingBossBehavior : MonoBehaviour {
 
@@ -42,7 +43,18 @@
 
 		//which step are we on in the boss fight
 		private enum Stage { GrabP1, SwitchToP2, GrabP2, SwitchToP1, Vulnerable };
-		private Stage currentStage = Stage.SwitchToP1;
+		private Stage currentStage = Stage.Vulnerable;
+
+
+		//the instruction UI
+		private Text instructionText;
+		private const string CANVAS_OBJ = "Instruction canvas";
+		private const string TEXT_OBJ = "Instruction text";
+		private const string GRAB_P1_INSTRUCTIONS = "Player 2, block!";
+		private const string SWITCH_P2_INSTRUCTIONS = "Player 2, careful!";
+		private const string GRAB_P2_INSTRUCTIONS = "Player 1, block!";
+		private const string SWITCH_P1_INSTRUCTIONS = "Player 1, careful!";
+		private const string VULNERABLE_INSTRUCTIONS = "Hit it with the\r\nBattery Star!";
 
 
 		private void Start(){
@@ -53,6 +65,7 @@
 			armAxis = transform.Find(ARM_AXIS_OBJ);
 			rotationTarget = transform.Find(ROTATION_TARGET_OBJ);
 			currentStage = Stage.Vulnerable;
+			instructionText = transform.Find(CANVAS_OBJ).Find(TEXT_OBJ).GetComponent<Text>();
 		}
 
 
@@ -60,20 +73,25 @@
 			switch (currentStage){
 				case Stage.GrabP1:
 					currentAction = GrabPlayer1;
+					instructionText.text = GRAB_P1_INSTRUCTIONS;
 					break;
 				case Stage.GrabP2:
 					currentAction = GrabPlayer2;
+					instructionText.text = GRAB_P2_INSTRUCTIONS;
 					break;
 				case Stage.SwitchToP1:
 					currentAction = PointTowardPlayer1;
 					PushPlayers();
+					instructionText.text = SWITCH_P1_INSTRUCTIONS;
 					break;
 				case Stage.SwitchToP2:
 					currentAction = PointTowardPlayer2;
 					PushPlayers();
+					instructionText.text = SWITCH_P2_INSTRUCTIONS;
 					break;
 				case Stage.Vulnerable:
 					currentAction = HoldArmsNeutral;
+					instructionText.text = VULNERABLE_INSTRUCTIONS;
 					break;
 			}
 
