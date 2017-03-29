@@ -9,6 +9,7 @@
 
 		//----------Tunable variables----------
 		public float pullStrength = 10.0f; //the strength of the magnetizing force
+		public float pushStrength = 20.0f;
 		public float armRotSpeed = 10.0f;
 
 		//how many degrees off the arms can be before they snap to a player and start magnetizing
@@ -40,7 +41,7 @@
 
 
 		//which step are we on in the boss fight
-		private enum Stage { GrabP1, SwitchToP2, GrabP2, SwitchToP1 };
+		private enum Stage { GrabP1, SwitchToP2, GrabP2, SwitchToP1, Vulnerable };
 		private Stage currentStage = Stage.SwitchToP1;
 
 
@@ -51,7 +52,7 @@
 			p2Body = player2.GetComponent<Rigidbody>();
 			armAxis = transform.Find(ARM_AXIS_OBJ);
 			rotationTarget = transform.Find(ROTATION_TARGET_OBJ);
-			currentAction = PointTowardPlayer1;
+			currentStage = Stage.Vulnerable;
 		}
 
 
@@ -65,9 +66,14 @@
 					break;
 				case Stage.SwitchToP1:
 					currentAction = PointTowardPlayer1;
+					PushPlayers();
 					break;
 				case Stage.SwitchToP2:
 					currentAction = PointTowardPlayer2;
+					PushPlayers();
+					break;
+				case Stage.Vulnerable:
+					currentAction = HoldArmsNeutral;
 					break;
 			}
 
@@ -120,11 +126,31 @@
 		}
 
 
-		public void PlayerBlock(char arm){
-			if (currentStage == Stage.GrabP1 && arm == '1'){
+		private void PushPlayers(){
+			Vector3 dirAwayFromP1 = (player1.transform.position - transform.position).normalized;
+			Vector3 dirAwayFromP2 = (player2.transform.position - transform.position).normalized;
+
+			p1Body.AddForce(dirAwayFromP1 * pushStrength, ForceMode.Force);
+			p2Body.AddForce(dirAwayFromP2 * pushStrength, ForceMode.Force);
+		}
+
+
+		private void HoldArmsNeutral(){
+			Vector3 armsAkimbo = Quaternion.Euler(0.0f, 45.0f, 0.0f) * Vector3.forward;
+			rotationTarget.rotation = Quaternion.LookRotation(armsAkimbo);
+			armAxis.rotation = Quaternion.RotateTowards(armAxis.rotation,
+														rotationTarget.rotation,
+														armRotSpeed * Time.deltaTime);
+		}
+
+
+		public void PlayerBlock(char contactPoint){
+			if (currentStage == Stage.GrabP1 && contactPoint == '1'){
 				currentStage = Stage.SwitchToP2;
-			} else if (currentStage == Stage.GrabP2 && arm == '2'){
-				currentStage = Stage.SwitchToP1;
+			} else if (currentStage == Stage.GrabP2 && contactPoint == '2'){
+				currentStage = Stage.Vulnerable;
+			} else if (currentStage == Stage.Vulnerable && contactPoint == 'n'){
+
 			}
 		}
 	}
