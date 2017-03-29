@@ -150,7 +150,7 @@
 			} else if (currentStage == Stage.GrabP2 && contactPoint == '2'){
 				currentStage = Stage.Vulnerable;
 			} else if (currentStage == Stage.Vulnerable && contactPoint == 'n'){
-
+				currentStage = Stage.SwitchToP1;
 			}
 		}
 	}
