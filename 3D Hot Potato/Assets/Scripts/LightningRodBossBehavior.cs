@@ -171,7 +171,7 @@
 				case 3:
 					//no attack until the players attack the boss successfully
 					beamRenderer.SetPosition(0, transform.position);
-					target = player2.position;
+					target = (player2.position - transform.position) * 10.0f;
 					beamRenderer.SetPosition(1, target);
 					break;
 				case 2:
@@ -233,9 +233,9 @@
 			choosePlayer++;
 
 			if (choosePlayer%2 == 1){
-				return player1.position;
+				return (player1.position - transform.position) * 10.0f;
 			} else {
-				return player2.position;
+				return (player2.position - transform.position) * 10.0f;
 			}
 		}
 
