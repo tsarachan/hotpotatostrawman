@@ -85,6 +85,7 @@ public class InputManager : MonoBehaviour {
 		levelManager = GetComponent<LevelManager>();
 		controllerMapScript = GameObject.Find(UI_CANVAS_OBJ).transform.Find(CONTROLLER_MAP_OBJ)
 			.GetComponent<ControllerInfoBehavior>();
+		StartGame();
 	}
 
 
@@ -145,11 +146,6 @@ public class InputManager : MonoBehaviour {
 		foreach (char player in players.Keys){
 			if (Input.GetButtonDown(O_BUTTON + player) ||
 				Input.GetButtonDown(A_BUTTON + player)){
-				//if a player has picked up the ball, start the game upon the first pass
-				//this will try to keep restarting the game--it's inefficient, but not causing performance problems
-				if (players[player].BallScript.BallCarrier){
-					StartGame();
-				}
 
 				players[player].BallScript.Throw();
 				players[player].CatchScript.AttemptAwesomeCatch();
@@ -248,7 +244,6 @@ public class InputManager : MonoBehaviour {
 			case p2PassKey:
 				players[numOfPlayer].BallScript.Throw();
 				players[numOfPlayer].CatchScript.AttemptAwesomeCatch();
-				StartGame();
 				break;
 			default:
 				Debug.Log("Illegal key: " + keyPressed.ToString());
