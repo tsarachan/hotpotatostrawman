@@ -2662,6 +2662,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 144315725}
+  - component: {fileID: 144315726}
   m_Layer: 0
   m_Name: Cycle and rider
   m_TagString: Untagged
@@ -2684,6 +2685,19 @@ Transform:
   m_Father: {fileID: 290731062}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &144315726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 144315724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92d5af91f89504bce9b24b5523bd1e8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5
+  range: 1
 --- !u!1 &150380492
 GameObject:
   m_ObjectHideFlags: 0
@@ -43173,6 +43187,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1519946765}
+  - component: {fileID: 1519946766}
   m_Layer: 0
   m_Name: Cycle and rider
   m_TagString: Untagged
@@ -43195,6 +43210,19 @@ Transform:
   m_Father: {fileID: 2058022944}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1519946766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1519946764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92d5af91f89504bce9b24b5523bd1e8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 3.5
+  range: 1
 --- !u!1 &1528407632
 GameObject:
   m_ObjectHideFlags: 0
