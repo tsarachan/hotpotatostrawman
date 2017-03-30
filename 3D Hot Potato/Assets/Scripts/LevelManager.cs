@@ -130,6 +130,8 @@ public class LevelManager : MonoBehaviour {
 	private Transform particles;
 	private const string PARTICLE_ORGANIZER = "Particles";
 	private const string PARTICLE_TAG = "Particle";
+	private ScoreManager scoreManager;
+	private float checkpointScore = 0.0f;
 
 
 	//these are used when putting messages on the roadway
@@ -148,6 +150,7 @@ public class LevelManager : MonoBehaviour {
 		RestartingGame = false;
 		Hold = false;
 		progressMessage = GameObject.Find(PROGRESS_MESSAGE_OBJ).GetComponent<ProgressMessageBehavior>();
+		scoreManager = GetComponent<ScoreManager>();
 	}
 
 	private List<Transform> FindSpawners(){
@@ -450,6 +453,7 @@ public class LevelManager : MonoBehaviour {
 		checkpointActNum = actNum;
 		checkpointNextReadTime = nextRead;
 		checkpointReadIndex = index;
+		checkpointScore = scoreManager.Score;
 	}
 
 	public void StopGame(){
@@ -484,12 +488,14 @@ public class LevelManager : MonoBehaviour {
 				actNumber = checkpointActNum;
 				nextReadTime = checkpointNextReadTime;
 				readIndex = checkpointReadIndex;
+				scoreManager.ResetAfterLoss(checkpointScore);
 			} else {
 				timer = 0.0f;
 				worldNumber = 1;
 				actNumber = 1;
 				nextReadTime = 0.0f;
 				readIndex = 0;
+				scoreManager.ResetAfterLoss(0.0f);
 			}
 				
 			spawnIndex = 0;

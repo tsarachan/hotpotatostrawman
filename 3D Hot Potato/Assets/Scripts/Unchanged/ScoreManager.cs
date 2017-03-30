@@ -38,9 +38,9 @@ public class ScoreManager : MonoBehaviour {
 
 
 	//these keep track of the score and current combo
-	private float score = 0.0f;
+	public float Score { get; private set; }
 	private int combo = 0;
-	private int comboStart = 0;
+	private const int comboStart = 0;
 
 
 	//this is added to the current combo value ot display the combo to the player
@@ -61,7 +61,7 @@ public class ScoreManager : MonoBehaviour {
 		comboText = GameObject.Find(COMBO_TEXT_OBJ)
 			.GetComponent<Text>();
 
-		scoreText.text = score.ToString();
+		scoreText.text = Score.ToString();
 		comboText.text = combo.ToString() + COMBO_LABEL;
 	}
 
@@ -80,8 +80,8 @@ public class ScoreManager : MonoBehaviour {
 
 
 	public void AddScore(int value){
-		score += value + value * combo * 0.5f;
-		scoreText.text = score.ToString();
+		Score += value + value * combo * 0.5f;
+		scoreText.text = Score.ToString();
 	}
 
 
@@ -96,5 +96,12 @@ public class ScoreManager : MonoBehaviour {
 	private string ResetCombo(){
 		combo = comboStart;
 		return combo.ToString() + COMBO_LABEL;
+	}
+
+
+	public void ResetAfterLoss(float score){
+		Score = score;
+		scoreText.text = Score.ToString();
+		ResetCombo();
 	}
 }
