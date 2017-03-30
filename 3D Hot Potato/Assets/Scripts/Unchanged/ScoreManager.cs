@@ -44,33 +44,21 @@ public class ScoreManager : MonoBehaviour {
 
 
 	//this is added to the current combo value ot display the combo to the player
-	private const string COMBO_LABEL = "x Combo";
+	private const string COMBO_LABEL = "x\r\nCombo";
 
 
 	//UI text variables
 	private Text scoreText;
 	private Text comboText;
-	private const string SIGN_OBJ = "Score sign";
-	private const string CANVAS_OBJ = "Score canvas";
 	private const string SCORE_TEXT_OBJ = "Score text";
 	private const string COMBO_TEXT_OBJ = "Combo text";
 
 
-	//used to move the score information in and out of view
-	private Transform sign;
-
-
-	//used to prevent the sign from trying to enter and leave at the same time
-	private bool signIsInView = false;
-
-
 	private void Start(){
-		sign = GameObject.Find(SIGN_OBJ).transform;
-		sign.position = startLoc;
 
-		scoreText = sign.Find(CANVAS_OBJ).Find(SCORE_TEXT_OBJ)
+		scoreText = GameObject.Find(SCORE_TEXT_OBJ)
 			.GetComponent<Text>();
-		comboText = sign.Find(CANVAS_OBJ).Find(COMBO_TEXT_OBJ)
+		comboText = GameObject.Find(COMBO_TEXT_OBJ)
 			.GetComponent<Text>();
 
 		scoreText.text = score.ToString();
@@ -102,53 +90,11 @@ public class ScoreManager : MonoBehaviour {
 		comboText.text = combo.ToString() + COMBO_LABEL;
 
 		comboTimer = 0.0f;
-
-		StartCoroutine(MoveIntoView());
 	}
 
 
 	private string ResetCombo(){
-		if (Mathf.Abs(sign.position.z - displayLoc.z) <= Mathf.Epsilon){
-			StartCoroutine(LeaveView());
-		}
-
 		combo = comboStart;
 		return combo.ToString() + COMBO_LABEL;
-	}
-
-
-	private IEnumerator MoveIntoView(){
-		if(signIsInView){
-			yield break;
-		}
-
-		signIsInView = true;
-
-		sign.position = startLoc;
-
-		float timer = 0.0f;
-
-		while (timer <= enterDuration){
-			timer += Time.deltaTime;
-
-			sign.position = Vector3.Lerp(startLoc, displayLoc, enterCurve.Evaluate(timer/enterDuration));
-
-			yield return null;
-		}
-
-		yield break;
-	}
-
-
-	private IEnumerator LeaveView(){
-		for (float timer = 0.0f; timer <= leaveDuration; timer += Time.deltaTime){
-			sign.position = Vector3.Lerp(displayLoc, endLoc, enterCurve.Evaluate(timer/leaveDuration));
-
-			yield return null;
-		}
-
-		signIsInView = false;
-
-		yield break;
 	}
 }
