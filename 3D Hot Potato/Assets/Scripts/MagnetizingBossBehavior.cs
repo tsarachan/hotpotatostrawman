@@ -45,11 +45,14 @@
 		private const string PLAYER_2_OBJ = "Player 2";
 
 
-		//the boss' "arms"
+		//the boss' "arm"
 		private Transform armAxis;
-		private const string ARM_AXIS_OBJ = "Arm axis";
+		private const string ARM_AXIS_OBJ = "Magnet arm";
 		private Transform rotationTarget;
 		private const string ROTATION_TARGET_OBJ = "Rotation target";
+		private Transform magnet;
+		private const string MAGNET_ARM_OBJ = "Magnet arm";
+		private const string MAGNET_OBJ = "Magnet";
 
 
 		//delegate for who to magnetically attract
@@ -107,6 +110,10 @@
 		private const string ENEMY_ORGANIZER = "Enemies";
 
 
+		//used to change the color of the magnet based on the stage of the boss fight
+		private MagneticArmBehavior magnetArm;
+
+
 		private void Start(){
 			player1 = GameObject.Find(PLAYER_1_OBJ);
 			player2 = GameObject.Find(PLAYER_2_OBJ);
@@ -114,6 +121,7 @@
 			p2Body = player2.GetComponent<Rigidbody>();
 			armAxis = transform.Find(ARM_AXIS_OBJ);
 			rotationTarget = transform.Find(ROTATION_TARGET_OBJ);
+			magnet = transform.Find(MAGNET_ARM_OBJ).Find(MAGNET_ARM_OBJ).Find(MAGNET_OBJ);
 			currentStage = Stage.Vulnerable;
 			instructionText = transform.Find(CANVAS_OBJ).Find(TEXT_OBJ).GetComponent<Text>();
 			currentHealth = startHealth;
@@ -122,6 +130,7 @@
 			levelManager = GameObject.Find(MANAGER_OBJ).GetComponent<LevelManager>();
 			levelManager.Hold = true;
 			transform.parent = GameObject.Find(ENEMY_ORGANIZER).transform;
+			magnetArm = transform.Find(MAGNET_ARM_OBJ).Find(MAGNET_ARM_OBJ).GetComponent<MagneticArmBehavior>();
 		}
 
 
@@ -135,24 +144,29 @@
 					case Stage.GrabP1:
 						currentAction = GrabPlayer1;
 						instructionText.text = GRAB_P1_INSTRUCTIONS;
+						magnetArm.ChangeMaterial(MagneticArmBehavior.Materials.Player1);
 						break;
 					case Stage.GrabP2:
 						currentAction = GrabPlayer2;
 						instructionText.text = GRAB_P2_INSTRUCTIONS;
+						magnetArm.ChangeMaterial(MagneticArmBehavior.Materials.Player2);
 						break;
 					case Stage.SwitchToP1:
 						currentAction = PointTowardPlayer1;
 						PushPlayers();
 						instructionText.text = SWITCH_P1_INSTRUCTIONS;
+						magnetArm.ChangeMaterial(MagneticArmBehavior.Materials.Repelling);
 						break;
 					case Stage.SwitchToP2:
 						currentAction = PointTowardPlayer2;
 						PushPlayers();
 						instructionText.text = SWITCH_P2_INSTRUCTIONS;
+						magnetArm.ChangeMaterial(MagneticArmBehavior.Materials.Repelling);
 						break;
 					case Stage.Vulnerable:
 						currentAction = HoldArmsNeutral;
 						instructionText.text = VULNERABLE_INSTRUCTIONS;
+						magnetArm.ChangeMaterial(MagneticArmBehavior.Materials.Vulnerable);
 						break;
 				}
 
@@ -194,17 +208,17 @@
 
 
 		private void GrabPlayer1(){
-			Vector3 forceTowardBoss = (transform.position - player1.transform.position).normalized;
+			Vector3 forceTowardBoss = (magnet.position - player1.transform.position).normalized;
 			p1Body.AddForce(forceTowardBoss * pullStrength, ForceMode.Force);
 
-			Vector3 dirTowardP1 = (player1.transform.position - transform.position).normalized * -1;
+			Vector3 dirTowardP1 = (player1.transform.position - magnet.position).normalized * -1;
 	
 			armAxis.rotation = Quaternion.LookRotation(dirTowardP1);
 		}
 
 
 		private void PointTowardPlayer1(){
-			Vector3 dirTowardP1 = (player1.transform.position - transform.position).normalized * -1;
+			Vector3 dirTowardP1 = (player1.transform.position - magnet.position).normalized * -1;
 			rotationTarget.rotation = Quaternion.LookRotation(dirTowardP1);
 			armAxis.rotation = Quaternion.RotateTowards(armAxis.rotation,
 														rotationTarget.rotation,
@@ -217,16 +231,16 @@
 
 
 		private void GrabPlayer2(){
-			Vector3 forceTowardBoss = (transform.position - player2.transform.position).normalized;
+			Vector3 forceTowardBoss = (magnet.position - player2.transform.position).normalized;
 			p2Body.AddForce(forceTowardBoss * pullStrength, ForceMode.Force);
 
-			Vector3 dirTowardP2 = Vector3.Cross((player2.transform.position - transform.position).normalized, Vector3.up);
+			Vector3 dirTowardP2 = Vector3.Cross((player2.transform.position - magnet.position).normalized, Vector3.up);
 			armAxis.rotation = Quaternion.LookRotation(dirTowardP2);
 		}
 
 
 		private void PointTowardPlayer2(){
-			Vector3 dirTowardP2 = Vector3.Cross((player2.transform.position - transform.position).normalized, Vector3.up);
+			Vector3 dirTowardP2 = Vector3.Cross((player2.transform.position - magnet.position).normalized, Vector3.up);
 			rotationTarget.rotation = Quaternion.LookRotation(dirTowardP2);
 			armAxis.rotation = Quaternion.RotateTowards(armAxis.rotation,
 														rotationTarget.rotation,
@@ -248,7 +262,7 @@
 
 
 		private void HoldArmsNeutral(){
-			Vector3 armsAkimbo = Quaternion.Euler(0.0f, 45.0f, 0.0f) * Vector3.forward;
+			Vector3 armsAkimbo = Quaternion.Euler(90.0f, 0.0f, 0.0f) * Vector3.forward;
 			rotationTarget.rotation = Quaternion.LookRotation(armsAkimbo);
 			armAxis.rotation = Quaternion.RotateTowards(armAxis.rotation,
 														rotationTarget.rotation,
@@ -340,6 +354,7 @@
 				transform.position.z - enterDistance);
 			levelManager = GameObject.Find(MANAGER_OBJ).GetComponent<LevelManager>();
 			levelManager.Hold = true;
+			magnet = transform.Find(MAGNET_ARM_OBJ).Find(MAGNET_ARM_OBJ).Find(MAGNET_OBJ);
 
 			currentStage = Stage.Vulnerable;
 			currentHealth = startHealth;
