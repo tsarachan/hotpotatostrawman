@@ -102,6 +102,11 @@
 		private float enemySpawnTimer = 0.0f;
 		private List<string> enemyOptions = new List<string> { "HomingEnemy" };
 		private int enemyOptionIndex = 0;
+		private const string SPAWNER_1_OBJ = "Spawner 1";
+		private const string SPAWNER_15_OBJ = "Spawner 15";
+		private Transform spawner1;
+		private Transform spawner15;
+		private int spawnerChooser = 0;
 
 
 		//initialize variables
@@ -134,6 +139,8 @@
 			beamRenderer.enabled = false;
 			playerLayerMask = 1 << playerLayer;
 			beamStartRadius = beamRenderer.startWidth;
+			spawner1 = GameObject.Find(SPAWNER_1_OBJ).transform;
+			spawner15 = GameObject.Find(SPAWNER_15_OBJ).transform;
 		}
 
 
@@ -255,8 +262,18 @@
 			if (enemySpawnTimer >= enemySpawnDelay){
 				enemySpawnTimer = 0.0f;
 				GameObject obj = ObjectPooling.ObjectPool.GetObj(ChooseEnemyToSpawn());
-				obj.transform.position = transform.position;
+				obj.transform.position = AlternateSpawners();
 				obj.GetComponent<ObjectPooling.Poolable>().Reset();
+			}
+		}
+
+		private Vector3 AlternateSpawners(){
+			spawnerChooser++;
+
+			if (spawnerChooser%2 == 0){
+				return spawner15.position;
+			} else {
+				return spawner1.position;
 			}
 		}
 

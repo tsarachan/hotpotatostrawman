@@ -5,7 +5,7 @@
 	using UnityEngine;
 	using UnityEngine.UI;
 
-	public class MagnetizingBossBehavior : MonoBehaviour {
+	public class MagnetizingBossBehavior : EnemyBase {
 
 
 		//----------Tunable variables----------
@@ -24,6 +24,13 @@
 
 		//how many degrees off the arms can be before they snap to a player and start magnetizing
 		public float quaternionMatchTolerance = 10.0f;
+
+
+		//these variables are used to bring the boss battle setpiece--the boss, platforms, and the lightning weapon--
+		//onto the screen
+		public float enterDistance = 5.0f; //how far the setpiece will travel on the z-axis. It should move far enough to reach (0, 0, 0).
+		public float enterDuration = 2.0f;
+		public AnimationCurve enterCurve;
 
 
 		//----------Internal variables----------
@@ -76,6 +83,28 @@
 		private const string HOMING_ENEMY = "HomingEnemy";
 		private float stage2AttackTimer = 0.0f;
 		private float stage3AttackTimer = 0.0f;
+		private const string SPAWNER_1_OBJ = "Spawner 1";
+		private const string SPAWNER_15_OBJ = "Spawner 15";
+		private Transform spawner1;
+		private Transform spawner15;
+		private int spawnerChooser = 0;
+
+
+		//used to pause the level manager
+		private LevelManager levelManager;
+		private const string MANAGER_OBJ = "Managers";
+
+
+		//variables for bringing the boss onto the screen
+		private bool enteringScreen = true;
+		private float enterTimer = 0.0f;
+		private Vector3 start;
+		private Vector3 end;
+		private const float Y_HEIGHT = 4.5f;
+
+
+		//used to parent the boss
+		private const string ENEMY_ORGANIZER = "Enemies";
 
 
 		private void Start(){
@@ -88,49 +117,79 @@
 			currentStage = Stage.Vulnerable;
 			instructionText = transform.Find(CANVAS_OBJ).Find(TEXT_OBJ).GetComponent<Text>();
 			currentHealth = startHealth;
+			spawner1 = GameObject.Find(SPAWNER_1_OBJ).transform;
+			spawner15 = GameObject.Find(SPAWNER_15_OBJ).transform;
+			levelManager = GameObject.Find(MANAGER_OBJ).GetComponent<LevelManager>();
+			levelManager.Hold = true;
+			transform.parent = GameObject.Find(ENEMY_ORGANIZER).transform;
 		}
 
 
 		private void Update(){
-			switch (currentStage){
-				case Stage.GrabP1:
-					currentAction = GrabPlayer1;
-					instructionText.text = GRAB_P1_INSTRUCTIONS;
-					break;
-				case Stage.GrabP2:
-					currentAction = GrabPlayer2;
-					instructionText.text = GRAB_P2_INSTRUCTIONS;
-					break;
-				case Stage.SwitchToP1:
-					currentAction = PointTowardPlayer1;
-					PushPlayers();
-					instructionText.text = SWITCH_P1_INSTRUCTIONS;
-					break;
-				case Stage.SwitchToP2:
-					currentAction = PointTowardPlayer2;
-					PushPlayers();
-					instructionText.text = SWITCH_P2_INSTRUCTIONS;
-					break;
-				case Stage.Vulnerable:
-					currentAction = HoldArmsNeutral;
-					instructionText.text = VULNERABLE_INSTRUCTIONS;
-					break;
-			}
+			if (enteringScreen){
+				transform.position = MoveOntoScreen();
+			} else if (gameObject.activeInHierarchy){
 
-			currentAction();
+				//operate the arms
+				switch (currentStage){
+					case Stage.GrabP1:
+						currentAction = GrabPlayer1;
+						instructionText.text = GRAB_P1_INSTRUCTIONS;
+						break;
+					case Stage.GrabP2:
+						currentAction = GrabPlayer2;
+						instructionText.text = GRAB_P2_INSTRUCTIONS;
+						break;
+					case Stage.SwitchToP1:
+						currentAction = PointTowardPlayer1;
+						PushPlayers();
+						instructionText.text = SWITCH_P1_INSTRUCTIONS;
+						break;
+					case Stage.SwitchToP2:
+						currentAction = PointTowardPlayer2;
+						PushPlayers();
+						instructionText.text = SWITCH_P2_INSTRUCTIONS;
+						break;
+					case Stage.Vulnerable:
+						currentAction = HoldArmsNeutral;
+						instructionText.text = VULNERABLE_INSTRUCTIONS;
+						break;
+				}
 
-			switch (currentHealth){
-				case startHealth:
-					//no attacks while at starting health
-					break;
-				case 2:
-					Stage2Attack();
-					break;
-				case 1:
-					Stage2Attack();
-					Stage3Attack();
-					break;
+				currentAction();
+
+				//attack
+				switch (currentHealth){
+					case startHealth:
+						//no attacks while at starting health
+						break;
+					case 2:
+						Stage2Attack();
+						break;
+					case 1:
+						Stage2Attack();
+						Stage3Attack();
+						break;
+				}
 			}
+		}
+
+
+		/// <summary>
+		/// Get the location of the setpiece each frame.
+		/// 
+		/// When the setpiece reaches its destination, flip the [enteringScreen] bool so that the boss battle 
+		/// stops moving.
+		/// </summary>
+		/// <returns>The position the setpiece should move to this frame.</returns>
+		private Vector3 MoveOntoScreen(){
+			enterTimer += Time.deltaTime;
+
+			Vector3 pos = Vector3.LerpUnclamped(start, end, enterCurve.Evaluate(enterTimer/enterDuration));
+
+			if (Vector3.Distance(pos, end) <= Mathf.Epsilon) { enteringScreen = false; }
+
+			return pos;
 		}
 
 
@@ -219,8 +278,19 @@
 
 		private void CreateEnemy(string enemyName){
 			GameObject obj = ObjectPooling.ObjectPool.GetObj(enemyName);
-			obj.transform.position = transform.position;
+			obj.transform.position = AlternateSpawners();
 			obj.GetComponent<ObjectPooling.Poolable>().Reset();
+		}
+
+
+		private Vector3 AlternateSpawners(){
+			spawnerChooser++;
+
+			if (spawnerChooser%2 == 0){
+				return spawner15.position;
+			} else {
+				return spawner1.position;
+			}
 		}
 
 
@@ -243,7 +313,39 @@
 
 
 		private IEnumerator ZeroHealthEffects(){
+			levelManager.Hold = false;
+			GetDestroyed();
+
 			yield break;
+		}
+
+
+		public override void GetDestroyed(){
+			levelManager.Hold = false;
+
+			ObjectPooling.ObjectPool.AddObj(gameObject);
+		}
+			
+		public override void ShutOff(){
+			gameObject.SetActive(false);
+		}
+
+
+		public override void Reset(){
+			enteringScreen = true;
+			enterTimer = 0.0f;
+			start = transform.position;
+			end = new Vector3(transform.position.x,
+				transform.position.y + Y_HEIGHT,
+				transform.position.z - enterDistance);
+			levelManager = GameObject.Find(MANAGER_OBJ).GetComponent<LevelManager>();
+			levelManager.Hold = true;
+
+			currentStage = Stage.Vulnerable;
+			currentHealth = startHealth;
+
+
+			gameObject.SetActive(true);
 		}
 	}
 }
