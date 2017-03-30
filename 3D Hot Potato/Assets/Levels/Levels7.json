@@ -303,10 +303,13 @@
 			{"action":"wait", "time":1},
 			{"action":"spawn", "whichEnemy":"Checkpoint", "waves":1, "numPerWave":1, "whichSpawners":[8], "timeBetweenWaves":0, "timeVariance":0}
 			{"action":"wait", "time":3},
-			{"action":"spawn", "whichEnemy":"LightningRodBoss", "waves":1, "numPerWave":1, "whichSpawners":[2], "timeBetweenWaves":0, "timeVariance":0}			
-			{"action":"spawn", "whichEnemy":"Checkpoint", "waves":1, "numPerWave":1, "whichSpawners":[8], "timeBetweenWaves":0, "timeVariance":0}
 		],
 		"act6":[
+			{"action":"progress", "title":"Lightning R.O.B."}
+			{"action":"spawn", "whichEnemy":"LightningRodBoss", "waves":1, "numPerWave":1, "whichSpawners":[8], "timeBetweenWaves":0, "timeVariance":0}			
+			{"action":"spawn", "whichEnemy":"Checkpoint", "waves":1, "numPerWave":1, "whichSpawners":[8], "timeBetweenWaves":0, "timeVariance":0}
+		],
+		"act7":[
 			{"action":"progress", "title":"Enter the Blightrunners"}
 			{"action":"wait", "time":3.5},
 			{"action":"spawn", "whichEnemy":"PlayerHuntEnemy", "waves":1, "numPerWave":1, "whichSpawners":[8], "timeBetweenWaves":0, "timeVariance":0},
@@ -322,13 +325,13 @@
 			{"action":"spawn", "whichEnemy":"Checkpoint", "waves":1, "numPerWave":1, "whichSpawners":[8], "timeBetweenWaves":0, "timeVariance":0}
 			{"action":"wait", "time":3},	
 		],
-		"act7":[
+		"act8":[
 			{"action":"spawn", "whichEnemy":"BossBattle2", "waves":1, "numPerWave":1, "whichSpawners":[8], "timeBetweenWaves":0, "timeVariance":0},
 			{"action":"wait", "time":40},
 			{"action":"spawn", "whichEnemy":"Checkpoint", "waves":1, "numPerWave":1, "whichSpawners":[8], "timeBetweenWaves":0, "timeVariance":0}
 			{"action":"wait", "time":3},
 		],
-		"act8":[
+		"act9":[
 			{"action":"spawn", "whichEnemy":"PlayerHuntEnemy", "waves":1, "numPerWave":1, "whichSpawners":[8], "timeBetweenWaves":0, "timeVariance":0}
 			{"action":"wait", "time":1},
 			{"action":"spawn", "whichEnemy":"HomingEnemy", "waves":1, "numPerWave":1, "whichSpawners":[10], "timeBetweenWaves":0, "timeVariance":0}
@@ -380,7 +383,7 @@
 			{"action":"spawn", "whichEnemy":"Checkpoint", "waves":1, "numPerWave":1, "whichSpawners":[8], "timeBetweenWaves":0, "timeVariance":0}
 			{"action":"wait", "time":3},
 		],
-		"act9":[
+		"act10":[
 			{"action":"spawn", "whichEnemy":"IgnoringSineEnemy", "waves":1, "numPerWave":3, "whichSpawners":[4, 8, 12], "timeBetweenWaves":0, "timeVariance":0}
 			{"action":"wait", "time":3},
 			{"action":"spawn", "whichEnemy":"IgnoringSineEnemy", "waves":3, "numPerWave":5, "whichSpawners":[2, 4, 6, 8, 10, 12, 14], "timeBetweenWaves":0.145, "timeVariance":0}
@@ -462,7 +465,7 @@
 			{"action":"spawn", "whichEnemy":"Checkpoint", "waves":1, "numPerWave":1, "whichSpawners":[8], "timeBetweenWaves":0, "timeVariance":0}
 			{"action":"wait", "time":5},
 		],
-		"act10":[
+		"act11":[
 			{"action":"spawn", "whichEnemy":"BossBattle", "waves":1, "numPerWave":1, "whichSpawners":[8], "timeBetweenWaves":0, "timeVariance":0},
 			{"action":"wait", "time":4},
 			{"action":"spawn", "whichEnemy":"PlayerTrackerEnemy", "waves":100, "numPerWave":5, "whichSpawners":[4, 6, 8, 10, 12], "timeBetweenWaves":2, "timeVariance":0}
