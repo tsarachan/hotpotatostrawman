@@ -13,7 +13,7 @@ public class ControllerInfoBehavior : MonoBehaviour {
 
 	private void Start(){
 		controllerMap = GameObject.Find(CONTROLLER_MAP_OBJ);
-		controllerMap.SetActive(false);
+		ShowControllerMap();
 	}
 
 

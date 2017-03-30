@@ -191,8 +191,10 @@
 					break;
 				case 2:
 					ShootBeam();
+					Debug.Log("Two health left");
 					break;
 				case 1:
+					Debug.Log("One health left");
 					ShootBeam();
 					MakeEnemies();
 					break;
@@ -356,6 +358,8 @@
 			if (currentHealth <= 0){
 				StartCoroutine(ZeroHealthEffects());
 			}
+
+			gettingHit = false;
 
 			yield break;
 		}

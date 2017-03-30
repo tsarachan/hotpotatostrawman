@@ -61,7 +61,7 @@ GameObject:
   - component: {fileID: 33205445511202492}
   - component: {fileID: 120304696098805258}
   m_Layer: 9
-  m_Name: Lightning rod boss
+  m_Name: LightningRodBoss
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -501,12 +501,13 @@ MonoBehaviour:
   scoreValue: 10
   startingHealth: 3
   introDuration: 10
-  vulnerableDuration: 3
+  vulnerableDuration: 1.5
   shakeSpeed: 20
   shakeMagnitude: 1
   shakeDuration: 2
   beamReloadDuration: 1
   sphereCastRadius: 2
+  enemySpawnDelay: 2
   enterDistance: 115
   enterDuration: 5
   enterCurve:

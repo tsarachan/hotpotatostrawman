@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 23115986564785300}
   - component: {fileID: 114813313534746640}
   m_Layer: 0
-  m_Name: Magnetizing boss
+  m_Name: MagnetizingBoss
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -29,6 +29,7 @@ public class InputManager : MonoBehaviour {
 	private const string HORIZ_AXIS = "PS4_LStick_Horiz_";
 	private const string O_BUTTON = "PS4_O_";
 	private const string PS_BUTTON = "PS4_PS_";
+	private const string PS_OPTIONS_BUTTON = "PS4_Options_";
 
 	private const string VERT_AXIS_360 = "360_LStick_Vert_";
 	private const string HORIZ_AXIS_360 = "360_LStick_Horiz_";
@@ -154,7 +155,7 @@ public class InputManager : MonoBehaviour {
 				players[player].CatchScript.AttemptAwesomeCatch();
 			}
 
-			if (Input.GetButtonDown(PS_BUTTON + player)){
+			if (Input.GetButtonDown(PS_OPTIONS_BUTTON + player)){
 				controllerMapScript.ReceivePauseInput();
 			}
 		}
