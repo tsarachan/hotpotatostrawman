@@ -96,6 +96,7 @@
 		private const string PLAYER_TAG = "Player";
 		private int choosePlayer = 1;
 		private float beamStartRadius = 1.0f;
+		private bool hitAPlayer = false;
 
 
 		//the enemies the boss spawns
@@ -234,6 +235,7 @@
 			}
 
 			for (int i = hitPlayers.Count - 1; i >= 0; i--){
+				hitAPlayer = true;
 				hitPlayers[i].LoseTheGame();
 				return;
 			}
@@ -304,8 +306,19 @@
 		/// <summary>
 		/// The boss cannot be destroyed by normal means. It can only be hit when the vulnerable and the lightsaber
 		/// is active (a bodge for getting hit by the lightsaber).
+		/// 
+		/// 
+		/// The UNBELIEVABLY HORRIBLE BODGE here is that LevelManager calls GetDestroyed to clear the scene
+		/// preparatory to restarting after a player dies. Thus, it's necessary to differentiate why this method
+		/// is being called. Under normal circumstances, it's being called by the lightsaber. If hitAPlayer is true,
+		/// however, it means that LevelManager is calling it, and so a different sequence must be followed.
 		/// </summary>
 		public override void GetDestroyed(){
+			if (hitAPlayer){
+				levelManager.Hold = false;
+				ObjectPooling.ObjectPool.AddObj(gameObject);
+			}
+
 			if (vulnerable){
 				if (lightsaber.activeInHierarchy){
 					StartCoroutine(HitEffects());
@@ -385,6 +398,13 @@
 				transform.position.z - enterDistance);
 			levelManager = GameObject.Find(MANAGER_OBJ).GetComponent<LevelManager>();
 			levelManager.Hold = true;
+			currentHealth = startingHealth;
+			hitAPlayer = false;
+			beamRenderer = GetComponent<LineRenderer>();
+			beamRenderer.enabled = false;
+			gettingHit = false;
+
+			gameObject.SetActive(true);
 		}
 	}
 }

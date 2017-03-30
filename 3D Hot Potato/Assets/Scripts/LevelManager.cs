@@ -499,6 +499,7 @@ public class LevelManager : MonoBehaviour {
 			GameHasStarted = true;
 			RestartingGame = false;
 			worldOver = false;
+			Hold = false;
 			ObjectPooling.ObjectPool.GameOver = false;
 		}
 	}
