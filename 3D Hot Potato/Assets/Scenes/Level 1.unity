@@ -26110,7 +26110,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   zoomDuration: 0.5
   readDelay: 2
-  enemyEntryTime: 0.5
+  cameraOffset: {x: 0, y: -9, z: 3}
 --- !u!114 &891422881
 MonoBehaviour:
   m_ObjectHideFlags: 0

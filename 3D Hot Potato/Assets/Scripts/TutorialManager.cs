@@ -204,7 +204,7 @@ public class TutorialManager : MonoBehaviour {
 		while (!tutorialFinished){
 			yield return null;
 		}
-
+			
 		levelManager.Hold = false;
 		yield break;
 	}
@@ -262,21 +262,21 @@ public class TutorialManager : MonoBehaviour {
 	//////////////////////////////////////////////////////
 
 	private void DisplayTutorialText(Instruction instruction){
-		Debug.Log("Top left instruction: " + instruction.TopLeftText);
-		Debug.Log("Top right instruction: " + instruction.TopRightText);
-		Debug.Log("Bottom right instruction: " + instruction.BottomRightText);
-		Debug.Log("Top left display: " + instructionsTopLeft.text);
-		Debug.Log("Top right display: " + instructionsTopRight.text);
-		Debug.Log("Bottom right display: " + instructionsBottomRight.text);
+//		Debug.Log("Top left instruction: " + instruction.TopLeftText);
+//		Debug.Log("Top right instruction: " + instruction.TopRightText);
+//		Debug.Log("Bottom right instruction: " + instruction.BottomRightText);
+//		Debug.Log("Top left display: " + instructionsTopLeft.text);
+//		Debug.Log("Top right display: " + instructionsTopRight.text);
+//		Debug.Log("Bottom right display: " + instructionsBottomRight.text);
 		instructionsTopLeft.text = instruction.TopLeftText;
 		instructionsTopRight.text = instruction.TopRightText;
 		instructionsBottomRight.text = instruction.BottomRightText;
-		Debug.Log("Top left instruction: " + instruction.TopLeftText);
-		Debug.Log("Top right instruction: " + instruction.TopRightText);
-		Debug.Log("Bottom right instruction: " + instruction.BottomRightText);
-		Debug.Log("Top left display: " + instructionsTopLeft.text);
-		Debug.Log("Top right display: " + instructionsTopRight.text);
-		Debug.Log("Bottom right display: " + instructionsBottomRight.text.ToString());
+//		Debug.Log("Top left instruction: " + instruction.TopLeftText);
+//		Debug.Log("Top right instruction: " + instruction.TopRightText);
+//		Debug.Log("Bottom right instruction: " + instruction.BottomRightText);
+//		Debug.Log("Top left display: " + instructionsTopLeft.text);
+//		Debug.Log("Top right display: " + instructionsTopRight.text);
+//		Debug.Log("Bottom right display: " + instructionsBottomRight.text.ToString());
 	}
 
 	private void ClearTutorialText(){
@@ -335,12 +335,14 @@ public class TutorialManager : MonoBehaviour {
 
 
 	private void CatchParticleRegistration(){
+		Debug.Log("Registering to listen for catch particle events");
 		eventHandler = new Event.Handler(CatchParticleFunc);
 		Services.EventManager.Register<PowerReadyEvent>(eventHandler);
 	}
 
 
 	private void PowerTriggeredRegistration(){
+		Debug.Log("Registering to listen for powers being triggered");
 		eventHandler = new Event.Handler(currentInstruction.eventHandlerFunc);
 		Services.EventManager.Register<PowerTriggeredEvent>(eventHandler);
 	}
@@ -376,6 +378,7 @@ public class TutorialManager : MonoBehaviour {
 	//used to stop the first part of the powers tutorial
 	//listens for when the awesome catch particle is active
 	public void CatchParticleFunc(Event e){
+		Debug.Log("Unregistering for catch particle events");
 		Services.EventManager.Unregister<PowerReadyEvent>(eventHandler);
 		tutorialFinished = true;
 	}
@@ -384,6 +387,7 @@ public class TutorialManager : MonoBehaviour {
 	//used to stop the powers tutorial
 	//listens for the first use of a power after the tutorial ends
 	public void PowerTriggeredFunc(Event e){
+		Debug.Log("Unregistering for power triggered events");
 		Services.EventManager.Unregister<PowerTriggeredEvent>(eventHandler);
 		tutorialFinished = true;
 	}

@@ -151,6 +151,7 @@ public class CatchBehavior : CatchSandbox {
 	/// Chooses the correct awesome catch effect for this player.
 	/// </summary>
 	public void AwesomeCatch(){
+		Services.EventManager.Fire(new PowerTriggeredEvent(gameObject));
 		if (gameObject.name == PLAYER_1_OBJ){
 			Player1AwesomeCatchEffect();
 		} else {

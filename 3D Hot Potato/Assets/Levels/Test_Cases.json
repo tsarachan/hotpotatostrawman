@@ -1,7 +1,8 @@
 {
 "world1":{
 		"act1":[
-			{"action":"spawn", "whichEnemy":"BlightrunnerTutorialHuntEnemy", "waves":1, "numPerWave":1, "whichSpawners":[8], "timeBetweenWaves":0, "timeVariance":0},
-			{"action":"tutorial", "tutorialName":"Block"}
+			{"action":"wait", "time":3},
+			{"action":"tutorial", "tutorialName":"Power"},
+			{"action":"spawn", "whichEnemy":"IgnoringEnemy", "waves":1, "numPerWave":3, "whichSpawners":[4, 8, 12], "timeBetweenWaves":0, "timeVariance":0}
 		]}
 }
