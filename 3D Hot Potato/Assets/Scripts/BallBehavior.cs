@@ -57,6 +57,22 @@ public class BallBehavior : MonoBehaviour {
 	private const string CATCH_WARNING = "Catch warning";
 
 
+	//used to track whether the awesome catch particle is active or not, and to send an event when it turns active
+	private bool activeParticleOn = false;
+	public bool ActiveParticleOn{
+		get { return activeParticleOn; }
+		set {
+			if (value != activeParticleOn){
+				if (value == true){
+					Services.EventManager.Fire(new PowerReadyEvent());
+				}
+
+				activeParticleOn = value;
+			}
+		}
+	}
+
+
 	//initialize variables
 	protected virtual void Start(){
 		rb = GetComponent<Rigidbody>();
@@ -113,6 +129,7 @@ public class BallBehavior : MonoBehaviour {
 
 			if (Vector3.Distance(transform.position, destination.position) <= awesomeCatchDistance){
 				awesomeCatchParticle.SetActive(true);
+				ActiveParticleOn = true;
 			}
 
 			yield return null;
@@ -154,6 +171,7 @@ public class BallBehavior : MonoBehaviour {
 		IntendedReceiver = transform; //default assignment
 
 		awesomeCatchParticle.SetActive(false);
+		ActiveParticleOn = false;
 
 		//switch off the catching player's warning that they're the receiver
 		catchingPlayer.Find(CATCH_WARNING).gameObject.SetActive(false);

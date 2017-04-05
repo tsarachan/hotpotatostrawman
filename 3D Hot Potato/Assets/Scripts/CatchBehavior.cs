@@ -150,8 +150,7 @@ public class CatchBehavior : CatchSandbox {
 	/// <summary>
 	/// Chooses the correct awesome catch effect for this player.
 	/// </summary>
-	/// <returns><c>true</c> so that the awesome catch will happen when the player catches the ball.</returns>
-	private void AwesomeCatch(){
+	public void AwesomeCatch(){
 		if (gameObject.name == PLAYER_1_OBJ){
 			Player1AwesomeCatchEffect();
 		} else {

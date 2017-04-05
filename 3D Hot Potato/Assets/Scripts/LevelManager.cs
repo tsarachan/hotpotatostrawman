@@ -301,8 +301,8 @@ public class LevelManager : MonoBehaviour {
 			//if the action is "tutorial," start the listed tutorial--the available tutorials are constant strings
 			//in TutorialManager
 			case TUTORIAL:
-				tutorialManager.StartTutorial(node[WORLD + worldNumber.ToString()]
-					[ACT + actNumber.ToString()][readIndex][TUTORIAL_NAME]);
+				StartCoroutine(tutorialManager.StartTutorial(node[WORLD + worldNumber.ToString()]
+					[ACT + actNumber.ToString()][readIndex][TUTORIAL_NAME]));
 				break;
 
 			//if the action is "spawn", make enemies

@@ -28,6 +28,7 @@ public class TutorialManager : MonoBehaviour {
 
 	public float zoomDuration = 0.5f; //how long the camera spends zooming in and out
 	public float readDelay = 2.0f; //how long the camera stays zoomed in
+	public float powerDuration = 3.0f; //how long the powers tutorial should wait for the power demo to end
 
 	//the camera's position relative to things it zooms in on
 	public Vector3 cameraOffset = new Vector3(0.0f, 0.0f, 0.0f);
@@ -91,6 +92,10 @@ public class TutorialManager : MonoBehaviour {
 	private const string BALL_OBJ = "Ball";
 
 
+	//used to find the players for the powers tutorial
+	private const string PLAYER_ORGANIZER = "Players";
+
+
 	private void Start(){
 		instructionsTopLeft = GameObject.Find(INSTRUCTIONS_1_OBJ).GetComponent<Text>();
 		instructionsTopRight = GameObject.Find(INSTRUCTIONS_2_OBJ).GetComponent<Text>();
@@ -102,21 +107,31 @@ public class TutorialManager : MonoBehaviour {
 		passInstruction = new Instruction("Cooperate with your partner to reach the goal",
 										  "Press the button to pass the Neon Star",
 										  "Pass the Neon Star to continue",
-										  new Vector3(0.0f, 0.0f, 0.0f), //the pass instruction will find the ballcarrier
+										  new Vector3(0.0f, 0.0f, 0.0f), //the pass instruction will find the ball
+										  PassRegistration,
 										  PlayerPassFunc,
 										  0.0f);
 		blockInstruction = new Instruction("",
 										   "The player without the Neon Star can block",
 										   "Run into this enemy to proceed",
 										   new Vector3 (0.0f, -13.8f, 31.5f),
+										   EnemyDestroyedRegistration,
 										   EnemyDestroyedFunc,
 										   0.5f);
 		blightrunnerInstruction = new Instruction("Gold enemies change the rules",
 												  "Hit them with the Neon Star",
 												  "If you don't have it, stay safe!",
 												  new Vector3(0.0f, -13.8f, 31.5f),
+												  EnemyDestroyedRegistration,
 												  EnemyDestroyedFunc,
 												  0.5f);
+		powerInstruction = new Instruction("Each player has a special power",
+										   "Hit the throw button while the ball is sparking",
+										   "Don't be early or late!",
+										   new Vector3(0.0f, 0.0f, 0.0f), //this instruction will find the ball
+										   PowerTriggeredRegistration,
+										   PowerTriggeredFunc,
+										   0.0f);
 	}
 
 
@@ -124,7 +139,7 @@ public class TutorialManager : MonoBehaviour {
 	/// LevelManager calls this to start a tutorial.
 	/// </summary>
 	/// <param name="tutorial">Which tutorial to begin.</param>
-	public void StartTutorial(string tutorial){
+	public IEnumerator StartTutorial(string tutorial){
 		switch (tutorial){
 			case PASS_TUTORIAL:
 				passInstruction.CameraZoomPos = GetBallPos() + cameraOffset;
@@ -136,9 +151,16 @@ public class TutorialManager : MonoBehaviour {
 			case BLIGHT_TUTORIAL:
 				currentInstruction = blightrunnerInstruction;
 				break;
+			case POWER_TUTORIAL:
+				currentInstruction = powerInstruction;
+				yield return StartCoroutine(StartPowersTutorial());
+				currentInstruction.CameraZoomPos = GetBallPos() + cameraOffset;
+				break;
 		}
 
-		StartCoroutine(DisplayTutorial(currentInstruction));
+		yield return StartCoroutine(DisplayTutorial(currentInstruction));
+
+		yield break;
 	}
 
 
@@ -160,6 +182,7 @@ public class TutorialManager : MonoBehaviour {
 	/// 4. Display explanatory text, if any.
 	/// 5. Clear the text.
 	/// 6. Zoom back out.
+	/// 7. Register for the event that will end the tutorial.
 	/// 7. Wait until something happens.
 	/// 8. Restart the LevelManager.
 	/// </summary>
@@ -175,8 +198,7 @@ public class TutorialManager : MonoBehaviour {
 		ClearTutorialText();
 		yield return StartCoroutine(ZoomCameraOut(instruction.CameraZoomPos));
 		Time.timeScale = 1.0f;
-		eventHandler = new Event.Handler(instruction.eventHandlerFunc);
-		Services.EventManager.Register<EnemyDestroyedEvent>(eventHandler);
+		currentInstruction.registerFunc();
 
 		//wait until the event handler sets tutorialFinished = true
 		while (!tutorialFinished){
@@ -184,6 +206,53 @@ public class TutorialManager : MonoBehaviour {
 		}
 
 		levelManager.Hold = false;
+		yield break;
+	}
+
+
+	/// <summary>
+	/// A specialized coroutine for the setup to the powers tutorial
+	/// </summary>
+	private IEnumerator StartPowersTutorial(){
+		levelManager.Hold = true; //stop LevelManager from making new enemies
+
+		//trigger the powers as an example of their existence
+		Transform players = GameObject.Find(PLAYER_ORGANIZER).transform;
+		foreach (Transform player in players){
+			player.GetComponent<CatchBehavior>().AwesomeCatch();
+		}
+
+		//show explanatory text
+		DisplayTutorialText(currentInstruction);
+
+		//let the example powers end
+		yield return new WaitForSeconds(powerDuration);
+
+		//have a player throw the ball
+		bool waitingForExampleThrow = true;
+		while (waitingForExampleThrow){
+			foreach (Transform player in players){
+				if (player.GetComponent<PlayerBallInteraction>().BallCarrier){
+					player.GetComponent<PlayerBallInteraction>().Throw();
+
+					waitingForExampleThrow = false;
+				}
+			}
+
+			yield return null;
+		}
+
+		//wait for the awesome catch particle
+		tutorialFinished = false;
+		CatchParticleRegistration();
+		while (!tutorialFinished){
+			yield return null;
+		}
+
+		//stop time with the ball in the air, showing the special particle
+		Time.timeScale = 0.0f;
+
+		//start the normal tutorial sequence at this point
 		yield break;
 	}
 
@@ -249,6 +318,35 @@ public class TutorialManager : MonoBehaviour {
 
 
 	//////////////////////////////////////////////////////
+	/// FUNCTIONS THAT REGISTER FOR EVENTS
+	//////////////////////////////////////////////////////
+
+
+	private void EnemyDestroyedRegistration(){
+		eventHandler = new Event.Handler(currentInstruction.eventHandlerFunc);
+		Services.EventManager.Register<EnemyDestroyedEvent>(eventHandler);
+	}
+
+
+	private void PassRegistration(){
+		eventHandler = new Event.Handler(currentInstruction.eventHandlerFunc);
+		Services.EventManager.Register<PassEvent>(eventHandler);
+	}
+
+
+	private void CatchParticleRegistration(){
+		eventHandler = new Event.Handler(CatchParticleFunc);
+		Services.EventManager.Register<PowerReadyEvent>(eventHandler);
+	}
+
+
+	private void PowerTriggeredRegistration(){
+		eventHandler = new Event.Handler(currentInstruction.eventHandlerFunc);
+		Services.EventManager.Register<PowerTriggeredEvent>(eventHandler);
+	}
+
+
+	//////////////////////////////////////////////////////
 	/// FUNCTIONS USED TO STOP INDIVIDUAL TUTORIALS
 	//////////////////////////////////////////////////////
 
@@ -275,6 +373,21 @@ public class TutorialManager : MonoBehaviour {
 	}
 
 
+	//used to stop the first part of the powers tutorial
+	//listens for when the awesome catch particle is active
+	public void CatchParticleFunc(Event e){
+		Services.EventManager.Unregister<PowerReadyEvent>(eventHandler);
+		tutorialFinished = true;
+	}
+
+
+	//used to stop the powers tutorial
+	//listens for the first use of a power after the tutorial ends
+	public void PowerTriggeredFunc(Event e){
+		Services.EventManager.Unregister<PowerTriggeredEvent>(eventHandler);
+		tutorialFinished = true;
+	}
+
 
 	//////////////////////////////////////////////////////
 	/// Private class used to create tutorials
@@ -285,6 +398,8 @@ public class TutorialManager : MonoBehaviour {
 		public string TopRightText { get; private set; } //text field at the top-right
 		public string BottomRightText { get; private set; } //text field at the bottom-right
 		public Vector3 CameraZoomPos { get; set; } //where the "Cameras" object should lerp to
+		public delegate void RegisterFunc();
+		public RegisterFunc registerFunc { get; private set; } //function that registers for events relevant to this tutorial
 		public delegate void EventHandlerFunc(Event e);
 		public EventHandlerFunc eventHandlerFunc { get; private set; } //the function that will end the tutorial
 		public float ZoomDelay { get; private set; } //if an enemy needs to come on screen, set the delay for that here
@@ -294,12 +409,14 @@ public class TutorialManager : MonoBehaviour {
 						   string topRight,
 						   string bottomRight,
 						   Vector3 camPos,
+						   RegisterFunc registerFunc,
 						   EventHandlerFunc eventHandlerFunc,
 						   float zoomDelay){
 			TopLeftText = topLeft;
 			TopRightText = topRight;
 			BottomRightText = bottomRight;
 			CameraZoomPos = camPos;
+			this.registerFunc = registerFunc;
 			this.eventHandlerFunc = eventHandlerFunc;
 			ZoomDelay = zoomDelay;
 		}
