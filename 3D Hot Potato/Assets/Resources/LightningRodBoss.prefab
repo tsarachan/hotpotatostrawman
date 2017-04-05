@@ -501,7 +501,7 @@ MonoBehaviour:
   scoreValue: 10
   startingHealth: 3
   introDuration: 10
-  vulnerableDuration: 1.5
+  vulnerableDuration: 3
   shakeSpeed: 20
   shakeMagnitude: 1
   shakeDuration: 2

@@ -258,10 +258,10 @@ MonoBehaviour:
   startVelocity: {x: 0, y: 0, z: 0}
   scoreValue: 10
   speed: 0
-  enterDistance: 75
+  enterDistance: 100
   maxOffset: 0
   frequency: 2
-  existDuration: 4
+  existDuration: 10000000
   enterTime: 0.5
   enterCurve:
     serializedVersion: 2

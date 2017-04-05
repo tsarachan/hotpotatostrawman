@@ -1,4 +1,22 @@
-﻿using System.Collections;
+﻿/*
+ * 
+ * HOW TO CREATE A NEW TUTORIAL:
+ * 
+ * 1. Create a new instruction object in Start(). Copy the syntax of the existing ones:
+ * - the first string is text to be displayed in the top-left of the screen
+ * - the second string is text in the top-right
+ * - the third string is text in the lower right.
+ * - the Vector3 is where the "Cameras" object (the parent object of the main camera and the UI camera) will zoom in to
+ * - the final entry is a function name; that function will end the tutorial.
+ * 
+ * 
+ * The function that ends the tutorial needs to listen for an event, so that it knows when the tutorial is finished.
+ * When it receives the event, it must set tutorialFinished = true. The function must be of return type void,
+ * and take one parameter of type Event.
+ * 
+ */
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,25 +28,29 @@ public class TutorialManager : MonoBehaviour {
 
 	public float zoomDuration = 0.5f; //how long the camera spends zooming in and out
 	public float readDelay = 2.0f; //how long the camera stays zoomed in
+	public float enemyEntryTime = 0.5f; //how long it takes enemies to enter the playing field
 
 
-	private Instruction blockInstruction
-		= new Instruction("",
-						  "The player without the Battery Star can block",
-						  "Run into this enemy to proceed",
-						  new Vector3 (0.0f, -14.4f, 57.5f),
-						  "");
+
 
 
 
 	//----------Internal variables----------
 
 
-	//this stores a value that other scripts will send to choose a tutorial
-	private const string BLOCK_TUTORIAL = "Block";
+	//the tutorials, plus a variable to store the current one
+	private Instruction blockInstruction; //basic blocking
+	private Instruction passInstruction; //basic passing
+	private Instruction blightrunnerInstruction; //how to deal with the hunt enemies
+	private Instruction powerInstruction; //how to activate a power
+	private Instruction currentInstruction;
+
+
+	//put these into the JSON file to choose a tutorial
+	private const string BLOCK_TUTORIAL = "Block"; //goes with BlockingTutorialEnemy
 	private const string PASS_TUTORIAL = "Pass";
+	private const string BLIGHT_TUTORIAL = "Blight"; //goes with BlightrunnerTutorialHuntEnemy
 	private const string POWER_TUTORIAL = "Power";
-	private const string BLIGHT_TUTORIAL = "Blight";
 
 
 	//the text blocks where instructions can be displayed
@@ -46,6 +68,23 @@ public class TutorialManager : MonoBehaviour {
 	private const string CAMERA_ORGANIZER = "Cameras";
 
 
+	//an empty string to clear instructions on the screen
+	private const string BLANK = "";
+
+
+	//delegate for handling events, and associated variables
+	private Event.Handler eventHandler;
+	private const string TUTORIAL = "Tutorial";
+
+
+	//the level manager, so it can be shut off while waiting for tutorials to complete
+	private LevelManager levelManager;
+
+
+	//use this bool to hold while waiting for the player to complete a tutorial
+	private bool tutorialFinished = false;
+
+
 
 	private void Start(){
 		instructionsTopLeft = GameObject.Find(INSTRUCTIONS_1_OBJ).GetComponent<Text>();
@@ -53,20 +92,78 @@ public class TutorialManager : MonoBehaviour {
 		instructionsBottomRight = GameObject.Find(INSTRUCTIONS_3_OBJ).GetComponent<Text>();
 		cameras = GameObject.Find(CAMERA_ORGANIZER).transform;
 		camerasStartPos = cameras.position;
-		StartCoroutine(ZoomCameraIn(new Vector3(0.0f, 0.0f, 0.0f)));
+		levelManager = GetComponent<LevelManager>();
+
+		blockInstruction = new Instruction("",
+										   "The player without the Neon Star can block",
+										   "Run into this enemy to proceed",
+										   new Vector3 (0.0f, -13.8f, 31.5f),
+										   EnemyDestroyedFunc);
+		blightrunnerInstruction = new Instruction("Gold enemies change the rules",
+												  "Hit them with the Neon Star",
+												  "If you don't have it, stay safe!",
+												  new Vector3(0.0f, -13.8f, 31.5f),
+												  EnemyDestroyedFunc);
 	}
 
 
-	public void StartTutorial(string tutorialName){
-		Time.timeScale = 0.0f;
-
-		switch (tutorialName){
+	/// <summary>
+	/// LevelManager calls this to start a tutorial.
+	/// </summary>
+	/// <param name="tutorial">Which tutorial to begin.</param>
+	public void StartTutorial(string tutorial){
+		switch (tutorial){
 			case BLOCK_TUTORIAL:
-				
+				currentInstruction = blockInstruction;
+				break;
+			case BLIGHT_TUTORIAL:
+				currentInstruction = blightrunnerInstruction;
 				break;
 		}
+
+		StartCoroutine(DisplayTutorial(currentInstruction));
 	}
 
+
+	/// <summary>
+	/// This coroutine organizes the overall tutorial process:
+	/// 
+	/// 1. Stop LevelManager from creating new enemies.
+	/// 2. Zoom in on some key part of the screen.
+	/// 3. Display explanatory text, if any.
+	/// 4. Clear the text.
+	/// 5. Zoom back out.
+	/// 6. Wait until something happens.
+	/// 7. Restart the LevelManager.
+	/// </summary>
+	/// <param name="instruction">The current instruction object.</param>
+	private IEnumerator DisplayTutorial(Instruction instruction){
+		levelManager.Hold = true;
+		tutorialFinished = false;
+		yield return new WaitForSeconds(enemyEntryTime);
+		Time.timeScale = 0.0f;
+		yield return StartCoroutine(ZoomCameraIn(instruction.CameraZoomPos));
+		DisplayTutorialText(instruction);
+		yield return new WaitForSecondsRealtime(readDelay);
+		ClearTutorialText();
+		yield return StartCoroutine(ZoomCameraOut(instruction.CameraZoomPos));
+		Time.timeScale = 1.0f;
+		eventHandler = new Event.Handler(instruction.eventHandlerFunc);
+		Services.EventManager.Register<EnemyDestroyedEvent>(eventHandler);
+
+		//wait until the event handler sets tutorialFinished = true
+		while (!tutorialFinished){
+			yield return null;
+		}
+
+		levelManager.Hold = false;
+		yield break;
+	}
+
+
+	//////////////////////////////////////////////////////
+	/// FUNCTIONS USED BY ALL TUTORIALS
+	//////////////////////////////////////////////////////
 
 	private void DisplayTutorialText(Instruction instruction){
 		instructionsTopLeft.text = instruction.TopLeftText;
@@ -74,45 +171,87 @@ public class TutorialManager : MonoBehaviour {
 		instructionsBottomRight.text = instruction.BottomRightText;
 	}
 
+	private void ClearTutorialText(){
+		instructionsTopLeft.text = BLANK;
+		instructionsTopRight.text = BLANK;
+		instructionsBottomRight.text = BLANK;
+	}
+
 
 	private IEnumerator ZoomCameraIn(Vector3 destination){
-		Debug.Log("ZoomCameraIn started");
 
 		float startTime = Time.realtimeSinceStartup;
 		float timer = 0.0f;
 		while (timer <= zoomDuration){
-			Debug.Log(timer);
-			timer += Time.realtimeSinceStartup - startTime;
+			timer = Time.realtimeSinceStartup - startTime;
 
 			cameras.position = Vector3.Lerp(camerasStartPos, destination, timer/zoomDuration);
 
 			yield return null;
 		}
 
-		yield return new WaitForSecondsRealtime(readDelay);
+		yield break;
+	}
+
+
+	private IEnumerator ZoomCameraOut(Vector3 zoomedPos){
+		float startTime = Time.realtimeSinceStartup;
+		float timer = 0.0f;
+		while (timer <= zoomDuration){
+			timer = Time.realtimeSinceStartup - startTime;
+
+			cameras.position = Vector3.Lerp(zoomedPos, camerasStartPos, timer/zoomDuration);
+
+			yield return null;
+		}
 
 		yield break;
 	}
 
 
+	//////////////////////////////////////////////////////
+	/// FUNCTIONS USED TO STOP INDIVIDUAL TUTORIALS
+	//////////////////////////////////////////////////////
+
+
+	//Used to stop the tutorials about blocking and the player hunt enemy
+	//Listens for when an enemy is destroyed; assuming it's a tutorial enemy, signals that the tutorial is finished
+	public void EnemyDestroyedFunc(Event e){
+		//Debug.Assert(e.GetType() == EnemyDestroyedEvent);
+
+		EnemyDestroyedEvent enemyDestroyedEvent = e as EnemyDestroyedEvent;
+
+		if (enemyDestroyedEvent.enemy.name.Contains(TUTORIAL)){
+			Services.EventManager.Unregister<EnemyDestroyedEvent>(eventHandler);
+			tutorialFinished = true;
+		}
+	}
+
+
+
+	//////////////////////////////////////////////////////
+	/// Private class used to create tutorials
+	//////////////////////////////////////////////////////
+
 	private class Instruction{
-		public string TopLeftText { get; private set; }
-		public string TopRightText { get; private set; }
-		public string BottomRightText { get; private set; }
-		public Vector3 CameraZoomPos { get; private set; }
-		public string ProceedEvent { get; private set; }
+		public string TopLeftText { get; private set; } //the text field at the top-left of the screen
+		public string TopRightText { get; private set; } //text field at the top-right
+		public string BottomRightText { get; private set; } //text field at the bottom-right
+		public Vector3 CameraZoomPos { get; private set; } //where the "Cameras" object should lerp to
+		public delegate void EventHandlerFunc(Event e);
+		public EventHandlerFunc eventHandlerFunc { get; private set; } //the function that will end the tutorial
 
 
 		public Instruction(string topLeft,
 						   string topRight,
 						   string bottomRight,
 						   Vector3 camPos,
-						   string proceed){
+						   EventHandlerFunc eventHandlerFunc){
 			TopLeftText = topLeft;
 			TopRightText = topRight;
 			BottomRightText = bottomRight;
 			CameraZoomPos = camPos;
-			ProceedEvent = proceed;
+			this.eventHandlerFunc = eventHandlerFunc;
 		}
 	}
 }

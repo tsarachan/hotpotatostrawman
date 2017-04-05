@@ -73,6 +73,8 @@ public class LevelManager : MonoBehaviour {
 	private const string TIME = "time";
 	private const string PROGRESS = "progress";
 	private const string TITLE = "title";
+	private const string TUTORIAL = "tutorial";
+	private const string TUTORIAL_NAME = "tutorialName";
 
 	private int worldNumber = 1; //which world are we on? Starts at 1.
 	private int actNumber = 1; //which act are we on? Starts at 1.
@@ -139,6 +141,10 @@ public class LevelManager : MonoBehaviour {
 	private const string PROGRESS_MESSAGE_OBJ = "Progress message";
 
 
+	//the tutorial manager, and the tutorials available
+	private TutorialManager tutorialManager;
+
+
 	private void Start(){
 		spawners = FindSpawners();
 		ObjectPooling.ObjectPool.GameOver = false; //start the game
@@ -151,6 +157,7 @@ public class LevelManager : MonoBehaviour {
 		Hold = false;
 		progressMessage = GameObject.Find(PROGRESS_MESSAGE_OBJ).GetComponent<ProgressMessageBehavior>();
 		scoreManager = GetComponent<ScoreManager>();
+		tutorialManager = GetComponent<TutorialManager>();
 	}
 
 	private List<Transform> FindSpawners(){
@@ -284,10 +291,18 @@ public class LevelManager : MonoBehaviour {
 				nextReadTime += node[WORLD + worldNumber.ToString()][ACT + actNumber.ToString()][readIndex][TIME].AsFloat;
 				break;
 
+			//if the action is "progress," send a message scrolling down the road
 			case PROGRESS:
 				progressMessage.NewMessage(worldNumber,
 										   actNumber,
 										   node[WORLD + worldNumber.ToString()][ACT + actNumber.ToString()][readIndex][TITLE]);
+				break;
+
+			//if the action is "tutorial," start the listed tutorial--the available tutorials are constant strings
+			//in TutorialManager
+			case TUTORIAL:
+				tutorialManager.StartTutorial(node[WORLD + worldNumber.ToString()]
+					[ACT + actNumber.ToString()][readIndex][TUTORIAL_NAME]);
 				break;
 
 			//if the action is "spawn", make enemies
