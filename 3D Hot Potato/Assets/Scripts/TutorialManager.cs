@@ -29,6 +29,9 @@ public class TutorialManager : MonoBehaviour {
 	public float zoomDuration = 0.5f; //how long the camera spends zooming in and out
 	public float readDelay = 2.0f; //how long the camera stays zoomed in
 
+	//the camera's position relative to things it zooms in on
+	public Vector3 cameraOffset = new Vector3(0.0f, 0.0f, 0.0f);
+
 
 
 
@@ -84,6 +87,9 @@ public class TutorialManager : MonoBehaviour {
 	private bool tutorialFinished = false;
 
 
+	//used to find the ball for the passing tutorial
+	private const string BALL_OBJ = "Ball";
+
 
 	private void Start(){
 		instructionsTopLeft = GameObject.Find(INSTRUCTIONS_1_OBJ).GetComponent<Text>();
@@ -93,6 +99,12 @@ public class TutorialManager : MonoBehaviour {
 		camerasStartPos = cameras.position;
 		levelManager = GetComponent<LevelManager>();
 
+		passInstruction = new Instruction("Cooperate with your partner to reach the goal",
+										  "Press the button to pass the Neon Star",
+										  "Pass the Neon Star to continue",
+										  new Vector3(0.0f, 0.0f, 0.0f), //the pass instruction will find the ballcarrier
+										  PlayerPassFunc,
+										  0.0f);
 		blockInstruction = new Instruction("",
 										   "The player without the Neon Star can block",
 										   "Run into this enemy to proceed",
@@ -114,6 +126,10 @@ public class TutorialManager : MonoBehaviour {
 	/// <param name="tutorial">Which tutorial to begin.</param>
 	public void StartTutorial(string tutorial){
 		switch (tutorial){
+			case PASS_TUTORIAL:
+				passInstruction.CameraZoomPos = GetBallPos() + cameraOffset;
+				currentInstruction = passInstruction;
+				break;
 			case BLOCK_TUTORIAL:
 				currentInstruction = blockInstruction;
 				break;
@@ -123,6 +139,15 @@ public class TutorialManager : MonoBehaviour {
 		}
 
 		StartCoroutine(DisplayTutorial(currentInstruction));
+	}
+
+
+	/// <summary>
+	/// Find the ball so that the passing tutorial can zoom in on it
+	/// </summary>
+	/// <returns>The ball carrier position.</returns>
+	private Vector3 GetBallPos(){
+		return GameObject.Find(BALL_OBJ).transform.position;
 	}
 
 
@@ -228,7 +253,7 @@ public class TutorialManager : MonoBehaviour {
 	//////////////////////////////////////////////////////
 
 
-	//Used to stop the tutorials about blocking and the player hunt enemy
+	//used to stop the tutorials about blocking and the player hunt enemy
 	//Listens for when an enemy is destroyed; assuming it's a tutorial enemy, signals that the tutorial is finished
 	public void EnemyDestroyedFunc(Event e){
 		//Debug.Assert(e.GetType() == EnemyDestroyedEvent);
@@ -242,6 +267,14 @@ public class TutorialManager : MonoBehaviour {
 	}
 
 
+	//used to stop the player passing tutorial
+	//listens for when a player passes; when a player does, signals that the tutorial is finished
+	public void PlayerPassFunc(Event e){
+		Services.EventManager.Unregister<PassEvent>(eventHandler);
+		tutorialFinished = true;
+	}
+
+
 
 	//////////////////////////////////////////////////////
 	/// Private class used to create tutorials
@@ -251,7 +284,7 @@ public class TutorialManager : MonoBehaviour {
 		public string TopLeftText { get; private set; } //the text field at the top-left of the screen
 		public string TopRightText { get; private set; } //text field at the top-right
 		public string BottomRightText { get; private set; } //text field at the bottom-right
-		public Vector3 CameraZoomPos { get; private set; } //where the "Cameras" object should lerp to
+		public Vector3 CameraZoomPos { get; set; } //where the "Cameras" object should lerp to
 		public delegate void EventHandlerFunc(Event e);
 		public EventHandlerFunc eventHandlerFunc { get; private set; } //the function that will end the tutorial
 		public float ZoomDelay { get; private set; } //if an enemy needs to come on screen, set the delay for that here

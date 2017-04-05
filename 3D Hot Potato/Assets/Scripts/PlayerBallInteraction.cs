@@ -87,6 +87,9 @@ public class PlayerBallInteraction : MonoBehaviour {
 			ballBehavior.Pass(transform.Find(BALL_OBJ).position, otherPlayer);
 			//scoreManager.Score(NUMBER_OF_PASSES, gameObject.name);
 			BallCarrier = false;
+
+			//send out a pass event; the passing tutorial needs to receive these before the players go on
+			Services.EventManager.Fire(new PassEvent(gameObject, otherPlayer.gameObject));
 		}
 	}
 }
