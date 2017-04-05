@@ -28,7 +28,6 @@ public class TutorialManager : MonoBehaviour {
 
 	public float zoomDuration = 0.5f; //how long the camera spends zooming in and out
 	public float readDelay = 2.0f; //how long the camera stays zoomed in
-	public float enemyEntryTime = 0.5f; //how long it takes enemies to enter the playing field
 
 
 
@@ -98,12 +97,14 @@ public class TutorialManager : MonoBehaviour {
 										   "The player without the Neon Star can block",
 										   "Run into this enemy to proceed",
 										   new Vector3 (0.0f, -13.8f, 31.5f),
-										   EnemyDestroyedFunc);
+										   EnemyDestroyedFunc,
+										   0.5f);
 		blightrunnerInstruction = new Instruction("Gold enemies change the rules",
 												  "Hit them with the Neon Star",
 												  "If you don't have it, stay safe!",
 												  new Vector3(0.0f, -13.8f, 31.5f),
-												  EnemyDestroyedFunc);
+												  EnemyDestroyedFunc,
+												  0.5f);
 	}
 
 
@@ -129,18 +130,19 @@ public class TutorialManager : MonoBehaviour {
 	/// This coroutine organizes the overall tutorial process:
 	/// 
 	/// 1. Stop LevelManager from creating new enemies.
-	/// 2. Zoom in on some key part of the screen.
-	/// 3. Display explanatory text, if any.
-	/// 4. Clear the text.
-	/// 5. Zoom back out.
-	/// 6. Wait until something happens.
-	/// 7. Restart the LevelManager.
+	/// 2. If the tutorial needs to wait for something (e.g., an enemy coming on screen), do that
+	/// 3. Zoom in on some key part of the screen.
+	/// 4. Display explanatory text, if any.
+	/// 5. Clear the text.
+	/// 6. Zoom back out.
+	/// 7. Wait until something happens.
+	/// 8. Restart the LevelManager.
 	/// </summary>
 	/// <param name="instruction">The current instruction object.</param>
 	private IEnumerator DisplayTutorial(Instruction instruction){
 		levelManager.Hold = true;
 		tutorialFinished = false;
-		yield return new WaitForSeconds(enemyEntryTime);
+		yield return new WaitForSeconds(instruction.ZoomDelay);
 		Time.timeScale = 0.0f;
 		yield return StartCoroutine(ZoomCameraIn(instruction.CameraZoomPos));
 		DisplayTutorialText(instruction);
@@ -166,9 +168,21 @@ public class TutorialManager : MonoBehaviour {
 	//////////////////////////////////////////////////////
 
 	private void DisplayTutorialText(Instruction instruction){
+		Debug.Log("Top left instruction: " + instruction.TopLeftText);
+		Debug.Log("Top right instruction: " + instruction.TopRightText);
+		Debug.Log("Bottom right instruction: " + instruction.BottomRightText);
+		Debug.Log("Top left display: " + instructionsTopLeft.text);
+		Debug.Log("Top right display: " + instructionsTopRight.text);
+		Debug.Log("Bottom right display: " + instructionsBottomRight.text);
 		instructionsTopLeft.text = instruction.TopLeftText;
 		instructionsTopRight.text = instruction.TopRightText;
 		instructionsBottomRight.text = instruction.BottomRightText;
+		Debug.Log("Top left instruction: " + instruction.TopLeftText);
+		Debug.Log("Top right instruction: " + instruction.TopRightText);
+		Debug.Log("Bottom right instruction: " + instruction.BottomRightText);
+		Debug.Log("Top left display: " + instructionsTopLeft.text);
+		Debug.Log("Top right display: " + instructionsTopRight.text);
+		Debug.Log("Bottom right display: " + instructionsBottomRight.text.ToString());
 	}
 
 	private void ClearTutorialText(){
@@ -240,18 +254,21 @@ public class TutorialManager : MonoBehaviour {
 		public Vector3 CameraZoomPos { get; private set; } //where the "Cameras" object should lerp to
 		public delegate void EventHandlerFunc(Event e);
 		public EventHandlerFunc eventHandlerFunc { get; private set; } //the function that will end the tutorial
+		public float ZoomDelay { get; private set; } //if an enemy needs to come on screen, set the delay for that here
 
 
 		public Instruction(string topLeft,
 						   string topRight,
 						   string bottomRight,
 						   Vector3 camPos,
-						   EventHandlerFunc eventHandlerFunc){
+						   EventHandlerFunc eventHandlerFunc,
+						   float zoomDelay){
 			TopLeftText = topLeft;
 			TopRightText = topRight;
 			BottomRightText = bottomRight;
 			CameraZoomPos = camPos;
 			this.eventHandlerFunc = eventHandlerFunc;
+			ZoomDelay = zoomDelay;
 		}
 	}
 }
