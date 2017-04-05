@@ -1,7 +1,7 @@
 {
 "world1":{
 		"act1":[
-			{"action":"wait", "time":5},
-			{"action":"spawn", "whichEnemy":"MagnetizingBoss", "waves":1, "numPerWave":1, "whichSpawners":[8], "timeBetweenWaves":0, "timeVariance":0}
+			{"action":"spawn", "whichEnemy":"BlightrunnerTutorialHuntEnemy", "waves":1, "numPerWave":1, "whichSpawners":[8], "timeBetweenWaves":0, "timeVariance":0},
+			{"action":"tutorial", "tutorialName":"Blight"}
 		]}
 }
