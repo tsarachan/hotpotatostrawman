@@ -120,7 +120,7 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 		if (other.gameObject.name.Contains(ENEMY_OBJ)){
 			if (!GetComponent<PlayerBallInteraction>().BallCarrier){  //try to destroy non-hunt enemies when not the ball carrier
 				ScoreDestroyedEnemy(other.gameObject);
-				Services.EventManager.Fire(new EnemyDestroyedEvent(collider.gameObject, gameObject));
+				Services.EventManager.Fire(new EnemyDestroyedEvent(other.gameObject, gameObject));
 				other.gameObject.GetComponent<EnemyBase>().GetDestroyed();
 				GetComponent<PlayerMovement>().Stopped = true;
 			} else { //this player is the ball carrier and got caught by a non-hunt enemy; the game is over
