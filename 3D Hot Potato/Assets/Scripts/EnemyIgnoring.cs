@@ -176,9 +176,6 @@ public class EnemyIgnoring : EnemyBase {
 
 
 	public override void GetDestroyed(){
-		//notify the event manager that this enemy has been destroyed; important for tutorials
-		Services.EventManager.Fire(new EnemyDestroyedEvent(gameObject));
-
 		GameObject destroyParticle = ObjectPooling.ObjectPool.GetObj(DESTROY_PARTICLE);
 		destroyParticle.transform.position = transform.position;
 	
