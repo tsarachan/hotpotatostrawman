@@ -1,0 +1,38 @@
+fileFormatVersion: 2
+guid: eb69370aea7cc4f75951aca3b5583e25
+timeCreated: 1491419943
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Fira Sans
+  fontNames:
+  - Fira Sans
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: c8408370da2694a348589d1073ab0a92, type: 3}
+  - {fileID: 12800000, guid: af59dee16be844794bc5ad2f0234c1a3, type: 3}
+  - {fileID: 12800000, guid: 14f86982998d347c1a9477224e5a245a, type: 3}
+  - {fileID: 12800000, guid: b27897b3327ec4523a848164170b724f, type: 3}
+  - {fileID: 12800000, guid: 3abfe0d3f65c14b79a7c91c5d29c2336, type: 3}
+  - {fileID: 12800000, guid: 320c56c50b6f0473aa6687bfe810f9d2, type: 3}
+  - {fileID: 12800000, guid: 15973fc56fb5a4e87b65124fd77e07ca, type: 3}
+  - {fileID: 12800000, guid: 3f819a2678b96457484b607ce4959caa, type: 3}
+  - {fileID: 12800000, guid: 3d2dd8965069447448dc96979bc81b87, type: 3}
+  - {fileID: 12800000, guid: 472668c62b3764d559cacf74ded1acea, type: 3}
+  - {fileID: 12800000, guid: e4d29bf901cd3407ab1f470007bc86d4, type: 3}
+  - {fileID: 12800000, guid: e5cf0b1ac8d33432faa5616adaf150ea, type: 3}
+  - {fileID: 12800000, guid: 52f0f88bcf5404c1bae464ee13751018, type: 3}
+  - {fileID: 12800000, guid: d97e1cebc16c3460b9f4d331e3f78acb, type: 3}
+  - {fileID: 12800000, guid: 0087343c873ae497bbfd2d42e938795b, type: 3}
+  - {fileID: 12800000, guid: dceae64cee61444a39733086798de8d6, type: 3}
+  - {fileID: 12800000, guid: 0a39416cc32f64448a9797877ad6e79d, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -20,6 +20,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class TutorialManager : MonoBehaviour {
 
@@ -57,9 +58,9 @@ public class TutorialManager : MonoBehaviour {
 
 
 	//the text blocks where instructions can be displayed
-	private Text instructionsTopLeft;
-	private Text instructionsTopRight;
-	private Text instructionsBottomRight;
+	private TextMeshProUGUI instructionsTopLeft;
+	private TextMeshProUGUI instructionsTopRight;
+	private TextMeshProUGUI instructionsBottomRight;
 	private const string INSTRUCTIONS_1_OBJ = "Tutorial text 1";
 	private const string INSTRUCTIONS_2_OBJ = "Tutorial text 2";
 	private const string INSTRUCTIONS_3_OBJ = "Tutorial text 3";
@@ -97,23 +98,23 @@ public class TutorialManager : MonoBehaviour {
 
 
 	private void Start(){
-		instructionsTopLeft = GameObject.Find(INSTRUCTIONS_1_OBJ).GetComponent<Text>();
-		instructionsTopRight = GameObject.Find(INSTRUCTIONS_2_OBJ).GetComponent<Text>();
-		instructionsBottomRight = GameObject.Find(INSTRUCTIONS_3_OBJ).GetComponent<Text>();
+		instructionsTopLeft = GameObject.Find(INSTRUCTIONS_1_OBJ).GetComponent<TextMeshProUGUI>();
+		instructionsTopRight = GameObject.Find(INSTRUCTIONS_2_OBJ).GetComponent<TextMeshProUGUI>();
+		instructionsBottomRight = GameObject.Find(INSTRUCTIONS_3_OBJ).GetComponent<TextMeshProUGUI>();
 		cameras = GameObject.Find(CAMERA_ORGANIZER).transform;
 		camerasStartPos = cameras.position;
 		levelManager = GetComponent<LevelManager>();
 
 		passInstruction = new Instruction("Cooperate with your partner to reach the goal",
-										  "Press the button to pass the Neon Star",
-										  "Pass the Neon Star to continue",
+										  "Press the button <sprite=\"Pass_button\" index=0>to pass the Neon Star",
+										  "Try passing now",
 										  new Vector3(0.0f, 0.0f, 0.0f), //the pass instruction will find the ball
 										  PassRegistration,
 										  PlayerPassFunc,
 										  0.0f);
 		blockInstruction = new Instruction("",
 										   "The player without the Neon Star can block",
-										   "Run into this enemy to proceed",
+										   "Run into this enemy to continue",
 										   new Vector3 (0.0f, -13.8f, 31.5f),
 										   EnemyDestroyedRegistration,
 										   EnemyDestroyedFunc,
@@ -126,7 +127,7 @@ public class TutorialManager : MonoBehaviour {
 												  EnemyDestroyedFunc,
 												  0.5f);
 		powerInstruction = new Instruction("Each player has a special power",
-										   "Hit the throw button while the ball is sparking",
+										   "Hit the throw button while the ball is sparking <sprite=\"Spark_ex\" index=0>",
 										   "Don't be early or late!",
 										   new Vector3(0.0f, 0.0f, 0.0f), //this instruction will find the ball
 										   PowerTriggeredRegistration,
