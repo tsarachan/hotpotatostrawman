@@ -196,7 +196,6 @@ public class TutorialManager : MonoBehaviour {
 		yield return StartCoroutine(ZoomCameraIn(instruction.CameraZoomPos));
 		DisplayTutorialText(instruction);
 		yield return new WaitForSecondsRealtime(readDelay);
-		ClearTutorialText();
 		yield return StartCoroutine(ZoomCameraOut(instruction.CameraZoomPos));
 		Time.timeScale = 1.0f;
 		currentInstruction.registerFunc();
@@ -205,6 +204,8 @@ public class TutorialManager : MonoBehaviour {
 		while (!tutorialFinished){
 			yield return null;
 		}
+
+		ClearTutorialText();
 			
 		levelManager.Hold = false;
 		yield break;

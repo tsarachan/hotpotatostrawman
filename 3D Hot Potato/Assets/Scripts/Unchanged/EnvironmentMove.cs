@@ -8,20 +8,20 @@ public class EnvironmentMove : MonoBehaviour {
 	public float resetZ = -25.0f; //the z-position where this object will cycle back to the front
 
 	//if freezing enemies is in the game, these variables freeze the environment around them
-	private bool frozen = false;
-	private float freezeTimer = 0.0f;
-	private float freezeDuration;
+	protected bool frozen = false;
+	protected float freezeTimer = 0.0f;
+	protected float freezeDuration;
 
 	//these stop the buildings when the game hasn't started, and then bring the buildings up to speed
 	//when the game gets underway
-	private bool gameHasStarted = false;
+	protected bool gameHasStarted = false;
 	public bool GameHasStarted{
 		get { return gameHasStarted; }
 		set { gameHasStarted = value; }
 	}
-	private float currentSpeed = 0.0f;
+	protected float currentSpeed = 0.0f;
 	public AnimationCurve startMovingCurve;
-	private float timer = 0.0f;
+	protected float timer = 0.0f;
 	public float timeToFullSpeed = 1.0f;
 
 
@@ -42,7 +42,7 @@ public class EnvironmentMove : MonoBehaviour {
 	}
 
 
-	private float GetCurrentSpeed(){
+	protected float GetCurrentSpeed(){
 		timer += Time.deltaTime;
 
 		return Mathf.Lerp(0.0f, speed, startMovingCurve.Evaluate(timer/timeToFullSpeed));
