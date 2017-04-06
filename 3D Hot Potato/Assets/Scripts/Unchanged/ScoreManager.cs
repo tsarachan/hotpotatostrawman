@@ -93,7 +93,7 @@ public class ScoreManager : MonoBehaviour {
 
 	public void AddScore(int value){
 		Score += value + value * combo * 0.5f;
-		scoreText.text = Score.ToString();
+		scoreText.text = SCORE_LABEL + Score.ToString();
 	}
 
 
@@ -108,8 +108,6 @@ public class ScoreManager : MonoBehaviour {
 		
 
 	private IEnumerator EnterComboText(){
-		Debug.Log("EnterComboText() called");
-
 		if (currentSignPosition != SignPosition.OFFTOP){
 			yield break;
 		} else {
@@ -117,7 +115,6 @@ public class ScoreManager : MonoBehaviour {
 		}
 
 		for (float timer = 0.0f; timer <= enterDuration; timer += Time.deltaTime){
-			Debug.Log("moving; timer == " + timer);
 			comboText.transform.position = Vector3.Lerp(startLoc, displayLoc, enterCurve.Evaluate(timer/enterDuration));
 
 			yield return null;
