@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using TMPro;
 
 public class ScoreManager : MonoBehaviour {
 
@@ -10,26 +11,26 @@ public class ScoreManager : MonoBehaviour {
 	public float nextComboTime = 0.5f;
 
 
-	//where the sign is when it's on screen and in view
-	public Vector3 displayLoc = new Vector3(-23.36f, 11.45f, 22.2f);
+	//where combo notifications stop
+	public Vector3 displayLoc = new Vector3(7.35f, 0.0f, -77.8f);
 
 
-	//how long it takes the sign to enter the screen
+	//how long it takes combo notifications to slide onscreen
 	public float enterDuration = 0.5f;
 	public AnimationCurve enterCurve;
 
 
-	//how long it takes the sign to leave the screen
+	//how long it takes combo notifications to leave the screen
 	public float leaveDuration = 0.5f;
 	public AnimationCurve leaveCurve;
 
 
-	//the sign's location when it starts to enter the screen
-	public Vector3 startLoc = new Vector3(-23.36f, 11.45f, 104.0f);
+	//where combo notifications wait at the top of the screen
+	public Vector3 startLoc = new Vector3(-23.36f, 11.45f, 46.9f);
 
 
-	//where the sign goes as it leaves the screen
-	public Vector3 endLoc = new Vector3(-23.36f, 11.45f, -18.51f);
+	//where combo notifications go as they scroll off the screen
+	public Vector3 endLoc = new Vector3(7.35f, 0.0f, -96.25f);
 
 
 	//----------Internal variables----------
@@ -44,25 +45,35 @@ public class ScoreManager : MonoBehaviour {
 
 
 	//this is added to the current combo value ot display the combo to the player
-	private const string COMBO_LABEL = "x\r\nCombo";
+	private const string COMBO_LABEL = "x Combo";
+
+
+	//this is added to the score as a label
+	private const string SCORE_LABEL = "Score: ";
 
 
 	//UI text variables
-	private Text scoreText;
-	private Text comboText;
+	private TextMeshProUGUI scoreText;
+	private TextMeshProUGUI comboText;
 	private const string SCORE_TEXT_OBJ = "Score text";
 	private const string COMBO_TEXT_OBJ = "Combo text";
+
+
+	//used to check whether the combo text is already moving on screen
+	private enum SignPosition { OFFTOP, ENTERING, DISPLAY, LEAVING };
+	private SignPosition currentSignPosition;
 
 
 	private void Start(){
 
 		scoreText = GameObject.Find(SCORE_TEXT_OBJ)
-			.GetComponent<Text>();
+			.GetComponent<TextMeshProUGUI>();
 		comboText = GameObject.Find(COMBO_TEXT_OBJ)
-			.GetComponent<Text>();
+			.GetComponent<TextMeshProUGUI>();
 
-		scoreText.text = Score.ToString();
+		scoreText.text = SCORE_LABEL + Score.ToString();
 		comboText.text = combo.ToString() + COMBO_LABEL;
+		currentSignPosition = SignPosition.OFFTOP;
 	}
 
 
@@ -72,6 +83,7 @@ public class ScoreManager : MonoBehaviour {
 
 			if (comboTimer >= nextComboTime){
 				comboText.text = ResetCombo();
+				StartCoroutine(LeaveComboText());
 
 				comboTimer = 0.0f;
 			}
@@ -90,6 +102,49 @@ public class ScoreManager : MonoBehaviour {
 		comboText.text = combo.ToString() + COMBO_LABEL;
 
 		comboTimer = 0.0f;
+
+		StartCoroutine(EnterComboText());
+	}
+		
+
+	private IEnumerator EnterComboText(){
+		Debug.Log("EnterComboText() called");
+
+		if (currentSignPosition != SignPosition.OFFTOP){
+			yield break;
+		} else {
+			currentSignPosition = SignPosition.ENTERING;
+		}
+
+		for (float timer = 0.0f; timer <= enterDuration; timer += Time.deltaTime){
+			Debug.Log("moving; timer == " + timer);
+			comboText.transform.position = Vector3.Lerp(startLoc, displayLoc, enterCurve.Evaluate(timer/enterDuration));
+
+			yield return null;
+		}
+
+		currentSignPosition = SignPosition.DISPLAY;
+
+		yield break;
+	}
+
+
+	private IEnumerator LeaveComboText(){
+		if (currentSignPosition != SignPosition.DISPLAY){
+			yield break;
+		} else {
+			currentSignPosition = SignPosition.LEAVING;
+		}
+
+		for (float timer = 0.0f; timer <= leaveDuration; timer += Time.deltaTime){
+			comboText.transform.position = Vector3.Lerp(displayLoc, endLoc, leaveCurve.Evaluate(timer/enterDuration));
+
+			yield return null;
+		}
+
+		currentSignPosition = SignPosition.OFFTOP;
+
+		yield break;
 	}
 
 
