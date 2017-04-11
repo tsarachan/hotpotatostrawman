@@ -8,7 +8,16 @@ using TMPro;
 public class HighScoreManager : MonoBehaviour {
 
 
+	//----------Tunable variables----------
 
+	public float highScoreDisplayTime = 5.0f;
+
+
+
+	//----------Internal variables----------
+
+
+	//class for entries in the high score list
 	public class Entry{
 		public string Name { get; set; }
 		public int Score { get; set; }
@@ -40,20 +49,29 @@ public class HighScoreManager : MonoBehaviour {
 	private const string HIGH_SCORES_OBJ = "High scores text";
 
 
-
-	public int numEntries = 10;
+	//the list of high scores
+	public int numEntries = 10; //the length of the high score list
 	public List<Entry> entries;
+
+
+	//used to label PlayerPrefs keys
 	private const string HIGH_SCORE_HEADER = "HighScore";
-	private string nameEntry;
-	private string scoreEntry;
+
+
+	//the name entry system, so that this can manage when it's turned on or off
+	private NameEntrySystem nameEntrySystem;
 
 
 	/// <summary>
-	/// Populates the list of high scores.
+	/// Populates the list of high scores, and then determine whether the players should enter their names, or
+	/// whether the system should skip ahead to displaying the current high scores.
 	/// </summary>
 	private void Start(){
 		highScoreText = transform.Find(CANVAS_OBJ).Find(HIGH_SCORES_OBJ).GetComponent<TextMeshProUGUI>();
 		entries = new List<Entry>();
+		nameEntrySystem = GetComponent<NameEntrySystem>();
+
+
 		string key;
 
 		for (int i = 0; i < numEntries; i++){
@@ -65,9 +83,39 @@ public class HighScoreManager : MonoBehaviour {
 				entries.Add(new Entry("rck&rll", 0));
 			}
 		}
+
+
+		//if the players have a high score, allow them to enter their names, and shut off the high score list until
+		//they do. If they do not, shut off the name entry system and display the high score list
+		if (CheckIfEnterNames()){
+			nameEntrySystem.gameObject.SetActive(true);
+			highScoreText.gameObject.SetActive(false);
+		} else {
+			nameEntrySystem.gameObject.SetActive(false);
+			StartCoroutine(DisplayScore());
+		}
 	}
 
 
+	/// <summary>
+	/// Used to determine whether the players have a high score, such that they should get to enter their names.
+	/// </summary>
+	/// <returns><c>true</c>if the players' score is better than the lowest high score in the list,
+	/// <c>false</c> otherwise.</returns>
+	private bool CheckIfEnterNames(){
+		if (ScoreRepository.Score > entries[entries.Count - 1].Score){
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+
+	/// <summary>
+	/// This is the master coroutine used to display the high score list. It switches on the high score display,
+	/// and then calls PrintScores() to display the entries in the high score list. After five secon
+	/// </summary>
+	/// <returns>The score.</returns>
 	public IEnumerator DisplayScore(){
 		highScoreText.gameObject.SetActive(true);
 		PrintScores();
@@ -78,6 +126,9 @@ public class HighScoreManager : MonoBehaviour {
 	}
 
 
+	/// <summary>
+	/// Displays the high scores. Note that this does not format them; that's handled by Entry.GetEntry().
+	/// </summary>
 	private void PrintScores() {
 		string scoreList = "";
 		foreach(Entry entry in entries) {
@@ -87,6 +138,13 @@ public class HighScoreManager : MonoBehaviour {
 	}
 
 
+	/// <summary>
+	/// Adds a high score to the list in the correct place, and then caps the list at [numEntries] entries.
+	/// 
+	/// NameEntrySystem calls this when name entry is complete.
+	/// </summary>
+	/// <param name="name">The players' names.</param>
+	/// <param name="score">Their score.</param>
 	public void ReviseScoreList(string name, int score){
 		Entry newChallenger = new Entry(name, score);
 
@@ -102,6 +160,9 @@ public class HighScoreManager : MonoBehaviour {
 	}
 
 
+	/// <summary>
+	/// Records the high score list in PlayerPrefs.
+	/// </summary>
 	private void SetScores(){
 		string key;
 
@@ -113,121 +174,10 @@ public class HighScoreManager : MonoBehaviour {
 	}
 
 
+	/// <summary>
+	/// Saves the current high score list to PlayerPrefs when the game closes.
+	/// </summary>
 	private void OnApplicationQuit(){
 		PlayerPrefs.Save();
 	}
-
-	//
-//	public class Entry {
-//		public string name;
-//		public int score;
-//		public Entry(string newName, int newScore) {
-//			name = newName;
-//			score = newScore;
-//		}
-//		public string GetEntry() {
-//			if(score != 0) {
-//				return string.Concat(name, " ", score.ToString());
-//			}
-//			else {
-//				return string.Concat(name, " ----");
-//			}
-//		}
-//		public string scoreVal() {
-//			return score.ToString();
-//		}
-//	}
-
-
-//	public Text HighScoreDisplay;
-//	public int numEntries = 10;
-//	public List<Entry> entries;
-//	private string HighScoreHeader;
-//	private string nameEntry;
-//	private int scoreEntry;
-//	bool enteringScore;
-
-
-
-//	void Start () {
-//		enteringScore = false;
-//		HighScoreHeader = SceneManager.GetActiveScene().name + "HighScore";
-//		entries = new List<Entry>();
-//		string key;
-//		for(int i = 0; i < numEntries; i++) {
-//			key = HighScoreHeader + i.ToString();
-//			if(PlayerPrefs.HasKey(key + "score")) {
-//				entries.Add(new Entry(PlayerPrefs.GetString(key + "name"), PlayerPrefs.GetInt(key + "score")));
-//			}
-//			else {
-//				entries.Add(new Entry("Sam", 0));
-//			}
-//		}
-//	}
-
-
-//	public void SetScores() {
-//		string key;
-//		for(int i = 0; i < numEntries; i++) {
-//			key = HighScoreHeader + i.ToString();
-//			PlayerPrefs.SetString(key + "name", entries[i].name);
-//			PlayerPrefs.SetInt(key + "score", entries[i].score);
-//		}
-//	}
-//
-//
-//	public void PrintScores() {
-//		string scoreList = "";
-//		foreach(Entry entry in entries) {
-//			scoreList = string.Concat(scoreList, entry.GetEntry(), "\n");
-//		}
-//		HighScoreDisplay.text = scoreList;
-//	}
-//
-//
-//	public void ClearLeaderBoard() {
-//		string key;
-//		for(int i = 0; i < numEntries; i++) {
-//			key = HighScoreHeader + i.ToString();
-//			PlayerPrefs.DeleteKey(key + "name");
-//			PlayerPrefs.DeleteKey(key + "score");
-//		}
-//	}
-//
-//
-//	void OnApplicationQuit()
-//	{
-//		PlayerPrefs.Save();
-//	}
-//
-//
-//	public bool MadeHighScoreList(int score) {
-//		return score > entries[numEntries -1].score;
-//	}
-//
-//
-//	public void CreateNewEntry(string name, int score) {
-//		Entry newChallenger = new Entry(name, score);
-//		for(int i = 0; i < entries.Count; i++) {
-//			if(entries[i].score < newChallenger.score) {
-//				entries.Insert(i, newChallenger);
-//				break;
-//			}
-//		}
-//		SetScores();
-//		entries.Remove(entries[numEntries]);
-//	}
-//
-//
-//	public void InputNewName(int score) {
-//		enteringScore = true;
-//		scoreEntry = score;
-//	}
-//
-//
-//	IEnumerator DisplayAndReset() {
-//		PrintScores();
-//		yield return new WaitForSeconds(5);
-//		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-//	}
 }
