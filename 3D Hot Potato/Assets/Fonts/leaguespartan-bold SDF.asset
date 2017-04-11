@@ -1030,6 +1030,9 @@ Material:
         name: _FaceDilate
       second: 0
     - first:
+        name: _FaceShininess
+      second: 0
+    - first:
         name: _FaceUVSpeedX
       second: 0
     - first:
@@ -1058,6 +1061,9 @@ Material:
       second: 0
     - first:
         name: _MaskSoftnessY
+      second: 0
+    - first:
+        name: _OutlineShininess
       second: 0
     - first:
         name: _OutlineSoftness
@@ -1167,6 +1173,9 @@ Material:
       second: {r: 0, g: 0, b: 0, a: 1}
     - first:
         name: _ReflectOutlineColor
+      second: {r: 0, g: 0, b: 0, a: 1}
+    - first:
+        name: _SpecColor
       second: {r: 0, g: 0, b: 0, a: 1}
     - first:
         name: _SpecularColor
