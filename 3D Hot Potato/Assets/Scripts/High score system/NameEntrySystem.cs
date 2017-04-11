@@ -110,7 +110,8 @@ public class NameEntrySystem : MonoBehaviour {
 			}
 
 			if (p1DoneEntering && p2DoneEntering){
-				GetComponent<HighScoreManager>().ReviseScoreList(p1Initials.text + " & " + p2Initials.text, 1000);
+				GetComponent<HighScoreManager>().ReviseScoreList(p1Initials.text + " & " + p2Initials.text,
+																 ScoreRepository.Score);
 				StartCoroutine(GetComponent<HighScoreManager>().DisplayScore());
 				bothDoneEntering = true;
 			}

@@ -156,4 +156,12 @@ public class ScoreManager : MonoBehaviour {
 		scoreText.text = Score.ToString();
 		ResetCombo();
 	}
+
+
+	/// <summary>
+	/// Called when the game ends to record the score.
+	/// </summary>
+	public void RecordScore(){
+		ScoreRepository.Score = (int)Score;
+	}
 }
