@@ -14,6 +14,10 @@ public class PlayerBallInteraction : MonoBehaviour {
 	private BallBehavior ballBehavior;
 
 
+	private Transform myCycleObj;
+	private const string CYCLE_OBJ = "Cycle and rider";
+
+
 	private const string PLAYER_ORGANIZER = "Players";
 	private const string PLAYER_1_NAME = "Player 1";
 	private const string PLAYER_2_NAME = "Player 2";
@@ -50,6 +54,7 @@ public class PlayerBallInteraction : MonoBehaviour {
 
 	private void Start(){
 		ballBehavior = GameObject.Find(BALL_OBJ).GetComponent<BallBehavior>();
+		myCycleObj = transform.Find(CYCLE_OBJ);
 		otherPlayer = GetOtherPlayer();
 		//scoreManager = GameObject.Find(MANAGER_OBJ).GetComponent<ScoreManager>();
 		catchBehavior = GetComponent<CatchBehavior>();
@@ -83,7 +88,7 @@ public class PlayerBallInteraction : MonoBehaviour {
 	/// InputManager calls this to start the process of throwing the ball.
 	/// </summary>
 	public void Throw(){
-		if (transform.Find(BALL_OBJ)){ //sanity check to make sure this player has the ball; avoids null references
+		if (myCycleObj.Find(BALL_OBJ)){ //sanity check to make sure this player has the ball; avoids null references
 			ballBehavior.Pass(transform.Find(BALL_OBJ).position, otherPlayer);
 			//scoreManager.Score(NUMBER_OF_PASSES, gameObject.name);
 			BallCarrier = false;

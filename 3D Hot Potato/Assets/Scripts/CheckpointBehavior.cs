@@ -35,6 +35,10 @@ public class CheckpointBehavior : EnemyBase {
 	private const string CHECKPOINT_MESSAGE = "Checkpoint!";
 
 
+	//used to make players jump
+	private const string CYCLE_OBJ = "Cycle and rider";
+
+
 
 	private void Start(){
 		levelManager = GameObject.Find(MANAGER_OBJ).GetComponent<LevelManager>();
@@ -60,11 +64,15 @@ public class CheckpointBehavior : EnemyBase {
 
 
 	public void OnTriggerEnter(Collider other){
-		if (!checkpointActivated && other.tag == PLAYER_TAG){ //don't set a checkpoint if, frex., an enemy goes through the point
-			StartCoroutine(sidelineTextControl.ShowText(CHECKPOINT_MESSAGE));
-			levelManager.SetCheckpoint(CurrentWorldNum, CurrentActNum, CurrentNextReadTime, CurrentReadIndex);
-			checkpointActivated = true;
-			audioSource.Play();
+		if (other.tag == PLAYER_TAG){
+			StartCoroutine(other.transform.Find(CYCLE_OBJ).GetComponent<BobUpAndDown>().Jump());
+
+			if (!checkpointActivated){ //don't set a checkpoint if, frex., an enemy goes through the point
+				StartCoroutine(sidelineTextControl.ShowText(CHECKPOINT_MESSAGE));
+				levelManager.SetCheckpoint(CurrentWorldNum, CurrentActNum, CurrentNextReadTime, CurrentReadIndex);
+				checkpointActivated = true;
+				audioSource.Play();
+			}
 		}
 	}
 

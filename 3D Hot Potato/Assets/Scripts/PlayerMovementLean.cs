@@ -34,6 +34,10 @@ public class PlayerMovementLean : MonoBehaviour {
 	public float backRotateSpeed = 500.0f; //speed of rotating into the braking move for backwards movement
 
 
+	//the rotation target is aligned differently when the players are jumping
+	public bool Jumping { get; set; }
+
+
 	//initialize variables
 	private void Start(){
 		cycleAndRider = transform.Find(CYCLE_AND_RIDER_OBJ);
@@ -48,33 +52,35 @@ public class PlayerMovementLean : MonoBehaviour {
 	/// </summary>
 	/// <param name="dir">The direction of movement, provided by InputManager.</param>
 	public void Lean(string dir){
-		Vector3 temp = rotationTarget.eulerAngles;
+		if (!Jumping){ //the cycle always leans backwards when jumping
+			Vector3 temp = rotationTarget.eulerAngles;
 
-		switch(dir){
-			//note that up and down are reversed in the input manager, and thus here as well
-			//that is to say, case DOWN is forward movement, case UP is backward movement
-			case UP:
-				temp.y = 90.0f;
-				temp.z = -maxSideLean;
-				rotationTarget.rotation = Quaternion.Euler(temp);
-				break;
-			case DOWN:
-				temp.x = maxForwardLean;
-				rotationTarget.rotation = Quaternion.Euler(temp);
-				break;
-			case LEFT:
-				temp.z = maxSideLean;
-				temp.y = -maxTurnLean;
-				rotationTarget.rotation = Quaternion.Euler(temp);
-				break;
-			case RIGHT:
-				temp.z = -maxSideLean;
-				temp.y = maxTurnLean;
-				rotationTarget.rotation = Quaternion.Euler(temp);
-				break;
-			default:
-				Debug.Log("Illegal direction: " + dir);
-				break;
+			switch(dir){
+				//note that up and down are reversed in the input manager, and thus here as well
+				//that is to say, case DOWN is forward movement, case UP is backward movement
+				case UP:
+					temp.y = 90.0f;
+					temp.z = -maxSideLean;
+					rotationTarget.rotation = Quaternion.Euler(temp);
+					break;
+				case DOWN:
+					temp.x = maxForwardLean;
+					rotationTarget.rotation = Quaternion.Euler(temp);
+					break;
+				case LEFT:
+					temp.z = maxSideLean;
+					temp.y = -maxTurnLean;
+					rotationTarget.rotation = Quaternion.Euler(temp);
+					break;
+				case RIGHT:
+					temp.z = -maxSideLean;
+					temp.y = maxTurnLean;
+					rotationTarget.rotation = Quaternion.Euler(temp);
+					break;
+				default:
+					Debug.Log("Illegal direction: " + dir);
+					break;
+			}
 		}
 	}
 
@@ -107,6 +113,25 @@ public class PlayerMovementLean : MonoBehaviour {
 														  rotationTarget.rotation,
 														  rotateSpeed * Time.deltaTime);
 
-		rotationTarget.rotation = Quaternion.identity;
+		if (!Jumping){
+			rotationTarget.rotation = Quaternion.identity;
+		}
+	}
+
+
+	public void StartJumpRise(float angle){
+		Jumping = true;
+
+		rotationTarget.rotation = Quaternion.Euler(new Vector3(angle, 0.0f, 0.0f));
+	}
+
+
+	public void StartJumpFall(float angle){
+		rotationTarget.rotation = Quaternion.Euler(new Vector3(-angle, 0.0f, 0.0f));
+	}
+
+
+	public void DoneJumping(){
+		Jumping = false;
 	}
 }

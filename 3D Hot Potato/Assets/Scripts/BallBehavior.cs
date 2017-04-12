@@ -26,6 +26,10 @@ public class BallBehavior : MonoBehaviour {
 	protected const string SCENE_ORGANIZER = "Scene";
 	protected Transform scene;
 
+
+	//used to parent the ball to the player model while being held
+	protected const string CYCLE_OBJ = "Cycle and rider";
+
 	//this will store the coroutine that moves the ball, so that it can be stopped early if necessary
 	protected Coroutine co;
 	public Coroutine Co{
@@ -163,7 +167,7 @@ public class BallBehavior : MonoBehaviour {
 			StopCoroutine(Co);
 		}
 
-		transform.parent = catchingPlayer;
+		transform.parent = catchingPlayer.Find(CYCLE_OBJ);
 
 		//changes to the player model may require changing the offset axis here
 		transform.localPosition = new Vector3(0.0f, verticalOffset, 0.0f);

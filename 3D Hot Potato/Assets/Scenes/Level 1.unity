@@ -765,7 +765,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 715565556}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1979,6 +1979,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   range: 0.5
+  jumpHeight: 5
+  jumpDuration: 1
+  riseCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  fallCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  startHeightBoost: 1
+  jumpLeanAngle: -60
 --- !u!1 &173135669
 GameObject:
   m_ObjectHideFlags: 0
@@ -2848,7 +2864,7 @@ MonoBehaviour:
     m_PostInfinity: 0
     m_RotationOrder: 0
   verticalHeight: 2
-  verticalOffset: 2
+  verticalOffset: 1
 --- !u!54 &260184039
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -15506,7 +15522,6 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 1963251871}
   - {fileID: 989453889}
   - {fileID: 84052807}
   - {fileID: 1885461860}
@@ -20395,7 +20410,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: beca32a3c8df64f9fa0fd2df0091573c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  filename: Levels7.json
+  filename: Test_Cases.json
   restartGracePeriod: 1
 --- !u!114 &891422879
 MonoBehaviour:
@@ -27020,7 +27035,7 @@ RectTransform:
   m_Children:
   - {fileID: 280238004}
   m_Father: {fileID: 715565556}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -27395,6 +27410,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 1
   range: 1
+  jumpHeight: 5
+  jumpDuration: 1
+  riseCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  fallCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  startHeightBoost: 1
+  jumpLeanAngle: -60
 --- !u!1 &1022580396
 GameObject:
   m_ObjectHideFlags: 0
@@ -35004,6 +35035,58 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3.5
   range: 0.75
+  jumpHeight: 15
+  jumpDuration: 1
+  riseCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 4.887452
+      outSlope: 4.887452
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.10200154
+      value: 0.34299374
+      inSlope: 1.6702712
+      outSlope: 1.6702712
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  fallCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0.3554459
+      outSlope: 0.3554459
+      tangentMode: 34
+    - serializedVersion: 2
+      time: 0.30167678
+      value: 0.10722977
+      inSlope: 0.63078773
+      outSlope: 0.63078773
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: 1.2784483
+      outSlope: 1.2784483
+      tangentMode: 34
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  startHeightBoost: 0.8
+  jumpLeanAngle: -60
 --- !u!1 &1528407632
 GameObject:
   m_ObjectHideFlags: 0
@@ -38546,7 +38629,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 715565556}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -39240,126 +39323,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1945647367}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &1963251870
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1963251871}
-  - component: {fileID: 1963251874}
-  - component: {fileID: 1963251873}
-  - component: {fileID: 1963251872}
-  m_Layer: 5
-  m_Name: Checkpoint text
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1963251871
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1963251870}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 715565556}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -600, y: 0}
-  m_SizeDelta: {x: 426, y: 106}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1963251872
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1963251870}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de4bde2c6ff894a63bf59abe301bc6e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startXPos: -600
-  endXPos: 600
-  moveDuration: 2.5
-  timer: 0
-  moveCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 0.0020202019
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - serializedVersion: 2
-      time: 0.29982966
-      value: 0.5973962
-      inSlope: 1.2550503
-      outSlope: 1.2550503
-      tangentMode: 0
-    - serializedVersion: 2
-      time: 0.5007393
-      value: 0.40366986
-      inSlope: 0.8356571
-      outSlope: 0.8356571
-      tangentMode: 0
-    - serializedVersion: 2
-      time: 1
-      value: 1.0020202
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
---- !u!114 &1963251873
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1963251870}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.97794116, g: 0.97794116, b: 0.97794116, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 72
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 7
-    m_MaxSize: 72
-    m_Alignment: 4
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: checkpoint
---- !u!222 &1963251874
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1963251870}
 --- !u!1 &1966004042
 GameObject:
   m_ObjectHideFlags: 0
