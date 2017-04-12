@@ -167,7 +167,6 @@ public class CatchSandbox : MonoBehaviour {
 			yield break;
 		} else {
 			powerRunning = true;
-			Debug.Log("starting new MultiBurstAroundPlayer");
 
 			float timer = 0.0f;
 			int burstsSoFar = 0;
@@ -189,19 +188,15 @@ public class CatchSandbox : MonoBehaviour {
 					switch (burstsSoFar){
 						case 0:
 							burst.transform.position = playerPosition + new Vector3(0.0f, 0.0f, distFromPlayer);
-							Debug.Log("Making first burst");
 							break;
 						case 1:
 							burst.transform.position = playerPosition + new Vector3(-distFromPlayer, 0.0f, 0.0f);
-							Debug.Log("Making second burst");
 							break;
 						case 2:
 							burst.transform.position = playerPosition + new Vector3(distFromPlayer, 0.0f, 0.0f);
-							Debug.Log("Making third burst");
 							break;
 						case 3:
 							burst.transform.position = playerPosition + new Vector3(0.0f, 0.0f, -distFromPlayer);
-							Debug.Log("Making fourth burst");
 							break;
 						default:
 							Debug.Log("Illegal burstsSoFar: " + burstsSoFar);
@@ -216,7 +211,6 @@ public class CatchSandbox : MonoBehaviour {
 				yield return null;
 			}
 			powerRunning = false;
-			Debug.Log("powerRunning == " + powerRunning);
 
 			yield break;
 		}
