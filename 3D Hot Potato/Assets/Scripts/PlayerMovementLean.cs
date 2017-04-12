@@ -127,7 +127,7 @@ public class PlayerMovementLean : MonoBehaviour {
 
 
 	public void StartJumpFall(float angle){
-		rotationTarget.rotation = Quaternion.Euler(new Vector3(-angle, 0.0f, 0.0f));
+		rotationTarget.rotation = Quaternion.Euler(new Vector3(angle, 0.0f, 0.0f));
 	}
 
 

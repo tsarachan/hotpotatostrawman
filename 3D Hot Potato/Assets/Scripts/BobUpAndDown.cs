@@ -12,6 +12,7 @@ public class BobUpAndDown : MonoBehaviour {
 	public AnimationCurve fallCurve;
 	public float startHeightBoost = 1.0f;
 	public float jumpLeanAngle = -60.0f;
+	public float jumpLandAngle = -60.0f;
 
 	Transform tf;
 	Vector3 posVec;
@@ -21,6 +22,8 @@ public class BobUpAndDown : MonoBehaviour {
 
 	private bool jumping = false;
 
+
+	private float bobTimer = 0.0f;
 
 	private PlayerMovementLean playerMovementLean;
 
@@ -35,7 +38,9 @@ public class BobUpAndDown : MonoBehaviour {
 
 	void Update ()
 	{
-			posVec.y = startY + range * Mathf.Sin(Time.time * speed); //using Time.time means all bobbing things will
+		bobTimer += Time.deltaTime;
+
+		posVec.y = startY + range * Mathf.Sin(bobTimer * speed); //using Time.time means all bobbing things will
 																	  //be at the same place in their bob
 		if (!jumping){
 			tf.localPosition = posVec;
@@ -55,13 +60,15 @@ public class BobUpAndDown : MonoBehaviour {
 
 		yield return StartCoroutine(JumpUp());
 
-		playerMovementLean.StartJumpFall(jumpLeanAngle);
+		playerMovementLean.StartJumpFall(jumpLandAngle);
 
 		yield return StartCoroutine(FallDown());
 
 		playerMovementLean.DoneJumping();
 
 		jumping = false;
+
+		bobTimer = 0.0f;
 
 		yield break;
 	}
@@ -96,11 +103,11 @@ public class BobUpAndDown : MonoBehaviour {
 
 		Vector3 jumpStart = tf.localPosition;
 
-		while (tf.localPosition.y > posVec.y){
+		while (timer <= fallDuration){
 			timer += Time.deltaTime;
 			tf.localPosition = new Vector3(tf.localPosition.x,
-										   Mathf.Lerp(jumpStart.y, 
-													  startY - range,
+										   Mathf.LerpUnclamped(jumpStart.y, 
+													  startY,
 													  fallCurve.Evaluate(timer/fallDuration)),
 										   tf.localPosition.z);
 
