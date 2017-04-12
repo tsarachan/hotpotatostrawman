@@ -187,5 +187,6 @@ public class BallBehavior : MonoBehaviour {
 	/// </summary>
 	public void ResetBall(){
 		GetCaught(GameObject.Find(PLAYER_1).transform);
+		GameObject.Find(PLAYER_1).GetComponent<PlayerBallInteraction>().BallCarrier = true;
 	}
 }
