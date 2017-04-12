@@ -12,6 +12,7 @@ public class EnemyHoming : EnemyBase {
 	public float onScreenTime = 10.0f; //how long before the enemy stops homing and rushes its target
 	public Color preparingToChargeColor; //when the enemy is getting ready to rush, the point light will adopt this color
 	public Color leavingScreenColor; //the color of the point light when the enemy is rushing
+	public float eyeChangeDuration = 1.0f; //how long it takes the hunt enemy's eye to become its target's color
 
 	/*
 	 * 
@@ -95,6 +96,15 @@ public class EnemyHoming : EnemyBase {
 	private const string CHARGE_CLIP = "Audio/EnemyChargeSFX";
 
 
+	//is this a homing enemy? If so, these help change the eye's color to the target's
+	private const string EYE_OBJ = "Eye";
+	private Material eyeMat;
+	private Color startEyeColor = Color.black;
+	private Color targetEyeColor;
+	private const string CYCLE_ORGANIZER = "Cycle and rider";
+	private const string CYCLE = "Lightrunner";
+
+
 
 	private void Start(){
 		transform.parent = GameObject.Find(ENEMY_ORGANIZER).transform;
@@ -162,6 +172,28 @@ public class EnemyHoming : EnemyBase {
 		} else { //not off to the side; the enemy is coming from the top
 			return new Vector3(transform.position.x, transform.position.y, transform.position.z - enterDistance);
 		}
+	}
+
+
+	/// <summary>
+	/// Lerp the hunt enemy's eye color from black to the cycle color of the player it is after.
+	/// </summary>
+	private IEnumerator ChangeEyeColor(){
+		yield return new WaitForSeconds(enterTime);
+
+		targetEyeColor = target.Find(CYCLE_ORGANIZER).Find(CYCLE).GetComponent<Renderer>().material.color;
+
+		float timer = 0.0f;
+
+		while (timer <= eyeChangeDuration){
+			timer += Time.deltaTime;
+
+			eyeMat.color = Color.Lerp(startEyeColor, targetEyeColor, timer/eyeChangeDuration);
+
+			yield return null;
+		}
+
+		yield break;
 	}
 
 
@@ -310,5 +342,15 @@ public class EnemyHoming : EnemyBase {
 		model.SetActive(true);
 
 		GetComponent<Rigidbody>().velocity = startVelocity; //sanity check: make absolutely sure the velocity is zero
+
+
+		//reset the hunt enemy's searching eye, if applicable
+		if (gameObject.name.Contains(HUNT)){
+			playerOrganizer = GameObject.Find(PLAYER_ORGANIZER).transform;
+			eyeMat = transform.Find(EYE_OBJ).GetComponent<Renderer>().material;
+			eyeMat.color = startEyeColor;
+			target = ChooseTarget();
+			StartCoroutine(ChangeEyeColor());
+		}
 	}
 }
