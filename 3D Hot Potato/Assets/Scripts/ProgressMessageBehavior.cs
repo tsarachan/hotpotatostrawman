@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 
 public class ProgressMessageBehavior : MonoBehaviour {
 
@@ -12,7 +12,7 @@ public class ProgressMessageBehavior : MonoBehaviour {
 
 	private Vector3 movement = new Vector3(0.0f, 0.0f, 0.0f);
 
-	private Text text;
+	private TextMeshPro text;
 	private const string CANVAS_OBJ = "Canvas";
 	private const string TEXT_OBJ = "Text";
 
@@ -23,7 +23,7 @@ public class ProgressMessageBehavior : MonoBehaviour {
 
 
 	private void Start(){
-		text = transform.Find(CANVAS_OBJ).Find(TEXT_OBJ).GetComponent<Text>();
+		text = transform.Find(CANVAS_OBJ).Find(TEXT_OBJ).GetComponent<TextMeshPro>();
 		movement.z = -speed;
 		transform.position = startLoc;
 	}

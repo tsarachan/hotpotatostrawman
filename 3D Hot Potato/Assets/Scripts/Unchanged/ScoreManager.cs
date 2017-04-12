@@ -49,14 +49,17 @@ public class ScoreManager : MonoBehaviour {
 
 
 	//this is added to the score as a label
-	private const string SCORE_LABEL = "Score: ";
+	//currently this is intentionally blank
+	//whatever is closest to the camera shows up the most clearly, so it seemed like it shoudl be numbers
+	//surely everyone knows it's a score anyway . . . .
+	private const string SCORE_LABEL = "";
 
 
 	//UI text variables
 	private TextMeshProUGUI scoreText;
 	private TextMeshProUGUI comboText;
 	private const string SCORE_TEXT_OBJ = "Score text";
-	private const string COMBO_TEXT_OBJ = "Combo text";
+	private const string COMBO_TEXT_OBJ = "Right side text";
 
 
 	//used to check whether the combo text is already moving on screen
