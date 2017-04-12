@@ -21,8 +21,6 @@ public class CheckpointBehavior : EnemyBase {
 	private const string MANAGER_OBJ = "Managers";
 	private Rigidbody rb;
 	private const string PLAYER_TAG = "Player";
-	private UIElementMove checkpointText;
-	private const string CHECKPOINT_TEXT = "Checkpoint text";
 	private const string ENEMIES_ORGANIZER = "Enemies";
 
 
@@ -31,14 +29,20 @@ public class CheckpointBehavior : EnemyBase {
 	private bool checkpointActivated = false;
 
 
+	//used to send a message that the checkpoint's been hit
+	private SidelineTextControl sidelineTextControl;
+	private const string SIDELINE_TEXT_OBJ = "Sideline text";
+	private const string CHECKPOINT_MESSAGE = "Checkpoint!";
+
+
 
 	private void Start(){
 		levelManager = GameObject.Find(MANAGER_OBJ).GetComponent<LevelManager>();
 		rb = GetComponent<Rigidbody>();
-		checkpointText = GameObject.Find(CHECKPOINT_TEXT).GetComponent<UIElementMove>();
 		GetCurrentLevelNumbers();
 		audioSource = GetComponent<AudioSource>();
 		transform.parent = GameObject.Find(ENEMIES_ORGANIZER).transform;
+		sidelineTextControl = GameObject.Find(SIDELINE_TEXT_OBJ).GetComponent<SidelineTextControl>();
 	}
 
 
@@ -57,8 +61,8 @@ public class CheckpointBehavior : EnemyBase {
 
 	public void OnTriggerEnter(Collider other){
 		if (!checkpointActivated && other.tag == PLAYER_TAG){ //don't set a checkpoint if, frex., an enemy goes through the point
+			StartCoroutine(sidelineTextControl.ShowText(CHECKPOINT_MESSAGE));
 			levelManager.SetCheckpoint(CurrentWorldNum, CurrentActNum, CurrentNextReadTime, CurrentReadIndex);
-			checkpointText.StartUIElementMoving();
 			checkpointActivated = true;
 			audioSource.Play();
 		}
@@ -71,6 +75,7 @@ public class CheckpointBehavior : EnemyBase {
 		checkpointActivated = false;
 		audioSource = GetComponent<AudioSource>();
 		transform.parent = GameObject.Find(ENEMIES_ORGANIZER).transform;
+		sidelineTextControl = GameObject.Find(SIDELINE_TEXT_OBJ).GetComponent<SidelineTextControl>();
 	}
 
 
