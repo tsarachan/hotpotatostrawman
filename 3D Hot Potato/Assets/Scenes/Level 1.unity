@@ -16586,7 +16586,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 810563468}
   m_LocalRotation: {x: 0.5, y: 0.5, z: -0.5, w: 0.5}
-  m_LocalPosition: {x: 0, y: 0, z: 46.9}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1184061276}
@@ -16594,8 +16594,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 90, y: 90, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 7.35, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 30.4, y: 0}
+  m_SizeDelta: {x: 50, y: 3.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &810563470
 MonoBehaviour:
@@ -16651,7 +16651,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_textAlignment: 257
+  m_textAlignment: 260
   m_isAlignmentEnumConverted: 1
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -20409,47 +20409,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nextComboTime: 1
-  displayLoc: {x: 7.35, y: 0, z: -82}
-  enterDuration: 0.5
-  enterCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 0
-      inSlope: 1
-      outSlope: 1
-      tangentMode: 34
-    - serializedVersion: 2
-      time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 1
-      tangentMode: 34
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
-  leaveDuration: 0.5
-  leaveCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 0
-      inSlope: 1
-      outSlope: 1
-      tangentMode: 34
-    - serializedVersion: 2
-      time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 1
-      tangentMode: 34
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
-  startLoc: {x: 7.35, y: 0, z: 46.9}
-  endLoc: {x: 7.35, y: 0, z: -96.25}
 --- !u!114 &891422880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39868,6 +39827,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1999500631}
+  - component: {fileID: 1999500632}
   m_Layer: 0
   m_Name: Sideline text
   m_TagString: Untagged
@@ -39890,6 +39850,59 @@ Transform:
   m_Father: {fileID: 393844137}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1999500632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1999500630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07c2547419e5c43fd9bc56f840054400, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  displayLoc: {x: 30.4, y: 0, z: 32.8}
+  enterDuration: 0.5
+  enterCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  leaveDuration: 0.5
+  leaveCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  displayTime: 1
+  startLoc: {x: 30.4, y: 0, z: 155}
+  endLoc: {x: 30.4, y: 0, z: 0}
 --- !u!1 &2004831377
 GameObject:
   m_ObjectHideFlags: 0
