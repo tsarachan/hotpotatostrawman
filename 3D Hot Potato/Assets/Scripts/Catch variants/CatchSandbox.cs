@@ -46,6 +46,10 @@ public class CatchSandbox : MonoBehaviour {
 	protected GameObject deathRay;
 
 
+	//used to prevent powers from activating while already in effect
+	protected bool powerRunning = false;
+
+
 	protected virtual void Start(){
 
 		//nonsense initializations for determining which powers are in use
@@ -159,44 +163,63 @@ public class CatchSandbox : MonoBehaviour {
 
 
 	protected IEnumerator MultiBurstAroundPlayer(Vector3 playerPosition){
-		float timer = 0.0f;
-		int burstsSoFar = 0;
-		int totalBursts = 4;
-		float distFromPlayer = 8.0f;
+		if (powerRunning){
+			yield break;
+		} else {
+			powerRunning = true;
+			Debug.Log("starting new MultiBurstAroundPlayer");
 
-		while (burstsSoFar < totalBursts){
-			timer += Time.deltaTime;
+			float timer = 0.0f;
+			int burstsSoFar = 0;
+			int totalBursts = 4;
+			float distFromPlayer = 8.0f;
+			float stopTime = Time.time + timeBetweenMultibursts * totalBursts;
+			float stopTimer = Time.time;
 
-			if (timer >= timeBetweenMultibursts){
-				GameObject burst = ObjectPooling.ObjectPool.GetObj(BURST_OBJ);
+			while (stopTimer <= stopTime ){
+				//Debug.Log("totalTimer == " + totalTimer + ", totalDuration == " + totalDuration);
+				timer += Time.deltaTime;
+				stopTimer = Time.time;
 
-				switch (burstsSoFar){
-					case 0:
-						burst.transform.position = playerPosition + new Vector3(0.0f, 0.0f, distFromPlayer);
-						break;
-					case 1:
-						burst.transform.position = playerPosition + new Vector3(-distFromPlayer, 0.0f, 0.0f);
-						break;
-					case 2:
-						burst.transform.position = playerPosition + new Vector3(distFromPlayer, 0.0f, 0.0f);
-						break;
-					case 3:
-						burst.transform.position = playerPosition + new Vector3(0.0f, 0.0f, -distFromPlayer);
-						break;
-					default:
-						Debug.Log("Illegal burstsSoFar: " + burstsSoFar);
-						break;
+				if (timer >= timeBetweenMultibursts && burstsSoFar < totalBursts){
+					GameObject burst = ObjectPooling.ObjectPool.GetObj(BURST_OBJ);
+					stopTime = Time.time + Mathf.Max(timeBetweenMultibursts * totalBursts,
+													 burst.GetComponent<BurstBehavior>().existDuration);
+
+					switch (burstsSoFar){
+						case 0:
+							burst.transform.position = playerPosition + new Vector3(0.0f, 0.0f, distFromPlayer);
+							Debug.Log("Making first burst");
+							break;
+						case 1:
+							burst.transform.position = playerPosition + new Vector3(-distFromPlayer, 0.0f, 0.0f);
+							Debug.Log("Making second burst");
+							break;
+						case 2:
+							burst.transform.position = playerPosition + new Vector3(distFromPlayer, 0.0f, 0.0f);
+							Debug.Log("Making third burst");
+							break;
+						case 3:
+							burst.transform.position = playerPosition + new Vector3(0.0f, 0.0f, -distFromPlayer);
+							Debug.Log("Making fourth burst");
+							break;
+						default:
+							Debug.Log("Illegal burstsSoFar: " + burstsSoFar);
+							break;
+					}
+
+					burstsSoFar++;
+				
+					timer = 0.0f;
 				}
 
-				burstsSoFar++;
-			
-				timer = 0.0f;
+				yield return null;
 			}
+			powerRunning = false;
+			Debug.Log("powerRunning == " + powerRunning);
 
-			yield return null;
+			yield break;
 		}
-
-		yield break;
 	}
 
 
