@@ -47,7 +47,7 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 
 	//needed to shut things off and turn them back on correctly
 	private const string POINT_LIGHT = "Point light";
-	private const string CYCLE = "Model";
+	private const string CYCLE = "Lightrunner";
 
 
 	//the audio

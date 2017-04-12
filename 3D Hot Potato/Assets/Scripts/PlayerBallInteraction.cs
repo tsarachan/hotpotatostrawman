@@ -89,7 +89,7 @@ public class PlayerBallInteraction : MonoBehaviour {
 	/// </summary>
 	public void Throw(){
 		if (myCycleObj.Find(BALL_OBJ)){ //sanity check to make sure this player has the ball; avoids null references
-			ballBehavior.Pass(transform.Find(BALL_OBJ).position, otherPlayer);
+			ballBehavior.Pass(myCycleObj.Find(BALL_OBJ).position, otherPlayer);
 			//scoreManager.Score(NUMBER_OF_PASSES, gameObject.name);
 			BallCarrier = false;
 
