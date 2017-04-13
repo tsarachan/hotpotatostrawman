@@ -45,10 +45,6 @@ public class BobUpAndDown : MonoBehaviour {
 		if (!jumping){
 			tf.localPosition = posVec;
 		}
-
-		if (Input.GetKeyDown(KeyCode.P)){
-			StartCoroutine(Jump());
-		}
 	}
 
 
