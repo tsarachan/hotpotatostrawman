@@ -352,7 +352,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startVelocity: {x: 0, y: 0, z: 0}
   scoreValue: 10
-  speed: 200
+  speed: 50
 --- !u!114 &114897289399037812
 MonoBehaviour:
   m_ObjectHideFlags: 1
