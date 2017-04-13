@@ -5645,7 +5645,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1222128856162186, guid: 35477c18b5cdd41b3b25376e485d107b, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1088623641555784, guid: 35477c18b5cdd41b3b25376e485d107b, type: 2}
       propertyPath: m_Name
@@ -12343,7 +12343,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1130335561
+  randomSeed: -1419556385
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -27890,7 +27890,7 @@ Light:
   serializedVersion: 7
   m_Type: 2
   m_Color: {r: 0.13725491, g: 0.9098039, b: 0.8039216, a: 1}
-  m_Intensity: 0.91
+  m_Intensity: 1.25
   m_Range: 100
   m_SpotAngle: 30
   m_CookieSize: 10
@@ -41162,7 +41162,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1772401113660898, guid: 35869bc2daaeb4ba1b7a90e269ae2454, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 23631133914902746, guid: 35869bc2daaeb4ba1b7a90e269ae2454,
         type: 2}
@@ -44552,7 +44552,7 @@ Light:
   serializedVersion: 7
   m_Type: 2
   m_Color: {r: 1, g: 0.3254902, b: 0.3254902, a: 1}
-  m_Intensity: 0.73
+  m_Intensity: 1.25
   m_Range: 100
   m_SpotAngle: 30
   m_CookieSize: 10
