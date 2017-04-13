@@ -347,9 +347,11 @@ public class EnemyHoming : EnemyBase {
 		//reset the hunt enemy's searching eye, if applicable
 		if (gameObject.name.Contains(HUNT)){
 			playerOrganizer = GameObject.Find(PLAYER_ORGANIZER).transform;
+			Debug.Log(playerOrganizer);
 			eyeMat = transform.Find(EYE_OBJ).GetComponent<Renderer>().material;
 			eyeMat.color = startEyeColor;
 			target = ChooseTarget();
+			Debug.Log(target);
 			StartCoroutine(ChangeEyeColor());
 		}
 	}

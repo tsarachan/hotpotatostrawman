@@ -4394,7 +4394,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4412131442969940, guid: 56a0891019aeb4bc195e8fb1ba3c85b2, type: 2}
       propertyPath: m_RootOrder
-      value: 15
+      value: 16
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 56a0891019aeb4bc195e8fb1ba3c85b2, type: 2}
@@ -16607,7 +16607,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: c8c7c10b224d24c35aa900092276f310, type: 3}
       propertyPath: m_Name
-      value: Lightrunner (1)
+      value: Lightrunner
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: c8c7c10b224d24c35aa900092276f310, type: 3}
       propertyPath: m_Materials.Array.data[0]
