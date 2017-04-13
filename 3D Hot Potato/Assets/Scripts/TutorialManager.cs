@@ -105,30 +105,30 @@ public class TutorialManager : MonoBehaviour {
 		camerasStartPos = cameras.position;
 		levelManager = GetComponent<LevelManager>();
 
-		passInstruction = new Instruction("Cooperate with your partner to reach the goal",
-										  "Press the button <sprite=\"Pass_button\" index=0>to pass the Neon Star",
+		passInstruction = new Instruction("Cooperate with your partner to reach the city center",
+										  "Press the  <sprite=\"Pass_button\" index=0> button to pass the Neon Star",
 										  "Try passing now",
 										  new Vector3(0.0f, 0.0f, 0.0f), //the pass instruction will find the ball
 										  PassRegistration,
 										  PlayerPassFunc,
 										  0.0f);
-		blockInstruction = new Instruction("",
-										   "The player without the Neon Star can block",
-										   "Run into this enemy to continue",
+		blockInstruction = new Instruction("The Neon Star must be protected from enemies",
+										   "The player without the Neon Star is immune to enemies",
+										   "Have them into this enemy to continue",
 										   new Vector3 (0.0f, -13.8f, 31.5f),
 										   EnemyDestroyedRegistration,
 										   EnemyDestroyedFunc,
 										   0.5f);
 		blightrunnerInstruction = new Instruction("Gold enemies change the rules",
-												  "Hit them with the Neon Star",
-												  "If you don't have it, stay safe!",
+												  "Gold enemies are hurt by the Neon Star",
+												  "If you don't have the Neon Star, they will take you down!",
 												  new Vector3(0.0f, -13.8f, 31.5f),
 												  EnemyDestroyedRegistration,
 												  EnemyDestroyedFunc,
 												  0.5f);
-		powerInstruction = new Instruction("Each player has a special power",
-										   "Hit the throw button while the ball is sparking <sprite=\"Spark_ex\" index=0>",
-										   "Don't be early or late!",
+		powerInstruction = new Instruction("Each player has a unique power",
+											"Trigger your power just before catching the Neon Star",
+											"Use your power by pressing the  <sprite=\"Pass_button\" index=0> button while the Neon Star is sparking  <sprite=\"Spark_ex\" index=0>",
 										   new Vector3(0.0f, 0.0f, 0.0f), //this instruction will find the ball
 										   PowerTriggeredRegistration,
 										   PowerTriggeredFunc,
