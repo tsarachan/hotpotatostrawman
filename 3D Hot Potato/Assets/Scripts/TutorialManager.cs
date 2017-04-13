@@ -114,7 +114,7 @@ public class TutorialManager : MonoBehaviour {
 										  0.0f);
 		blockInstruction = new Instruction("The Neon Star must be protected from enemies",
 										   "The player without the Neon Star is immune to enemies",
-										   "Have them into this enemy to continue",
+										   "Have them run into this enemy to continue",
 										   new Vector3 (0.0f, -13.8f, 31.5f),
 										   EnemyDestroyedRegistration,
 										   EnemyDestroyedFunc,
