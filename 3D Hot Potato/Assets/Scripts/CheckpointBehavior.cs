@@ -53,8 +53,8 @@ public class CheckpointBehavior : EnemyBase {
 	private void GetCurrentLevelNumbers(){
 		CurrentWorldNum = levelManager.GetWorldNum();
 		CurrentActNum = levelManager.GetActNum();
-		CurrentNextReadTime = levelManager.GetNextReadTime();
-		CurrentReadIndex = levelManager.GetReadIndex();
+		CurrentReadIndex = levelManager.GetReadIndex() + 1;
+		CurrentNextReadTime = levelManager.GetArbitraryReadTime(CurrentWorldNum, CurrentActNum, CurrentReadIndex);
 	}
 
 

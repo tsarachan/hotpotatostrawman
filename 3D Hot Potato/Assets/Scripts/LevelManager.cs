@@ -539,6 +539,13 @@ public class LevelManager : MonoBehaviour {
 		return nextReadTime;
 	}
 
+
+	public float GetArbitraryReadTime(int worldNum, int actNum, int index){
+		JSONNode node = JSON.Parse(FileIOUtil.ReadStringFromFile(Application.dataPath + LEVEL_PATH + filename));
+
+		return node[WORLD + worldNum.ToString()][ACT + actNum.ToString()][index][TIME].AsFloat;
+	}
+
 	public int GetReadIndex(){
 		return readIndex;
 	}
