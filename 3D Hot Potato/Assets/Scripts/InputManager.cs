@@ -88,7 +88,9 @@ public class InputManager : MonoBehaviour {
 	//used to reset the game
 	private bool paused = true;
 	private float resetTimer = 0.0f;
+	private const string HIGH_SCORE_SCENE = "High score scene";
 	private const string TITLE_SCENE = "TitleScene3";
+	private ScoreManager scoreManager;
 
 
 	//initialize variables and data structures
@@ -97,6 +99,7 @@ public class InputManager : MonoBehaviour {
 		levelManager = GetComponent<LevelManager>();
 		controllerMapScript = GameObject.Find(UI_CANVAS_OBJ).transform.Find(CONTROLLER_MAP_OBJ)
 			.GetComponent<ControllerInfoBehavior>();
+		scoreManager = GetComponent<ScoreManager>();
 		StartGame();
 	}
 
