@@ -17,12 +17,19 @@
  */
 
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 
 public class InputManager : MonoBehaviour {
 	
+	//----------Tunable variables----------
+
+	public float resetDelay = 3.0f; //how long the players have to hold the button while paused to reset the game
+
+
+	//----------Internal variables----------
 
 	//gamepad axes and buttons. Player numbers are intentionally left off.
 	private const string VERT_AXIS = "PS4_LStick_Vert_";
@@ -77,6 +84,11 @@ public class InputManager : MonoBehaviour {
 	private const string UI_CANVAS_OBJ = "UI canvas";
 	private const string CONTROLLER_MAP_OBJ = "Controller map";
 
+
+	//used to reset the game
+	private bool paused = true;
+	private float resetTimer = 0.0f;
+	private const string TITLE_SCENE = "TitleScene3";
 
 
 	//initialize variables and data structures
@@ -152,10 +164,26 @@ public class InputManager : MonoBehaviour {
 			}
 
 			if (Input.GetButtonDown(PS_OPTIONS_BUTTON + player)){
+				paused = !paused;
 				controllerMapScript.ReceivePauseInput();
 			}
 		}
 
+
+		if (Input.GetButton(O_BUTTON + "1") &&
+			Input.GetButton(O_BUTTON + "2") &&
+			paused){
+
+			resetTimer += Time.unscaledDeltaTime;
+			Debug.Log("resetTimer == " + resetTimer);
+
+			if (resetTimer >= resetDelay){
+				resetTimer = 0.0f;
+				SceneManager.LoadScene(TITLE_SCENE);
+			}
+		} else {
+			resetTimer = 0.0f;
+		}
 
 		if (Input.GetKeyDown(pauseKey)){
 			controllerMapScript.ReceivePauseInput();

@@ -556,4 +556,11 @@ public class LevelManager : MonoBehaviour {
 			GameHasStarted = true;
 		}
 	}
+
+
+	public void ResetGame(){
+		StopGame();
+		checkpointReached = false;
+		ResetGame();
+	}
 }

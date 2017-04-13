@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ControllerInfoBehavior : MonoBehaviour {
 
-	private bool showingControllerInfo = false;
+	private bool showingControllerInfo = true;
 
 
 	private GameObject controllerMap;
