@@ -148,7 +148,7 @@ public class BallBehavior : MonoBehaviour {
 
 		FallToGround(destination.position);
 
-		Debug.Log("Coroutine stopped: y == " + transform.position.y);
+		//Debug.Log("Coroutine stopped: y == " + transform.position.y);
 		yield break;
 	}
 
@@ -197,7 +197,7 @@ public class BallBehavior : MonoBehaviour {
 	public void ResetBall(){
 		GetCaught(GameObject.Find(PLAYER_1).transform);
 		GameObject.Find(PLAYER_1).GetComponent<PlayerBallInteraction>().BallCarrier = true;
-		Debug.Log(GameObject.Find(PLAYER_1).name + " BallCarrier == " + 
-			GameObject.Find(PLAYER_1).GetComponent<PlayerBallInteraction>().BallCarrier);
+//		Debug.Log(GameObject.Find(PLAYER_1).name + " BallCarrier == " + 
+//			GameObject.Find(PLAYER_1).GetComponent<PlayerBallInteraction>().BallCarrier);
 	}
 }

@@ -84,26 +84,26 @@ public class NameEntrySystem : MonoBehaviour {
 	private void Update(){
 		if (!bothDoneEntering){
 			if (!p1DoneEntering){
-				if (currentP1Index > p1Initials.text.Length){
+				if (currentP1Index >= p1Initials.text.Length){
 					p1DoneEntering = true;
 				} else {
 					currentP1Character = SelectCharacter(KeyCode.A, KeyCode.D, currentP1Character);
 					currentP1Index = EnterButton(KeyCode.S, currentP1Index);
 
-					if (currentP1Index <= p1Initials.text.Length){
+					if (currentP1Index < p1Initials.text.Length){
 						p1Initials.text = ReplaceCharInString(p1Initials.text, currentP1Index, characters[currentP1Character]);
 					}
 				}
 			}
 
 			if (!p2DoneEntering){
-				if (currentP2Index > p2Initials.text.Length){
+				if (currentP2Index >= p2Initials.text.Length){
 					p2DoneEntering = true;
 				} else {
 					currentP2Character = SelectCharacter(KeyCode.J, KeyCode.L, currentP2Character);
 					currentP2Index = EnterButton(KeyCode.K, currentP2Index);
 
-					if (currentP2Index <= p2Initials.text.Length){
+					if (currentP2Index < p2Initials.text.Length){
 						p2Initials.text = ReplaceCharInString(p2Initials.text, currentP2Index, characters[currentP2Character]);
 					}
 				}

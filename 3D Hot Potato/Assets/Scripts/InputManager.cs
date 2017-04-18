@@ -178,11 +178,11 @@ public class InputManager : MonoBehaviour {
 			paused){
 
 			resetTimer += Time.unscaledDeltaTime;
-			Debug.Log("resetTimer == " + resetTimer);
 
 			if (resetTimer >= resetDelay){
 				resetTimer = 0.0f;
-				SceneManager.LoadScene(TITLE_SCENE);
+				ScoreRepository.Score = (int)scoreManager.Score;
+				SceneManager.LoadScene(HIGH_SCORE_SCENE);
 			}
 		} else {
 			resetTimer = 0.0f;
