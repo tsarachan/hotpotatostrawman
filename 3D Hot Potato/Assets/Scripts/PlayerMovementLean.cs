@@ -120,6 +120,7 @@ public class PlayerMovementLean : MonoBehaviour {
 
 
 	public void StartJumpRise(float angle){
+		Debug.Log("StartJumpRise() called for " + gameObject.name);
 		Jumping = true;
 
 		rotationTarget.rotation = Quaternion.Euler(new Vector3(angle, 0.0f, 0.0f));
@@ -127,11 +128,13 @@ public class PlayerMovementLean : MonoBehaviour {
 
 
 	public void StartJumpFall(float angle){
+		Debug.Log("StartJumpFall() called for " + gameObject.name);
 		rotationTarget.rotation = Quaternion.Euler(new Vector3(angle, 0.0f, 0.0f));
 	}
 
 
 	public void DoneJumping(){
+		Debug.Log("DoneJumping() called for " + gameObject.name);
 		Jumping = false;
 	}
 }

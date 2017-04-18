@@ -491,6 +491,11 @@ public class LevelManager : MonoBehaviour {
 			p2EnemyScript.ResetPlayer();
 			ballScript.ResetBall();
 
+			Debug.Log("Player 1 BallCarrier == " + 
+				GameObject.Find(PLAYER_1).GetComponent<PlayerBallInteraction>().BallCarrier);
+			Debug.Log("Player 2 BallCarrier == " + 
+				GameObject.Find(PLAYER_2).GetComponent<PlayerBallInteraction>().BallCarrier);
+
 			foreach (Transform particle in particles){
 				if (particle.tag == PARTICLE_TAG){
 					ObjectPooling.ObjectPool.AddObj(particle.gameObject);
@@ -561,6 +566,6 @@ public class LevelManager : MonoBehaviour {
 	public void ResetGame(){
 		StopGame();
 		checkpointReached = false;
-		ResetGame();
+		RestartGame();
 	}
 }

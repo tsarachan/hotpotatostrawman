@@ -76,6 +76,9 @@ public class BallBehavior : MonoBehaviour {
 		}
 	}
 
+	//tells the players whether the ball has been thrown; prevents "handoffs" during collisions
+	public bool InAir { get; set; }
+
 
 	//initialize variables
 	protected virtual void Start(){
@@ -85,6 +88,8 @@ public class BallBehavior : MonoBehaviour {
 		myStartPos = transform.position;
 		awesomeCatchParticle = transform.Find(AWESOME_CATCH_PARTICLE).gameObject;
 		awesomeCatchDistance = GameObject.Find(PLAYER_1).GetComponent<CatchBehavior>().GetAwesomeCatchDistance();
+
+		ResetBall();
 	}
 
 	/// <summary>
@@ -93,6 +98,8 @@ public class BallBehavior : MonoBehaviour {
 	/// <param name="start">The ball's current position.</param>
 	/// <param name="destination">The catching player.</param>
 	public virtual void Pass(Vector3 start, Transform destination){
+		InAir = true;
+
 		transform.parent = scene; //stop being a child of the ball carrier, so that the ball can move between players
 		IntendedReceiver = destination;
 		co = StartCoroutine(PassBetweenPlayers(start, destination));
@@ -179,6 +186,8 @@ public class BallBehavior : MonoBehaviour {
 
 		//switch off the catching player's warning that they're the receiver
 		catchingPlayer.Find(CATCH_WARNING).gameObject.SetActive(false);
+
+		InAir = false;
 	}
 
 
@@ -188,5 +197,7 @@ public class BallBehavior : MonoBehaviour {
 	public void ResetBall(){
 		GetCaught(GameObject.Find(PLAYER_1).transform);
 		GameObject.Find(PLAYER_1).GetComponent<PlayerBallInteraction>().BallCarrier = true;
+		Debug.Log(GameObject.Find(PLAYER_1).name + " BallCarrier == " + 
+			GameObject.Find(PLAYER_1).GetComponent<PlayerBallInteraction>().BallCarrier);
 	}
 }

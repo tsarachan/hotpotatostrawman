@@ -140,8 +140,8 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 
 	public void LoseTheGame(){
 		//de-parent the ball to avoid null reference exceptions
-		if (transform.Find(BALL_OBJ) != null){
-			transform.Find(BALL_OBJ).parent = transform.root;
+		if (transform.Find(RIDER_ORGANIZER).Find(BALL_OBJ) != null){
+			transform.Find(RIDER_ORGANIZER).Find(BALL_OBJ).parent = transform.root;
 		}
 
 		GameObject deathParticle = ObjectPooling.ObjectPool.GetObj(DEATH_PARTICLE);
