@@ -49,6 +49,11 @@ public class HighScoreManager : MonoBehaviour {
 	private const string HIGH_SCORES_OBJ = "High scores text";
 
 
+	//the name entry UI
+	private GameObject nameEntryUI;
+	private const string NAME_ENTRY_UI_OBJ = "Name entry UI";
+
+
 	//the list of high scores
 	public int numEntries = 10; //the length of the high score list
 	public List<Entry> entries;
@@ -70,6 +75,7 @@ public class HighScoreManager : MonoBehaviour {
 		highScoreText = transform.Find(CANVAS_OBJ).Find(HIGH_SCORES_OBJ).GetComponent<TextMeshProUGUI>();
 		entries = new List<Entry>();
 		nameEntrySystem = GetComponent<NameEntrySystem>();
+		nameEntryUI = transform.Find(CANVAS_OBJ).Find(NAME_ENTRY_UI_OBJ).gameObject;
 
 
 		string key;
@@ -88,10 +94,10 @@ public class HighScoreManager : MonoBehaviour {
 		//if the players have a high score, allow them to enter their names, and shut off the high score list until
 		//they do. If they do not, shut off the name entry system and display the high score list
 		if (CheckIfEnterNames()){
-			nameEntrySystem.gameObject.SetActive(true);
+			nameEntryUI.SetActive(true);
 			highScoreText.gameObject.SetActive(false);
 		} else {
-			nameEntrySystem.gameObject.SetActive(false);
+			nameEntryUI.gameObject.SetActive(false);
 			StartCoroutine(DisplayScore());
 		}
 	}
