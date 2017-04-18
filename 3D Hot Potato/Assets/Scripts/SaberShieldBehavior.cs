@@ -5,11 +5,18 @@ using UnityEngine;
 public class SaberShieldBehavior : MonoBehaviour {
 
 
+	private int enemyLayer = 9;
+
+
 	private const string ENEMY_TAG = "Enemy";
+
 
 	private void OnTriggerEnter(Collider other){
 		if (other.tag == ENEMY_TAG){
-			transform.parent.GetComponent<LightsaberBehavior>().DestroyEnemy(other.gameObject.GetComponent<EnemyBase>());
+			if (other.gameObject.layer == enemyLayer){
+				transform.parent.GetComponent<LightsaberBehavior>()
+					.DestroyEnemy(other.gameObject.GetComponent<EnemyBase>());
+			}
 		}
 	}
 }

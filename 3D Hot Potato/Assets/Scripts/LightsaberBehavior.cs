@@ -136,7 +136,7 @@ public class LightsaberBehavior : MonoBehaviour {
 
 
 	private void BlastEnemies(){
-		RaycastHit[] hitInfo = Physics.SphereCastAll(start.position, 
+		RaycastHit[] hitInfo = Physics.SphereCastAll(start.position,
 													 startRadius,
 													 end.position - start.position,
 													 Vector3.Distance(player1.position, player2.position),
@@ -147,6 +147,7 @@ public class LightsaberBehavior : MonoBehaviour {
 
 		foreach (RaycastHit hit in hitInfo){
 			if (hit.collider.tag == ENEMY_TAG){
+				Debug.Log("hit object: " + hit.collider.gameObject.name);
 				hitEnemies.Add(hit.collider.GetComponent<EnemyBase>());
 			}
 		}

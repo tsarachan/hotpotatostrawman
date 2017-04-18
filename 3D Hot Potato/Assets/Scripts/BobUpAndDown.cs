@@ -53,47 +53,47 @@ public class BobUpAndDown : MonoBehaviour {
 
 
 	public IEnumerator Jump(){
-		Debug.Log("Jump() called for " + transform.parent.name);
+		//Debug.Log("Jump() called for " + transform.parent.name);
 
 		jumping = true;
 
 		playerMovementLean.StartJumpRise(jumpLeanAngle);
 
-		Debug.Log("playerMovementLean.StartJumpRise() completed for " + transform.parent.name);
+		//Debug.Log("playerMovementLean.StartJumpRise() completed for " + transform.parent.name);
 
 		yield return StartCoroutine(JumpUp());
 
 		playerMovementLean.StartJumpFall(jumpLandAngle);
 
-		Debug.Log("playerMovementLean.StartJumpFall() for " + transform.parent.name);
+		//Debug.Log("playerMovementLean.StartJumpFall() for " + transform.parent.name);
 
 		yield return StartCoroutine(FallDown());
 
-		Debug.Log("Jump() finishing for " + transform.parent.name);
+		//Debug.Log("Jump() finishing for " + transform.parent.name);
 
 		playerMovementLean.DoneJumping();
 
-		Debug.Log("playerMovementLean.DoneJumping() completed for " + transform.parent.name);
+		//Debug.Log("playerMovementLean.DoneJumping() completed for " + transform.parent.name);
 
 		jumping = false;
 
 		bobTimer = 0.0f;
 
-		Debug.Log("Jump() complete for " + transform.parent.name);
+		//Debug.Log("Jump() complete for " + transform.parent.name);
 
 		yield break;
 	}
 
 
 	private IEnumerator JumpUp(){
-		Debug.Log("JumpUp() called for " + transform.parent.name);
+		//Debug.Log("JumpUp() called for " + transform.parent.name);
 		float riseDuration = jumpDuration/2;
 		float timer = 0.0f;
 
 		Vector3 jumpStart = tf.localPosition;
 
 		while (timer <= riseDuration){
-			Debug.Log(transform.parent.name + " going up; timer == " + timer);
+			//Debug.Log(transform.parent.name + " going up; timer == " + timer);
 
 			timer += Time.deltaTime;
 			tf.localPosition = new Vector3(tf.localPosition.x,
@@ -106,20 +106,20 @@ public class BobUpAndDown : MonoBehaviour {
 			yield return null;
 		}
 
-		Debug.Log("JumpUp() ending for " + transform.parent.name);
+		//Debug.Log("JumpUp() ending for " + transform.parent.name);
 		yield break;
 	}
 
 
 	private IEnumerator FallDown(){
-		Debug.Log("FallDown() called for " + transform.parent.name);
+		//Debug.Log("FallDown() called for " + transform.parent.name);
 		float fallDuration = jumpDuration/2;
 		float timer = 0.0f;
 
 		Vector3 jumpStart = tf.localPosition;
 
 		while (timer <= fallDuration){
-			Debug.Log(transform.parent.name + " going down; timer == " + timer);
+			//Debug.Log(transform.parent.name + " going down; timer == " + timer);
 
 			timer += Time.deltaTime;
 			tf.localPosition = new Vector3(tf.localPosition.x,
@@ -133,7 +133,7 @@ public class BobUpAndDown : MonoBehaviour {
 		}
 
 
-		Debug.Log("FallDown() ending for " + transform.parent.name);
+		//Debug.Log("FallDown() ending for " + transform.parent.name);
 		yield break;
 	}
 }
