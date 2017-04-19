@@ -6,6 +6,10 @@ using TMPro;
 
 public class NameEntrySystem : MonoBehaviour {
 
+
+	public float charSwitchDelay = 0.1f; //delay for gamepad control switching characters during name input
+	public float inputDeadZone = 0.3f; //dead zone for gamepad thumbsticks
+
 	//the characters that can be included in a player's initials
 	private List<char> characters = new List<char> { 'a',
 		'b',
@@ -58,6 +62,13 @@ public class NameEntrySystem : MonoBehaviour {
 	private bool bothDoneEntering = false;
 
 
+	//gamepad controls
+	private const string HORIZ_AXIS = "PS4_LStick_Horiz_";
+	private const string PASS_BUTTON = "PS4_O_";
+	private float p1CharSwitchTimer = 0.0f;
+	private float p2CharSwitchTimer = 0.0f;
+
+
 	//initialize variables
 	private void Start(){
 		p1Initials = transform.Find(CANVAS_OBJ).Find(NAME_ENTRY_ORGANIZER)
@@ -67,6 +78,7 @@ public class NameEntrySystem : MonoBehaviour {
 		p2Initials = transform.Find(CANVAS_OBJ).Find(NAME_ENTRY_ORGANIZER)
 			.Find(P2_INITIALS_OBJ).GetComponent<TextMeshProUGUI>();
 		p2Initials.text = "   ";
+		Debug.Log(Time.timeScale);
 	}
 
 
@@ -87,8 +99,14 @@ public class NameEntrySystem : MonoBehaviour {
 				if (currentP1Index >= p1Initials.text.Length){
 					p1DoneEntering = true;
 				} else {
-					currentP1Character = SelectCharacter(KeyCode.A, KeyCode.D, currentP1Character);
-					currentP1Index = EnterButton(KeyCode.S, currentP1Index);
+					p1CharSwitchTimer += Time.deltaTime;
+
+					currentP1Character = SelectCharacter(KeyCode.A,
+														 KeyCode.D,
+														 "1",
+														 ref p1CharSwitchTimer,
+														 currentP1Character);
+					currentP1Index = EnterButton(KeyCode.Z, "1", currentP1Index);
 
 					if (currentP1Index < p1Initials.text.Length){
 						p1Initials.text = ReplaceCharInString(p1Initials.text, currentP1Index, characters[currentP1Character]);
@@ -100,8 +118,10 @@ public class NameEntrySystem : MonoBehaviour {
 				if (currentP2Index >= p2Initials.text.Length){
 					p2DoneEntering = true;
 				} else {
-					currentP2Character = SelectCharacter(KeyCode.J, KeyCode.L, currentP2Character);
-					currentP2Index = EnterButton(KeyCode.K, currentP2Index);
+					p2CharSwitchTimer += Time.deltaTime;
+
+					currentP2Character = SelectCharacter(KeyCode.J, KeyCode.L, "2", ref p2CharSwitchTimer, currentP2Character);
+					currentP2Index = EnterButton(KeyCode.N, "2", currentP2Index);
 
 					if (currentP2Index < p2Initials.text.Length){
 						p2Initials.text = ReplaceCharInString(p2Initials.text, currentP2Index, characters[currentP2Character]);
@@ -126,21 +146,28 @@ public class NameEntrySystem : MonoBehaviour {
 	/// <param name="downButton">Down button.</param>
 	/// <param name="upButton">Up button.</param>
 	/// <param name="currentCharacter">The index in characters of the player's current selection.</param>
-	private int SelectCharacter(KeyCode downButton, KeyCode upButton, int currentCharacter){
+	private int SelectCharacter(KeyCode downButton, KeyCode upButton, string playerNum, ref float timer, int currentCharacter){
 		int temp = currentCharacter;
+		Debug.Log(timer);
 
-		if (Input.GetKeyDown(downButton)){
+		if (Input.GetKeyDown(downButton) ||
+			Input.GetAxis(HORIZ_AXIS + playerNum) < -inputDeadZone && timer >= charSwitchDelay){
 			temp--;
 
 			if (temp < 0){
 				temp = characters.Count - 1;
 			}
-		} else if (Input.GetKeyDown(upButton)){
+
+			timer = 0.0f;
+		} else if (Input.GetKeyDown(upButton) ||
+				   Input.GetAxis(HORIZ_AXIS + playerNum) > inputDeadZone && timer >= charSwitchDelay){
 			temp++;
 
 			if (temp >= characters.Count){
 				temp = 0;
 			}
+
+			timer = 0.0f;
 		}
 
 		return temp;
@@ -153,10 +180,11 @@ public class NameEntrySystem : MonoBehaviour {
 	/// <returns>The button.</returns>
 	/// <param name="button">Button.</param>
 	/// <param name="currentIndex">The index of the initial the player is currently entering, 0, 1, or 2.</param>
-	private int EnterButton(KeyCode button, int currentIndex){
+	private int EnterButton(KeyCode button, string playerNum, int currentIndex){
 		int temp = currentIndex;
 
-		if (Input.GetKeyDown(button)){
+		if (Input.GetKeyDown(button) ||
+			Input.GetButtonDown(PASS_BUTTON + playerNum)){
 			temp++;
 		}
 

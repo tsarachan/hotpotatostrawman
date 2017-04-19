@@ -76,6 +76,7 @@ public class HighScoreManager : MonoBehaviour {
 	/// whether the system should skip ahead to displaying the current high scores.
 	/// </summary>
 	private void Start(){
+		Time.timeScale = 1.0f; //return time to normal; it was set to 0 when the game scene was paused
 		highScoreText = transform.Find(CANVAS_OBJ).Find(HIGH_SCORES_OBJ).GetComponent<TextMeshProUGUI>();
 		entries = new List<Entry>();
 		nameEntrySystem = GetComponent<NameEntrySystem>();
@@ -127,6 +128,7 @@ public class HighScoreManager : MonoBehaviour {
 	/// </summary>
 	/// <returns>The score.</returns>
 	public IEnumerator DisplayScore(){
+		nameEntryUI.SetActive(false);
 		highScoreText.gameObject.SetActive(true);
 		PrintScores();
 		yield return new WaitForSeconds(5.0f);
