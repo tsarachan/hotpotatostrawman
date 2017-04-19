@@ -67,6 +67,10 @@ public class HighScoreManager : MonoBehaviour {
 	private NameEntrySystem nameEntrySystem;
 
 
+	//the title scene, to return to when done displaying high scores
+	private const string TITLE_SCENE = "TitleScene3";
+
+
 	/// <summary>
 	/// Populates the list of high scores, and then determine whether the players should enter their names, or
 	/// whether the system should skip ahead to displaying the current high scores.
@@ -86,7 +90,7 @@ public class HighScoreManager : MonoBehaviour {
 			if (PlayerPrefs.HasKey(key + "score")){
 				entries.Add(new Entry(PlayerPrefs.GetString(key + "name"), PlayerPrefs.GetInt(key + "score")));
 			} else {
-				entries.Add(new Entry("rck&rll", 0));
+				entries.Add(new Entry("rck & rll", 0));
 			}
 		}
 
@@ -126,7 +130,8 @@ public class HighScoreManager : MonoBehaviour {
 		highScoreText.gameObject.SetActive(true);
 		PrintScores();
 		yield return new WaitForSeconds(5.0f);
-		//load a new scene
+
+		SceneManager.LoadScene(TITLE_SCENE);
 
 		yield break;
 	}
