@@ -5,7 +5,7 @@ using UnityEngine;
 public class TextureScroll : MonoBehaviour {
 
 
-	private float speed = 10.0f;
+	private float speed = 0.85f;
 
 
 	private float offset = 0.0f;
@@ -20,7 +20,11 @@ public class TextureScroll : MonoBehaviour {
 
 
 	private void Update(){
-		offset += Time.deltaTime + speed;
+		offset += Time.deltaTime * speed;
+
+		if (offset > 1.0f){
+			offset = 0.0f;
+		}
 
 		myMaterial.SetTextureOffset("_MainTex", new Vector2(0.0f, offset));
 	}
