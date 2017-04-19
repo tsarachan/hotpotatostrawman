@@ -148,7 +148,7 @@ public class NameEntrySystem : MonoBehaviour {
 	/// <param name="currentCharacter">The index in characters of the player's current selection.</param>
 	private int SelectCharacter(KeyCode downButton, KeyCode upButton, string playerNum, ref float timer, int currentCharacter){
 		int temp = currentCharacter;
-		Debug.Log(timer);
+		//Debug.Log(timer);
 
 		if (Input.GetKeyDown(downButton) ||
 			Input.GetAxis(HORIZ_AXIS + playerNum) < -inputDeadZone && timer >= charSwitchDelay){

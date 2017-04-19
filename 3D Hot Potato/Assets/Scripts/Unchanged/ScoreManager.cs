@@ -104,7 +104,7 @@ public class ScoreManager : MonoBehaviour {
 		comboTimer = 0.0f;
 		nextComboTime = GetNextComboTime();
 
-		StartCoroutine(sidelineTextControl.ShowText(combo.ToString() + COMBO_LABEL));
+		StartCoroutine(sidelineTextControl.ShowText(comboTimer.ToString() + "sec " + combo.ToString() + COMBO_LABEL));
 	}
 
 
@@ -132,7 +132,7 @@ public class ScoreManager : MonoBehaviour {
 
 	private string ResetCombo(){
 		combo = comboStart;
-		return combo.ToString() + COMBO_LABEL;
+		return comboTimer.ToString() + "sec " + combo.ToString() + COMBO_LABEL;
 	}
 
 

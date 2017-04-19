@@ -30,7 +30,7 @@ public class HighScoreManager : MonoBehaviour {
 
 		public string GetEntry(){
 			if (Score != 0){
-				return string.Concat(Name, " ", Score.ToString());
+				return string.Concat(Name, " ", System.String.Format("{0:n0}", Score));
 			} else {
 				return string.Concat(Name, " ", "----");
 			}

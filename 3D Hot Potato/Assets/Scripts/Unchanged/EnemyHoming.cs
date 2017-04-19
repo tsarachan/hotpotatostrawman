@@ -161,13 +161,13 @@ public class EnemyHoming : EnemyBase {
 				//there should always one such player in any given frame
 				if (!player.GetComponent<PlayerBallInteraction>().BallCarrier &&
 					ballScript.IntendedReceiver != player){
-					Debug.Log(gameObject.name + " found a target without the ball: " + player);
+					//Debug.Log(gameObject.name + " found a target without the ball: " + player);
 					return player;
 				}
 			}
 
 			//if somehow there wasn't a suitable player, return a random player
-			Debug.Log(gameObject.name + " is returning a random enemy");
+			//Debug.Log(gameObject.name + " is returning a random enemy");
 			return playerOrganizer.GetChild(Random.Range(0, playerOrganizer.childCount));
 		} else { //didn't want to go for the ball; chase a random player
 			return playerOrganizer.GetChild(Random.Range(0, playerOrganizer.childCount));
@@ -363,12 +363,12 @@ public class EnemyHoming : EnemyBase {
 		//reset the hunt enemy's searching eye, if applicable
 		if (gameObject.name.Contains(HUNT)){
 			playerOrganizer = GameObject.Find(PLAYER_ORGANIZER).transform;
-			Debug.Log(playerOrganizer);
+			//Debug.Log(playerOrganizer);
 			eyeMat = transform.Find(EYE_OBJ).GetComponent<Renderer>().material;
 			eyeMat.color = startEyeColor;
 			ballScript = GameObject.Find(BALL_OBJ).GetComponent<BallBehavior>();
 			target = ChooseTarget();
-			Debug.Log(target);
+			//Debug.Log(target);
 			StartCoroutine(ChangeEyeColor());
 		}
 	}
