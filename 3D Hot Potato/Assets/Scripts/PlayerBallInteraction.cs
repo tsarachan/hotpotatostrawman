@@ -80,10 +80,10 @@ public class PlayerBallInteraction : MonoBehaviour {
 	private void OnTriggerEnter(Collider other){
 		if (other.transform.name.Contains(BALL_OBJ)){
 			if (other.transform.GetComponent<BallBehavior>().InAir){
-				Debug.Log("Touched the ball");
+				//Debug.Log("Touched the ball");
 				other.transform.GetComponent<BallBehavior>().GetCaught(transform);
 				BallCarrier = true;
-				Debug.Log(gameObject.name + " BallCarrier == " + BallCarrier);
+				//Debug.Log(gameObject.name + " BallCarrier == " + BallCarrier);
 			}
 		}
 	}
@@ -96,7 +96,7 @@ public class PlayerBallInteraction : MonoBehaviour {
 			ballBehavior.Pass(myCycleObj.Find(BALL_OBJ).position, otherPlayer);
 			//scoreManager.Score(NUMBER_OF_PASSES, gameObject.name);
 			BallCarrier = false;
-			Debug.Log(gameObject.name + " BallCarrier == " + BallCarrier);
+			//Debug.Log(gameObject.name + " BallCarrier == " + BallCarrier);
 
 			//send out a pass event; the passing tutorial needs to receive these before the players go on
 			Services.EventManager.Fire(new PassEvent(gameObject, otherPlayer.gameObject));

@@ -218,7 +218,7 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 
 
 	private void ScoreDestroyedEnemy(GameObject enemy){
-		scoreManager.AddScore(enemy.GetComponent<EnemyBase>().ScoreValue);
 		scoreManager.IncreaseCombo();
+		scoreManager.AddScore(enemy.GetComponent<EnemyBase>().ScoreValue);
 	}
 }

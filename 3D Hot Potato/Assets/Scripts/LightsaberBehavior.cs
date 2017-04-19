@@ -159,8 +159,8 @@ public class LightsaberBehavior : MonoBehaviour {
 
 
 	public void DestroyEnemy(EnemyBase enemy){
-		scoreManager.AddScore(enemy.ScoreValue);
 		scoreManager.IncreaseCombo();
+		scoreManager.AddScore(enemy.ScoreValue);
 		enemy.GetDestroyed();
 	}
 }

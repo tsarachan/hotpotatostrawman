@@ -32,12 +32,15 @@ public class BurstBehavior : ObjectPooling.Poolable {
 
 	//internal variables
 	private const string PARTICLES_ORGANIZER = "Particles";
+	private ScoreManager scoreManager;
+	private const string MANAGER_OBJ = "Managers";
 
 
 	//initialize variables
 	private void Start(){
 		transform.parent = GameObject.Find(PARTICLES_ORGANIZER).transform;
 		enemyLayerMask = 1 << enemyLayer;
+		scoreManager = GameObject.Find(MANAGER_OBJ).GetComponent<ScoreManager>();
 	}
 
 
@@ -107,7 +110,11 @@ public class BurstBehavior : ObjectPooling.Poolable {
 	/// </summary>
 	/// <param name="enemy">The enemy to be affected.</param>
 	private void BlowAwayEffect(GameObject enemy){
-		enemy.GetComponent<EnemyBase>().GetDestroyed();
+		scoreManager.IncreaseCombo();
+
+		EnemyBase enemyBase = enemy.GetComponent<EnemyBase>();
+		scoreManager.AddScore(enemyBase.ScoreValue);
+		enemyBase.GetDestroyed();
 	}
 
 
