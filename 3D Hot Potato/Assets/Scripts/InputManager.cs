@@ -159,8 +159,9 @@ public class InputManager : MonoBehaviour {
 	private void Update(){
 		//controller buttons
 		foreach (char player in players.Keys){
-			if (Input.GetButtonDown(O_BUTTON + player) ||
-				Input.GetButtonDown(A_BUTTON + player)){
+			if (!paused && 
+				(Input.GetButtonDown(O_BUTTON + player) ||
+				 Input.GetButtonDown(A_BUTTON + player))){
 
 				players[player].BallScript.Throw();
 				players[player].CatchScript.AttemptAwesomeCatch();
@@ -182,6 +183,7 @@ public class InputManager : MonoBehaviour {
 			if (resetTimer >= resetDelay){
 				resetTimer = 0.0f;
 				ScoreRepository.Score = (int)scoreManager.Score;
+				ObjectPooling.ObjectPool.ClearPools(); //clear the object pools, to avoid null references on game restart
 				SceneManager.LoadScene(HIGH_SCORE_SCENE);
 			}
 		} else {

@@ -20,12 +20,19 @@ public class TextureScroll : MonoBehaviour {
 
 
 	private void Update(){
-		offset += Time.deltaTime * speed;
-
-		if (offset > 1.0f){
-			offset = 0.0f;
-		}
+		offset = CalculateOffset(offset);
 
 		myMaterial.SetTextureOffset("_MainTex", new Vector2(0.0f, offset));
+	}
+
+
+	private float CalculateOffset(float currentOffset){
+		currentOffset += Time.deltaTime * speed;
+
+		if (currentOffset > 1.0f){
+			currentOffset = 0.0f;
+		}
+
+		return currentOffset;
 	}
 }
