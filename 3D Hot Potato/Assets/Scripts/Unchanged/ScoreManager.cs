@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Text;
 using TMPro;
 
 public class ScoreManager : MonoBehaviour {
@@ -71,7 +72,8 @@ public class ScoreManager : MonoBehaviour {
 
 	public void AddScore(int value){
 		Score += value * GetComboMultiplier();
-		scoreText.text = SCORE_LABEL + Score.ToString();
+
+		scoreText.text = System.String.Format("{0:n0}", Score);
 	}
 
 
