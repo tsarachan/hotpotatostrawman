@@ -50,9 +50,10 @@ public class EnemyIgnoring : EnemyBase {
 	private const string DEATH_CLIP = "Audio/EnemyDeathSFX";
 
 
-	//names of different types of enemies; used to determine how this should move
+	//names of different types of enemies; used to determine how this should move or behave
 	private const string SINE = "Sine";
 	private const string SIDEWAYS = "Sideways";
+	private const string TUTORIAL = "Tutorial";
 
 
 
@@ -169,7 +170,14 @@ public class EnemyIgnoring : EnemyBase {
 
 		Vector3 pos = Vector3.LerpUnclamped(start, end, enterCurve.Evaluate(timer/enterTime));
 
-		if (Vector3.Distance(pos, end) <= Mathf.Epsilon) { enteringScreen = false; }
+		if (Vector3.Distance(pos, end) <= Mathf.Epsilon)
+		{
+			enteringScreen = false;
+
+			if (gameObject.name.Contains(TUTORIAL)){
+				GetComponent<Collider>().enabled = true;
+			}
+		}
 
 		return pos;
 	}
@@ -221,5 +229,10 @@ public class EnemyIgnoring : EnemyBase {
 		startXPos = transform.position.x;
 
 		GetComponent<Rigidbody>().velocity = startVelocity; //sanity check: make absolutely sure the velocity is zero
+
+		//if this enemy is part of a tutorial, shut its collider off so that it can't be destroyed prematurely
+		if (gameObject.name.Contains(TUTORIAL)){
+			GetComponent<Collider>().enabled = false;
+		}
 	}
 }

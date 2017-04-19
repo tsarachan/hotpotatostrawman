@@ -191,6 +191,7 @@ public class TutorialManager : MonoBehaviour {
 	private IEnumerator DisplayTutorial(Instruction instruction){
 		levelManager.Hold = true;
 		tutorialFinished = false;
+		currentInstruction.registerFunc();
 		yield return new WaitForSeconds(instruction.ZoomDelay);
 		Time.timeScale = 0.0f;
 		yield return StartCoroutine(ZoomCameraIn(instruction.CameraZoomPos));
@@ -198,7 +199,6 @@ public class TutorialManager : MonoBehaviour {
 		yield return new WaitForSecondsRealtime(readDelay);
 		yield return StartCoroutine(ZoomCameraOut(instruction.CameraZoomPos));
 		Time.timeScale = 1.0f;
-		currentInstruction.registerFunc();
 
 		//wait until the event handler sets tutorialFinished = true
 		while (!tutorialFinished){

@@ -78,7 +78,6 @@ public class NameEntrySystem : MonoBehaviour {
 		p2Initials = transform.Find(CANVAS_OBJ).Find(NAME_ENTRY_ORGANIZER)
 			.Find(P2_INITIALS_OBJ).GetComponent<TextMeshProUGUI>();
 		p2Initials.text = "   ";
-		Debug.Log(Time.timeScale);
 	}
 
 
