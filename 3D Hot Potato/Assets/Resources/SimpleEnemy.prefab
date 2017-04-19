@@ -284,7 +284,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startVelocity: {x: 0, y: 0, z: 0}
-  scoreValue: 50
+  scoreValue: 30
   chanceOfGoForBall: 1
   speed: 145
   maxSpeeds:
@@ -295,6 +295,7 @@ MonoBehaviour:
   onScreenTime: 0
   preparingToChargeColor: {r: 1, g: 0.029411793, b: 0.12981711, a: 0}
   leavingScreenColor: {r: 0.1397059, g: 1, b: 0.31682524, a: 1}
+  eyeChangeDuration: 1
   particleTotalLifetime: 1.5
   enterDistance: 75
   enterTime: 0.5
