@@ -36807,6 +36807,7 @@ GameObject:
   - component: {fileID: 1662276292}
   - component: {fileID: 1662276291}
   - component: {fileID: 1662276290}
+  - component: {fileID: 1662276289}
   m_Layer: 0
   m_Name: UI Camera
   m_TagString: Untagged
@@ -36827,6 +36828,19 @@ Transform:
   m_Father: {fileID: 1725037828}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 40.2, y: 0, z: 0}
+--- !u!114 &1662276289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1662276287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42cd8dcae69d178488f5efa28e7c7e78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shader: {fileID: 4800000, guid: 95703b29f49b899499233ea7308bb800, type: 3}
+  BlockCount: 512
 --- !u!92 &1662276290
 Behaviour:
   m_ObjectHideFlags: 0
