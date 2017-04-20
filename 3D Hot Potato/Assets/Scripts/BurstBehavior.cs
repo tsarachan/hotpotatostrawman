@@ -110,6 +110,7 @@ public class BurstBehavior : ObjectPooling.Poolable {
 	/// </summary>
 	/// <param name="enemy">The enemy to be affected.</param>
 	private void BlowAwayEffect(GameObject enemy){
+		Debug.Log(gameObject.name + " destroyed " + enemy.gameObject.name);
 		scoreManager.IncreaseCombo();
 
 		EnemyBase enemyBase = enemy.GetComponent<EnemyBase>();

@@ -7,6 +7,7 @@ public class BallEnemyInteraction : MonoBehaviour {
 
 	private void OnTriggerEnter(Collider other){
 		if (other.gameObject.name.Contains(ENEMY_OBJ)){
+			Debug.Log(gameObject.name + " destroyed " + other.gameObject.name);
 			other.gameObject.GetComponent<EnemyBase>().GetDestroyed();
 		}
 	}

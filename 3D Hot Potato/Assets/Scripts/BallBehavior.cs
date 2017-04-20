@@ -158,6 +158,7 @@ public class BallBehavior : MonoBehaviour {
 	/// </summary>
 	/// <param name="destination">The world space point where the ball is meant to stop.</param>
 	public virtual void FallToGround(Vector3 destination){
+		Debug.Log("Ball falling to ground");
 		if (destination.y != 0.0f){
 			destination.y = 0.0f;
 		}

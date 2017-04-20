@@ -147,7 +147,6 @@ public class LightsaberBehavior : MonoBehaviour {
 
 		foreach (RaycastHit hit in hitInfo){
 			if (hit.collider.tag == ENEMY_TAG){
-				Debug.Log("hit object: " + hit.collider.gameObject.name);
 				hitEnemies.Add(hit.collider.GetComponent<EnemyBase>());
 			}
 		}
@@ -159,6 +158,7 @@ public class LightsaberBehavior : MonoBehaviour {
 
 
 	public void DestroyEnemy(EnemyBase enemy){
+		Debug.Log(gameObject.name + " destroyed " + enemy.gameObject.name);
 		scoreManager.IncreaseCombo();
 		scoreManager.AddScore(enemy.ScoreValue);
 		enemy.GetDestroyed();
