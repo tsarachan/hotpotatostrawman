@@ -253,7 +253,9 @@ public class EnemyHoming : EnemyBase {
 				stayTimer += Time.deltaTime;
 				rb.AddForce(direction * Speed, ForceMode.Force);
 				if(stayTimer >= onScreenTime - 1.5f){
-					myPointLight.color = preparingToChargeColor;
+					if (!gameObject.name.Contains(SIMPLE)){
+						myPointLight.color = preparingToChargeColor;
+					}
 //					if(myPointLight.intensity < 5f){
 //						myPointLight.intensity = 5.1f;
 //					}
@@ -266,12 +268,16 @@ public class EnemyHoming : EnemyBase {
 			} else {
 				//stop changing direction; the enemy goes off-screen
 				rb.AddForce(direction * Speed * speedBoost, ForceMode.Force);
-				myPointLight.color = leavingScreenColor;
-				myPointLight.intensity = 8.0f; //set the light to maximum intensity to signify danger
+				if (!gameObject.name.Contains(SIMPLE)){
+					myPointLight.color = leavingScreenColor;
+					myPointLight.intensity = 8.0f; //set the light to maximum intensity to signify danger
+				}
 			}
 
 			//increase intensity of point light while on screen
-			myPointLight.intensity = Mathf.Lerp(startIntensity, 8.0f, stayTimer/onScreenTime);
+			if (!gameObject.name.Contains(SIMPLE)){
+				myPointLight.intensity = Mathf.Lerp(startIntensity, 8.0f, stayTimer/onScreenTime);
+			}
 
 			//This is a bodge to limit maximum speed. The better way would be to impose a countervailing force.
 			//Directly manipulating rigidbody velocity could lead to physics problems.
@@ -284,7 +290,13 @@ public class EnemyHoming : EnemyBase {
 
 		Vector3 pos = Vector3.LerpUnclamped(start, end, enterCurve.Evaluate(timer/enterTime));
 
-		if (Vector3.Distance(pos, end) <= Mathf.Epsilon) { enteringScreen = false; }
+		if (Vector3.Distance(pos, end) <= Mathf.Epsilon){
+			enteringScreen = false;
+
+			if (gameObject.name.Contains(SIMPLE)){
+				transform.rotation = Quaternion.LookRotation(target.position - transform.position, Vector3.up);
+			}
+		}
 
 		return pos;
 	}
