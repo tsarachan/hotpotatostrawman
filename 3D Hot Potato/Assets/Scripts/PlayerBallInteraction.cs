@@ -74,28 +74,12 @@ public class PlayerBallInteraction : MonoBehaviour {
 
 
 	/// <summary>
-	/// Picks up the ball when the player encounters it.
-	/// </summary>
-	/// <param name="other">The collider the player has encountered.</param>
-	private void OnTriggerEnter(Collider other){
-		if (other.transform.name.Contains(BALL_OBJ)){
-			if (other.transform.GetComponent<BallBehavior>().InAir){
-				//Debug.Log("Touched the ball");
-				other.transform.GetComponent<BallBehavior>().GetCaught(transform);
-				BallCarrier = true;
-				//Debug.Log(gameObject.name + " BallCarrier == " + BallCarrier);
-			}
-		}
-	}
-
-	/// <summary>
 	/// InputManager calls this to start the process of throwing the ball.
 	/// </summary>
 	public void Throw(){
 		if (myCycleObj.Find(BALL_OBJ)){ //sanity check to make sure this player has the ball; avoids null references
-			ballBehavior.Pass(myCycleObj.Find(BALL_OBJ).position, otherPlayer);
+			ballBehavior.Throw(transform, otherPlayer);
 			//scoreManager.Score(NUMBER_OF_PASSES, gameObject.name);
-			BallCarrier = false;
 			//Debug.Log(gameObject.name + " BallCarrier == " + BallCarrier);
 
 			//send out a pass event; the passing tutorial needs to receive these before the players go on

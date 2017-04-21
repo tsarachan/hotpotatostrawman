@@ -214,7 +214,6 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 		transform.Find(POINT_LIGHT).gameObject.SetActive(true); //turn the point light back on
 		transform.Find(RIDER_ORGANIZER).Find(CYCLE).GetComponent<Renderer>().enabled = true; //restore the lightsteed
 //		transform.GetChild(1).GetChild(1).gameObject.SetActive(true); //bring back the rider
-		GetComponent<PlayerBallInteraction>().BallCarrier = false; //without this setting, players can be destroyed without the ball on restart
 		GetComponent<BackwardsTrail>().StartGame();
 	}
 
