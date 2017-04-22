@@ -25,6 +25,10 @@ public class BallBehavior : MonoBehaviour {
 	public float holdHeight = 2.0f;
 
 
+	//the distance between ball and player where a special catch becomes possible; must match value in CatchBehavior
+	public float awesomeCatchDist = 10.0f;
+
+
 	//----------Internal variables----------
 
 
@@ -51,12 +55,31 @@ public class BallBehavior : MonoBehaviour {
 	private const string CATCH_WARNING_OBJ = "Catch warning";
 
 
+	//the spark that shows when the ball is in range for an awesome catch
+	private GameObject awesomeParticle;
+	private const string AWESOME_PARTICLE_OBJ = "Ball particle";
+	private bool awesomeCatchReady = false;
+	public bool AwesomeCatchReady{
+		get { return awesomeCatchReady; }
+		set {
+			if (value != awesomeCatchReady){
+				awesomeCatchReady = value;
+
+				if (awesomeCatchReady == true){
+					Services.EventManager.Fire(new PowerReadyEvent());
+				}
+			}
+		}
+	}
+
+
 
 	private void Start(){
 		rb = GetComponent<Rigidbody>();
 		player1 = GameObject.Find(PLAYER_1_OBJ).transform;
 		player2 = GameObject.Find(PLAYER_2_OBJ).transform;
 		IntendedReceiver = transform; //nonsense initialization for error-checking
+		awesomeParticle = transform.Find(AWESOME_PARTICLE_OBJ).gameObject;
 		ResetBall();
 	}
 
@@ -85,6 +108,11 @@ public class BallBehavior : MonoBehaviour {
 				arrived = true;
 				GetCaught(receivingPlayer);
 				yield break;
+			}
+
+			if (Vector3.Distance(receivingPlayer.position, transform.position) <= awesomeCatchDist){
+				AwesomeCatchReady = true;
+				awesomeParticle.SetActive(AwesomeCatchReady);
 			}
 
 
@@ -129,11 +157,17 @@ public class BallBehavior : MonoBehaviour {
 		transform.localPosition = new Vector3(0.0f, holdHeight, 0.0f);
 
 		IntendedReceiver = transform;
+
+		AwesomeCatchReady = false;
+		awesomeParticle.SetActive(AwesomeCatchReady);
 	}
 
 
 	public void ResetBall(){
 		GetCaught(player1);
 		player2.GetComponent<PlayerBallInteraction>().BallCarrier = false;
+		awesomeParticle.SetActive(false);
+		GameObject.Find(PLAYER_1_OBJ).transform.Find(CATCH_WARNING_OBJ).gameObject.SetActive(false);
+		GameObject.Find(PLAYER_2_OBJ).transform.Find(CATCH_WARNING_OBJ).gameObject.SetActive(false);
 	}
 }
