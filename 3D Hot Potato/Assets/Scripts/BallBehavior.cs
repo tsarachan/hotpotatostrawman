@@ -67,6 +67,8 @@ public class BallBehavior : MonoBehaviour {
 
 		receivingPlayer.Find(CATCH_WARNING_OBJ).gameObject.SetActive(true);
 
+		Services.EventManager.Fire(new PassEvent(throwingPlayer.gameObject, receivingPlayer.gameObject));
+
 		StartCoroutine(MoveBetweenPlayers(throwingPlayer, receivingPlayer));
 	}
 
