@@ -127,17 +127,22 @@ public class CatchBehavior : CatchSandbox {
 	//	/// All the logic for whether or not awesome catches occur is in the if-statements in this function.
 	//	/// </summary>
 	public void AttemptAwesomeCatch(){
+//		Debug.Log("AttemptAwesomeCatch() called for " + gameObject.name);
 		if (ballBehavior.IntendedReceiver == transform){ //make sure the ball is coming to this player
+//			Debug.Log("I am the intended receiver");
 			if(inputs > 0){ //if this is true, the player has already tried for an awesome catch and is mashing
 				movementScript.SlowMaxSpeed();
 				readyForAwesomeCatch = false;
+//				Debug.Log("Too many inputs");
 				MissedCatchFeedback();
 			} else if (Vector3.Distance(transform.position, ball.position) > awesomeCatchDistance){ //if true, pushed button too early--missed catch
+//				Debug.Log("Too far");
 				inputs++;
 				movementScript.SlowMaxSpeed();
 				readyForAwesomeCatch = false;
 				MissedCatchFeedback();
 			} else { //success! An awesome catch can occur
+//				Debug.Log("Success!");
 				readyForAwesomeCatch = true;
 				catchText.text = CATCH;
 				catchText.color = Color.green;

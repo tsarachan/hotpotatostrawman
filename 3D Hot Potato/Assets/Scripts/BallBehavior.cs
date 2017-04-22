@@ -56,6 +56,7 @@ public class BallBehavior : MonoBehaviour {
 		rb = GetComponent<Rigidbody>();
 		player1 = GameObject.Find(PLAYER_1_OBJ).transform;
 		player2 = GameObject.Find(PLAYER_2_OBJ).transform;
+		IntendedReceiver = transform; //nonsense initialization for error-checking
 		ResetBall();
 	}
 
@@ -66,6 +67,8 @@ public class BallBehavior : MonoBehaviour {
 		throwingPlayer.GetComponent<PlayerBallInteraction>().BallCarrier = false;
 
 		receivingPlayer.Find(CATCH_WARNING_OBJ).gameObject.SetActive(true);
+
+		IntendedReceiver = receivingPlayer;
 
 		Services.EventManager.Fire(new PassEvent(throwingPlayer.gameObject, receivingPlayer.gameObject));
 
@@ -88,16 +91,16 @@ public class BallBehavior : MonoBehaviour {
 			//calculate the height of the ball at this point in the arc
 			//the ball should be at max height when it is halfway between the players
 			float distBetweenPlayers = Vector3.Distance(throwingPlayer.position, receivingPlayer.position);
-			Debug.Log("distBetweenPlayers == " + distBetweenPlayers);
+//			Debug.Log("distBetweenPlayers == " + distBetweenPlayers);
 
 
 			Vector3 groundLoc = transform.position;
 			groundLoc.y = 0.0f;
 			float distToReceiver = Vector3.Distance(groundLoc, receivingPlayer.position);
-			Debug.Log("distToReceiver == " + distToReceiver);
+//			Debug.Log("distToReceiver == " + distToReceiver);
 
 			float currentHeight = Mathf.Sin((1 - (distToReceiver/distBetweenPlayers)) * Mathf.PI) * maxHeight;
-			Debug.Log("currentHeight == " + currentHeight);
+//			Debug.Log("currentHeight == " + currentHeight);
 
 			Vector3 nextPos = groundLoc + 
 							  (receivingPlayer.position - groundLoc).normalized * speed;
@@ -124,6 +127,8 @@ public class BallBehavior : MonoBehaviour {
 		receivingPlayer.Find(CATCH_WARNING_OBJ).gameObject.SetActive(false);
 
 		transform.localPosition = new Vector3(0.0f, holdHeight, 0.0f);
+
+		IntendedReceiver = transform;
 	}
 
 
