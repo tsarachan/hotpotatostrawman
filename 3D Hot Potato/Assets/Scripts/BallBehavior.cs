@@ -47,6 +47,10 @@ public class BallBehavior : MonoBehaviour {
 	private const string PLAYER_2_OBJ = "Player 2";
 
 
+	//the notifications above the players
+	private const string CATCH_WARNING_OBJ = "Catch warning";
+
+
 
 	private void Start(){
 		rb = GetComponent<Rigidbody>();
@@ -60,6 +64,9 @@ public class BallBehavior : MonoBehaviour {
 		transform.parent = transform.root;
 
 		throwingPlayer.GetComponent<PlayerBallInteraction>().BallCarrier = false;
+
+		receivingPlayer.Find(CATCH_WARNING_OBJ).gameObject.SetActive(true);
+
 		StartCoroutine(MoveBetweenPlayers(throwingPlayer, receivingPlayer));
 	}
 
@@ -111,6 +118,8 @@ public class BallBehavior : MonoBehaviour {
 		Debug.Log(transform.parent);
 
 		receivingPlayer.GetComponent<PlayerBallInteraction>().BallCarrier = true;
+
+		receivingPlayer.Find(CATCH_WARNING_OBJ).gameObject.SetActive(false);
 
 		transform.localPosition = new Vector3(0.0f, holdHeight, 0.0f);
 	}
