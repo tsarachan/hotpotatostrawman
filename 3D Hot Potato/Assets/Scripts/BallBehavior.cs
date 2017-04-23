@@ -140,15 +140,13 @@ public class BallBehavior : MonoBehaviour {
 			yield return null;
 		}
 
-		//this coroutine shoudl always end in the if-statement above; this is a sanity check
+		//this coroutine should always end in the if-statement above; this is a sanity check
 		yield break;
 	}
 
 
 	public void GetCaught(Transform receivingPlayer){
 		transform.parent = receivingPlayer.Find(CYCLE_OBJ);
-
-		Debug.Log(transform.parent);
 
 		receivingPlayer.GetComponent<PlayerBallInteraction>().BallCarrier = true;
 

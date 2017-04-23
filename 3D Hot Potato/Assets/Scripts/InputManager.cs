@@ -91,6 +91,7 @@ public class InputManager : MonoBehaviour {
 	private const string HIGH_SCORE_SCENE = "High score scene";
 	private const string TITLE_SCENE = "TitleScene3";
 	private ScoreManager scoreManager;
+	private GameEndSystem gameEndSystem;
 
 
 	//initialize variables and data structures
@@ -100,6 +101,7 @@ public class InputManager : MonoBehaviour {
 		controllerMapScript = GameObject.Find(UI_CANVAS_OBJ).transform.Find(CONTROLLER_MAP_OBJ)
 			.GetComponent<ControllerInfoBehavior>();
 		scoreManager = GetComponent<ScoreManager>();
+		gameEndSystem = GetComponent<GameEndSystem>();
 		StartGame();
 	}
 
@@ -165,6 +167,7 @@ public class InputManager : MonoBehaviour {
 
 				players[player].BallScript.Throw();
 				players[player].CatchScript.AttemptAwesomeCatch();
+				gameEndSystem.ResetInputTimer();
 			}
 
 			if (Input.GetButtonDown(PS_OPTIONS_BUTTON + player)){
@@ -217,22 +220,26 @@ public class InputManager : MonoBehaviour {
 				Input.GetAxis(VERT_AXIS_360 + player) > deadZone){
 				players[player].MoveScript.Move(UP);
 				players[player].LeanScript.Lean(UP);
+				gameEndSystem.ResetInputTimer();
 			}
 			else if (Input.GetAxis(VERT_AXIS + player) < -deadZone ||
 					 Input.GetAxis(VERT_AXIS_360 + player) < -deadZone){
 				players[player].MoveScript.Move(DOWN);
 				players[player].LeanScript.Lean(DOWN);
+				gameEndSystem.ResetInputTimer();
 			}
 
 			if (Input.GetAxis(HORIZ_AXIS + player) < -deadZone ||
 				Input.GetAxis(HORIZ_AXIS_360 + player) < -deadZone){
 				players[player].MoveScript.Move(LEFT);
 				players[player].LeanScript.Lean(LEFT);
+				gameEndSystem.ResetInputTimer();
 			}
 			else if (Input.GetAxis(HORIZ_AXIS + player) > deadZone ||
 					 Input.GetAxis(HORIZ_AXIS_360 + player) > deadZone){
 				players[player].MoveScript.Move(RIGHT);
 				players[player].LeanScript.Lean(RIGHT);
+				gameEndSystem.ResetInputTimer();
 			}
 		}
 
@@ -241,6 +248,7 @@ public class InputManager : MonoBehaviour {
 			foreach (KeyCode control in players[player].keyboardControls){
 				if (Input.GetKey(control)){
 					InputByKey(player, control);
+					gameEndSystem.ResetInputTimer();
 				}
 			}
 		}
