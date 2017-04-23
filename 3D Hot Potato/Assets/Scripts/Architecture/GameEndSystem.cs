@@ -17,8 +17,19 @@ public class GameEndSystem : MonoBehaviour {
 	private float noInputTimer = 0.0f;
 
 
+	//the score system
+	private ScoreManager scoreManager;
+
+
 	//scenes to load
 	private const string TITLE_SCENE = "TitleScene3";
+	private const string HIGH_SCORE_SCENE = "High score scene";
+
+
+	//initialize variables
+	private void Start(){
+		scoreManager = GetComponent<ScoreManager>();
+	}
 
 
 
@@ -33,5 +44,12 @@ public class GameEndSystem : MonoBehaviour {
 
 	public void ResetInputTimer(){
 		noInputTimer = 0.0f;
+	}
+
+
+	public void VoluntaryStop(){
+		ScoreRepository.Score = (int)scoreManager.Score;
+		ObjectPooling.ObjectPool.ClearPools();
+		SceneManager.LoadScene(HIGH_SCORE_SCENE);
 	}
 }

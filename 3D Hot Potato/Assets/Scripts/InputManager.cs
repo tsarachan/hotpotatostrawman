@@ -85,12 +85,9 @@ public class InputManager : MonoBehaviour {
 	private const string CONTROLLER_MAP_OBJ = "Controller map";
 
 
-	//used to reset the game
+	//used to end the game
 	private bool paused = true;
 	private float resetTimer = 0.0f;
-	private const string HIGH_SCORE_SCENE = "High score scene";
-	private const string TITLE_SCENE = "TitleScene3";
-	private ScoreManager scoreManager;
 	private GameEndSystem gameEndSystem;
 
 
@@ -100,7 +97,6 @@ public class InputManager : MonoBehaviour {
 		levelManager = GetComponent<LevelManager>();
 		controllerMapScript = GameObject.Find(UI_CANVAS_OBJ).transform.Find(CONTROLLER_MAP_OBJ)
 			.GetComponent<ControllerInfoBehavior>();
-		scoreManager = GetComponent<ScoreManager>();
 		gameEndSystem = GetComponent<GameEndSystem>();
 		StartGame();
 	}
@@ -185,9 +181,7 @@ public class InputManager : MonoBehaviour {
 
 			if (resetTimer >= resetDelay){
 				resetTimer = 0.0f;
-				ScoreRepository.Score = (int)scoreManager.Score;
-				ObjectPooling.ObjectPool.ClearPools(); //clear the object pools, to avoid null references on game restart
-				SceneManager.LoadScene(HIGH_SCORE_SCENE);
+				gameEndSystem.VoluntaryStop();
 			}
 		} else {
 			resetTimer = 0.0f;
