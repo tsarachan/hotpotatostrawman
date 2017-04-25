@@ -77,8 +77,6 @@ public class PauseMenuBehavior : MonoBehaviour {
 		while (optInTimer >= 0.0f){
 			optInTimer -= Time.unscaledDeltaTime;
 
-			Debug.Log(optInTimer);
-
 			optInSeconds.text = ((int)optInTimer).ToString();
 
 			//if the players unpause the game, they've opted into continuing; stop this coroutine
