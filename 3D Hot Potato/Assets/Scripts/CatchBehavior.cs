@@ -85,18 +85,13 @@ public class CatchBehavior : CatchSandbox {
 	/// an awesome catch is possible.
 	/// </summary>
 	/// <param name="other">The collider the player encountered.</param>
-	private void OnTriggerEnter(Collider other){
-		if (other.gameObject.name == BALL_OBJ){
-			if (readyForAwesomeCatch){
-				AwesomeCatch();
-			}
-
-			inputs = 0;
-			readyForAwesomeCatch = false;
-			catchText.text = INCOMING; //reset the UI that tells players the ball is approaching
-			catchText.color = Color.white;
-			//madeAwesomeCatch = false;
+	public void CheckIfAwesomeCatch() {
+		if (readyForAwesomeCatch){
+			AwesomeCatch();
 		}
+
+		inputs = 0;
+		readyForAwesomeCatch = false;
 	}
 
 

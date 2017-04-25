@@ -141,7 +141,7 @@ public class LevelManager : MonoBehaviour {
 	private const string PROGRESS_MESSAGE_OBJ = "Progress message";
 
 
-	//the tutorial manager, and the tutorials available
+	//the tutorial manager
 	private TutorialManager tutorialManager;
 
 

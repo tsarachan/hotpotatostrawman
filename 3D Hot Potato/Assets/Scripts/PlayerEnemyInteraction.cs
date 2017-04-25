@@ -60,6 +60,10 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 	private ScoreManager scoreManager;
 
 
+	//ending the game
+	private GameEndSystem gameEndSystem;
+
+
 	//initialize variables
 	private void Start(){
 		levelManager = GameObject.Find(MANAGER_OBJ).GetComponent<LevelManager>();
@@ -73,6 +77,7 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 		audioSource = GetComponent<AudioSource>();
 		deathSFX = Resources.Load(DEATH_SFX) as AudioClip;
 		scoreManager = GameObject.Find(MANAGER_OBJ).GetComponent<ScoreManager>();
+		gameEndSystem = GameObject.Find(MANAGER_OBJ).GetComponent<GameEndSystem>();
 	}
 
 	//debug instruction
@@ -200,6 +205,8 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 		}
 
 		levelManager.RestartGame();
+
+		gameEndSystem.CheckDeathTracking();
 
 		yield break;
 	}

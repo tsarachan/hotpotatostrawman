@@ -80,13 +80,13 @@ public class InputManager : MonoBehaviour {
 
 
 	//variables for the pause menu with controller map
-	private ControllerInfoBehavior controllerMapScript;
+	private PauseMenuBehavior pauseMenuScript;
 	private const string UI_CANVAS_OBJ = "UI canvas";
 	private const string CONTROLLER_MAP_OBJ = "Controller map";
 
 
 	//used to end the game
-	private bool paused = true;
+	//private bool paused = true;
 	private float resetTimer = 0.0f;
 	private GameEndSystem gameEndSystem;
 
@@ -95,8 +95,8 @@ public class InputManager : MonoBehaviour {
 	private void Start(){
 		players = MakePlayers();
 		levelManager = GetComponent<LevelManager>();
-		controllerMapScript = GameObject.Find(UI_CANVAS_OBJ).transform.Find(CONTROLLER_MAP_OBJ)
-			.GetComponent<ControllerInfoBehavior>();
+		pauseMenuScript = GameObject.Find(UI_CANVAS_OBJ).transform.Find(CONTROLLER_MAP_OBJ)
+			.GetComponent<PauseMenuBehavior>();
 		gameEndSystem = GetComponent<GameEndSystem>();
 		StartGame();
 	}
@@ -157,7 +157,7 @@ public class InputManager : MonoBehaviour {
 	private void Update(){
 		//controller buttons
 		foreach (char player in players.Keys){
-			if (!paused && 
+			if (!pauseMenuScript.Paused && 
 				(Input.GetButtonDown(O_BUTTON + player) ||
 				 Input.GetButtonDown(A_BUTTON + player))){
 
@@ -167,15 +167,14 @@ public class InputManager : MonoBehaviour {
 			}
 
 			if (Input.GetButtonDown(PS_OPTIONS_BUTTON + player)){
-				paused = !paused;
-				controllerMapScript.ReceivePauseInput();
+				pauseMenuScript.ChangePauseMenuState();
 			}
 		}
 
 
 		if (Input.GetButton(O_BUTTON + "1") &&
 			Input.GetButton(O_BUTTON + "2") &&
-			paused){
+			pauseMenuScript.Paused){
 
 			resetTimer += Time.unscaledDeltaTime;
 
@@ -188,8 +187,7 @@ public class InputManager : MonoBehaviour {
 		}
 
 		if (Input.GetKeyDown(pauseKey)){
-			paused = !paused;
-			controllerMapScript.ReceivePauseInput();
+			pauseMenuScript.ChangePauseMenuState();
 		}
 
 		/* 

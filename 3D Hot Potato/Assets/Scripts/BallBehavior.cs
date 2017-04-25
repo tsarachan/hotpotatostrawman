@@ -4,8 +4,10 @@
  * 
  */
 
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
+using UnityEngine.UI;
+
 
 public class BallBehavior : MonoBehaviour {
 
@@ -73,6 +75,18 @@ public class BallBehavior : MonoBehaviour {
 	}
 
 
+	//the special catch indicators for each player
+	private Text p1CatchText;
+	private Text p2CatchText;
+	private GameObject p1CatchObj;
+	private GameObject p2CatchObj;
+	private const string TEXT_CANVAS = "Catch warning";
+	private const string TEXT_OBJ = "Text";
+	private const string MISS = "X";
+	private const string CATCH = "OK";
+	private const string INCOMING = "!";
+
+
 
 	private void Start(){
 		rb = GetComponent<Rigidbody>();
@@ -80,6 +94,10 @@ public class BallBehavior : MonoBehaviour {
 		player2 = GameObject.Find(PLAYER_2_OBJ).transform;
 		IntendedReceiver = transform; //nonsense initialization for error-checking
 		awesomeParticle = transform.Find(AWESOME_PARTICLE_OBJ).gameObject;
+		p1CatchObj = player1.transform.Find(TEXT_CANVAS).gameObject;
+		p2CatchObj = player2.transform.Find(TEXT_CANVAS).gameObject;
+		p1CatchText = p1CatchObj.transform.Find(TEXT_OBJ).GetComponent<Text>();
+		p2CatchText = p2CatchObj.transform.Find(TEXT_OBJ).GetComponent<Text>();
 		ResetBall();
 	}
 
@@ -150,11 +168,13 @@ public class BallBehavior : MonoBehaviour {
 
 		receivingPlayer.GetComponent<PlayerBallInteraction>().BallCarrier = true;
 
-		receivingPlayer.Find(CATCH_WARNING_OBJ).gameObject.SetActive(false);
-
 		transform.localPosition = new Vector3(0.0f, holdHeight, 0.0f);
 
 		IntendedReceiver = transform;
+
+		receivingPlayer.GetComponent<CatchBehavior>().CheckIfAwesomeCatch();
+
+		ResetCatchTexts();
 
 		AwesomeCatchReady = false;
 		awesomeParticle.SetActive(AwesomeCatchReady);
@@ -165,7 +185,18 @@ public class BallBehavior : MonoBehaviour {
 		GetCaught(player1);
 		player2.GetComponent<PlayerBallInteraction>().BallCarrier = false;
 		awesomeParticle.SetActive(false);
-		GameObject.Find(PLAYER_1_OBJ).transform.Find(CATCH_WARNING_OBJ).gameObject.SetActive(false);
-		GameObject.Find(PLAYER_2_OBJ).transform.Find(CATCH_WARNING_OBJ).gameObject.SetActive(false);
+
+		ResetCatchTexts();
+	}
+
+
+	private void ResetCatchTexts(){
+		p1CatchText.text = INCOMING;
+		p1CatchText.color = Color.white;
+		p2CatchText.text = INCOMING;
+		p2CatchText.color = Color.white;
+
+		p1CatchObj.SetActive(false);
+		p2CatchObj.SetActive(false);
 	}
 }

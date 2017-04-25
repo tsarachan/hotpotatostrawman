@@ -18,6 +18,7 @@ public class CheckpointBehavior : EnemyBase {
 
 
 	private LevelManager levelManager;
+	private GameEndSystem gameEndSystem;
 	private const string MANAGER_OBJ = "Managers";
 	private Rigidbody rb;
 	private const string PLAYER_TAG = "Player";
@@ -42,6 +43,7 @@ public class CheckpointBehavior : EnemyBase {
 
 	private void Start(){
 		levelManager = GameObject.Find(MANAGER_OBJ).GetComponent<LevelManager>();
+		gameEndSystem = GameObject.Find(MANAGER_OBJ).GetComponent<GameEndSystem>();
 		rb = GetComponent<Rigidbody>();
 		GetCurrentLevelNumbers();
 		audioSource = GetComponent<AudioSource>();
@@ -71,6 +73,7 @@ public class CheckpointBehavior : EnemyBase {
 				StartCoroutine(sidelineTextControl.ShowText(CHECKPOINT_MESSAGE));
 				levelManager.SetCheckpoint(CurrentWorldNum, CurrentActNum, CurrentNextReadTime, CurrentReadIndex);
 				checkpointActivated = true;
+				gameEndSystem.ResetDeathTracking();
 				audioSource.Play();
 			}
 		}
