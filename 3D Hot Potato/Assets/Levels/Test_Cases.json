@@ -1,10 +1,9 @@
 {
 "world1":{
 		"act1":[
-			{"action":"progress", "title":"A title"},
-			{"action":"spawn", "whichEnemy":"SimpleEnemy", "waves":1, "numPerWave":1, "whichSpawners":[8], "timeBetweenWaves":0, "timeVariance":0},
-			{"action":"wait", "time":2},
-			{"action":"spawn", "whichEnemy":"SimpleEnemy", "waves":5, "numPerWave":1, "whichSpawners":[1, 2, 3, 4, 5], "timeBetweenWaves":0, "timeVariance":0},
-
+			{"action":"spawn", "whichEnemy":"BossBattle", "waves":1, "numPerWave":1, "whichSpawners":[8], "timeBetweenWaves":0, "timeVariance":0},
+			{"action":"wait", "time":4},
+			{"action":"spawn", "whichEnemy":"PlayerTrackerEnemy", "waves":100, "numPerWave":5, "whichSpawners":[4, 6, 8, 10, 12], "timeBetweenWaves":2, "timeVariance":0}
+			{"action":"wait", "time":1},
 		]}
 }
