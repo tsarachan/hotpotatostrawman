@@ -52,5 +52,6 @@ public class ProgressMessageBehavior : MonoBehaviour {
 	public void ResetProgressMessage(){
 		StopAllCoroutines();
 		transform.position = startLoc;
+		text.text = "";
 	}
 }
