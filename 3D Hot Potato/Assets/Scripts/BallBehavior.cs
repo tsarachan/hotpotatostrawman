@@ -121,13 +121,23 @@ public class BallBehavior : MonoBehaviour {
 		bool arrived = false;
 
 		while (!arrived){
-			if (Vector3.Distance(receivingPlayer.position, transform.position) <= speed){
+			//calculate the 2D distance between the ball and the receiver
+			Vector3 groundLoc = transform.position;
+			groundLoc.y = 0.0f;
+			float distToReceiver = Vector3.Distance(groundLoc, receivingPlayer.position);
+
+
+			//if the 2D distance is less than the speed of the ball, the ball will arrive this frame
+			//give the ball to the receiver, so the ball doesn't flicker around the receiver
+			if (distToReceiver <= speed){
 				rb.MovePosition(receivingPlayer.position);
 				arrived = true;
 				GetCaught(receivingPlayer);
 				yield break;
 			}
 
+
+			//the ball isn't getting caught this frame; should the awesome catch particle turn on?
 			if (Vector3.Distance(receivingPlayer.position, transform.position) <= awesomeCatchDist){
 				AwesomeCatchReady = true;
 				awesomeParticle.SetActive(AwesomeCatchReady);
@@ -137,17 +147,12 @@ public class BallBehavior : MonoBehaviour {
 			//calculate the height of the ball at this point in the arc
 			//the ball should be at max height when it is halfway between the players
 			float distBetweenPlayers = Vector3.Distance(throwingPlayer.position, receivingPlayer.position);
-//			Debug.Log("distBetweenPlayers == " + distBetweenPlayers);
 
-
-			Vector3 groundLoc = transform.position;
-			groundLoc.y = 0.0f;
-			float distToReceiver = Vector3.Distance(groundLoc, receivingPlayer.position);
-//			Debug.Log("distToReceiver == " + distToReceiver);
 
 			float currentHeight = Mathf.Sin((1 - (distToReceiver/distBetweenPlayers)) * Mathf.PI) * maxHeight;
-//			Debug.Log("currentHeight == " + currentHeight);
 
+
+			//place the ball
 			Vector3 nextPos = groundLoc + 
 							  (receivingPlayer.position - groundLoc).normalized * speed;
 
