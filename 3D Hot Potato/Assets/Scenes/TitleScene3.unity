@@ -2937,45 +2937,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f7b184d63a1048cc8d1475a864c5f90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  normalTossCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 0
-      inSlope: 1
-      outSlope: 1
-      tangentMode: 34
-    - serializedVersion: 2
-      time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 1
-      tangentMode: 34
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
-  flightTimePerUnitDistance: 40
-  verticalCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 0
-      inSlope: 4.561616
-      outSlope: 4.561616
-      tangentMode: 0
-    - serializedVersion: 2
-      time: 0.50044286
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 0
-    m_RotationOrder: 0
-  verticalHeight: 2
-  verticalOffset: 1
+  speed: 2
+  maxHeight: 5
+  holdHeight: 2
+  awesomeCatchDist: 10
 --- !u!54 &260184039
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -29982,7 +29947,8 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114468563299828248, guid: 3721f03d9f13f41d2badfcc21a5fdffe, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 3721f03d9f13f41d2badfcc21a5fdffe, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &1210323705
@@ -30666,6 +30632,85 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1258570692}
   m_Mesh: {fileID: 4300000, guid: e0634b50b593648f386489c9a32e4484, type: 3}
+--- !u!1 &1271466110
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1271466111}
+  - component: {fileID: 1271466114}
+  - component: {fileID: 1271466113}
+  - component: {fileID: 1271466112}
+  m_Layer: 0
+  m_Name: Instructions Camera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1271466111
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1271466110}
+  m_LocalRotation: {x: 0.34365973, y: -0, z: -0, w: 0.9390943}
+  m_LocalPosition: {x: 0, y: 22.7, z: -13}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1725037828}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 40.2, y: 0, z: 0}
+--- !u!92 &1271466112
+Behaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1271466110}
+  m_Enabled: 1
+--- !u!124 &1271466113
+Behaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1271466110}
+  m_Enabled: 1
+--- !u!20 &1271466114
+Camera:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1271466110}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 3
+  m_BackGroundColor: {r: 0.098039225, g: 0.2784314, b: 0.2784314, a: 1}
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 5.67
+  far clip plane: 1000
+  field of view: 62
+  orthographic: 0
+  orthographic size: 5
+  m_Depth: 2
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4096
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
+  m_StereoMirrorMode: 0
 --- !u!1 &1272396127
 GameObject:
   m_ObjectHideFlags: 0
@@ -36899,7 +36944,7 @@ GameObject:
   - component: {fileID: 1676248532}
   - component: {fileID: 1676248534}
   - component: {fileID: 1676248533}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: TextMeshPro Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37293,6 +37338,7 @@ Transform:
   m_Children:
   - {fileID: 1662276288}
   - {fileID: 125557043}
+  - {fileID: 1271466111}
   m_Father: {fileID: 393844137}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
