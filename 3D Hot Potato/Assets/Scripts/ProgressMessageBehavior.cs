@@ -47,4 +47,10 @@ public class ProgressMessageBehavior : MonoBehaviour {
 
 		yield break;
 	}
+
+
+	public void ResetProgressMessage(){
+		StopAllCoroutines();
+		transform.position = startLoc;
+	}
 }

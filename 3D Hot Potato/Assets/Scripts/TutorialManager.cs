@@ -259,6 +259,12 @@ public class TutorialManager : MonoBehaviour {
 	}
 
 
+	public void ResetTutorials(){
+		StopAllCoroutines();
+		ClearTutorialText();
+	}
+
+
 	//////////////////////////////////////////////////////
 	/// FUNCTIONS USED BY ALL TUTORIALS
 	//////////////////////////////////////////////////////

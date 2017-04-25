@@ -490,6 +490,8 @@ public class LevelManager : MonoBehaviour {
 			p1EnemyScript.ResetPlayer();
 			p2EnemyScript.ResetPlayer();
 			ballScript.ResetBall();
+			progressMessage.ResetProgressMessage();
+			tutorialManager.ResetTutorials();
 
 //			Debug.Log("Player 1 BallCarrier == " + 
 //				GameObject.Find(PLAYER_1).GetComponent<PlayerBallInteraction>().BallCarrier);
