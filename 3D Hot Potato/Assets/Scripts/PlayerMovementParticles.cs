@@ -33,6 +33,10 @@ public class PlayerMovementParticles : MonoBehaviour {
 
 	private void Start(){
 		brakeParticle = transform.Find(BRAKE_PARTICLE_OBJ).GetComponent<ParticleSystem>();
+
+		ParticleSystem.MainModule mainBrakeParticle= brakeParticle.main;
+		mainBrakeParticle.startColor = RenderSettings.ambientLight;
+
 		accelParticle = transform.Find(ACCEL_PARTICLE_OBJ).gameObject;
 		accelParticleVert = accelParticle.transform.Find(VERTICAL_OBJ).GetComponent<ParticleSystem>();
 		accelParticleLeft = accelParticle.transform.Find(LEFT_OBJ).GetComponent<ParticleSystem>();
