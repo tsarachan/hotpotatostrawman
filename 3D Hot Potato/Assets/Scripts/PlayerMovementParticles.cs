@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerMovementParticles : MonoBehaviour {
 
+
 	private List<string> inputsThisFrame = new List<string>();
 	private List<string> inputsLastFrame = new List<string>();
 
@@ -31,6 +32,18 @@ public class PlayerMovementParticles : MonoBehaviour {
 	private const string UP = "up";
 
 
+	//variables associated with the wind trails
+	public bool windActive = true; //are we using wind at all?
+	private ContrailBehavior frontWind;
+	private ContrailBehavior rearWind;
+	private ContrailBehavior leftWind;
+	private ContrailBehavior rightWind;
+	private const string WIND_SOURCE = " wind source";
+	private const string FRONT_OBJ = "Forward";
+	private const string REAR_OBJ = "Rear";
+	private const string CYCLE_OBJ = "Cycle and rider";
+
+
 	private void Start(){
 		brakeParticle = transform.Find(BRAKE_PARTICLE_OBJ).GetComponent<ParticleSystem>();
 
@@ -41,6 +54,18 @@ public class PlayerMovementParticles : MonoBehaviour {
 		accelParticleVert = accelParticle.transform.Find(VERTICAL_OBJ).GetComponent<ParticleSystem>();
 		accelParticleLeft = accelParticle.transform.Find(LEFT_OBJ).GetComponent<ParticleSystem>();
 		accelParticleRight = accelParticle.transform.Find(RIGHT_OBJ).GetComponent<ParticleSystem>();
+
+		if (windActive){
+			frontWind = transform.Find(CYCLE_OBJ).Find(FRONT_OBJ + WIND_SOURCE).GetComponent<ContrailBehavior>();
+			rearWind = transform.Find(CYCLE_OBJ).Find(REAR_OBJ + WIND_SOURCE).GetComponent<ContrailBehavior>();
+			leftWind = transform.Find(CYCLE_OBJ).Find(LEFT_OBJ + WIND_SOURCE).GetComponent<ContrailBehavior>();
+			rightWind = transform.Find(CYCLE_OBJ).Find(RIGHT_OBJ + WIND_SOURCE).GetComponent<ContrailBehavior>();
+
+			frontWind.Active = false;
+			rearWind.Active = false;
+			leftWind.ChangeState(true);
+			rightWind.ChangeState(true);
+		}
 	}
 
 
@@ -77,11 +102,25 @@ public class PlayerMovementParticles : MonoBehaviour {
 		switch (input){
 			case UP:
 				brakeParticle.Play();
+
+				if (windActive){
+					frontWind.ChangeState(true);
+					rearWind.ChangeState(true);
+					leftWind.ChangeState(false);
+					rightWind.ChangeState(false);
+				}
 				break;
 			case DOWN:
 				accelParticleVert.Play();
 				accelParticleLeft.Play();
 				accelParticleRight.Play();
+
+				if (windActive){
+					frontWind.ChangeState(false);
+					rearWind.ChangeState(false);
+					leftWind.ChangeState(true);
+					rightWind.ChangeState(true);
+				}
 				break;
 
 		}
@@ -90,6 +129,14 @@ public class PlayerMovementParticles : MonoBehaviour {
 
 	private void StopMovementParticles(string input){
 		switch(input){
+			case UP:
+				if (windActive){
+					frontWind.ChangeState(false);
+					rearWind.ChangeState(false);
+					leftWind.ChangeState(true);
+					rightWind.ChangeState(true);
+				}
+				break;
 			case DOWN:
 				accelParticleVert.Stop();
 				accelParticleLeft.Stop();

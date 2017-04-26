@@ -27,6 +27,9 @@ public class HeadlightBehavior : MonoBehaviour {
 	private List<Vector3> verts = new List<Vector3>();
 
 
+	private Vector3 secondVertStart = new Vector3(0.0f, 0.0f, 0.0f);
+	private Vector3 secondVertDest = new Vector3(0.0f, 0.0f, 0.0f);
+
 	private float timer = 0.0f;
 
 
@@ -41,7 +44,6 @@ public class HeadlightBehavior : MonoBehaviour {
 
 	public void Update(){
 		verts[0] = transform.position;
-
 
 		for (int i = 1; i < verts.Count; i++){
 			verts[i] += speed;
@@ -72,7 +74,7 @@ public class HeadlightBehavior : MonoBehaviour {
 										offset.y + Random.Range(-yOffsetRange, yOffsetRange),
 										0.0f);
 
-		temp[1] += newOffset;
+		temp[2] += newOffset;
 
 
 		if (temp.Count >= numVertices){
