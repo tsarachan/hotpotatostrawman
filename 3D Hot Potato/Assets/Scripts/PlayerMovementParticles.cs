@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerMovementParticles : MonoBehaviour {
@@ -70,8 +71,6 @@ public class PlayerMovementParticles : MonoBehaviour {
 
 
 	private void LateUpdate(){
-
-
 		//start effects that should begin this frame
 		foreach (string input in inputsThisFrame){
 			if (!inputsLastFrame.Contains(input)){
@@ -88,6 +87,10 @@ public class PlayerMovementParticles : MonoBehaviour {
 		}
 
 
+		if (windActive){
+			HandleContrails();
+		}
+
 		inputsLastFrame.Clear();
 
 		foreach (string input in inputsThisFrame){
@@ -98,29 +101,33 @@ public class PlayerMovementParticles : MonoBehaviour {
 	}
 
 
+	private void HandleContrails(){
+		if (inputsThisFrame.Count == 0 ||
+			inputsThisFrame.Count == 1 && inputsThisFrame.Contains(DOWN)){
+			//Debug.Log("Left and right; inputsThisFrame.Count == " + inputsThisFrame.Count);
+			frontWind.ChangeState(false);
+			rearWind.ChangeState(false);
+			leftWind.ChangeState(true);
+			rightWind.ChangeState(true);
+		} else {
+			//Debug.Log("Front and back; inputsThisFrame.Count == " + inputsThisFrame.Count);
+			frontWind.ChangeState(true);
+			rearWind.ChangeState(true);
+			leftWind.ChangeState(false);
+			rightWind.ChangeState(false);
+		}
+	}
+
+
 	private void PlayMovementParticles(string input){
 		switch (input){
 			case UP:
 				brakeParticle.Play();
-
-				if (windActive){
-					frontWind.ChangeState(true);
-					rearWind.ChangeState(true);
-					leftWind.ChangeState(false);
-					rightWind.ChangeState(false);
-				}
 				break;
 			case DOWN:
 				accelParticleVert.Play();
 				accelParticleLeft.Play();
 				accelParticleRight.Play();
-
-				if (windActive){
-					frontWind.ChangeState(false);
-					rearWind.ChangeState(false);
-					leftWind.ChangeState(true);
-					rightWind.ChangeState(true);
-				}
 				break;
 
 		}
@@ -129,14 +136,6 @@ public class PlayerMovementParticles : MonoBehaviour {
 
 	private void StopMovementParticles(string input){
 		switch(input){
-			case UP:
-				if (windActive){
-					frontWind.ChangeState(false);
-					rearWind.ChangeState(false);
-					leftWind.ChangeState(true);
-					rightWind.ChangeState(true);
-				}
-				break;
 			case DOWN:
 				accelParticleVert.Stop();
 				accelParticleLeft.Stop();

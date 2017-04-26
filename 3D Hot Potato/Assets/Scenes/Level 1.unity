@@ -5488,7 +5488,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 229521190}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.86, y: 0, z: 1.75}
+  m_LocalPosition: {x: -0.86, y: 0, z: 1.75}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 144315725}
@@ -20867,7 +20867,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 542286026}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4, y: 0, z: -2.75}
+  m_LocalPosition: {x: 0, y: 0, z: -2.75}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 144315725}
@@ -41821,7 +41821,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 920620136}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4, y: 0, z: 2.75}
+  m_LocalPosition: {x: 0, y: 0, z: 2.75}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 144315725}
@@ -43146,7 +43146,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1026061900
 Transform:
   m_ObjectHideFlags: 0
@@ -43171,12 +43171,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac4fe6993ba3c4c0db678f3853e71974, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numVertices: 1
-  newVertDelay: 2
+  numVertices: 10
+  newVertDelay: 0.1
   offset: {x: 1, y: 0, z: 0}
-  xOffsetVariance: 1
+  xOffsetVariance: 2
   yOffsetRange: 1
-  speed: {x: 0, y: 0, z: -0.85}
+  speed: {x: 0, y: 0, z: -0.2}
 --- !u!120 &1026061902
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -43232,7 +43232,7 @@ LineRenderer:
         rgba: 4294967295
       key1:
         serializedVersion: 2
-        rgba: 4294967295
+        rgba: 4280295668
       key2:
         serializedVersion: 2
         rgba: 16777215
@@ -43252,7 +43252,7 @@ LineRenderer:
         serializedVersion: 2
         rgba: 0
       ctime0: 0
-      ctime1: 65535
+      ctime1: 19661
       ctime2: 65535
       ctime3: 0
       ctime4: 0
@@ -43268,7 +43268,7 @@ LineRenderer:
       atime6: 0
       atime7: 0
       m_Mode: 0
-      m_NumColorKeys: 2
+      m_NumColorKeys: 3
       m_NumAlphaKeys: 3
     numCornerVertices: 0
     numCapVertices: 0
@@ -57986,7 +57986,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1672123331}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.1399999, y: 0, z: 1.75}
+  m_LocalPosition: {x: 0.86, y: 0, z: 1.75}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 144315725}
@@ -63372,7 +63372,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1934644245
 Transform:
   m_ObjectHideFlags: 0
@@ -63397,12 +63397,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac4fe6993ba3c4c0db678f3853e71974, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numVertices: 2
-  newVertDelay: 0.5
+  numVertices: 10
+  newVertDelay: 0.1
   offset: {x: -1, y: 0, z: 0}
-  xOffsetVariance: 1
+  xOffsetVariance: 2
   yOffsetRange: 1
-  speed: {x: 0, y: 0, z: -0.85}
+  speed: {x: 0, y: 0, z: -0.2}
 --- !u!120 &1934644247
 LineRenderer:
   m_ObjectHideFlags: 0

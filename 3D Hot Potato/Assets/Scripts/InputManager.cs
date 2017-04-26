@@ -177,12 +177,14 @@ public class InputManager : MonoBehaviour {
 				Input.GetAxis(HORIZ_AXIS_360 + player) < -deadZone){
 				players[player].MoveScript.Move(LEFT);
 				players[player].LeanScript.Lean(LEFT);
+				players[player].ParticleScript.GetInput(LEFT);
 				gameEndSystem.ResetInputTimer();
 			}
 			else if (Input.GetAxis(HORIZ_AXIS + player) > deadZone ||
 				Input.GetAxis(HORIZ_AXIS_360 + player) > deadZone){
 				players[player].MoveScript.Move(RIGHT);
 				players[player].LeanScript.Lean(RIGHT);
+				players[player].ParticleScript.GetInput(RIGHT);
 				gameEndSystem.ResetInputTimer();
 			}
 		}
