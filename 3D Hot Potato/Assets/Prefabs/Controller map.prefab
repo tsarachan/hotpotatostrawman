@@ -53,7 +53,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 224120477928682522}
-  - component: {fileID: 114468563299828248}
+  - component: {fileID: 114429267846614934}
   m_Layer: 5
   m_Name: Controller map
   m_TagString: Untagged
@@ -61,6 +61,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &114429267846614934
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1969169873060528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e868a83fa0714eca9f55579952227c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  optInPeriod: 21
 --- !u!114 &114435419149045976
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -88,17 +100,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114468563299828248
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1969169873060528}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66782ebce1d034422a8a4919782c4d70, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114902876276645744
 MonoBehaviour:
   m_ObjectHideFlags: 1

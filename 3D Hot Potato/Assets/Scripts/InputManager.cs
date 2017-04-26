@@ -119,6 +119,7 @@ public class InputManager : MonoBehaviour {
 											  playerObj.GetComponent<PlayerBallInteraction>(),
 											  playerObj.GetComponent<PlayerMovementLean>(),
 											  playerObj.GetComponent<CatchBehavior>(),
+											  playerObj.GetComponent<PlayerMovementParticles>(),
 											  p1UpKey,
 											  p1DownKey,
 											  p1LeftKey,
@@ -131,6 +132,7 @@ public class InputManager : MonoBehaviour {
 											  playerObj.GetComponent<PlayerBallInteraction>(),
 											  playerObj.GetComponent<PlayerMovementLean>(),
 											  playerObj.GetComponent<CatchBehavior>(),
+											  playerObj.GetComponent<PlayerMovementParticles>(),
 											  p2UpKey,
 											  p2DownKey,
 											  p2LeftKey,
@@ -155,6 +157,37 @@ public class InputManager : MonoBehaviour {
 	/// Send button presses to player scripts when players input them.
 	/// </summary>
 	private void Update(){
+		foreach (char player in players.Keys){
+			if (Input.GetAxis(VERT_AXIS + player) > deadZone ||
+				Input.GetAxis(VERT_AXIS_360 + player) > deadZone){
+				players[player].MoveScript.Move(UP);
+				players[player].LeanScript.Lean(UP);
+				players[player].ParticleScript.GetInput(UP);
+				gameEndSystem.ResetInputTimer();
+			}
+			else if (Input.GetAxis(VERT_AXIS + player) < -deadZone ||
+				Input.GetAxis(VERT_AXIS_360 + player) < -deadZone){
+				players[player].MoveScript.Move(DOWN);
+				players[player].LeanScript.Lean(DOWN);
+				players[player].ParticleScript.GetInput(DOWN);
+				gameEndSystem.ResetInputTimer();
+			}
+
+			if (Input.GetAxis(HORIZ_AXIS + player) < -deadZone ||
+				Input.GetAxis(HORIZ_AXIS_360 + player) < -deadZone){
+				players[player].MoveScript.Move(LEFT);
+				players[player].LeanScript.Lean(LEFT);
+				gameEndSystem.ResetInputTimer();
+			}
+			else if (Input.GetAxis(HORIZ_AXIS + player) > deadZone ||
+				Input.GetAxis(HORIZ_AXIS_360 + player) > deadZone){
+				players[player].MoveScript.Move(RIGHT);
+				players[player].LeanScript.Lean(RIGHT);
+				gameEndSystem.ResetInputTimer();
+			}
+		}
+
+
 		//controller buttons
 		foreach (char player in players.Keys){
 			if (!pauseMenuScript.Paused && 
@@ -207,33 +240,7 @@ public class InputManager : MonoBehaviour {
 	/// </summary>
 	private void FixedUpdate(){
 		//thumbstick controls
-		foreach (char player in players.Keys){
-			if (Input.GetAxis(VERT_AXIS + player) > deadZone ||
-				Input.GetAxis(VERT_AXIS_360 + player) > deadZone){
-				players[player].MoveScript.Move(UP);
-				players[player].LeanScript.Lean(UP);
-				gameEndSystem.ResetInputTimer();
-			}
-			else if (Input.GetAxis(VERT_AXIS + player) < -deadZone ||
-					 Input.GetAxis(VERT_AXIS_360 + player) < -deadZone){
-				players[player].MoveScript.Move(DOWN);
-				players[player].LeanScript.Lean(DOWN);
-				gameEndSystem.ResetInputTimer();
-			}
 
-			if (Input.GetAxis(HORIZ_AXIS + player) < -deadZone ||
-				Input.GetAxis(HORIZ_AXIS_360 + player) < -deadZone){
-				players[player].MoveScript.Move(LEFT);
-				players[player].LeanScript.Lean(LEFT);
-				gameEndSystem.ResetInputTimer();
-			}
-			else if (Input.GetAxis(HORIZ_AXIS + player) > deadZone ||
-					 Input.GetAxis(HORIZ_AXIS_360 + player) > deadZone){
-				players[player].MoveScript.Move(RIGHT);
-				players[player].LeanScript.Lean(RIGHT);
-				gameEndSystem.ResetInputTimer();
-			}
-		}
 
 		//keyboard controls
 		foreach (char player in players.Keys){
@@ -319,11 +326,13 @@ public class InputManager : MonoBehaviour {
 		private PlayerBallInteraction ballScript;
 		private PlayerMovementLean leanScript;
 		private CatchBehavior catchScript;
+		private PlayerMovementParticles particleScript;
 
 		public PlayerMovement MoveScript { get { return moveScript; } }
 		public PlayerBallInteraction BallScript { get { return ballScript; } }
 		public PlayerMovementLean LeanScript { get { return leanScript; } }
 		public CatchBehavior CatchScript { get { return catchScript; } }
+		public PlayerMovementParticles ParticleScript { get { return particleScript; } }
 
 		//keyboard controls
 		private KeyCode upKey;
@@ -342,6 +351,7 @@ public class InputManager : MonoBehaviour {
 					  PlayerBallInteraction ballScript,
 					  PlayerMovementLean leanScript,
 					  CatchBehavior catchScript,
+					  PlayerMovementParticles particleScript,
 					  KeyCode upKey,
 					  KeyCode downKey,
 					  KeyCode leftKey,
@@ -352,6 +362,7 @@ public class InputManager : MonoBehaviour {
 			this.ballScript = ballScript;
 			this.leanScript = leanScript;
 			this.catchScript = catchScript;
+			this.particleScript = particleScript;
 			this.upKey = upKey;
 			this.downKey = downKey;
 			this.leftKey = leftKey;
