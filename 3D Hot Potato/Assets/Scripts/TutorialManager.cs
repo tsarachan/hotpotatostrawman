@@ -105,15 +105,16 @@ public class TutorialManager : MonoBehaviour {
 		camerasStartPos = cameras.position;
 		levelManager = GetComponent<LevelManager>();
 
-		passInstruction = new Instruction("Cooperate with your partner to reach the city center",
+		//first line = top left, middle = top right, bottom = bottom right
+		passInstruction = new Instruction("Cooperate with your partner to reach the city center.",
 										  "Press the  <sprite=\"Pass_button\" index=0> button to pass the Neon Star",
 										  "Try passing now",
 										  new Vector3(0.0f, 0.0f, 0.0f), //the pass instruction will find the ball
 										  PassRegistration,
 										  PlayerPassFunc,
 										  0.0f);
-		blockInstruction = new Instruction("The Neon Star must be protected from enemies",
-										   "The player without the Neon Star is immune to enemies",
+		blockInstruction = new Instruction("The Neon Star must be protected from enemies.",
+										   "The player without the Neon Star is invincible.",
 										   "Have them run into this enemy to continue",
 										   new Vector3 (0.0f, -13.8f, 31.5f),
 										   EnemyDestroyedRegistration,
