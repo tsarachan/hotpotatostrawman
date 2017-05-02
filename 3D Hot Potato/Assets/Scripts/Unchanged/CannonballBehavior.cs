@@ -11,7 +11,7 @@
 		private const string BOSS_OBJ = "Boss";
 
 		private CannonBossBattle bossBattleScript;
-		private const string BOSS_BATTLE_OBJ = "Cannon boss battle";
+		private const string BOSS_BATTLE_OBJ = "Cannon boss battle(Clone)";
 
 		private void Start(){
 			bossBattleScript = GameObject.Find(BOSS_BATTLE_OBJ).GetComponent<CannonBossBattle>();
