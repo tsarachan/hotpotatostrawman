@@ -11,7 +11,9 @@
 		///////////////////////////////////////////////////////////////////////
 
 		[SerializeField] private float bossMoveDist = 5.0f; //how far left and right the boss moves
+		[SerializeField] private float bossMoveSpeed = 1.0f; //how quickly the boss moves
 		[SerializeField] private float spawnDelay = 5.0f; //how long between waves of enemies
+		[SerializeField] private float bossSpeedMult = 1.5f; //how much faster the boss gets after 2 hits
 
 
 		///////////////////////////////////////////////////////////////////////
@@ -20,7 +22,7 @@
 
 
 		//the steps in the boss fight
-		private enum Stages { Tutorial, Health3, Health2, Health1, Health0 };
+		private enum Stages { Tutorial, Health4, Health3, Health2, Health1, Health0 };
 		private Stages currentStage;
 
 
@@ -44,9 +46,11 @@
 		//the enemies spawned during this boss battle
 		private const string BOSS_SUPPORTER_OBJ = "PlayerTrackerEnemy";
 		private List<Transform> supporterSpawners = new List<Transform>();
-		private List<string> spawners = new List<string>() { "4", "6", "8", "10", "12" };
+		private List<string> easySpawners = new List<string> { "4", "12" };
+		private List<string> difficultSpawners = new List<string>() { "4", "6", "8", "10", "12" };
 		private const string SPAWNER_OBJ = "Spawner ";
 		private float spawnTimer = 0.0f;
+
 
 
 		///////////////////////////////////////////////////////////////////////
@@ -63,14 +67,25 @@
 
 		private List<Transform> GetSpawners(){
 			List<Transform> temp = new List<Transform>();
+			List<string> currentSpawners = GetCurrentSpawnList();
 
-			foreach (string spawner in spawners){
+
+			foreach (string spawner in currentSpawners){
 				temp.Add(GameObject.Find(SPAWNER_OBJ + spawner).transform);
 			}
 
-			Debug.Assert(temp.Count == spawners.Count);
+			Debug.Assert(temp.Count == currentSpawners.Count);
 
 			return temp;
+		}
+
+
+		private List<string> GetCurrentSpawnList(){
+			if (currentStage == Stages.Tutorial){
+				return easySpawners;
+			} else {
+				return difficultSpawners;
+			}
 		}
 
 
@@ -84,11 +99,13 @@
 				case Stages.Tutorial:
 					//do nothing; during the tutorial, the cannon boss just sits there
 					break;
+				case Stages.Health4:
 				case Stages.Health3:
-				case Stages.Health2:
 					spawnTimer = HandleSpawning();
 					break;
+				case Stages.Health2:
 				case Stages.Health1:
+					spawnTimer = HandleSpawning();
 					break;
 				case Stages.Health0:
 					break;
@@ -101,11 +118,13 @@
 				case Stages.Tutorial:
 					//do nothing; during the tutorial, the cannon boss just sits there
 					break;
+				case Stages.Health4:
 				case Stages.Health3:
-				case Stages.Health2:
 					moveTimer = HandleBossMovement();
 					break;
+				case Stages.Health2:
 				case Stages.Health1:
+					moveTimer = HandleBossMovement();
 					break;
 				case Stages.Health0:
 					break;
@@ -124,7 +143,7 @@
 		/// <returns>The boss' new position.</returns>
 		private Vector3 LeftAndRight(float time){
 			Vector3 temp = bossStartPos;
-			temp.x += Mathf.Sin(time) * bossMoveDist;
+			temp.x += Mathf.Sin(time * bossMoveSpeed) * bossMoveDist;
 
 			return temp;
 		}
@@ -136,6 +155,7 @@
 
 			if (temp >= spawnDelay){
 				foreach (Transform spawner in supporterSpawners){
+					Debug.Log("current spawner: " + spawner);
 					GameObject obj = ObjectPooling.ObjectPool.GetObj(BOSS_SUPPORTER_OBJ);
 					obj.transform.position = spawner.position;
 					obj.GetComponent<ObjectPooling.Poolable>().Reset();
@@ -162,10 +182,12 @@
 			if (currentStage != Stages.Health0){
 				currentStage++;
 
-				if (currentStage == Stages.Health3){ //moving out of the tutorial; set variables
+				if (currentStage == Stages.Health4){ //moving out of the tutorial; set variables
 					bossStartPos = bossBody.transform.position;
+				} else if (currentStage == Stages.Health2){ //moving into the more difficult part of the battle
+					bossMoveSpeed *= bossSpeedMult; //the boss speeds up
+					supporterSpawners = GetSpawners(); //spawn more enemies
 				}
-				Debug.Log(currentStage);
 			}
 		}
 	}

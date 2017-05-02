@@ -128,6 +128,10 @@ public class EnemyPlayerTracker : EnemyBase {
 		timer = 0.0f;
 		enteringScreen = true;
 
+		start = transform.position;
+		end = new Vector3(transform.position.x,
+						  transform.position.y,
+						  transform.position.z - enterDistance);
 
 		GetComponent<Rigidbody>().velocity = startVelocity; //sanity check: make absolutely sure the velocity is zero
 	}
