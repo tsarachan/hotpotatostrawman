@@ -25,11 +25,11 @@ public class CannonBehavior : MonoBehaviour {
 	}
 
 	//The boss moves left and right.
-	private void FixedUpdate(){
-		posVec.z = ForwardAndBack();
-
-		rb.MovePosition(posVec);
-	}
+//	private void FixedUpdate(){
+//		posVec.z = ForwardAndBack();
+//
+//		rb.MovePosition(posVec);
+//	}
 
 
 	/// <summary>

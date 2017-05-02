@@ -1,23 +1,29 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿namespace CannonBoss{
+	using UnityEngine;
+	using System.Collections;
 
-public class CannonballBehavior : MonoBehaviour {
+	public class CannonballBehavior : MonoBehaviour {
 
-	public float speed = 20.0f;
+		public float speed = 20.0f;
 
-	private Rigidbody rb;
+		private Rigidbody rb;
 
-	private const string BOSS_OBJ = "Boss";
+		private const string BOSS_OBJ = "Boss";
 
-	private void Start(){
-		rb = GetComponent<Rigidbody>();
-		rb.AddForce(new Vector3(0.0f, 0.0f, speed), ForceMode.Impulse); //move straight up
-	}
+		private CannonBossBattle bossBattleScript;
+		private const string BOSS_BATTLE_OBJ = "Cannon boss battle";
 
-	private void OnTriggerEnter(Collider other){
-		if (other.name.Contains(BOSS_OBJ)){
-			other.GetComponent<EnemyBoss>().GetHit();
-			Destroy(gameObject);
+		private void Start(){
+			bossBattleScript = GameObject.Find(BOSS_BATTLE_OBJ).GetComponent<CannonBossBattle>();
+			rb = GetComponent<Rigidbody>();
+			rb.AddForce(new Vector3(0.0f, 0.0f, speed), ForceMode.Impulse); //move straight up
+		}
+
+		private void OnTriggerEnter(Collider other){
+			if (other.name.Contains(BOSS_OBJ)){
+				bossBattleScript.Hit();
+				Destroy(gameObject);
+			}
 		}
 	}
 }
