@@ -359,52 +359,7 @@
 			{"action":"wait", "time":1},
 		],
 		"act9":[
-			{"action":"spawn", "whichEnemy":"PlayerHuntEnemy", "waves":1, "numPerWave":1, "whichSpawners":[8], "timeBetweenWaves":0, "timeVariance":0}
-			{"action":"wait", "time":1},
-			{"action":"spawn", "whichEnemy":"HomingEnemy", "waves":1, "numPerWave":1, "whichSpawners":[10], "timeBetweenWaves":0, "timeVariance":0}
-			{"action":"wait", "time":1},
-			{"action":"spawn", "whichEnemy":"HomingEnemy", "waves":1, "numPerWave":1, "whichSpawners":[12], "timeBetweenWaves":0, "timeVariance":0}
-			{"action":"wait", "time":1},
-			{"action":"spawn", "whichEnemy":"HomingEnemy", "waves":1, "numPerWave":1, "whichSpawners":[85], "timeBetweenWaves":0, "timeVariance":0}
-			{"action":"wait", "time":1},
-			{"action":"spawn", "whichEnemy":"HomingEnemy", "waves":1, "numPerWave":1, "whichSpawners":[86], "timeBetweenWaves":0, "timeVariance":0}
-			{"action":"wait", "time":1},
-			{"action":"spawn", "whichEnemy":"HomingEnemy", "waves":1, "numPerWave":1, "whichSpawners":[8], "timeBetweenWaves":0, "timeVariance":0}
-			{"action":"wait", "time":1},
-			{"action":"spawn", "whichEnemy":"HomingEnemy", "waves":1, "numPerWave":1, "whichSpawners":[95], "timeBetweenWaves":0, "timeVariance":0}
-			{"action":"wait", "time":1},
-			{"action":"spawn", "whichEnemy":"HomingEnemy", "waves":1, "numPerWave":1, "whichSpawners":[96], "timeBetweenWaves":0, "timeVariance":0}
-			{"action":"wait", "time":4},
-			{"action":"spawn", "whichEnemy":"HomingEnemy", "waves":1, "numPerWave":1, "whichSpawners":[4], "timeBetweenWaves":0, "timeVariance":0}
-			{"action":"wait", "time":1},
-			{"action":"spawn", "whichEnemy":"HomingEnemy", "waves":1, "numPerWave":1, "whichSpawners":[6], "timeBetweenWaves":0, "timeVariance":0}
-			{"action":"wait", "time":1},
-			{"action":"spawn", "whichEnemy":"HomingEnemy", "waves":1, "numPerWave":1, "whichSpawners":[8], "timeBetweenWaves":0, "timeVariance":0}
-			{"action":"wait", "time":1},
-			{"action":"spawn", "whichEnemy":"HomingEnemy", "waves":1, "numPerWave":1, "whichSpawners":[10], "timeBetweenWaves":0, "timeVariance":0}
-			{"action":"wait", "time":1},
-			{"action":"spawn", "whichEnemy":"HomingEnemy", "waves":1, "numPerWave":1, "whichSpawners":[12], "timeBetweenWaves":0, "timeVariance":0}
-			{"action":"wait", "time":1},
-			{"action":"spawn", "whichEnemy":"HomingEnemy", "waves":1, "numPerWave":1, "whichSpawners":[85], "timeBetweenWaves":0, "timeVariance":0}
-			{"action":"wait", "time":1},
-			{"action":"spawn", "whichEnemy":"HomingEnemy", "waves":1, "numPerWave":1, "whichSpawners":[86], "timeBetweenWaves":0, "timeVariance":0}
-			{"action":"wait", "time":1},
-			{"action":"spawn", "whichEnemy":"HomingEnemy", "waves":1, "numPerWave":1, "whichSpawners":[8], "timeBetweenWaves":0, "timeVariance":0}
-			{"action":"wait", "time":1},
-			{"action":"spawn", "whichEnemy":"HomingEnemy", "waves":1, "numPerWave":1, "whichSpawners":[95], "timeBetweenWaves":0, "timeVariance":0}
-			{"action":"wait", "time":1},
-			{"action":"spawn", "whichEnemy":"HomingEnemy", "waves":1, "numPerWave":1, "whichSpawners":[96], "timeBetweenWaves":0, "timeVariance":0}
-			{"action":"wait", "time":1},
-			{"action":"spawn", "whichEnemy":"HomingEnemy", "waves":1, "numPerWave":1, "whichSpawners":[85], "timeBetweenWaves":0, "timeVariance":0}
-			{"action":"wait", "time":1},
-			{"action":"spawn", "whichEnemy":"PlayerHuntEnemy", "waves":1, "numPerWave":1, "whichSpawners":[86], "timeBetweenWaves":0, "timeVariance":0}
-			{"action":"wait", "time":1},
-			{"action":"spawn", "whichEnemy":"PlayerHuntEnemy", "waves":1, "numPerWave":1, "whichSpawners":[8], "timeBetweenWaves":0, "timeVariance":0}
-			{"action":"wait", "time":1},
-			{"action":"spawn", "whichEnemy":"HomingEnemy", "waves":1, "numPerWave":1, "whichSpawners":[95], "timeBetweenWaves":0, "timeVariance":0}
-			{"action":"wait", "time":1},
-			{"action":"spawn", "whichEnemy":"PlayerHuntEnemy", "waves":1, "numPerWave":1, "whichSpawners":[96], "timeBetweenWaves":0, "timeVariance":0}
-			{"action":"wait", "time":1},
+
 
 			{"action":"wait", "time":3},
 			{"action":"progress", "title":"WARNING: VOIDCANNON"}
