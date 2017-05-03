@@ -106,6 +106,11 @@ public class EnemyHoming : EnemyBase {
 	private const string CYCLE = "Lightrunner";
 
 
+	//color gradient for explosion particle
+	private Gradient explodeGradient = new Gradient();
+	private Color myColor;
+
+
 
 	private void Start(){
 		transform.parent = GameObject.Find(ENEMY_ORGANIZER).transform;
@@ -128,6 +133,13 @@ public class EnemyHoming : EnemyBase {
 		audioSource = GetAudioSource();
 		deathClip = Resources.Load(DEATH_CLIP) as AudioClip;
 		chargeClip = Resources.Load(CHARGE_CLIP) as AudioClip;
+		myColor = model.GetComponent<Renderer>().material.color;
+		explodeGradient.SetKeys(new GradientColorKey[] { new GradientColorKey(Color.red, 0.0f),
+														 new GradientColorKey(Color.red, 0.103f),
+														 new GradientColorKey(myColor, 0.409f) },
+								new GradientAlphaKey[] { new GradientAlphaKey(1.0f, 0.0f),
+														 new GradientAlphaKey(1.0f, 0.856f),
+														 new GradientAlphaKey(0.0f, 1.0f) });
 	}
 
 
@@ -313,16 +325,19 @@ public class EnemyHoming : EnemyBase {
 		GameObject destroyParticle = ObjectPooling.ObjectPool.GetObj(DESTROY_PARTICLE);
 		destroyParticle.transform.position = transform.position;
 
-		Color myColor = model.GetComponent<Renderer>().material.color;
-
-		destroyParticle.GetComponent<ParticlePlexus>().LineColor = myColor;
+		//destroyParticle.GetComponent<ParticlePlexus>().LineColor = myColor;
 
 
 		//for reasons unclear, Unity throws an error if you try to set the start color of the particles without
 		//first assigning the main module to its own variable
-		ParticleSystem.MainModule mainModule = destroyParticle.GetComponent<ParticleSystem>().main;
+//		ParticleSystem.MainModule mainModule = destroyParticle.GetComponent<ParticleSystem>().main;
+//
+//		mainModule.startColor = myColor;
 
-		mainModule.startColor = myColor;
+		ParticleSystem.ColorOverLifetimeModule colorModule = 
+			destroyParticle.GetComponent<ParticleSystem>().colorOverLifetime;
+
+		colorModule.color = explodeGradient;
 
 		if (!audioSource.isPlaying ||
 			(audioSource.isPlaying && audioSource.clip != deathClip)){
