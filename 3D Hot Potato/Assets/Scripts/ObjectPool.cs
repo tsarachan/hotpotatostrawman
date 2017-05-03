@@ -64,6 +64,7 @@ namespace ObjectPooling
 			//if no pool exists for an object, make the object
 			else {
 				obj = MonoBehaviour.Instantiate(Resources.Load(objectType)) as GameObject;
+				obj.GetComponent<Poolable>().Reset();
 //				Debug.Log("Made something because there was no pool");
 //				Debug.Log("objectPool.Count == " + objectPool.Count);
 			}

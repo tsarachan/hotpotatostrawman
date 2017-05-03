@@ -87,6 +87,10 @@ public class BallBehavior : MonoBehaviour {
 	private const string INCOMING = "!";
 
 
+	//BallEnemyInteraction uses this to decide if the ball can destroy enemies
+	public bool InAir { get; private set; }
+
+
 
 	private void Start(){
 		rb = GetComponent<Rigidbody>();
@@ -110,6 +114,8 @@ public class BallBehavior : MonoBehaviour {
 		receivingPlayer.Find(CATCH_WARNING_OBJ).gameObject.SetActive(true);
 
 		IntendedReceiver = receivingPlayer;
+
+		InAir = true;
 
 		Services.EventManager.Fire(new PassEvent(throwingPlayer.gameObject, receivingPlayer.gameObject));
 
@@ -177,6 +183,8 @@ public class BallBehavior : MonoBehaviour {
 
 		IntendedReceiver = transform;
 
+		InAir = false;
+
 		receivingPlayer.GetComponent<CatchBehavior>().CheckIfAwesomeCatch();
 
 		ResetCatchTexts();
@@ -190,6 +198,7 @@ public class BallBehavior : MonoBehaviour {
 		GetCaught(player1);
 		player2.GetComponent<PlayerBallInteraction>().BallCarrier = false;
 		awesomeParticle.SetActive(false);
+		InAir = false;
 
 		ResetCatchTexts();
 	}

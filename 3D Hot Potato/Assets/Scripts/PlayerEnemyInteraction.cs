@@ -98,7 +98,6 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 				if (!GetComponent<PlayerBallInteraction>().BallCarrier){  //lose when you get caught by a hunt enemy
 					LoseTheGame();
 				} else { //destroy hunt enemies when the ballcarrier
-					Debug.Log(gameObject.name + " destroyed " + collision.gameObject.name);
 					ScoreDestroyedEnemy(collision.gameObject);
 					Services.EventManager.Fire(new EnemyDestroyedEvent(collision.gameObject, gameObject));
 					collision.gameObject.GetComponent<EnemyBase>().GetDestroyed();
@@ -106,7 +105,6 @@ public class PlayerEnemyInteraction : MonoBehaviour {
 				}
 			}
 			else if (!GetComponent<PlayerBallInteraction>().BallCarrier){  //try to destroy other enemies when not the ball carrier
-				Debug.Log(gameObject.name + " destroyed " + collision.gameObject.name);
 				ScoreDestroyedEnemy(collision.gameObject);
 				Services.EventManager.Fire(new EnemyDestroyedEvent(collision.gameObject, gameObject));
 				collision.gameObject.GetComponent<EnemyBase>().GetDestroyed();

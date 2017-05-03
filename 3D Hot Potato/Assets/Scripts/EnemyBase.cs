@@ -26,7 +26,7 @@ public abstract class EnemyBase : ObjectPooling.Poolable {
 
 
 	//the particle that enemies generate when they're destroyed
-	protected const string DESTROY_PARTICLE = "Plexus prefab";
+	protected const string DESTROY_PARTICLE = "Bennett explosion";
 
 
 	/// <summary>
