@@ -25,7 +25,7 @@ public class CatchParticleBehavior : ObjectPooling.Poolable {
 		existTimer += Time.deltaTime;
 
 		if (existTimer >= existDuration){
-			ShutOff();
+			ObjectPooling.ObjectPool.AddObj(gameObject);
 		}
 	}
 

@@ -1,6 +1,7 @@
 ﻿namespace CannonBoss{
 	using System.Collections;
 	using System.Collections.Generic;
+	using TMPro;
 	using UnityEngine;
 
 	public class CannonBossBattle : EnemyBase {
@@ -25,6 +26,10 @@
 		[SerializeField] private float enterDist = 130.0f;
 		[SerializeField] private float enterDuration = 1.5f;
 		[SerializeField] private AnimationCurve enterCurve;
+
+
+		//how long to wait before going to the high score scene after victory
+		[SerializeField] private float victoryDelay = 3.0f;
 
 
 		///////////////////////////////////////////////////////////////////////
@@ -83,6 +88,23 @@
 		private Vector3 endPos = new Vector3(0.0f, 0.0f, 0.0f);
 
 
+		//the LevelManager, so that it can be shut off
+		private LevelManager levelManager;
+		private const string MANAGER_OBJ = "Managers";
+
+
+		//particle when the boss is destroyed
+		private const string BOSS_DESTROYED_PARTICLE = "Boss destroyed particle";
+
+
+		//the GamEndSystem, to go to the high score screen after winning, with associated variables
+		private GameEndSystem gameEndSystem;
+		private const string GAME_END_FUNC = "EndGame";
+		private TextMeshProUGUI tutorialText1;
+		private const string TUTORIAL_TEXT_OBJ = "Tutorial text 1";
+		private const string CONGRATULATIONS_MESSAGE = "Congratulations!\nThanks for playing the demo!";
+
+
 
 		///////////////////////////////////////////////////////////////////////
 		/// Setup
@@ -99,6 +121,8 @@
 			startPos = transform.position;
 			endPos = startPos;
 			endPos.z -= enterDist;
+			levelManager = GameObject.Find(MANAGER_OBJ).GetComponent<LevelManager>();
+			gameEndSystem = GameObject.Find(MANAGER_OBJ).GetComponent<GameEndSystem>();
 		}
 
 
@@ -277,6 +301,8 @@
 					cannonStartPos = cannonBody.transform.position;
 					bossMoveSpeed *= bossSpeedMult; //the boss speeds up
 					supporterSpawners = GetSpawners(); //spawn more enemies
+				} else if (currentStage == Stages.Health0){
+					levelManager.StopGame();
 				}
 			}
 		}
@@ -285,6 +311,23 @@
 		///////////////////////////////////////////////////////////////////////
 		/// Object pooling
 		///////////////////////////////////////////////////////////////////////
+
+
+		public override void GetDestroyed(){
+			if (currentStage == Stages.Health0){
+				GameObject destroyParticle = ObjectPooling.ObjectPool.GetObj(BOSS_DESTROYED_PARTICLE);
+				destroyParticle.transform.position = bossBody.transform.position;
+				tutorialText1.text = CONGRATULATIONS_MESSAGE;
+				Invoke(GAME_END_FUNC, victoryDelay);
+			}
+
+			ObjectPooling.ObjectPool.AddObj(gameObject);
+		}
+
+
+		private void EndGame(){
+			gameEndSystem.VoluntaryStop();
+		}
 
 
 		public override void Reset(){
@@ -303,6 +346,13 @@
 
 			currentBossMoveSpeed = bossMoveSpeed;
 			currentCannonMoveSpeed = cannonMoveSpeed;
+
+			levelManager = GameObject.Find(MANAGER_OBJ).GetComponent<LevelManager>();
+			levelManager.Hold = true;
+
+			gameEndSystem = GameObject.Find(MANAGER_OBJ).GetComponent<GameEndSystem>();
+
+			tutorialText1 = GameObject.Find(TUTORIAL_TEXT_OBJ).GetComponent<TextMeshProUGUI>();
 
 			gameObject.SetActive(true);
 		}
