@@ -50,6 +50,14 @@ public class PlayerMovementParticles : MonoBehaviour {
 		ParticleSystem.MainModule mainBrakeParticle= brakeParticle.main;
 		mainBrakeParticle.startColor = RenderSettings.ambientLight;
 
+		Color particleColor = RenderSettings.ambientLight;
+		particleColor.a = 0.0f;
+
+		brakeParticle.GetComponent<Renderer>().material.SetColor("_Color", particleColor);
+		brakeParticle.GetComponent<Renderer>().material.SetColor("_Ambient", particleColor);
+
+
+
 		accelParticle = transform.Find(ACCEL_PARTICLE_OBJ).gameObject;
 		accelParticleVert = accelParticle.transform.Find(VERTICAL_OBJ).GetComponent<ParticleSystem>();
 		accelParticleLeft = accelParticle.transform.Find(LEFT_OBJ).GetComponent<ParticleSystem>();
@@ -135,6 +143,9 @@ public class PlayerMovementParticles : MonoBehaviour {
 
 	private void StopMovementParticles(string input){
 		switch(input){
+		case UP:
+				brakeParticle.Stop();
+				break;
 			case DOWN:
 				accelParticleVert.Stop();
 				accelParticleLeft.Stop();
