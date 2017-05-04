@@ -16,6 +16,7 @@
  * 
  */
 
+using Rewired;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Linq;
@@ -27,6 +28,7 @@ public class InputManager : MonoBehaviour {
 	//----------Tunable variables----------
 
 	public float resetDelay = 3.0f; //how long the players have to hold the button while paused to reset the game
+	public float deadZone = 0.3f; //input deadzone
 
 
 	//----------Internal variables----------
@@ -46,31 +48,7 @@ public class InputManager : MonoBehaviour {
 	//the players
 	private const string PLAYER_ORGANIZER = "Players";
 	private const string PLAYER_OBJ = "Player ";
-	private Dictionary<char, Player> players = new Dictionary<char, Player>();
-
-
-	//variables relating to the thumbstick
-	public float deadZone = 0.3f; //must be between 0.0 and 1.0
-	private const string UP = "up";
-	private const string DOWN = "down";
-	private const string LEFT = "left";
-	private const string RIGHT = "right";
-
-
-	//keyboard controls
-	private const KeyCode p1UpKey = KeyCode.S;
-	private const KeyCode p1DownKey = KeyCode.W;
-	private const KeyCode p1LeftKey = KeyCode.A;
-	private const KeyCode p1RightKey = KeyCode.D;
-	private const KeyCode p1PassKey = KeyCode.Z;
-
-	private const KeyCode p2UpKey = KeyCode.K;
-	private const KeyCode p2DownKey = KeyCode.I;
-	private const KeyCode p2LeftKey = KeyCode.J;
-	private const KeyCode p2RightKey = KeyCode.L;
-	private const KeyCode p2PassKey = KeyCode.N;
-
-	private const KeyCode pauseKey = KeyCode.Space;
+	private Dictionary<char, PlayerInfo> players = new Dictionary<char, PlayerInfo>();
 
 
 	//additional variables needed to start the game with the first pass
@@ -91,6 +69,13 @@ public class InputManager : MonoBehaviour {
 	private GameEndSystem gameEndSystem;
 
 
+	//directions sent to other scripts
+	private const string UP = "up";
+	private const string DOWN = "down";
+	private const string LEFT = "left";
+	private const string RIGHT = "right";
+
+
 	//initialize variables and data structures
 	private void Start(){
 		players = MakePlayers();
@@ -107,37 +92,27 @@ public class InputManager : MonoBehaviour {
 	/// needs to send input to, as well as the player's keyboard controls.
 	/// </summary>
 	/// <returns>A dictionary containing the player objects, indexed by the player's number.</returns>
-	private Dictionary<char, Player> MakePlayers(){
-		Dictionary<char, Player> temp = new Dictionary<char, Player>();
+	private Dictionary<char, PlayerInfo> MakePlayers(){
+		Dictionary<char, PlayerInfo> temp = new Dictionary<char, PlayerInfo>();
 
 		for (int i = 1; i < 3; i++){
 			Transform playerObj = transform.root.Find(PLAYER_ORGANIZER).Find(PLAYER_OBJ + i.ToString());
 
 			if (i == 1){
-				Player newPlayer = new Player(char.Parse(i.ToString()),
+				PlayerInfo newPlayer = new PlayerInfo(ReInput.players.GetPlayer(i - 1),
 											  playerObj.GetComponent<PlayerMovement>(),
 											  playerObj.GetComponent<PlayerBallInteraction>(),
 											  playerObj.GetComponent<PlayerMovementLean>(),
 											  playerObj.GetComponent<CatchBehavior>(),
-											  playerObj.GetComponent<PlayerMovementParticles>(),
-											  p1UpKey,
-											  p1DownKey,
-											  p1LeftKey,
-											  p1RightKey,
-											  p1PassKey);
+											  playerObj.GetComponent<PlayerMovementParticles>());
 				temp.Add(char.Parse(i.ToString()), newPlayer);
 			} else if (i == 2) {
-				Player newPlayer = new Player(char.Parse(i.ToString()),
+				PlayerInfo newPlayer = new PlayerInfo(ReInput.players.GetPlayer(i - 1),
 											  playerObj.GetComponent<PlayerMovement>(),
 											  playerObj.GetComponent<PlayerBallInteraction>(),
 											  playerObj.GetComponent<PlayerMovementLean>(),
 											  playerObj.GetComponent<CatchBehavior>(),
-											  playerObj.GetComponent<PlayerMovementParticles>(),
-											  p2UpKey,
-											  p2DownKey,
-											  p2LeftKey,
-											  p2RightKey,
-											  p2PassKey);
+											  playerObj.GetComponent<PlayerMovementParticles>());
 				temp.Add(char.Parse(i.ToString()), newPlayer);
 			} else {
 				Debug.Log("Illegal player number: " + i);
@@ -158,30 +133,26 @@ public class InputManager : MonoBehaviour {
 	/// </summary>
 	private void Update(){
 		foreach (char player in players.Keys){
-			if (Input.GetAxis(VERT_AXIS + player) > deadZone ||
-				Input.GetAxis(VERT_AXIS_360 + player) > deadZone){
+			if (players[player].ThisPlayer.GetAxis("Move Vert") < -deadZone){
 				players[player].MoveScript.Move(UP);
 				players[player].LeanScript.Lean(UP);
 				players[player].ParticleScript.GetInput(UP);
 				gameEndSystem.ResetInputTimer();
 			}
-			else if (Input.GetAxis(VERT_AXIS + player) < -deadZone ||
-				Input.GetAxis(VERT_AXIS_360 + player) < -deadZone){
+			else if (players[player].ThisPlayer.GetAxis("Move Vert") > deadZone){
 				players[player].MoveScript.Move(DOWN);
 				players[player].LeanScript.Lean(DOWN);
 				players[player].ParticleScript.GetInput(DOWN);
 				gameEndSystem.ResetInputTimer();
 			}
 
-			if (Input.GetAxis(HORIZ_AXIS + player) < -deadZone ||
-				Input.GetAxis(HORIZ_AXIS_360 + player) < -deadZone){
+			if (players[player].ThisPlayer.GetAxis("Move Horiz") < -deadZone){
 				players[player].MoveScript.Move(LEFT);
 				players[player].LeanScript.Lean(LEFT);
 				players[player].ParticleScript.GetInput(LEFT);
 				gameEndSystem.ResetInputTimer();
 			}
-			else if (Input.GetAxis(HORIZ_AXIS + player) > deadZone ||
-				Input.GetAxis(HORIZ_AXIS_360 + player) > deadZone){
+			else if (players[player].ThisPlayer.GetAxis("Move Horiz") > deadZone){
 				players[player].MoveScript.Move(RIGHT);
 				players[player].LeanScript.Lean(RIGHT);
 				players[player].ParticleScript.GetInput(RIGHT);
@@ -193,15 +164,14 @@ public class InputManager : MonoBehaviour {
 		//controller buttons
 		foreach (char player in players.Keys){
 			if (!pauseMenuScript.Paused && 
-				(Input.GetButtonDown(O_BUTTON + player) ||
-				 Input.GetButtonDown(A_BUTTON + player))){
+				players[player].ThisPlayer.GetButtonDown("Pass")){
 
 				players[player].BallScript.Throw();
 				players[player].CatchScript.AttemptAwesomeCatch();
 				gameEndSystem.ResetInputTimer();
 			}
 
-			if (Input.GetButtonDown(PS_OPTIONS_BUTTON + player)){
+			if (players[player].ThisPlayer.GetButtonDown("Start")){
 				pauseMenuScript.ChangePauseMenuState();
 			}
 		}
@@ -221,7 +191,7 @@ public class InputManager : MonoBehaviour {
 			resetTimer = 0.0f;
 		}
 
-		if (Input.GetKeyDown(pauseKey)){
+		if (Input.GetKeyDown(KeyCode.Space)){
 			pauseMenuScript.ChangePauseMenuState();
 		}
 
@@ -232,66 +202,6 @@ public class InputManager : MonoBehaviour {
 		 * since FixedUpdate() can run more than once per frame.
 		 * 
 		 */
-	}
-
-
-	/// <summary>
-	/// Send instructions to player scripts when their players move the thumbstick or hit a keyboard key.
-	/// 
-	/// This is in FixedUpdate on the assumption that players move with physics.
-	/// </summary>
-	private void FixedUpdate(){
-		//thumbstick controls
-
-
-		//keyboard controls
-		foreach (char player in players.Keys){
-			foreach (KeyCode control in players[player].keyboardControls){
-				if (Input.GetKey(control)){
-					InputByKey(player, control);
-					gameEndSystem.ResetInputTimer();
-				}
-			}
-		}
-	}
-
-
-	/// <summary>
-	/// Handles all keyboard inputs.
-	/// </summary>
-	/// <param name="numOfPlayer">The dictionary index for the player who gave the input.</param>
-	/// <param name="keyPressed">The key pressed.</param>
-	private void InputByKey(char numOfPlayer, KeyCode keyPressed){
-		switch(keyPressed){
-			case p1UpKey:
-			case p2UpKey:
-				players[numOfPlayer].MoveScript.Move(UP);
-				players[numOfPlayer].LeanScript.Lean(UP);
-				break;
-			case p1DownKey:
-			case p2DownKey:
-				players[numOfPlayer].MoveScript.Move(DOWN);
-				players[numOfPlayer].LeanScript.Lean(DOWN);
-				break;
-			case p1LeftKey:
-			case p2LeftKey:
-				players[numOfPlayer].MoveScript.Move(LEFT);
-				players[numOfPlayer].LeanScript.Lean(LEFT);
-				break;
-			case p1RightKey:
-			case p2RightKey:
-				players[numOfPlayer].MoveScript.Move(RIGHT);
-				players[numOfPlayer].LeanScript.Lean(RIGHT);
-				break;
-			case p1PassKey:
-			case p2PassKey:
-				players[numOfPlayer].BallScript.Throw();
-				players[numOfPlayer].CatchScript.AttemptAwesomeCatch();
-				break;
-			default:
-				Debug.Log("Illegal key: " + keyPressed.ToString());
-				break;
-		}
 	}
 
 
@@ -322,59 +232,36 @@ public class InputManager : MonoBehaviour {
 	/// To make a new player, use the syntax that appears in MakePlayers(), above.
 	/// 
 	/// </summary>
-	private class Player {
+	private class PlayerInfo {
 		//scripts each player has that receive input
+		private Player thisPlayer;
 		private PlayerMovement moveScript;
 		private PlayerBallInteraction ballScript;
 		private PlayerMovementLean leanScript;
 		private CatchBehavior catchScript;
 		private PlayerMovementParticles particleScript;
 
+		public Player ThisPlayer { get { return thisPlayer; } }
 		public PlayerMovement MoveScript { get { return moveScript; } }
 		public PlayerBallInteraction BallScript { get { return ballScript; } }
 		public PlayerMovementLean LeanScript { get { return leanScript; } }
 		public CatchBehavior CatchScript { get { return catchScript; } }
 		public PlayerMovementParticles ParticleScript { get { return particleScript; } }
 
-		//keyboard controls
-		private KeyCode upKey;
-		private KeyCode downKey;
-		private KeyCode leftKey;
-		private KeyCode rightKey;
-		private KeyCode passKey;
-		public List<KeyCode> keyboardControls = new List<KeyCode>();
-
-		//gamepad controls
-		private char playerNum;
 
 		//constructor for players
-		public Player(char playerNum,
+		public PlayerInfo(Player thisPlayer,
 					  PlayerMovement moveScript,
 					  PlayerBallInteraction ballScript,
 					  PlayerMovementLean leanScript,
 					  CatchBehavior catchScript,
-					  PlayerMovementParticles particleScript,
-					  KeyCode upKey,
-					  KeyCode downKey,
-					  KeyCode leftKey,
-					  KeyCode rightKey,
-					  KeyCode passKey){
-			this.playerNum = playerNum;
+					  PlayerMovementParticles particleScript){
+			this.thisPlayer = thisPlayer;
 			this.moveScript = moveScript;
 			this.ballScript = ballScript;
 			this.leanScript = leanScript;
 			this.catchScript = catchScript;
 			this.particleScript = particleScript;
-			this.upKey = upKey;
-			this.downKey = downKey;
-			this.leftKey = leftKey;
-			this.rightKey = rightKey;
-			this.passKey = passKey;
-			this.keyboardControls.Add(upKey);
-			this.keyboardControls.Add(downKey);
-			this.keyboardControls.Add(leftKey);
-			this.keyboardControls.Add(rightKey);
-			this.keyboardControls.Add(passKey);
 		}
 	}
 }
