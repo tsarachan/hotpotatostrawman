@@ -1,5 +1,6 @@
 ﻿namespace TitleScene
 {
+	using Rewired;
 	using System.Collections;
 	using UnityEngine;
 	using UnityEngine.SceneManagement;
@@ -18,15 +19,7 @@
 
 
 		private void Update(){
-			if (Input.anyKeyDown ||
-				Input.GetButtonDown(O_BUTTON + P1) ||
-				Input.GetButtonDown(X_BUTTON + P1) ||
-				Input.GetButtonDown(SQUARE_BUTTON + P1) ||
-				Input.GetButtonDown(TRIANGLE_BUTTON + P1) ||
-				Input.GetButtonDown(O_BUTTON + P2) ||
-				Input.GetButtonDown(X_BUTTON + P2) ||
-				Input.GetButtonDown(SQUARE_BUTTON + P2) ||
-				Input.GetButtonDown(TRIANGLE_BUTTON + P2))
+			if (ReInput.controllers.GetAnyButtonDown())
 			{
 				SceneManager.LoadScene(GAME_SCENE);
 			} 
