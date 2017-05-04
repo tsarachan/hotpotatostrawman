@@ -4,6 +4,7 @@ using System.Collections;
 public class CannonBehavior : MonoBehaviour {
 
 	private Rigidbody rb;
+	private AudioSource audioSource;
 
 	private Vector3 posVec = new Vector3(0.0f, 0.0f, 0.0f);
 	private float startZ;
@@ -18,8 +19,10 @@ public class CannonBehavior : MonoBehaviour {
 	public float reloadTime = 1.0f; //how long the players have to wait between attacks
 	private float timer = 0.0f;
 
+
 	private void Start(){
 		rb = GetComponent<Rigidbody>();
+		audioSource = GetComponent<AudioSource>();
 		startZ = transform.localPosition.z;
 		cannonball = Resources.Load(CANNONBALL_OBJ) as GameObject;
 	}
@@ -68,6 +71,7 @@ public class CannonBehavior : MonoBehaviour {
 	/// </summary>
 	private bool Shoot(){
 		Instantiate(cannonball, transform.position, Quaternion.identity);
+		audioSource.Play();
 
 		return true;
 	}
