@@ -97,12 +97,19 @@
 		private const string BOSS_DESTROYED_PARTICLE = "Boss destroyed particle";
 
 
-		//the GamEndSystem, to go to the high score screen after winning, with associated variables
+		//the GameEndSystem, to go to the high score screen after winning, with associated variables
 		private GameEndSystem gameEndSystem;
 		private const string GAME_END_FUNC = "EndGame";
 		private TextMeshProUGUI tutorialText1;
 		private const string TUTORIAL_TEXT_OBJ = "Tutorial text 1";
 		private const string CONGRATULATIONS_MESSAGE = "Congratulations!\nThanks for playing the demo!";
+
+
+		//speaker for sound effects
+		private AudioSource bossSpeaker;
+		private const string BOSS_SPEAKER_OBJ = "BossSpeaker";
+		private AudioClip bossHitClip;
+		private const string BOSS_HIT_CLIP = "Audio/CannonBossEnemyHurtSFX";
 
 
 
@@ -123,6 +130,9 @@
 			endPos.z -= enterDist;
 			levelManager = GameObject.Find(MANAGER_OBJ).GetComponent<LevelManager>();
 			gameEndSystem = GameObject.Find(MANAGER_OBJ).GetComponent<GameEndSystem>();
+			bossSpeaker = GameObject.Find(BOSS_SPEAKER_OBJ).GetComponent<AudioSource>();
+			bossHitClip = Resources.Load(BOSS_HIT_CLIP) as AudioClip;
+			Debug.Log(bossHitClip);
 		}
 
 
@@ -293,6 +303,10 @@
 
 		public void Hit(){
 			if (currentStage != Stages.Entering){
+				bossSpeaker.Stop();
+				bossSpeaker.clip = bossHitClip;
+				bossSpeaker.Play();
+
 				if (currentStage != Stages.Health0){
 					currentStage++;
 

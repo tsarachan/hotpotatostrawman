@@ -94,6 +94,7 @@ public class EnemyHoming : EnemyBase {
 	private AudioClip deathClip;
 	private AudioClip chargeClip;
 	private const string DEATH_CLIP = "Audio/EnemyDeathSFX";
+	private const string HUNT_DEATH_CLIP = "Audio/PlayerHuntEnemyDeathSFX";
 	private const string CHARGE_CLIP = "Audio/EnemyChargeSFX";
 
 
@@ -131,7 +132,7 @@ public class EnemyHoming : EnemyBase {
 		}
 		model = transform.Find(MODEL).gameObject;
 		audioSource = GetAudioSource();
-		deathClip = Resources.Load(DEATH_CLIP) as AudioClip;
+		deathClip = GetDeathClip();
 		chargeClip = Resources.Load(CHARGE_CLIP) as AudioClip;
 		myColor = model.GetComponent<Renderer>().material.color;
 		explodeGradient.SetKeys(new GradientColorKey[] { new GradientColorKey(Color.white, 0.0f),
@@ -153,6 +154,15 @@ public class EnemyHoming : EnemyBase {
 		//this should never happen
 		Debug.Log("Couldn't find audioSource for " + gameObject.name);
 		return null;
+	}
+
+
+	private AudioClip GetDeathClip(){
+		if (gameObject.name.Contains(HUNT)){
+			return Resources.Load(HUNT_DEATH_CLIP) as AudioClip;
+		} else {
+			return Resources.Load(DEATH_CLIP) as AudioClip;
+		}
 	}
 
 
