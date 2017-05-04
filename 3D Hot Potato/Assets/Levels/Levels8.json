@@ -508,7 +508,7 @@
 		],
 
 		"act12":[
-			{"action":"spawn", "whichEnemy":"BossBattle", "waves":1, "numPerWave":1, "whichSpawners":[8], "timeBetweenWaves":0, "timeVariance":0},
+			{"action":"spawn", "whichEnemy":"CannonBossBattle", "waves":1, "numPerWave":1, "whichSpawners":[8], "timeBetweenWaves":0, "timeVariance":0},
 			{"action":"wait", "time":4},
 		]},
 "world2":{
