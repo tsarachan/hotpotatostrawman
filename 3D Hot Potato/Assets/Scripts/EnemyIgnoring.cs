@@ -72,8 +72,8 @@ public class EnemyIgnoring : EnemyBase {
 		audioSource = GetAudioSource();
 		deathClip = Resources.Load(DEATH_CLIP) as AudioClip;
 		myColor = GetComponent<Renderer>().material.color;
-		explodeGradient.SetKeys(new GradientColorKey[] { new GradientColorKey(Color.red, 0.0f),
-														 new GradientColorKey(Color.red, 0.103f),
+		explodeGradient.SetKeys(new GradientColorKey[] { new GradientColorKey(Color.white, 0.0f),
+														 new GradientColorKey(Color.white, 0.103f),
 														 new GradientColorKey(myColor, 0.409f) },
 								new GradientAlphaKey[] { new GradientAlphaKey(1.0f, 0.0f),
 														 new GradientAlphaKey(1.0f, 0.856f),

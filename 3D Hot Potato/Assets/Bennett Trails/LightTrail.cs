@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public struct QuadPosition{
+public class QuadPosition{
     public Vector3 nwPoint;
 	public Vector3 nePoint;
 	public Vector3 swPoint;
@@ -69,7 +69,7 @@ public class LightTrail : MonoBehaviour {
 	
 	void LateUpdate () {
 
-
+		transformList = MoveBySpeed();
 
 		//get the camera location of the new vertices
 		Vector3 nwVertex = transform.TransformPoint(new Vector3(-0.5f*width, 0.5f*height,0));
@@ -182,5 +182,22 @@ public class LightTrail : MonoBehaviour {
 		trailMesh.SetTriangles(trianglesArray,0);
 		trailMesh.RecalculateBounds();
 		meshFilter.sharedMesh = trailMesh;
+	}
+
+
+	private List<QuadPosition> MoveBySpeed(){
+		List<QuadPosition> temp = transformList;
+
+		Vector3 speed = new Vector3(0.0f, -0.5f, -0.0f);
+
+		for (int i = 0; i < temp.Count; i++){
+			temp[i].nwPoint += speed;
+			temp[i].nePoint += speed;
+			temp[i].sePoint += speed;
+			temp[i].swPoint += speed;
+		}
+
+
+		return temp;
 	}
 }

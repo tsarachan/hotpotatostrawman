@@ -14,7 +14,7 @@ public class ExampleMove : MonoBehaviour {
 		oldPosition = transform.position;
 		transform.position = new Vector3 (
 			Mathf.Sin (Time.time * 2f) * 10f,
-			Mathf.Sin (Time.time) * 10f,
+			0.0f,
 			Mathf.Cos (Time.time * 3f) * 10f);
 		Vector3 movementVector = (transform.position - oldPosition).normalized;
 		transform.rotation = Quaternion.LookRotation (movementVector);
