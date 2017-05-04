@@ -212,15 +212,8 @@ public class EnemyIgnoring : EnemyBase {
 
 		ParticleSystem.ColorOverLifetimeModule colorModule = 
 			destroyParticle.GetComponent<ParticleSystem>().colorOverLifetime;
-		Gradient grad = new Gradient();
-		grad.SetKeys(new GradientColorKey[] { new GradientColorKey(Color.white, 0.0f),
-											  new GradientColorKey(Color.white, 0.103f),
-											  new GradientColorKey(myColor, 0.409f) },
-					 new GradientAlphaKey[] { new GradientAlphaKey(1.0f, 0.0f),
-											  new GradientAlphaKey(1.0f, 0.856f),
-											  new GradientAlphaKey(0.0f, 1.0f) });
 
-		colorModule.color = grad;
+		colorModule.color = explodeGradient;
 
 		audioSource.clip = deathClip;
 		audioSource.Play();

@@ -13,7 +13,6 @@ public class EnemyPlayerTracker : EnemyBase {
 	}
 	public float[] maxSpeeds = { 2.0f, 5.0f, 7.0f };
 	private float myMaxSpeed = 0.0f;
-	private GameObject destroyParticle;
 
 	private const string PLAYER_ORGANIZER = "Players";
 	private Transform playerOrganizer;
@@ -32,6 +31,12 @@ public class EnemyPlayerTracker : EnemyBase {
 	private Vector3 start;
 	private Vector3 end;
 
+
+	//color gradient for explosion particle
+	private Gradient explodeGradient = new Gradient();
+	private Color myColor;
+
+
 	private void Start(){
 		transform.parent = GameObject.Find(ENEMY_ORGANIZER).transform;
 		playerOrganizer = GameObject.Find(PLAYER_ORGANIZER).transform;
@@ -43,6 +48,13 @@ public class EnemyPlayerTracker : EnemyBase {
 		end = new Vector3(transform.position.x,
 			transform.position.y,
 			transform.position.z - enterDistance);
+		myColor = GetComponent<Renderer>().material.color;
+		explodeGradient.SetKeys(new GradientColorKey[] { new GradientColorKey(Color.white, 0.0f),
+														 new GradientColorKey(Color.white, 0.103f),
+														 new GradientColorKey(myColor, 0.409f) },
+								new GradientAlphaKey[] { new GradientAlphaKey(1.0f, 0.0f),
+														 new GradientAlphaKey(1.0f, 0.856f),
+														 new GradientAlphaKey(0.0f, 1.0f) });
 	}
 
 
@@ -102,16 +114,21 @@ public class EnemyPlayerTracker : EnemyBase {
 		GameObject destroyParticle = ObjectPooling.ObjectPool.GetObj(DESTROY_PARTICLE);
 		destroyParticle.transform.position = transform.position;
 
-		Color myColor = GetComponent<Renderer>().material.color;
+//		Color myColor = GetComponent<Renderer>().material.color;
+//
+//		destroyParticle.GetComponent<ParticlePlexus>().LineColor = myColor;
+//
+//
+//		//for reasons unclear, Unity throws an error if you try to set the start color of the particles without
+//		//first assigning the main module to its own variable
+//		ParticleSystem.MainModule mainModule = destroyParticle.GetComponent<ParticleSystem>().main;
+//
+//		mainModule.startColor = myColor;
 
-		destroyParticle.GetComponent<ParticlePlexus>().LineColor = myColor;
+		ParticleSystem.ColorOverLifetimeModule colorModule = 
+			destroyParticle.GetComponent<ParticleSystem>().colorOverLifetime;
 
-
-		//for reasons unclear, Unity throws an error if you try to set the start color of the particles without
-		//first assigning the main module to its own variable
-		ParticleSystem.MainModule mainModule = destroyParticle.GetComponent<ParticleSystem>().main;
-
-		mainModule.startColor = myColor;
+		colorModule.color = explodeGradient;
 
 		ObjectPooling.ObjectPool.AddObj(gameObject); //shut this off and return it to the pool
 	}
