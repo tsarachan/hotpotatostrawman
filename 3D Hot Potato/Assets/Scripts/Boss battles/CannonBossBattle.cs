@@ -346,6 +346,9 @@
 			endPos = startPos;
 			endPos.z -= enterDist;
 
+			moveTimer = 0.0f;
+			bossAccelTimer = 0.0f;
+
 			currentBossMoveSpeed = bossMoveSpeed;
 			currentCannonMoveSpeed = cannonMoveSpeed;
 
