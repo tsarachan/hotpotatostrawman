@@ -357,8 +357,6 @@
 			tutorialText1 = GameObject.Find(TUTORIAL_TEXT_OBJ).GetComponent<TextMeshProUGUI>();
 
 			gameObject.SetActive(true);
-
-			Debug.Log("Reset() called; currentStage == " + currentStage + ", enterTimer == " + enterTimer);
 		}
 
 
