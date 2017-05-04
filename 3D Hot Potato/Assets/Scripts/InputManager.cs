@@ -177,8 +177,8 @@ public class InputManager : MonoBehaviour {
 		}
 
 
-		if (Input.GetButton(O_BUTTON + "1") &&
-			Input.GetButton(O_BUTTON + "2") &&
+		if (players['1'].ThisPlayer.GetButton("Pass") &&
+			players['2'].ThisPlayer.GetButton("Pass") &&
 			pauseMenuScript.Paused){
 
 			resetTimer += Time.unscaledDeltaTime;
@@ -191,9 +191,6 @@ public class InputManager : MonoBehaviour {
 			resetTimer = 0.0f;
 		}
 
-		if (Input.GetKeyDown(KeyCode.Space)){
-			pauseMenuScript.ChangePauseMenuState();
-		}
 
 		/* 
 		 * 
