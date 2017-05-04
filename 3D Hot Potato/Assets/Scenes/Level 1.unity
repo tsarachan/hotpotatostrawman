@@ -6163,7 +6163,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 1.6
   maxHeight: 5
-  holdHeight: 0.25
+  holdHeight: 1
   awesomeCatchDist: 10
 --- !u!54 &260184039
 Rigidbody:
@@ -14945,7 +14945,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -2138828575
+  randomSeed: 1870722255
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -15402,7 +15402,7 @@ ParticleSystem:
     enabled: 0
     type: 4
     radius: 1
-    angle: 25
+    angle: 90
     length: 5
     boxX: 1
     boxY: 1
@@ -18692,7 +18692,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1867346124
+  randomSeed: -629898801
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -21451,7 +21451,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1130335561
+  randomSeed: -1917006467
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -29996,7 +29996,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -157596322
+  randomSeed: -376219712
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -30172,7 +30172,7 @@ ParticleSystem:
       maxColor: {r: 0.99215686, g: 1, b: 0.3019608, a: 1}
       minMaxState: 0
     startSize:
-      scalar: 5
+      scalar: 7
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -33274,7 +33274,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 312979908
+  randomSeed: 1993891713
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -42104,7 +42104,7 @@ Light:
   serializedVersion: 7
   m_Type: 2
   m_Color: {r: 1, g: 0.9764706, b: 0.3254902, a: 1}
-  m_Intensity: 1.2
+  m_Intensity: 8
   m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10
@@ -60594,7 +60594,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 806455003
+  randomSeed: 1441534745
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -60746,7 +60746,7 @@ ParticleSystem:
       maxColor: {r: 0.99215686, g: 1, b: 0.3019608, a: 1}
       minMaxState: 0
     startSize:
-      scalar: 1
+      scalar: 4
       maxCurve:
         serializedVersion: 2
         m_Curve:
