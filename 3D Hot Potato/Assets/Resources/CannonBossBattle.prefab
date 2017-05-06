@@ -53,7 +53,7 @@ GameObject:
   - component: {fileID: 4847045682323634}
   - component: {fileID: 114870532017749208}
   m_Layer: 0
-  m_Name: Cannon boss battle
+  m_Name: CannonBossBattle
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

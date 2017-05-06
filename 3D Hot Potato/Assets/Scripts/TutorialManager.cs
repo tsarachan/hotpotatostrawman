@@ -128,8 +128,8 @@ public class TutorialManager : MonoBehaviour {
 												  EnemyDestroyedFunc,
 												  0.5f);
 		powerInstruction = new Instruction("Each player has a unique power",
-											"Trigger your power just before catching the Neon Star",
-											"Use your power by pressing the  <sprite=\"Pass_button\" index=0> button while the Neon Star is sparking  <sprite=\"Spark_ex\" index=0>",
+											"Trigger your power by pressing the  <sprite=\"Pass_button\" index=0> button just before catching the Neon Star",
+											"",
 										   new Vector3(0.0f, 0.0f, 0.0f), //this instruction will find the ball
 										   PowerTriggeredRegistration,
 										   PowerTriggeredFunc,

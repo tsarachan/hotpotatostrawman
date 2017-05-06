@@ -36,6 +36,7 @@ public class LightTrail : MonoBehaviour {
 	private Vector3[] normalsArray;
 	private int[] trianglesArray;
 	private Color32[] colorsArray;
+	private Transform myPlayer;
 
 	void Start () {
 		_cam = Camera.main.transform;
@@ -54,6 +55,7 @@ public class LightTrail : MonoBehaviour {
 		trianglesArray = new int[((numFrames)*8+4)*3];//2 extra for the cap
 
 		oldNumFrames = numFrames;
+		myPlayer = GameObject.Find("Player 1").transform;
 	}
 
 	void OnEnable(){
@@ -68,6 +70,7 @@ public class LightTrail : MonoBehaviour {
 	}
 	
 	void LateUpdate () {
+		transform.position = myPlayer.position;
 
 		transformList = MoveBySpeed();
 
@@ -76,13 +79,13 @@ public class LightTrail : MonoBehaviour {
 		Vector3 neVertex = transform.TransformPoint(new Vector3(0.5f*width, 0.5f*height,0));
 		Vector3 swVertex = transform.TransformPoint(new Vector3(-0.5f*width, -0.5f*height,0));
 		Vector3 seVertex = transform.TransformPoint(new Vector3(0.5f*width, -0.5f*height,0));
-
-		Vector3 nwTransformed = _cam.InverseTransformPoint(nwVertex);
-		Vector3 neTransformed = _cam.InverseTransformPoint(neVertex);
-		Vector3 swTransformed = _cam.InverseTransformPoint(swVertex);
-		Vector3 seTransformed = _cam.InverseTransformPoint(seVertex);
-
-		transformList.Add(new QuadPosition(nwTransformed,neTransformed,swTransformed,seTransformed, color));
+//
+//		Vector3 nwTransformed = _cam.InverseTransformPoint(nwVertex);
+//		Vector3 neTransformed = _cam.InverseTransformPoint(neVertex);
+//		Vector3 swTransformed = _cam.InverseTransformPoint(swVertex);
+//		Vector3 seTransformed = _cam.InverseTransformPoint(seVertex);
+//
+		transformList.Add(new QuadPosition(nwVertex,neVertex,swVertex,seVertex, color));
 
 
 		if (oldNumFrames != numFrames) {
@@ -93,7 +96,7 @@ public class LightTrail : MonoBehaviour {
 				transformList.RemoveAt(0);
 			}
 			while (transformList.Count < numFrames) {
-				transformList.Add (new QuadPosition(nwTransformed,neTransformed,swTransformed,seTransformed, color));
+				transformList.Add (new QuadPosition(nwVertex,neVertex,swVertex,seVertex, color));
 			}
 			verticesArray = new Vector3[numFrames * 4];
 			normalsArray = new Vector3[numFrames * 4];
@@ -109,10 +112,10 @@ public class LightTrail : MonoBehaviour {
 
 		//construct the mesh
 		for (int i=0; i<numFrames; i++){
-			verticesArray[i*4 + 0] = transform.InverseTransformPoint(_cam.TransformPoint(transformList[i].nwPoint));
-			verticesArray[i*4 + 1] = transform.InverseTransformPoint(_cam.TransformPoint(transformList[i].nePoint));
-			verticesArray[i*4 + 2] = transform.InverseTransformPoint(_cam.TransformPoint(transformList[i].swPoint));
-			verticesArray[i*4 + 3] = transform.InverseTransformPoint(_cam.TransformPoint(transformList[i].sePoint));
+			verticesArray[i*4 + 0] = transform.InverseTransformPoint(transformList[i].nwPoint);
+			verticesArray[i*4 + 1] = transform.InverseTransformPoint(transformList[i].nePoint);
+			verticesArray[i*4 + 2] = transform.InverseTransformPoint(transformList[i].swPoint);
+			verticesArray[i*4 + 3] = transform.InverseTransformPoint(transformList[i].sePoint);
 			normalsArray[i*4 + 0] = new Vector3(-1,1,0);
 			normalsArray[i*4 + 1] = new Vector3(1,1,0);
 			normalsArray[i*4 + 2] = new Vector3(-1,-1,0);
@@ -188,13 +191,17 @@ public class LightTrail : MonoBehaviour {
 	private List<QuadPosition> MoveBySpeed(){
 		List<QuadPosition> temp = transformList;
 
-		Vector3 speed = new Vector3(0.0f, -0.5f, -0.0f);
+		Vector3 displacement = new Vector3(0.0f, 0.0f, 0.0f);
 
 		for (int i = 0; i < temp.Count; i++){
-			temp[i].nwPoint += speed;
-			temp[i].nePoint += speed;
-			temp[i].sePoint += speed;
-			temp[i].swPoint += speed;
+
+			displacement.z = (float)((temp.Count - i)/temp.Count) * -5.0f;
+			Debug.Log(displacement);
+
+			temp[i].nwPoint += displacement;
+			temp[i].nePoint += displacement;
+			temp[i].sePoint += displacement;
+			temp[i].swPoint += displacement;
 		}
 
 

@@ -20,7 +20,7 @@ public class ContrailBehavior : MonoBehaviour {
 	public bool Active { get; set; }
 
 
-	private void Start(){
+	private void Awake(){
 		lineRend = GetComponent<LineRenderer>();
 		Active = false;
 	}
