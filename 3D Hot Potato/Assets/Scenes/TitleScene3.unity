@@ -1131,7 +1131,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 40.76, y: -23.1, z: 0}
 --- !u!81 &125557044
 AudioListener:
@@ -7111,7 +7111,7 @@ Transform:
   - {fileID: 1232189563}
   - {fileID: 526225147}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &562660417
 GameObject:
@@ -13349,7 +13349,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &715565552
 GameObject:
@@ -22148,7 +22148,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000019073, y: 0.0000066757}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 506, y: 506}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1067926019
@@ -22170,7 +22170,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 36d64eb65b9344c59ba22e50404b5144, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -22921,28 +22921,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   city: {fileID: 21300000, guid: 36d64eb65b9344c59ba22e50404b5144, type: 3}
-  cityStart: {x: 0, y: 0, z: 0}
-  cityEnd: {x: 0, y: 0, z: 0}
+  cityStart: {x: -10, y: 0}
+  cityEnd: {x: 10, y: 0}
   cityTime: 1
   scientists: {fileID: 21300000, guid: 069f72a142fe64a2386421eec4396d6f, type: 3}
-  scientistStart: {x: 0, y: 0, z: 0}
-  scientstsEnd: {x: 0, y: 0, z: 0}
+  scientistStart: {x: 0, y: -10}
+  scientstsEnd: {x: 0, y: 10}
   scientistsTime: 1
   erasedScientists: {fileID: 21300000, guid: f36bb21de417d44cc917c4b59f75bca9, type: 3}
-  erasedStart: {x: 0, y: 0, z: 0}
-  erasedEnd: {x: 0, y: 0, z: 0}
+  erasedStart: {x: 5, y: 5}
+  erasedEnd: {x: -5, y: -5}
   erasedTime: 1
   voidwielder: {fileID: 21300000, guid: cf70e8a8ca667414da269245a6145c83, type: 3}
-  voidwielderStart: {x: 0, y: 0, z: 0}
-  voidwielderEnd: {x: 0, y: 0, z: 0}
+  voidwielderStart: {x: -5, y: -5}
+  voidwielderEnd: {x: 5, y: 5}
   voidwielderTime: 1
   players: {fileID: 21300000, guid: 21e7d804b593846668aa520d205195ab, type: 3}
-  playersStart: {x: 0, y: 0, z: 0}
-  playersEnd: {x: 0, y: 0, z: 0}
+  playersStart: {x: -10, y: 10}
+  playersEnd: {x: 0, y: 0}
   playersTime: 1
   lightrunners: {fileID: 21300000, guid: 36d64eb65b9344c59ba22e50404b5144, type: 3}
-  lightrunnersStart: {x: 0, y: 0, z: 0}
-  lightrunnersEnd: {x: 0, y: 0, z: 0}
+  lightrunnersStart: {x: 20, y: -20}
+  lightrunnersEnd: {x: 0, y: 0}
   lightrunnersTime: 1
   titleSceneDuration: 5
   mainCameraPos: {x: 0, y: 33.63, z: -24}
@@ -22957,7 +22957,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1184061275
 GameObject:
@@ -32640,7 +32640,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1980010108
 GameObject:

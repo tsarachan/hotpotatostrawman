@@ -23,50 +23,50 @@
 
 		[Header("Scene 1: City view")]
 		public Sprite city;
-		public Vector3 cityStart;
-		public Vector3 cityEnd;
+		public Vector2 cityStart;
+		public Vector2 cityEnd;
 		public float cityTime;
-		private MoveCameraTask cityViewTask;
+		private MoveImageTask cityViewTask;
 
 
 		[Header("Scene 2: Scientists")]
 		public Sprite scientists;
-		public Vector3 scientistStart;
-		public Vector3 scientstsEnd;
+		public Vector2 scientistStart;
+		public Vector2 scientstsEnd;
 		public float scientistsTime;
-		private MoveCameraTask scientistsTask;
+		private MoveImageTask scientistsTask;
 
 
 		[Header("Scene 3: Erased")]
 		public Sprite erasedScientists;
-		public Vector3 erasedStart;
-		public Vector3 erasedEnd;
+		public Vector2 erasedStart;
+		public Vector2 erasedEnd;
 		public float erasedTime;
-		private MoveCameraTask erasedTask;
+		private MoveImageTask erasedTask;
 
 
 		[Header("Scene 4: Voidweilder")]
 		public Sprite voidwielder;
-		public Vector3 voidwielderStart;
-		public Vector3 voidwielderEnd;
+		public Vector2 voidwielderStart;
+		public Vector2 voidwielderEnd;
 		public float voidwielderTime;
-		private MoveCameraTask voidwielderTask;
+		private MoveImageTask voidwielderTask;
 
 
 		[Header("Scene 5: Players")]
 		public Sprite players;
-		public Vector3 playersStart;
-		public Vector3 playersEnd;
+		public Vector2 playersStart;
+		public Vector2 playersEnd;
 		public float playersTime;
-		private MoveCameraTask playersTask;
+		private MoveImageTask playersTask;
 
 
 		[Header("Scene 6: Lightrunners")]
 		public Sprite lightrunners;
-		public Vector3 lightrunnersStart;
-		public Vector3 lightrunnersEnd;
+		public Vector2 lightrunnersStart;
+		public Vector2 lightrunnersEnd;
 		public float lightrunnersTime;
-		private MoveCameraTask lightrunnersTask;
+		private MoveImageTask lightrunnersTask;
 
 
 		[Header("Scene 7: Title screen")]
@@ -95,12 +95,12 @@
 			taskManager = new TaskManager();
 
 
-			cityViewTask = new MoveCameraTask(city, cityStart, cityEnd, cityTime);
-			scientistsTask = new MoveCameraTask(scientists, scientistStart, scientstsEnd, scientistsTime);
-			erasedTask = new MoveCameraTask(erasedScientists, erasedStart, erasedEnd, erasedTime);
-			voidwielderTask = new MoveCameraTask(voidwielder, voidwielderStart, voidwielderEnd, voidwielderTime);
-			playersTask = new MoveCameraTask(players, playersStart, playersEnd, playersTime);
-			lightrunnersTask = new MoveCameraTask(lightrunners, lightrunnersStart, lightrunnersEnd, lightrunnersTime);
+			cityViewTask = new MoveImageTask(city, cityStart, cityEnd, cityTime);
+			scientistsTask = new MoveImageTask(scientists, scientistStart, scientstsEnd, scientistsTime);
+			erasedTask = new MoveImageTask(erasedScientists, erasedStart, erasedEnd, erasedTime);
+			voidwielderTask = new MoveImageTask(voidwielder, voidwielderStart, voidwielderEnd, voidwielderTime);
+			playersTask = new MoveImageTask(players, playersStart, playersEnd, playersTime);
+			lightrunnersTask = new MoveImageTask(lightrunners, lightrunnersStart, lightrunnersEnd, lightrunnersTime);
 
 
 			GameObject titleScene = GameObject.Find(TITLE_SCENE_PREFAB);
