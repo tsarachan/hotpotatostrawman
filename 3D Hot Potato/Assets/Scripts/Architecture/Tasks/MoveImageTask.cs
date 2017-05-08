@@ -31,6 +31,9 @@
 		private const string CAPTION_ORGANIZER = "Cutscene caption";
 		private TextMeshProUGUI captionText;
 		private const string CAPTION_OBJ = "Caption";
+		private float typeDelay = 0.0f;
+		private float typeTimer = 0.0f;
+		private int numCharsDisplayed = 0;
 
 
 		////////////////////////////////////////////////////////////////////////
@@ -70,9 +73,11 @@
 
 
 		internal override void Update(){
-			moveTimer += Time.deltaTime;
+			rect.anchoredPosition = MoveImage();
 
-			rect.anchoredPosition = Vector2.Lerp(start, end, moveTimer/duration);
+			if (numCharsDisplayed < caption.Length){
+				captionText.text = TypeText();
+			}
 
 			if (moveTimer >= duration){
 				SetStatus(TaskStatus.Succeeded);
@@ -80,8 +85,34 @@
 		}
 
 
+		private Vector2 MoveImage(){
+			moveTimer += Time.deltaTime;
+
+			return Vector2.Lerp(start, end, moveTimer/duration);
+		}
+
+
+		private string TypeText(){
+			typeTimer += Time.deltaTime;
+
+			char[] captionAsArray = caption.ToCharArray();
+			string temp = "";
+
+			if (typeTimer >= typeDelay){
+				numCharsDisplayed++;
+
+				for (int i = 0; i < numCharsDisplayed; i++){
+					temp += captionAsArray[i];
+				}
+			}
+
+			return temp;
+		}
+
+
 		protected override void Cleanup(){
 			moveTimer = 0.0f;
+			typeTimer = 0.0f;
 			captionOrganizer.SetActive(false);
 		}
 	}
