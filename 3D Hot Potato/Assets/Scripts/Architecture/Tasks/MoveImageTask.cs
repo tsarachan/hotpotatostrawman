@@ -1,5 +1,6 @@
 ﻿namespace AttractMode
 {
+	using TMPro;
 	using UnityEngine;
 	using UnityEngine.UI;
 
@@ -14,6 +15,7 @@
 		private Vector2 start; //start location of image
 		private Vector2 end; //end location of image
 		private float duration; //how long this image stays on screen; also how long the camera moves
+		private string caption; //the text, if any, that displays while this image is on-screen
 
 
 		////////////////////////////////////////////////////////////////////////
@@ -25,6 +27,10 @@
 		private float moveTimer = 0.0f;
 		private Image cutsceneImage;
 		private const string CUTSCENE_IMAGE = "Cutscene image";
+		private GameObject captionOrganizer;
+		private const string CAPTION_ORGANIZER = "Cutscene caption";
+		private TextMeshProUGUI captionText;
+		private const string CAPTION_OBJ = "Caption";
 
 
 		////////////////////////////////////////////////////////////////////////
@@ -32,13 +38,17 @@
 		////////////////////////////////////////////////////////////////////////
 
 
-		public MoveImageTask(Sprite cutscene, Vector2 start, Vector2 end, float duration){
+		public MoveImageTask(Sprite cutscene, Vector2 start, Vector2 end, float duration, string text){
 			this.cutscene = cutscene;;
 			this.start = start;
 			this.end = end;
 			this.duration = duration;
+			this.caption = text;
 			cutsceneImage = GameObject.Find(CUTSCENE_IMAGE).GetComponent<Image>();
 			rect = cutsceneImage.rectTransform;
+
+			captionOrganizer = GameObject.Find(CAPTION_ORGANIZER);
+			captionText = GameObject.Find(CAPTION_OBJ).GetComponent<TextMeshProUGUI>();
 		}
 
 
@@ -50,6 +60,12 @@
 		protected override void Init(){
 			cutsceneImage.sprite = cutscene;
 			rect.anchoredPosition = start;
+			if (captionText.text == ""){
+				captionOrganizer.SetActive(false);
+			} else {
+				captionOrganizer.SetActive(true);
+				captionText.text = caption;
+			}
 		}
 
 
@@ -66,6 +82,7 @@
 
 		protected override void Cleanup(){
 			moveTimer = 0.0f;
+			captionOrganizer.SetActive(false);
 		}
 	}
 }

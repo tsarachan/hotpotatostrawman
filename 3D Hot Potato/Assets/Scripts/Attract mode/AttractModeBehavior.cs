@@ -45,7 +45,7 @@
 		private MoveImageTask erasedTask;
 
 
-		[Header("Scene 4: Voidweilder")]
+		[Header("Scene 4: Voidwielder")]
 		public Sprite voidwielder;
 		public Vector2 voidwielderStart;
 		public Vector2 voidwielderEnd;
@@ -95,12 +95,18 @@
 			taskManager = new TaskManager();
 
 
-			cityViewTask = new MoveImageTask(city, cityStart, cityEnd, cityTime);
-			scientistsTask = new MoveImageTask(scientists, scientistStart, scientstsEnd, scientistsTime);
-			erasedTask = new MoveImageTask(erasedScientists, erasedStart, erasedEnd, erasedTime);
-			voidwielderTask = new MoveImageTask(voidwielder, voidwielderStart, voidwielderEnd, voidwielderTime);
-			playersTask = new MoveImageTask(players, playersStart, playersEnd, playersTime);
-			lightrunnersTask = new MoveImageTask(lightrunners, lightrunnersStart, lightrunnersEnd, lightrunnersTime);
+			cityViewTask = new MoveImageTask(city, cityStart, cityEnd, cityTime, 
+				"In 2153, the world became a peaceful utopia\nwhere scarcity doesn't exist.");
+			scientistsTask = new MoveImageTask(scientists, scientistStart, scientstsEnd, scientistsTime, 
+				"Seven scientists created the Neon Star, a nearly limitless battery which solved the global energy crisis,");
+			erasedTask = new MoveImageTask(erasedScientists, erasedStart, erasedEnd, erasedTime, 
+				"But one day, members of the Neon Star Project disappeared.");
+			voidwielderTask = new MoveImageTask(voidwielder, voidwielderStart, voidwielderEnd, voidwielderTime, 
+				"A scientist went rogue!\nHe kidnapped the others and stole each city's Neon Star for himself.");
+			playersTask = new MoveImageTask(players, playersStart, playersEnd, playersTime, 
+				"To stop the Voidwielder and bring light back to the cities,\ntwo retired scientists take the last remaining Neon Star");
+			lightrunnersTask = new MoveImageTask(lightrunners, lightrunnersStart, lightrunnersEnd, lightrunnersTime, 
+				"...and saddle up for one last ride.");
 
 
 			GameObject titleScene = GameObject.Find(TITLE_SCENE_PREFAB);
