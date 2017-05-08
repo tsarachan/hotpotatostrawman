@@ -23182,27 +23182,27 @@ MonoBehaviour:
   city: {fileID: 21300000, guid: 36d64eb65b9344c59ba22e50404b5144, type: 3}
   cityStart: {x: -10, y: 0}
   cityEnd: {x: 10, y: 0}
-  cityTime: 1
+  cityTime: 5
   scientists: {fileID: 21300000, guid: 069f72a142fe64a2386421eec4396d6f, type: 3}
   scientistStart: {x: 0, y: -10}
   scientstsEnd: {x: 0, y: 10}
-  scientistsTime: 1
+  scientistsTime: 5
   erasedScientists: {fileID: 21300000, guid: f36bb21de417d44cc917c4b59f75bca9, type: 3}
   erasedStart: {x: 5, y: 5}
   erasedEnd: {x: -5, y: -5}
-  erasedTime: 1
+  erasedTime: 5
   voidwielder: {fileID: 21300000, guid: cf70e8a8ca667414da269245a6145c83, type: 3}
   voidwielderStart: {x: -5, y: -5}
   voidwielderEnd: {x: 5, y: 5}
-  voidwielderTime: 1
+  voidwielderTime: 5
   players: {fileID: 21300000, guid: 21e7d804b593846668aa520d205195ab, type: 3}
   playersStart: {x: -10, y: 10}
   playersEnd: {x: 0, y: 0}
-  playersTime: 1
+  playersTime: 5
   lightrunners: {fileID: 21300000, guid: 36d64eb65b9344c59ba22e50404b5144, type: 3}
   lightrunnersStart: {x: 20, y: -20}
   lightrunnersEnd: {x: 0, y: 0}
-  lightrunnersTime: 1
+  lightrunnersTime: 5
   titleSceneDuration: 5
   mainCameraPos: {x: 0, y: 33.63, z: -24}
 --- !u!4 &1178960775
