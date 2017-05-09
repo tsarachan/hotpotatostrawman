@@ -98,7 +98,7 @@
 			cityViewTask = new MoveImageTask(city, cityStart, cityEnd, cityTime, 
 				"In 2153, the world became a peaceful utopia\nwhere scarcity doesn't exist.");
 			scientistsTask = new MoveImageTask(scientists, scientistStart, scientstsEnd, scientistsTime, 
-				"Seven scientists created the Neon Star, a nearly limitless battery which solved the global energy crisis,");
+				"Seven scientists created the Neon Star, a nearly limitless battery\nwhich solved the global energy crisis,");
 			erasedTask = new MoveImageTask(erasedScientists, erasedStart, erasedEnd, erasedTime, 
 				"But one day, members of the Neon Star Project disappeared.");
 			voidwielderTask = new MoveImageTask(voidwielder, voidwielderStart, voidwielderEnd, voidwielderTime, 

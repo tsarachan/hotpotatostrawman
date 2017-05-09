@@ -113,6 +113,7 @@
 		protected override void Cleanup(){
 			moveTimer = 0.0f;
 			typeTimer = 0.0f;
+			numCharsDisplayed = 0;
 			captionOrganizer.SetActive(false);
 		}
 	}
