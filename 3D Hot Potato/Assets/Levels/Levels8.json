@@ -478,7 +478,7 @@
 			{"action":"spawn", "whichEnemy":"HomingEnemy", "waves":1, "numPerWave":2, "whichSpawners":[3, 13], "timeBetweenWaves":0, "timeVariance":0}
 			{"action":"wait", "time":0.2},
 			{"action":"spawn", "whichEnemy":"HomingEnemy", "waves":1, "numPerWave":2, "whichSpawners":[4, 12], "timeBetweenWaves":0, "timeVariance":0}
-			{"action":"wait", "time":0.4},
+			{"action":"wait", "time":1},
 			{"action":"spawn", "whichEnemy":"IgnoringEnemy", "waves":1, "numPerWave":5, "whichSpawners":[6, 7, 8, 9, 10], "timeBetweenWaves":0, "timeVariance":0}
 			{"action":"wait", "time":0.2},
 			{"action":"spawn", "whichEnemy":"IgnoringEnemy", "waves":1, "numPerWave":5, "whichSpawners":[6, 7, 8, 9, 10], "timeBetweenWaves":0, "timeVariance":0}
