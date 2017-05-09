@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Rewired;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
@@ -100,12 +101,10 @@ public class NameEntrySystem : MonoBehaviour {
 				} else {
 					p1CharSwitchTimer += Time.deltaTime;
 
-					currentP1Character = SelectCharacter(KeyCode.A,
-														 KeyCode.D,
-														 "1",
+					currentP1Character = SelectCharacter(ReInput.players.GetPlayer(0),
 														 ref p1CharSwitchTimer,
 														 currentP1Character);
-					currentP1Index = EnterButton(KeyCode.Z, "1", currentP1Index);
+					currentP1Index = EnterButton(ReInput.players.GetPlayer(0), currentP1Index);
 
 					if (currentP1Index < p1Initials.text.Length){
 						p1Initials.text = ReplaceCharInString(p1Initials.text, currentP1Index, characters[currentP1Character]);
@@ -119,8 +118,10 @@ public class NameEntrySystem : MonoBehaviour {
 				} else {
 					p2CharSwitchTimer += Time.deltaTime;
 
-					currentP2Character = SelectCharacter(KeyCode.J, KeyCode.L, "2", ref p2CharSwitchTimer, currentP2Character);
-					currentP2Index = EnterButton(KeyCode.N, "2", currentP2Index);
+					currentP2Character = SelectCharacter(ReInput.players.GetPlayer(1),
+														 ref p2CharSwitchTimer,
+														 currentP2Character);
+					currentP2Index = EnterButton(ReInput.players.GetPlayer(1), currentP2Index);
 
 					if (currentP2Index < p2Initials.text.Length){
 						p2Initials.text = ReplaceCharInString(p2Initials.text, currentP2Index, characters[currentP2Character]);
@@ -145,12 +146,11 @@ public class NameEntrySystem : MonoBehaviour {
 	/// <param name="downButton">Down button.</param>
 	/// <param name="upButton">Up button.</param>
 	/// <param name="currentCharacter">The index in characters of the player's current selection.</param>
-	private int SelectCharacter(KeyCode downButton, KeyCode upButton, string playerNum, ref float timer, int currentCharacter){
+	private int SelectCharacter(Player player, ref float timer, int currentCharacter){
 		int temp = currentCharacter;
 		//Debug.Log(timer);
 
-		if (Input.GetKeyDown(downButton) ||
-			Input.GetAxis(HORIZ_AXIS + playerNum) < -inputDeadZone && timer >= charSwitchDelay){
+		if (player.GetAxis("Move Horiz") < -inputDeadZone && timer >= charSwitchDelay){
 			temp--;
 
 			if (temp < 0){
@@ -158,8 +158,7 @@ public class NameEntrySystem : MonoBehaviour {
 			}
 
 			timer = 0.0f;
-		} else if (Input.GetKeyDown(upButton) ||
-				   Input.GetAxis(HORIZ_AXIS + playerNum) > inputDeadZone && timer >= charSwitchDelay){
+		} else if (player.GetAxis("Move Horiz") > inputDeadZone && timer >= charSwitchDelay){
 			temp++;
 
 			if (temp >= characters.Count){
@@ -179,11 +178,10 @@ public class NameEntrySystem : MonoBehaviour {
 	/// <returns>The button.</returns>
 	/// <param name="button">Button.</param>
 	/// <param name="currentIndex">The index of the initial the player is currently entering, 0, 1, or 2.</param>
-	private int EnterButton(KeyCode button, string playerNum, int currentIndex){
+	private int EnterButton(Player player, int currentIndex){
 		int temp = currentIndex;
 
-		if (Input.GetKeyDown(button) ||
-			Input.GetButtonDown(PASS_BUTTON + playerNum)){
+		if (player.GetButtonDown("Pass")){
 			temp++;
 		}
 

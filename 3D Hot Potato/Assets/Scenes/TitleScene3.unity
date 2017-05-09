@@ -1131,7 +1131,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 40.76, y: -23.1, z: 0}
 --- !u!81 &125557044
 AudioListener:
@@ -7111,7 +7111,7 @@ Transform:
   - {fileID: 1232189563}
   - {fileID: 526225147}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &562660417
 GameObject:
@@ -14058,7 +14058,7 @@ GameObject:
   - component: {fileID: 755637335}
   - component: {fileID: 755637337}
   - component: {fileID: 755637336}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: Backdrop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14504,7 +14504,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 808386062}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: Cutscene caption
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21396,7 +21396,7 @@ GameObject:
   - component: {fileID: 936742089}
   - component: {fileID: 936742091}
   - component: {fileID: 936742090}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: Caption
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22385,7 +22385,7 @@ GameObject:
   - component: {fileID: 1067926018}
   - component: {fileID: 1067926020}
   - component: {fileID: 1067926019}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: Cutscene image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24054,8 +24054,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 22.7, z: -13}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1725037828}
-  m_RootOrder: 0
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 40.2, y: 0, z: 0}
 --- !u!92 &1271466112
 Behaviour:
@@ -29802,7 +29802,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1725037828}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 40.2, y: 0, z: 0}
 --- !u!114 &1662276289
 MonoBehaviour:
@@ -30125,7 +30125,7 @@ GameObject:
   - component: {fileID: 1685629942}
   - component: {fileID: 1685629941}
   - component: {fileID: 1685629940}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: Cutscene canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30201,7 +30201,7 @@ RectTransform:
   - {fileID: 1067926018}
   - {fileID: 808386062}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -30305,7 +30305,6 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1271466111}
   - {fileID: 1662276288}
   m_Father: {fileID: 393844137}
   m_RootOrder: 8
@@ -32912,7 +32911,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1980010108
 GameObject:

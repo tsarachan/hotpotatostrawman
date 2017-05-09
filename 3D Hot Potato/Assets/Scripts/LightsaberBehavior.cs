@@ -158,7 +158,6 @@ public class LightsaberBehavior : MonoBehaviour {
 
 
 	public void DestroyEnemy(EnemyBase enemy){
-		Debug.Log(gameObject.name + " destroyed " + enemy.gameObject.name);
 		Services.EventManager.Fire(new EnemyDestroyedEvent(enemy.gameObject, gameObject));
 		scoreManager.IncreaseCombo();
 		scoreManager.AddScore(enemy.ScoreValue);
