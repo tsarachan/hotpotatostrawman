@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 198014831242639420}
   - component: {fileID: 199042762250497134}
   - component: {fileID: 114128822873780574}
+  - component: {fileID: 65541321685873194}
   m_Layer: 0
   m_Name: Bennett explosion
   m_TagString: Untagged
@@ -135,6 +136,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &65541321685873194
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1257878738678618}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114128822873780574
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -203,7 +216,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1536220884
+  randomSeed: 1611427618
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -2708,7 +2721,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -480394770
+  randomSeed: -775688085
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -5231,7 +5244,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1669046553
+  randomSeed: -1255870995
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -7718,7 +7731,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1480005938
+  randomSeed: 938651778
   InitialModule:
     serializedVersion: 3
     enabled: 1

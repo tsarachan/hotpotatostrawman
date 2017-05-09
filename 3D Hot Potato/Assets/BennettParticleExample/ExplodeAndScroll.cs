@@ -9,6 +9,11 @@ public class ExplodeAndScroll : ObjectPooling.Poolable {
 	private float timer = 0.0f;
 
 
+	private const string PLAYER_TAG = "Player";
+	private const string DRIVE_THRU_PARTICLE = "Go through explosion particle";
+	private bool driveThruable = true;
+
+
 	private void Start(){
 		transform.parent = GameObject.Find(PARTICLE_ORGANIZER).transform;
 	}
@@ -27,6 +32,7 @@ public class ExplodeAndScroll : ObjectPooling.Poolable {
 
 	public override void Reset(){
 		timer = 0.0f; //sanity check; make sure the timer is at zero, so the object doesn't instantly disappear
+		driveThruable = true;
 		gameObject.SetActive(true);
 		//Explode();
 	}
@@ -41,5 +47,18 @@ public class ExplodeAndScroll : ObjectPooling.Poolable {
 		GetComponent<ParticleSystem> ().Stop ();
 		GetComponent<ParticleSystem> ().Clear ();
 		GetComponent<ParticleSystem> ().Play ();
+	}
+
+
+	private void OnTriggerEnter(Collider other){
+		if (other.tag == PLAYER_TAG && driveThruable){
+			ParticleSystem driveThruParticle = 
+				other.transform.Find(DRIVE_THRU_PARTICLE).GetComponent<ParticleSystem>();
+
+			driveThruParticle.Stop();
+			driveThruParticle.Play();
+
+			driveThruable = false;
+		}
 	}
 }
