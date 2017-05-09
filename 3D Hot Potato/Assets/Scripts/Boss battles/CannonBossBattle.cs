@@ -132,7 +132,6 @@
 			gameEndSystem = GameObject.Find(MANAGER_OBJ).GetComponent<GameEndSystem>();
 			bossSpeaker = GameObject.Find(BOSS_SPEAKER_OBJ).GetComponent<AudioSource>();
 			bossHitClip = Resources.Load(BOSS_HIT_CLIP) as AudioClip;
-			Debug.Log(bossHitClip);
 		}
 
 

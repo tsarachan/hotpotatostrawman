@@ -12,7 +12,7 @@
 		private const string BOSS_OBJ = "Boss";
 
 		private CannonBossBattle bossBattleScript;
-		private const string BOSS_BATTLE_OBJ = "Cannon boss battle(Clone)";
+		private const string BOSS_BATTLE_OBJ = "CannonBossBattle(Clone)";
 
 
 		//particle for when the cannonball hits the boss
