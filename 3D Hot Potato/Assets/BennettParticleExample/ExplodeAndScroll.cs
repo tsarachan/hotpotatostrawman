@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ExplodeAndScroll : ObjectPooling.Poolable {
 
+
+	[SerializeField] private Vector3 speed = new Vector3(0.0f, 0.0f, -0.85f);
 	private const string PARTICLE_ORGANIZER = "Particles";
 	public float lifetime = 2.0f;
 	private float timer = 0.0f;
@@ -20,7 +22,7 @@ public class ExplodeAndScroll : ObjectPooling.Poolable {
 
 
 	private void Update(){
-		transform.position += new Vector3 (0, 0, -0.85f);
+		transform.position += speed;
 
 		timer += Time.deltaTime;
 

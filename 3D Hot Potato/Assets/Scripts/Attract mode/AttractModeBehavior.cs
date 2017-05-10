@@ -96,13 +96,13 @@
 
 
 			cityViewTask = new MoveImageTask(city, cityStart, cityEnd, cityTime, 
-				"In 2153, the world became a peaceful utopia\nwhere scarcity doesn't exist.");
+				"In 2153, the world became a peaceful utopia\nwithout scarcity.");
 			scientistsTask = new MoveImageTask(scientists, scientistStart, scientstsEnd, scientistsTime, 
-				"Seven scientists created the Neon Star, a nearly limitless battery\nwhich solved the global energy crisis,");
+				"Seven scientists created the Neon Star, a nearly limitless battery\nwhich resolved the global energy crisis.");
 			erasedTask = new MoveImageTask(erasedScientists, erasedStart, erasedEnd, erasedTime, 
-				"But one day, members of the Neon Star Project disappeared.");
+				"But one of the scientists went rogue!");
 			voidwielderTask = new MoveImageTask(voidwielder, voidwielderStart, voidwielderEnd, voidwielderTime, 
-				"A scientist went rogue!\nHe kidnapped the others and stole each city's Neon Star for himself.");
+				"He kidnapped the others and stole each city's Neon Star for himself.");
 			playersTask = new MoveImageTask(players, playersStart, playersEnd, playersTime, 
 				"To stop the Voidwielder and bring light back to the cities,\ntwo retired scientists take the last remaining Neon Star");
 			lightrunnersTask = new MoveImageTask(lightrunners, lightrunnersStart, lightrunnersEnd, lightrunnersTime, 

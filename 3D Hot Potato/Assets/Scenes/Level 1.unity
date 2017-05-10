@@ -8965,7 +8965,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 293c10b9750ca46e5a376c9247152c71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 150
+  speed: 175
   startPos: {x: -25.85, y: 9.73, z: 161.1}
   resetZ: -25
   startMovingCurve:
@@ -55732,7 +55732,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 293c10b9750ca46e5a376c9247152c71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 150
+  speed: 175
   startPos: {x: 34.68, y: 9.73, z: 109.74}
   resetZ: -25
   startMovingCurve:
@@ -70294,6 +70294,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ec8f1e1c3f544c7c8d9ed9c081d4513, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 1
 --- !u!33 &2004831381
 MeshFilter:
   m_ObjectHideFlags: 0

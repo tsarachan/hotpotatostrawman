@@ -59,7 +59,6 @@ public class PlayerMovement : MonoBehaviour {
 		
 
 	private void FixedUpdate(){
-		Debug.Log(rb.velocity);
 		//normal movement
 		if (!Stopped && !MovementLocked){
 			//This is a bodge to limit maximum speed. The better way would be to impose a countervailing force.

@@ -5,7 +5,7 @@ using UnityEngine;
 public class TextureScroll : MonoBehaviour {
 
 
-	private float speed = 0.85f;
+	[SerializeField] private float speed = 0.85f;
 
 
 	private float offset = 0.0f;

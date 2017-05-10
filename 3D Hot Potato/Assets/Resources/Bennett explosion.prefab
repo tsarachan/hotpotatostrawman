@@ -160,6 +160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startVelocity: {x: 0, y: 0, z: 0}
+  speed: {x: 0, y: 0, z: -3.5}
   lifetime: 2
 --- !u!198 &198014831242639420
 ParticleSystem:
@@ -221,7 +222,7 @@ ParticleSystem:
     serializedVersion: 3
     enabled: 1
     startLifetime:
-      scalar: 1.5
+      scalar: 0.9
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -239,7 +240,7 @@ ParticleSystem:
         m_Curve:
         - serializedVersion: 2
           time: 0
-          value: 0.2
+          value: 0.33333334
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -2726,7 +2727,7 @@ ParticleSystem:
     serializedVersion: 3
     enabled: 1
     startLifetime:
-      scalar: 0.8
+      scalar: 0.4
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -5249,7 +5250,7 @@ ParticleSystem:
     serializedVersion: 3
     enabled: 1
     startLifetime:
-      scalar: 0.4
+      scalar: 0.3
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -5267,7 +5268,7 @@ ParticleSystem:
         m_Curve:
         - serializedVersion: 2
           time: 0
-          value: 0.75
+          value: 0.3333333
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -7736,7 +7737,7 @@ ParticleSystem:
     serializedVersion: 3
     enabled: 1
     startLifetime:
-      scalar: 0.8
+      scalar: 0.4
       maxCurve:
         serializedVersion: 2
         m_Curve:
