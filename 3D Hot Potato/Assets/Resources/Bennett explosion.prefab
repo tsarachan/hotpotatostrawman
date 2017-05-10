@@ -160,7 +160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startVelocity: {x: 0, y: 0, z: 0}
-  speed: {x: 0, y: 0, z: -3.5}
+  speed: {x: 0, y: 0, z: -2.5}
   lifetime: 2
 --- !u!198 &198014831242639420
 ParticleSystem:
