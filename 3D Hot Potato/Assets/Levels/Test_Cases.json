@@ -1,6 +1,27 @@
 {
 "world1":{
 		"act1":[
-			{"action":"tutorial", "tutorialName":"Power"}
+			{"action":"spawn", "whichEnemy":"IgnoringEnemy", "waves":1, "numPerWave":3, "whichSpawners":[4, 8, 12], "timeBetweenWaves":0, "timeVariance":0},
+			{"action":"wait", "time":5},
+			{"action":"spawn", "whichEnemy":"IgnoringEnemy", "waves":1, "numPerWave":3, "whichSpawners":[4, 8, 12], "timeBetweenWaves":0, "timeVariance":0},
+			{"action":"wait", "time":5},
+			{"action":"spawn", "whichEnemy":"IgnoringEnemy", "waves":1, "numPerWave":3, "whichSpawners":[4, 8, 12], "timeBetweenWaves":0, "timeVariance":0},
+			{"action":"wait", "time":5},
+			{"action":"spawn", "whichEnemy":"IgnoringEnemy", "waves":1, "numPerWave":3, "whichSpawners":[4, 8, 12], "timeBetweenWaves":0, "timeVariance":0},
+			{"action":"wait", "time":5},
+			{"action":"spawn", "whichEnemy":"IgnoringEnemy", "waves":1, "numPerWave":3, "whichSpawners":[4, 8, 12], "timeBetweenWaves":0, "timeVariance":0},
+			{"action":"wait", "time":5},
+			{"action":"spawn", "whichEnemy":"IgnoringEnemy", "waves":1, "numPerWave":3, "whichSpawners":[4, 8, 12], "timeBetweenWaves":0, "timeVariance":0},
+			{"action":"wait", "time":5},
+			{"action":"spawn", "whichEnemy":"IgnoringEnemy", "waves":1, "numPerWave":3, "whichSpawners":[4, 8, 12], "timeBetweenWaves":0, "timeVariance":0},
+			{"action":"wait", "time":5},
+			{"action":"spawn", "whichEnemy":"IgnoringEnemy", "waves":1, "numPerWave":3, "whichSpawners":[4, 8, 12], "timeBetweenWaves":0, "timeVariance":0},
+			{"action":"wait", "time":5},
+			{"action":"spawn", "whichEnemy":"IgnoringEnemy", "waves":1, "numPerWave":3, "whichSpawners":[4, 8, 12], "timeBetweenWaves":0, "timeVariance":0},
+			{"action":"wait", "time":5},
+			{"action":"spawn", "whichEnemy":"IgnoringEnemy", "waves":1, "numPerWave":3, "whichSpawners":[4, 8, 12], "timeBetweenWaves":0, "timeVariance":0},
+			{"action":"wait", "time":5},
+			{"action":"spawn", "whichEnemy":"IgnoringEnemy", "waves":1, "numPerWave":3, "whichSpawners":[4, 8, 12], "timeBetweenWaves":0, "timeVariance":0},
+			{"action":"wait", "time":5}
 		]}
 }

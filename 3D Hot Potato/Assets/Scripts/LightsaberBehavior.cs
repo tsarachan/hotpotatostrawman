@@ -62,8 +62,6 @@ public class LightsaberBehavior : MonoBehaviour {
 		activeTimer += Time.deltaTime;
 
 		if (activeTimer > activeDuration){
-			extendTimer = 0.0f;
-			activeTimer = 0.0f;
 			gameObject.SetActive(false);
 		}
 
@@ -99,8 +97,15 @@ public class LightsaberBehavior : MonoBehaviour {
 
 
 	public void ExtendConnection(){
+
+		//set initial positions to avoid a flicker of the saber at full length on the first frame
 		start.position = player1.position;
 		end.position = player2.position;
+		lineRenderer.SetPosition(0, start.position);
+		lineRenderer.SetPosition(1, start.position);
+
+		extendTimer = 0.0f;
+		activeTimer = 0.0f;
 
 		if (gameObject.name != CENTER_BEAM_OBJ){
 			centerBeam.ExtendConnection();

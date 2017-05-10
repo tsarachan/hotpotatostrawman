@@ -87,12 +87,23 @@ public class CatchSandbox : MonoBehaviour {
 
 
 	protected IEnumerator CallDownTether(){
+		if (powerRunning){
+			yield break;
+		}
+
+		powerRunning = true;
+
 		lightPillar = SetUpLightPillar();
 		tether = SetUpTether();
 
 		yield return StartCoroutine(lightPillar.GetComponent<LightPillarBehavior>().ShineDown());
 
 		tether.GetComponent<LightsaberBehavior>().ExtendConnection();
+
+		yield return new WaitForSeconds(tether.GetComponent<LightsaberBehavior>().extendDuration + 
+			tether.GetComponent<LightsaberBehavior>().activeDuration);
+
+		powerRunning = false;
 
 		yield break;
 	}

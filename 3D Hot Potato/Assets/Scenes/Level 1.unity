@@ -33205,7 +33205,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: beca32a3c8df64f9fa0fd2df0091573c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  filename: Levels8.json
+  filename: Test_Cases.json
   restartGracePeriod: 1
 --- !u!114 &891422879
 MonoBehaviour:
@@ -70789,7 +70789,7 @@ MonoBehaviour:
   maxBackwardLean: 35
   maxSideLean: 45
   maxTurnLean: 45
-  rotationSpeed: 750
+  rotationSpeed: 300
   returnSpeed: 750
   backRotateSpeed: 1000
 --- !u!114 &2058022955

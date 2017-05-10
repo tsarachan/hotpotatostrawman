@@ -51,7 +51,6 @@ public class LightPillarBehavior : MonoBehaviour {
 
 		if (gameObject.name != CENTER_OBJ){
 			transform.Find(CENTER_OBJ).GetComponent<LightPillarBehavior>().Setup(player);
-			StartCoroutine(transform.Find(CENTER_OBJ).GetComponent<LightPillarBehavior>().ShineDown());
 		}
 
 		audioSource = GameObject.Find(SPEAKER_OBJ).GetComponent<AudioSource>();
@@ -60,7 +59,19 @@ public class LightPillarBehavior : MonoBehaviour {
 
 
 	public IEnumerator ShineDown(){
+		timer = 0.0f;
+
+		//set initial positions, to avoid a single-frame flicker of wrong positioning
+		start.position = player.position + new Vector3(0.0f, startHeight, 0.0f);
+		end.position = Vector3.Lerp(origin, player.position, timer/extendDuration);
+		lineRenderer.SetPosition(0, start.position);
+		lineRenderer.SetPosition(1, end.position);
+
 		gameObject.SetActive(true);
+
+		if (gameObject.name != CENTER_OBJ){
+			StartCoroutine(transform.Find(CENTER_OBJ).GetComponent<LightPillarBehavior>().ShineDown());
+		}
 
 		audioSource.Play();
 
@@ -68,10 +79,11 @@ public class LightPillarBehavior : MonoBehaviour {
 			timer += Time.deltaTime;
 
 			if (timer < extendDuration){
-				end.position = Vector3.Lerp(origin, player.position, timer/extendDuration);
+				start.position = player.position + new Vector3(0.0f, startHeight, 0.0f);
+				end.position = Vector3.Lerp(start.position, player.position, timer/extendDuration);
 			} else if (timer <= extendDuration * 2.0f) {
 				end.position = player.position;
-				start.position = Vector3.Lerp(origin, end.position, (timer - extendDuration)/extendDuration);
+				start.position = Vector3.Lerp(start.position, end.position, (timer - extendDuration)/extendDuration);
 			}
 
 			lineRenderer.SetPosition(0, start.position);
