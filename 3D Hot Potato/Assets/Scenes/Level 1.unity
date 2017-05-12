@@ -33205,7 +33205,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: beca32a3c8df64f9fa0fd2df0091573c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  filename: Test_Cases.json
+  filename: Levels8.json
   restartGracePeriod: 1
 --- !u!114 &891422879
 MonoBehaviour:
@@ -43671,7 +43671,7 @@ ParticleSystem:
   playOnAwake: 0
   autoRandomSeed: 1
   startDelay:
-    scalar: 0.3
+    scalar: 0.05
     maxCurve:
       serializedVersion: 2
       m_Curve:
@@ -43712,7 +43712,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1398704705
+  randomSeed: -1423259209
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -47125,7 +47125,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1530321814
+  randomSeed: -296441471
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -50072,7 +50072,7 @@ ParticleSystem:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1350521551}
   serializedVersion: 5
-  lengthInSec: 0.75
+  lengthInSec: 0.55
   simulationSpeed: 1
   looping: 0
   prewarm: 0
@@ -50120,12 +50120,12 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1782334652
+  randomSeed: -1062446545
   InitialModule:
     serializedVersion: 3
     enabled: 1
     startLifetime:
-      scalar: 0.75
+      scalar: 0.55
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -50530,7 +50530,7 @@ ParticleSystem:
         m_RotationOrder: 4
       minMaxState: 0
     randomizeRotationDirection: 0
-    maxNumParticles: 3
+    maxNumParticles: 2
     size3D: 0
     rotation3D: 0
     gravityModifier:
@@ -50701,6 +50701,12 @@ ParticleSystem:
           value: 1
           inSlope: 0
           outSlope: 0
+          tangentMode: 0
+        - serializedVersion: 2
+          time: 0.5053773
+          value: 0.8060931
+          inSlope: -1.5002489
+          outSlope: -1.5002489
           tangentMode: 0
         - serializedVersion: 2
           time: 1
@@ -52923,7 +52929,7 @@ ParticleSystem:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1373681514}
   serializedVersion: 5
-  lengthInSec: 0.3
+  lengthInSec: 0.55
   simulationSpeed: 1
   looping: 0
   prewarm: 0
@@ -52971,12 +52977,12 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -184389013
+  randomSeed: -1062446545
   InitialModule:
     serializedVersion: 3
     enabled: 1
     startLifetime:
-      scalar: 0.3
+      scalar: 0.55
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -53147,7 +53153,7 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       minMaxState: 0
     startSize:
-      scalar: 20
+      scalar: 13
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -53381,7 +53387,7 @@ ParticleSystem:
         m_RotationOrder: 4
       minMaxState: 0
     randomizeRotationDirection: 0
-    maxNumParticles: 1
+    maxNumParticles: 2
     size3D: 0
     rotation3D: 0
     gravityModifier:
@@ -53552,6 +53558,12 @@ ParticleSystem:
           value: 1
           inSlope: 0
           outSlope: 0
+          tangentMode: 0
+        - serializedVersion: 2
+          time: 0.5053773
+          value: 0.8060931
+          inSlope: -1.5002489
+          outSlope: -1.5002489
           tangentMode: 0
         - serializedVersion: 2
           time: 1
@@ -53787,10 +53799,10 @@ ParticleSystem:
       maxGradient:
         key0:
           serializedVersion: 2
-          rgba: 4294967295
+          rgba: 3372220415
         key1:
           serializedVersion: 2
-          rgba: 3372220415
+          rgba: 1694498815
         key2:
           serializedVersion: 2
           rgba: 4278190080
@@ -53799,7 +53811,7 @@ ParticleSystem:
           rgba: 2415919104
         key4:
           serializedVersion: 2
-          rgba: 0
+          rgba: 2415919104
         key5:
           serializedVersion: 2
           rgba: 0
@@ -53821,7 +53833,7 @@ ParticleSystem:
         atime1: 10409
         atime2: 56090
         atime3: 65535
-        atime4: 0
+        atime4: 65535
         atime5: 0
         atime6: 0
         atime7: 0
