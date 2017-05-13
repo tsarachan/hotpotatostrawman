@@ -39,6 +39,7 @@ public class QuitAndRestart : MonoBehaviour {
 	{
 		if (Input.GetKeyDown(KeyCode.R))
 		{
+			ObjectPooling.ObjectPool.ClearPools();
 			SceneManager.LoadScene(0);
 		}
 	}

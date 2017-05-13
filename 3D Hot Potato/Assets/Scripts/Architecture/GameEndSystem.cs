@@ -49,6 +49,7 @@ public class GameEndSystem : MonoBehaviour {
 		noInputTimer += Time.deltaTime;
 
 		if (noInputTimer >= noInputResetTime){
+			ObjectPooling.ObjectPool.ClearPools();
 			SceneManager.LoadScene(TITLE_SCENE);
 		}
 	}
