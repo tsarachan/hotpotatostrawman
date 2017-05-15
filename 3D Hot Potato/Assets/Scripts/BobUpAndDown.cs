@@ -28,12 +28,16 @@ public class BobUpAndDown : MonoBehaviour {
 	private PlayerMovementLean playerMovementLean;
 
 
+	private PlayerMovementParticles particleScript;
+
+
 	void Awake()
 	{
 		tf = transform;
 		posVec = tf.localPosition;
 		startY = posVec.y;
 		playerMovementLean = transform.parent.GetComponent<PlayerMovementLean>();
+		particleScript = transform.parent.GetComponent<PlayerMovementParticles>();
 	}
 
 	void Update ()
@@ -56,6 +60,7 @@ public class BobUpAndDown : MonoBehaviour {
 		//Debug.Log("Jump() called for " + transform.parent.name);
 
 		jumping = true;
+		particleScript.InAir = true;
 
 		playerMovementLean.StartJumpRise(jumpLeanAngle);
 
@@ -78,6 +83,8 @@ public class BobUpAndDown : MonoBehaviour {
 		jumping = false;
 
 		bobTimer = 0.0f;
+
+		particleScript.InAir = false;
 
 		//Debug.Log("Jump() complete for " + transform.parent.name);
 

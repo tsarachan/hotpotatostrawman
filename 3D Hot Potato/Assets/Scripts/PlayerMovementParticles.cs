@@ -15,6 +15,17 @@ public class PlayerMovementParticles : MonoBehaviour {
 	//the puff of dust raised by braking
 	private ParticleSystem brakeParticle;
 	private const string BRAKE_PARTICLE_OBJ = "Brake particle";
+	private bool inAir = false;
+	public bool InAir{
+		get { return inAir; }
+		set{
+			if (value == true){
+				brakeParticle.Stop();
+			}
+
+			inAir = value;
+		}
+	}
 
 	//the line left by accelerating
 	private GameObject accelParticle;
@@ -129,7 +140,9 @@ public class PlayerMovementParticles : MonoBehaviour {
 	private void PlayMovementParticles(string input){
 		switch (input){
 			case UP:
-				brakeParticle.Play();
+				if (!InAir){
+					brakeParticle.Play();
+				}
 				break;
 			case DOWN:
 				accelParticleVert.Play();
@@ -143,7 +156,7 @@ public class PlayerMovementParticles : MonoBehaviour {
 
 	private void StopMovementParticles(string input){
 		switch(input){
-		case UP:
+			case UP:
 				brakeParticle.Stop();
 				break;
 			case DOWN:
