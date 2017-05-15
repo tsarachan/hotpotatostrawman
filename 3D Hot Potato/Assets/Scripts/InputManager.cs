@@ -132,49 +132,50 @@ public class InputManager : MonoBehaviour {
 	/// Send button presses to player scripts when players input them.
 	/// </summary>
 	private void Update(){
-		foreach (char player in players.Keys){
-			if (players[player].ThisPlayer.GetAxis("Move Vert") < -deadZone){
-				players[player].MoveScript.Move(UP);
-				players[player].LeanScript.Lean(UP);
-				players[player].ParticleScript.GetInput(UP);
-				gameEndSystem.ResetInputTimer();
-			}
-			else if (players[player].ThisPlayer.GetAxis("Move Vert") > deadZone){
-				players[player].MoveScript.Move(DOWN);
-				players[player].LeanScript.Lean(DOWN);
-				players[player].ParticleScript.GetInput(DOWN);
-				gameEndSystem.ResetInputTimer();
-			}
-
-			if (players[player].ThisPlayer.GetAxis("Move Horiz") < -deadZone){
-				players[player].MoveScript.Move(LEFT);
-				players[player].LeanScript.Lean(LEFT);
-				players[player].ParticleScript.GetInput(LEFT);
-				gameEndSystem.ResetInputTimer();
-			}
-			else if (players[player].ThisPlayer.GetAxis("Move Horiz") > deadZone){
-				players[player].MoveScript.Move(RIGHT);
-				players[player].LeanScript.Lean(RIGHT);
-				players[player].ParticleScript.GetInput(RIGHT);
-				gameEndSystem.ResetInputTimer();
-			}
-		}
-
-
-		//controller buttons
-		foreach (char player in players.Keys){
-			if (!pauseMenuScript.Paused && 
-				players[player].ThisPlayer.GetButtonDown("Pass")){
-
-				players[player].BallScript.Throw();
-				players[player].CatchScript.AttemptAwesomeCatch();
-				gameEndSystem.ResetInputTimer();
-			}
-
-			if (players[player].ThisPlayer.GetButtonDown("Start")){
-				pauseMenuScript.ChangePauseMenuState();
-			}
-		}
+		ReadKeyboardInputs();
+//		foreach (char player in players.Keys){
+//			if (players[player].ThisPlayer.GetAxis("Move Vert") < -deadZone){
+//				players[player].MoveScript.Move(UP);
+//				players[player].LeanScript.Lean(UP);
+//				players[player].ParticleScript.GetInput(UP);
+//				gameEndSystem.ResetInputTimer();
+//			}
+//			else if (players[player].ThisPlayer.GetAxis("Move Vert") > deadZone){
+//				players[player].MoveScript.Move(DOWN);
+//				players[player].LeanScript.Lean(DOWN);
+//				players[player].ParticleScript.GetInput(DOWN);
+//				gameEndSystem.ResetInputTimer();
+//			}
+//
+//			if (players[player].ThisPlayer.GetAxis("Move Horiz") < -deadZone){
+//				players[player].MoveScript.Move(LEFT);
+//				players[player].LeanScript.Lean(LEFT);
+//				players[player].ParticleScript.GetInput(LEFT);
+//				gameEndSystem.ResetInputTimer();
+//			}
+//			else if (players[player].ThisPlayer.GetAxis("Move Horiz") > deadZone){
+//				players[player].MoveScript.Move(RIGHT);
+//				players[player].LeanScript.Lean(RIGHT);
+//				players[player].ParticleScript.GetInput(RIGHT);
+//				gameEndSystem.ResetInputTimer();
+//			}
+//		}
+//
+//
+//		//controller buttons
+//		foreach (char player in players.Keys){
+//			if (!pauseMenuScript.Paused && 
+//				players[player].ThisPlayer.GetButtonDown("Pass")){
+//
+//				players[player].BallScript.Throw();
+//				players[player].CatchScript.AttemptAwesomeCatch();
+//				gameEndSystem.ResetInputTimer();
+//			}
+//
+//			if (players[player].ThisPlayer.GetButtonDown("Start")){
+//				pauseMenuScript.ChangePauseMenuState();
+//			}
+//		}
 
 
 		if (players['1'].ThisPlayer.GetButton("Pass") &&
@@ -190,15 +191,95 @@ public class InputManager : MonoBehaviour {
 		} else {
 			resetTimer = 0.0f;
 		}
+	}
 
 
-		/* 
-		 * 
-		 * Player keyboard controls for movement and passing are checked in FixedUpdate().
-		 * This may lead to slight variations in play between keyboard and controller play,
-		 * since FixedUpdate() can run more than once per frame.
-		 * 
-		 */
+	private void ReadKeyboardInputs(){
+
+		//player 1
+		if (Input.GetKey(KeyCode.S)){
+			players['1'].MoveScript.Move(UP);
+			players['1'].LeanScript.Lean(UP);
+			players['1'].ParticleScript.GetInput(UP);
+			gameEndSystem.ResetInputTimer();
+		} else if (Input.GetKey(KeyCode.W)){
+			players['1'].MoveScript.Move(DOWN);
+			players['1'].LeanScript.Lean(DOWN);
+			players['1'].ParticleScript.GetInput(DOWN);
+			gameEndSystem.ResetInputTimer();
+		}
+
+		if (Input.GetKey(KeyCode.A)){
+			players['1'].MoveScript.Move(LEFT);
+			players['1'].LeanScript.Lean(LEFT);
+			players['1'].ParticleScript.GetInput(LEFT);
+			gameEndSystem.ResetInputTimer();
+		} else if (Input.GetKey(KeyCode.D)){
+			players['1'].MoveScript.Move(RIGHT);
+			players['1'].LeanScript.Lean(RIGHT);
+			players['1'].ParticleScript.GetInput(RIGHT);
+			gameEndSystem.ResetInputTimer();
+		}
+
+
+		if (!pauseMenuScript.Paused &&
+			(Input.GetKeyDown(KeyCode.Z) ||
+			Input.GetKeyDown(KeyCode.X) ||
+			Input.GetKeyDown(KeyCode.C) ||
+			Input.GetKeyDown(KeyCode.V) ||
+			Input.GetKeyDown(KeyCode.B) ||
+			Input.GetKeyDown(KeyCode.H))){
+			players['1'].BallScript.Throw();
+			players['1'].CatchScript.AttemptAwesomeCatch();
+			gameEndSystem.ResetInputTimer();
+		}
+
+		if (Input.GetKeyDown(KeyCode.Alpha1)){
+			pauseMenuScript.ChangePauseMenuState();
+		}
+
+
+		//player 2
+		if (Input.GetKey(KeyCode.K)){
+			players['2'].MoveScript.Move(UP);
+			players['2'].LeanScript.Lean(UP);
+			players['2'].ParticleScript.GetInput(UP);
+			gameEndSystem.ResetInputTimer();
+		} else if (Input.GetKey(KeyCode.I)){
+			players['2'].MoveScript.Move(DOWN);
+			players['2'].LeanScript.Lean(DOWN);
+			players['2'].ParticleScript.GetInput(DOWN);
+			gameEndSystem.ResetInputTimer();
+		}
+
+		if (Input.GetKey(KeyCode.J)){
+			players['2'].MoveScript.Move(LEFT);
+			players['2'].LeanScript.Lean(LEFT);
+			players['2'].ParticleScript.GetInput(LEFT);
+			gameEndSystem.ResetInputTimer();
+		} else if (Input.GetKey(KeyCode.L)){
+			players['2'].MoveScript.Move(RIGHT);
+			players['2'].LeanScript.Lean(RIGHT);
+			players['2'].ParticleScript.GetInput(RIGHT);
+			gameEndSystem.ResetInputTimer();
+		}
+
+
+		if (!pauseMenuScript.Paused &&
+			(Input.GetKeyDown(KeyCode.N) ||
+				Input.GetKeyDown(KeyCode.M) ||
+				Input.GetKeyDown(KeyCode.Comma) ||
+				Input.GetKeyDown(KeyCode.Period) ||
+				Input.GetKeyDown(KeyCode.Slash) ||
+				Input.GetKeyDown(KeyCode.RightShift))){
+			players['2'].BallScript.Throw();
+			players['2'].CatchScript.AttemptAwesomeCatch();
+			gameEndSystem.ResetInputTimer();
+		}
+
+		if (Input.GetKeyDown(KeyCode.Alpha2)){
+			pauseMenuScript.ChangePauseMenuState();
+		}
 	}
 
 
