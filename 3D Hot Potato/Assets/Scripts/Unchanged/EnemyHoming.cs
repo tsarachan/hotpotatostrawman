@@ -95,6 +95,7 @@ public class EnemyHoming : EnemyBase {
 	private AudioClip chargeClip;
 	private const string DEATH_CLIP = "Audio/EnemyDeathSFX";
 	private const string HUNT_DEATH_CLIP = "Audio/PlayerHuntEnemyDeathSFX";
+	private const string HOMING_DEATH_CLIP = "Audio/HomingEnemyDeath";
 	private const string CHARGE_CLIP = "Audio/EnemyChargeSFX";
 
 
@@ -160,6 +161,8 @@ public class EnemyHoming : EnemyBase {
 	private AudioClip GetDeathClip(){
 		if (gameObject.name.Contains(HUNT)){
 			return Resources.Load(HUNT_DEATH_CLIP) as AudioClip;
+		} else if (gameObject.name.Contains(HOMING)){
+			return Resources.Load(HOMING_DEATH_CLIP) as AudioClip;
 		} else {
 			return Resources.Load(DEATH_CLIP) as AudioClip;
 		}

@@ -47,7 +47,7 @@ public class EnemyIgnoring : EnemyBase {
 	private AudioSource audioSource;
 	private const string SPEAKERS = "Speakers";
 	private AudioClip deathClip;
-	private const string DEATH_CLIP = "Audio/EnemyDeathSFX";
+	private const string DEATH_CLIP = "Audio/IgnoringEnemyDeath";
 
 
 	//names of different types of enemies; used to determine how this should move or behave
