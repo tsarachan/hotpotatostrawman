@@ -132,50 +132,50 @@ public class InputManager : MonoBehaviour {
 	/// Send button presses to player scripts when players input them.
 	/// </summary>
 	private void Update(){
-		ReadKeyboardInputs();
-//		foreach (char player in players.Keys){
-//			if (players[player].ThisPlayer.GetAxis("Move Vert") < -deadZone){
-//				players[player].MoveScript.Move(UP);
-//				players[player].LeanScript.Lean(UP);
-//				players[player].ParticleScript.GetInput(UP);
-//				gameEndSystem.ResetInputTimer();
-//			}
-//			else if (players[player].ThisPlayer.GetAxis("Move Vert") > deadZone){
-//				players[player].MoveScript.Move(DOWN);
-//				players[player].LeanScript.Lean(DOWN);
-//				players[player].ParticleScript.GetInput(DOWN);
-//				gameEndSystem.ResetInputTimer();
-//			}
-//
-//			if (players[player].ThisPlayer.GetAxis("Move Horiz") < -deadZone){
-//				players[player].MoveScript.Move(LEFT);
-//				players[player].LeanScript.Lean(LEFT);
-//				players[player].ParticleScript.GetInput(LEFT);
-//				gameEndSystem.ResetInputTimer();
-//			}
-//			else if (players[player].ThisPlayer.GetAxis("Move Horiz") > deadZone){
-//				players[player].MoveScript.Move(RIGHT);
-//				players[player].LeanScript.Lean(RIGHT);
-//				players[player].ParticleScript.GetInput(RIGHT);
-//				gameEndSystem.ResetInputTimer();
-//			}
-//		}
-//
-//
-//		//controller buttons
-//		foreach (char player in players.Keys){
-//			if (!pauseMenuScript.Paused && 
-//				players[player].ThisPlayer.GetButtonDown("Pass")){
-//
-//				players[player].BallScript.Throw();
-//				players[player].CatchScript.AttemptAwesomeCatch();
-//				gameEndSystem.ResetInputTimer();
-//			}
-//
-//			if (players[player].ThisPlayer.GetButtonDown("Start")){
-//				pauseMenuScript.ChangePauseMenuState();
-//			}
-//		}
+		//ReadKeyboardInputs();
+		foreach (char player in players.Keys){
+			if (players[player].ThisPlayer.GetAxis("Move Vert") < -deadZone){
+				players[player].MoveScript.Move(UP);
+				players[player].LeanScript.Lean(UP);
+				players[player].ParticleScript.GetInput(UP);
+				gameEndSystem.ResetInputTimer();
+			}
+			else if (players[player].ThisPlayer.GetAxis("Move Vert") > deadZone){
+				players[player].MoveScript.Move(DOWN);
+				players[player].LeanScript.Lean(DOWN);
+				players[player].ParticleScript.GetInput(DOWN);
+				gameEndSystem.ResetInputTimer();
+			}
+
+			if (players[player].ThisPlayer.GetAxis("Move Horiz") < -deadZone){
+				players[player].MoveScript.Move(LEFT);
+				players[player].LeanScript.Lean(LEFT);
+				players[player].ParticleScript.GetInput(LEFT);
+				gameEndSystem.ResetInputTimer();
+			}
+			else if (players[player].ThisPlayer.GetAxis("Move Horiz") > deadZone){
+				players[player].MoveScript.Move(RIGHT);
+				players[player].LeanScript.Lean(RIGHT);
+				players[player].ParticleScript.GetInput(RIGHT);
+				gameEndSystem.ResetInputTimer();
+			}
+		}
+
+
+		//controller buttons
+		foreach (char player in players.Keys){
+			if (!pauseMenuScript.Paused && 
+				players[player].ThisPlayer.GetButtonDown("Pass")){
+
+				players[player].BallScript.Throw();
+				players[player].CatchScript.AttemptAwesomeCatch();
+				gameEndSystem.ResetInputTimer();
+			}
+
+			if (players[player].ThisPlayer.GetButtonDown("Start")){
+				pauseMenuScript.ChangePauseMenuState();
+			}
+		}
 
 
 		if (players['1'].ThisPlayer.GetButton("Pass") &&
