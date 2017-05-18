@@ -6791,7 +6791,7 @@ Prefab:
   m_IsPrefabParent: 0
 --- !u!4 &288675410 stripped
 Transform:
-  m_PrefabParentObject: {fileID: 0}
+  m_PrefabParentObject: {fileID: 400000, guid: d6e839ddf79674f1d903f41fa67a8846, type: 3}
   m_PrefabInternal: {fileID: 288675409}
 --- !u!1 &290731061
 GameObject:
@@ -7890,7 +7890,7 @@ Prefab:
   m_IsPrefabParent: 0
 --- !u!4 &333572321 stripped
 Transform:
-  m_PrefabParentObject: {fileID: 0}
+  m_PrefabParentObject: {fileID: 400000, guid: d6e839ddf79674f1d903f41fa67a8846, type: 3}
   m_PrefabInternal: {fileID: 333572320}
 --- !u!1 &333911390
 GameObject:
@@ -17785,7 +17785,7 @@ Prefab:
   m_IsPrefabParent: 0
 --- !u!4 &508490428 stripped
 Transform:
-  m_PrefabParentObject: {fileID: 0}
+  m_PrefabParentObject: {fileID: 400000, guid: d6e839ddf79674f1d903f41fa67a8846, type: 3}
   m_PrefabInternal: {fileID: 508490427}
 --- !u!1 &510329863
 GameObject:
@@ -17849,7 +17849,7 @@ RectTransform:
   m_GameObject: {fileID: 518548381}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.19, y: 1, z: 1}
+  m_LocalScale: {x: 2.61, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 280211138}
   m_RootOrder: 1
@@ -17879,7 +17879,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 2fa8fbda233134a21aec1d8fb06beeff, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 93bb2e99b9d8d4d4d85d0a605be4d654, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -27813,7 +27813,7 @@ Prefab:
   m_IsPrefabParent: 0
 --- !u!4 &694158746 stripped
 Transform:
-  m_PrefabParentObject: {fileID: 0}
+  m_PrefabParentObject: {fileID: 400000, guid: 2a1d2ef3c152f448d8979b21dbe82266, type: 3}
   m_PrefabInternal: {fileID: 694158745}
 --- !u!1 &698868667
 GameObject:
@@ -33038,7 +33038,7 @@ Prefab:
   m_IsPrefabParent: 0
 --- !u!4 &861497913 stripped
 Transform:
-  m_PrefabParentObject: {fileID: 0}
+  m_PrefabParentObject: {fileID: 400000, guid: d6e839ddf79674f1d903f41fa67a8846, type: 3}
   m_PrefabInternal: {fileID: 861497912}
 --- !u!1 &870671286
 GameObject:
@@ -43296,7 +43296,7 @@ Prefab:
   m_IsPrefabParent: 0
 --- !u!4 &1230356234 stripped
 Transform:
-  m_PrefabParentObject: {fileID: 0}
+  m_PrefabParentObject: {fileID: 400000, guid: d6e839ddf79674f1d903f41fa67a8846, type: 3}
   m_PrefabInternal: {fileID: 1230356233}
 --- !u!1 &1246477015
 GameObject:
@@ -58624,8 +58624,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 704, y: 419.39}
+  m_AnchoredPosition: {x: 0, y: -54}
+  m_SizeDelta: {x: 704, y: 1069}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1423624018
 MonoBehaviour:
@@ -58723,7 +58723,7 @@ Prefab:
   m_IsPrefabParent: 0
 --- !u!4 &1429025718 stripped
 Transform:
-  m_PrefabParentObject: {fileID: 0}
+  m_PrefabParentObject: {fileID: 400000, guid: d6e839ddf79674f1d903f41fa67a8846, type: 3}
   m_PrefabInternal: {fileID: 1429025717}
 --- !u!1 &1438593732
 GameObject:

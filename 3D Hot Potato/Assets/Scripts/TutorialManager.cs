@@ -107,7 +107,7 @@ public class TutorialManager : MonoBehaviour {
 
 		//first line = top left, middle = top right, bottom = bottom right
 		passInstruction = new Instruction("Cooperate with your partner to reach the city center.",
-										  "Press the  <sprite=\"Pass_button_arcade\" index=0> button to pass the Neon Star",
+										  "Press the  <sprite=\"Pass_button\" index=0> button to pass the Neon Star",
 										  "Try passing now",
 										  new Vector3(0.0f, 0.0f, 0.0f), //the pass instruction will find the ball
 										  PassRegistration,
@@ -128,7 +128,7 @@ public class TutorialManager : MonoBehaviour {
 												  EnemyDestroyedFunc,
 												  0.5f);
 		powerInstruction = new Instruction("Each player has a unique power",
-											"Trigger your power by pressing the  <sprite=\"Pass_button_arcade\" index=0> button just before catching the Neon Star",
+											"Trigger your power by pressing the  <sprite=\"Pass_button\" index=0> button just before catching the Neon Star",
 											"",
 										   new Vector3(0.0f, 0.0f, 0.0f), //this instruction will find the ball
 										   PowerTriggeredRegistration,
